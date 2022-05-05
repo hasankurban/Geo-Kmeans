@@ -1,0 +1,3 @@
+Size	Num_clusters	Time	Iterations	ARI
+500k	5	6.8	5	0.72	DCKM
+500k	5	2.36	95	0.72	KM
