@@ -1,6 +1,7 @@
 import numpy as np
 from sortedcontainers import SortedList
 
+
 def create_BSTs(assigned_clusters, distances, num_clusters, num_points):
 
     BST_List = {}
@@ -19,35 +20,36 @@ def create_BSTs(assigned_clusters, distances, num_clusters, num_points):
     return BST_List
 
 
-def extract_expressive_data(BST_List, num_clusters, data_threshold, data):
+def extract_expressive_data(BST_List, num_clusters, data_threshold):
 
     leaves = [[] for i in range(num_clusters)]
-    temp2 = []
 
     for index in range(num_clusters):
-        # High expression data
-        # print("Before removing the leaves: ", len(BST_List[index]))
         t = len(BST_List[index]) - int(len(BST_List[index])/data_threshold)
         leaves[index] = list(BST_List[index].islice(t, len(BST_List[index])))
         del BST_List[index][t:]
-        # print("After removing the leaves: ", len(BST_List[index]))
-
-        # Low expression data
-        # BST_List[index] = SortedList(list(BST_List[index].islice(0, int(len(BST_List[index])/data_threshold))))
+        BST_List[index] = SortedList(BST_List[index][0:t])
 
     # print("Leaves from the function")
-    leaves = sum(leaves, [])
-    leaves = np.array(leaves, dtype='int')
+    leaves1 = sum(leaves, [])
+    leaves1 = np.array(leaves1, dtype='int')
+    leaves1 = leaves1[:, 1]
 
-    return leaves[:, 1], BST_List
+    return leaves1, BST_List, leaves
 
 
-def update_BST(BST_List, he_index, he_cluster_assign, distances, num_clusters, data_threshold, data):
+def update_BST(BST_List, he_index, he_cluster_assign, distances, num_clusters, data_threshold):
+
+    # for clus_index in range(num_clusters):
+    #     data_point_indices = np.where(he_cluster_assign == clus_index)[0].tolist()
+    #
+    #     for index in data_point_indices:
+    #         BST_List[clus_index].add([distances[index], he_index[index]])
 
     for i in range(len(he_index)):
         BST_List[he_cluster_assign[i]].add([distances[i], he_index[i]])
 
-    he_data_index, BST_List = extract_expressive_data(BST_List, num_clusters, data_threshold, data)
+    he_data_index, BST_List, leaves = extract_expressive_data(BST_List, num_clusters, data_threshold)
 
-    return he_data_index, BST_List#, #temp
+    return he_data_index, BST_List, leaves
 

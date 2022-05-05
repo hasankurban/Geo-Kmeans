@@ -1,6 +1,9 @@
 import numpy as np
 import pandas as pd
 import os
+from sklearn.model_selection import train_test_split
+from pathlib import Path
+
 
 def read_data(input_loc):
 
@@ -19,37 +22,13 @@ def read_data(input_loc):
     return data, labels
 
 
-def read_crop_data(input_loc, raw):
-
-    if raw:
-        seperator = ","
-    else:
-        seperator = "\t"
-
-    data = pd.read_csv(input_loc, header=0, sep=seperator)
-    data = data.replace('?', np.NaN)
-    data = data.dropna()
-
-    # Get the label column from the data
-    labels = list(data['label'].values)
-    data.drop(['label'], inplace=True, axis=1)
-
-    # Subset the feature columns from the data
-    data = np.array(data, dtype=float)
-
-    # Cast labels to a numpy array
-    labels = np.array(labels)
-    print("Data shape: ", data.shape)
-    return data, labels
-
-
 def read_simulated_data(file_path):
 
     data = pd.read_csv(file_path, sep=",")
     labels = data['labels'].to_list()
     data.drop(["labels"], inplace=True, axis=1)
 
-    return np.array(data), np.array(labels)
+    return np.array(data), labels
 
 
 def write_result_data(result, output_loc, result_type):
@@ -75,78 +54,75 @@ def write_result_data(result, output_loc, result_type):
     print(result_type, ": File written to disk")
 
 
-def read_song_data(input_loc):
+def read_real_data(dataset_loc, dataset_name):
 
-    data = pd.read_csv(input_loc, header=None, sep=",")
-    data = data.replace('?', np.NaN)
-    data = data.dropna()
+    if dataset_name[0] == "spambase.csv":
 
-    # Get the label column from the data
-    train_data = data.iloc[0:463715, ].copy()
-    test_data = data.iloc[463715:, ].copy()
+        data = pd.read_csv(dataset_loc, sep=",")
+        # data = data.sample(frac=1).reset_index(drop=True)
 
-    train_labels = train_data.iloc[:, 0].to_list()
-    test_labels = test_data.iloc[:, 0].to_list()
+        labels = list(data['labels'].values)
+        data.drop("labels", axis=1, inplace=True)
 
-    train_labels = np.array(train_labels)
-    test_labels = np.array(test_labels)
+        # train_data, test_data, train_labels, test_labels = train_test_split(data, labels, random_state=4152, test_size=0.1)
 
-    train_data.drop(train_data.columns[0], inplace=True, axis=1)
-    test_data.drop(test_data.columns[0], inplace=True, axis=1)
+        return np.array(data), labels
 
-    # Subset the feature columns from the data
-    train_data = np.array(train_data, dtype=float)
-    test_data = np.array(test_data, dtype=float)
+    elif dataset_name[0] == "magic.csv":
 
-    temp_index = [i for i in range(len(train_labels)) if train_labels[i] in test_labels]
+        data = pd.read_csv(dataset_loc, sep=",")
+        # data = data.sample(frac=1).reset_index(drop=True)
 
-    train_labels = train_labels[temp_index]
-    train_data = train_data[temp_index, ]
+        labels = list(data['labels'].values)
+        data.drop("labels", axis=1, inplace=True)
 
-    u_train_labels = np.sort(np.unique(train_labels))
-    u_test_labes = np.sort(np.unique(test_labels))
+        # train_data, test_data, train_labels, test_labels = train_test_split(data, labels, random_state=1475, test_size=0.1)
 
-    for i in range(len(u_train_labels)):
-        train_labels[np.where(train_labels == u_train_labels[i])] = i
+        return np.array(data), labels
 
-    for i in range(len(u_test_labes)):
-        test_labels[np.where(test_labels == u_test_labes[i])] = i
+    elif dataset_name[0] == "hapt_train.csv":
 
-    # print(len(train_labels), train_data.shape)
+        data = pd.read_csv(dataset_loc, sep=",")
+        # data = data.sample(frac=1).reset_index(drop=True)
 
-    return train_data, train_labels, test_data, test_labels
+        labels = list(data['labels'].values)
+        data.drop("labels", axis=1, inplace=True)
+
+        # test_data = pd.read_csv(os.path.join(os.path.dirname(dataset_name), dataset_name[2]), sep=",")
+        # test_labels = list(test_data['labels'].values)
+        # test_data.drop("labels", axis=1, inplace=True)
+        #
+        # train_data = np.array(train_data)
+        # test_data = np.array(test_data)
+
+        return np.array(data), labels
+
+    elif dataset_name[0] == "user_knowledge_train.csv":
+
+        data = pd.read_csv(dataset_loc, sep=",")
+        # data = data.sample(frac=1).reset_index(drop=True)
+
+        labels = list(data["UNS"].values)
+        data.drop("UNS", axis=1, inplace=True)
+
+        # test_data = pd.read_csv(os.path.join(os.path.dirname(dataset_loc), dataset_name[2]), sep=",")
+        # test_labels = list(test_data["UNS"].values)
+        # test_data.drop("UNS", axis=1, inplace=True)
+
+        return np.array(data), labels
+
+    elif dataset_name[0] == "crop.csv":
+
+        data = pd.read_csv(dataset_loc, sep=",")
+        # data = data.sample(frac=1).reset_index(drop=True)
+
+        labels = list(data['labels'].values)
+        data.drop(['labels'], inplace=True, axis=1)
+
+        # train_data, test_data, train_labels, test_labels = train_test_split(data, labels, random_state=5532, test_size=0.1)
+
+        return np.array(data), labels
 
 
-def read_real_data(data_dir_loc, dataset_name):
 
-    if dataset_name == "spambase":
-        label_col = 57
-    elif dataset_name == "magicgamma":
-        label_col = 11
-
-    pass
-
-
-def read_cropland_data(input_loc, raw):
-
-    if raw:
-        seperator = ","
-    else:
-        seperator = "\t"
-
-    data = pd.read_csv(input_loc, header=0, sep=seperator)
-    data = data.replace('?', np.NaN)
-    data= data.dropna()
-
-    # Get the label column from the data
-    labels = list(data['label'].values)
-    data.drop(['label'], inplace=True, axis=1)
-
-    # Subset the feature columns from the data
-    data = np.array(data, dtype=float)
-
-    # Cast labels to a numpy array
-    labels = np.array(labels)
-    print("Data shape: ", data.shape)
-    return data, labels
 
