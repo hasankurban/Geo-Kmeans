@@ -2,7 +2,6 @@ import sys
 sys.path.append("..")
 
 from utils.dataIO import *
-from base.expr_DEKmeans import *
 from pathlib import Path
 from run_algorithms_real_data import run_algorithms
 
@@ -37,10 +36,10 @@ all_results_df = pd.DataFrame(columns=["Algorithm", 'Num_clusters', 'Dataset', '
 
 algorithms = ['KMeans', 'DCKMeans']
 
-# algorithms = ['KMeans']
 
 # Make changes for adjusting the current directory here
-file_path = os.path.join(Path(__file__).parents[1], "benchmark", "real_data")
+file_path = os.path.join(Path(os.path.abspath(__file__)).parents[1], "benchmark", "real_data")
+print(file_path)
 
 result_dictionary = {'Algorithm': [], 'Num_clusters': [], 'Runtime': [], 'Dataset':[],
                      'Num_iterations': [], 'Accuracy': [], 'ARI': [], 'AMI': [], 'Deviation': []}
