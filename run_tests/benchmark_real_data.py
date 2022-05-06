@@ -1,5 +1,3 @@
-import numpy as np
-
 from utils.dataIO import *
 from base.expr_DEKmeans import *
 from pathlib import Path
@@ -7,9 +5,7 @@ from run_algorithms_real_data import run_algorithms
 
 '''
 Algo1: KMeans
-Algo2: DEKMeans, 1 step look-back
-Algo3: DEKMeans, probabilistic 1 step look back
-Algo4: DEKMeans, Stochastic 1 step look back
+Algo2: DCKMeans: Data Centric KMeans
 '''
 
 # Set parameters
@@ -23,11 +19,11 @@ file_list = [['user_knowledge_train.csv', 'User_Knowledge_Data', 'user_knowledge
              ['crop.csv', 'Cropland_Map_Data']]
 
 
-file_list = [['spambase.csv', 'Spambase_Data']]
+# file_list = [['spambase.csv', 'Spambase_Data']]
 
 
 np.random.seed(45125)
-seed_array = np.array(np.random.randint(1, 10000, 10)).reshape(5, 2)
+seed_array = np.array(np.random.randint(1, 10000, 25)).reshape(5, 5)
 
 
 avg_results_df = pd.DataFrame(columns=["Algorithm", 'Num_clusters', 'Dataset',  'Runtime', 'Num_iterations',
@@ -47,7 +43,7 @@ result_dictionary = {'Algorithm': [], 'Num_clusters': [], 'Runtime': [], 'Datase
                      'Num_iterations': [], 'Accuracy': [], 'ARI': [], 'AMI': [], 'Deviation': []}
 
 
-num_clusters = [5, 10, 15, 20]
+num_clusters = [2, 5, 10, 15, 20]
 run_counter = 0
 
 
@@ -91,7 +87,6 @@ for algo in algorithms:
             avg_results_df.loc[len(avg_results_df.index)] = [algo, nclus, dataset[1], subset[0], subset[1], subset[2],
                                                        subset[3], subset[4], subset[5]]
 
-# print(all_results_df)
 print(avg_results_df)
 
 ## Write the results to a file

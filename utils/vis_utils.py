@@ -416,8 +416,8 @@ def get_midpoints_np(old_centroids, new_centroids, assigned_clusters, distances)
     for i in range(len(new_centroids)):
 
         centroid_motion.append(np.sqrt(np.sum(np.square(new_centroids-old_centroids))))
-
         s = np.where(assigned_clusters == i)[0]
+
         cen1_rad = np.max(distances[s])
 
         neighbors = np.where(mid_point_mat[i] <= cen1_rad)[0]

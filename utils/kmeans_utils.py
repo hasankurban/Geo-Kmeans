@@ -1,5 +1,3 @@
-import math
-
 import numpy as np
 from scipy.spatial import distance
 from sklearn.metrics import adjusted_rand_score as ari
@@ -10,16 +8,16 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from scipy.special import softmax
-from sortedcontainers import SortedList, SortedDict
+from sortedcontainers import SortedDict
 
 
 def init_centroids(data, num_clusters, seed):
 
     # Randomly select points from the data as centroids
-    # np.random.seed(seed)
+    np.random.seed(seed)
 
-    # indices = np.random.choice(data.shape[0], num_clusters, replace=False, )
-    return np.array(data[0:num_clusters, :])
+    indices = np.random.choice(data.shape[0], num_clusters, replace=False, )
+    return np.array(data[indices, :])
 
 
 def calculate_distances(data, centroids):
@@ -32,13 +30,18 @@ def calculate_distances(data, centroids):
     # distances = np.array(np.min(dist_mat, axis=1))
 
     n, d = data.shape
-    dist = np.zeros((n, len(centroids)), dtype=float)
-    for i in range(dist.shape[0]):
-        for k in range(len(centroids)):
-            dist[i][k] = np.linalg.norm(data[i] - centroids[k])
+    dist_mat = np.zeros((n, len(centroids)), dtype=float)
+
+    # for i in range(dist.shape[0]):
+    #     for k in range(len(centroids)):
+    #         dist[i][k] = np.linalg.norm(data[i] - centroids[k])
         # dist[i, :] = np.linalg.norm(data[i, :] - centroids)
 
-    return np.argmin(dist, axis=1), np.round(dist, 5)
+    for k in range(len(centroids)):
+        # dist_mat[:, k] = np.sqrt(np.sum(np.square(np.subtract(data, centroids[k])), 1))
+        dist_mat[:, k] = np.linalg.norm(data - centroids[k], axis=1)
+
+    return np.argmin(dist_mat, axis=1), np.round(dist_mat, 5)
     # return assigned_cluster, np.round(distances, 5)
 
 

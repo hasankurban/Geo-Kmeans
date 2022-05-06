@@ -1,14 +1,11 @@
 from utils.assign_clusters import calc_raw_accuracy
 from base.expr_DEKmeans import *
-# from base.kmeans import *
 import time
 from sklearn.cluster import KMeans as km
 
 
 def run_algorithms(data, labels, dataset_name, result_dictionary, num_iterations,
                    epsilon, num_clusters, i_seed):
-
-    data_threshold = 3
 
     algorithms = ['KMeans', 'DCKMeans']
 
@@ -46,7 +43,7 @@ def run_algorithms(data, labels, dataset_name, result_dictionary, num_iterations
     ###########
 
     dckm_start_time = time.time()
-    dckm_centroids, dckm_iter = DEKmeans_sto(data, num_clusters, num_iterations, i_seed)
+    dckm_centroids, dckm_iter = DCKMeans(data, num_clusters, epsilon, num_iterations, i_seed)
     dckm_TraningTime = round(time.time() - dckm_start_time, 2)
 
     result_dictionary['Runtime'].append(dckm_TraningTime)

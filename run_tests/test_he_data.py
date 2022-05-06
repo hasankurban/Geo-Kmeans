@@ -11,9 +11,7 @@ from sklearn.cluster import KMeans as km
 
 '''
 Algo1: KMeans
-Algo2: DEKMeans, 1 step look-back
-Algo3: DEKMeans, probabilistic 1 step look back
-Algo4: DEKMeans, Stochastic 1 step look back
+Algo2: DCKMeans
 '''
 
 # Set parameters
@@ -24,13 +22,10 @@ leaf_threshold = 3
 
 # file_list = ['test_data_case1.csv']
 # file_list = ['test_100k_500_5.csv']
-# file_list = ['crop.csv']
-file_list = ['magic.csv']
+file_list = ['crop.csv']
+# file_list = ['magic.csv']
 # file_list = ['user_knowledge_train.csv']
 # file_list = ['spambase.csv']
-
-# file_list = ['10_cluters.csv']
-# file_list = ['100k_50_5.csv']
 
 
 # Make changes for adjusting the current directory here
@@ -39,7 +34,7 @@ file_path = os.path.join(Path(__file__).parents[1], "benchmark", "real_data")
 # file_path = os.path.join(Path(__file__).parents[1], "sample_data")
 
 num_clusters = 10
-seed = 410
+seed = 127
 
 
 for data_file in file_list:
@@ -57,7 +52,7 @@ for data_file in file_list:
     km_TraningTime = round(time.time() - km_start_time, 2)
 
     kmlb_start_time = time.time()
-    kmlb_centroids, kmlb_iter = kmeans_vis_with_he(data, num_clusters, threshold, num_iterations, seed)
+    kmlb_centroids, kmlb_iter = DCKMeans(data, num_clusters, threshold, num_iterations, seed)
     kmlb_TraningTime = round(time.time() - kmlb_start_time, 2)
 
     # km_start_time = time.time()

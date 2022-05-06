@@ -1,5 +1,3 @@
-import numpy as np
-
 from utils.dataIO import *
 from base.expr_DEKmeans import *
 from pathlib import Path
@@ -7,16 +5,13 @@ from run_algorithms_real_data import run_algorithms
 
 '''
 Algo1: KMeans
-Algo2: DEKMeans, 1 step look-back
-Algo3: DEKMeans, probabilistic 1 step look back
-Algo4: DEKMeans, Stochastic 1 step look back
+Algo2: DCKMeans: Data Centric KMeans
 '''
 
 # Set parameters
 epsilon = 0.001
 num_iterations = 100
 
-file_list = [['500_clusters.csv', '500_clusters']]
 
 np.random.seed(45125)
 seed_array = np.array(np.random.randint(1, 10000, 5)).reshape(5, 1)
@@ -28,7 +23,7 @@ avg_results_df = pd.DataFrame(columns=["Algorithm", 'Num_clusters', 'Dataset',  
 all_results_df = pd.DataFrame(columns=["Algorithm", 'Num_clusters', 'Dataset', 'Runtime', 'Num_iterations',
                           'Accuracy', 'ARI', 'AMI', 'Deviation'])
 
-algorithms = ['KMeans-SciPy', 'DEKMeans-LB', 'DEKMeans-PROB', 'DEKMeans-STO']
+algorithms = ['KMeans', 'DCKMeans']
 
 
 # Make changes for adjusting the current directory here
@@ -38,13 +33,12 @@ result_dictionary = {'Algorithm': [], 'Num_clusters': [], 'Runtime': [], 'Datase
                      'Num_iterations': [], 'Accuracy': [], 'ARI': [], 'AMI': [], 'Deviation': []}
 
 
-num_clusters = [100, 200, 300, 400, 500]
+num_clusters = [10, 50, 100, 200, 500]
 run_counter = 0
 
 # Load the data
 data_file_path = os.path.join(file_path, '500_clusters.csv')
 data, labels = read_simulated_data(data_file_path)
-
 
 
 for numclus in num_clusters:
