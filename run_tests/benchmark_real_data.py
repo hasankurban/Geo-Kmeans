@@ -21,9 +21,9 @@ file_list = [['user_knowledge_train.csv', 'User_Knowledge_Data', 'user_knowledge
 
 # file_list = [['spambase.csv', 'Spambase_Data']]
 
-
 np.random.seed(45125)
-seed_array = np.array(np.random.randint(1, 10000, 25)).reshape(5, 5)
+seed_array = np.array(np.random.randint(1, 10000, 15)).reshape(5, 3)
+# seed_array = np.array(np.random.randint(1, 10000, 5)).reshape(5, 1)
 
 
 avg_results_df = pd.DataFrame(columns=["Algorithm", 'Num_clusters', 'Dataset',  'Runtime', 'Num_iterations',
@@ -42,7 +42,6 @@ file_path = os.path.join(Path(__file__).parents[1], "benchmark", "real_data")
 result_dictionary = {'Algorithm': [], 'Num_clusters': [], 'Runtime': [], 'Dataset':[],
                      'Num_iterations': [], 'Accuracy': [], 'ARI': [], 'AMI': [], 'Deviation': []}
 
-
 num_clusters = [2, 5, 10, 15, 20]
 run_counter = 0
 
@@ -57,7 +56,6 @@ for dataset in file_list:
 
     for numclus in num_clusters:
 
-        print(numclus, "\n")
         run_counter = 0
 
         for seed in seed_array[run_counter]:
@@ -68,17 +66,13 @@ for dataset in file_list:
 
         run_counter += 1
 
-
 # for k in result_dictionary.keys():
 #     print(k, result_dictionary[k])
 
 all_results_df = pd.DataFrame(result_dictionary)
 
-
 for algo in algorithms:
-
     for dataset in file_list:
-
         for nclus in num_clusters:
 
             subset = all_results_df.loc[(all_results_df['Algorithm'] == algo) & (all_results_df['Num_clusters'] == nclus) & (all_results_df['Dataset'] == dataset[1]),
@@ -87,6 +81,9 @@ for algo in algorithms:
             avg_results_df.loc[len(avg_results_df.index)] = [algo, nclus, dataset[1], subset[0], subset[1], subset[2],
                                                        subset[3], subset[4], subset[5]]
 
+print("\n\n")
+print("Results on Real Data (after averaging)")
+print("\n\n")
 print(avg_results_df)
 
 ## Write the results to a file

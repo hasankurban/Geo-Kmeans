@@ -23,26 +23,18 @@ def init_centroids(data, num_clusters, seed):
 def calculate_distances(data, centroids):
 
     # Find pairwise distances
-    # dist_mat = distance.cdist(data, centroids, 'euclidean')
-    #
-    # # Find the closest centroid
-    # assigned_cluster = np.argmin(dist_mat, axis=1)
-    # distances = np.array(np.min(dist_mat, axis=1))
-
     n, d = data.shape
     dist_mat = np.zeros((n, len(centroids)), dtype=float)
 
     for i in range(dist_mat.shape[0]):
         for k in range(len(centroids)):
             dist_mat[i][k] = np.linalg.norm(data[i] - centroids[k])
-        # dist[i, :] = np.linalg.norm(data[i, :] - centroids)
 
     # for k in range(len(centroids)):
-    #     # dist_mat[:, k] = np.sqrt(np.sum(np.square(np.subtract(data, centroids[k])), 1))
-    #     dist_mat[:, k] = np.linalg.norm(data - centroids[k], axis=1)
+    #     dist_mat[:, k] = np.sqrt(np.sum(np.square(np.subtract(data, centroids[k])), 1))
+        # dist_mat[:, k] = np.linalg.norm(data - centroids[k], axis=1)
 
     return np.argmin(dist_mat, axis=1), np.round(dist_mat, 5)
-    # return assigned_cluster, np.round(distances, 5)
 
 
 def calculate_distances_specific(data, centroids, old_center, new_center, old_assign):

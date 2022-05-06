@@ -410,8 +410,16 @@ def get_midpoints_np(old_centroids, new_centroids, assigned_clusters, distances)
     centroid_neighbor = {}
     centroid_motion = []
 
-    dist_mat = distance.cdist(new_centroids, new_centroids, 'euclidean')
-    mid_point_mat = dist_mat / 2
+    dist_mat = np.zeros((len(new_centroids), len(new_centroids)), dtype=float)
+
+    # dist_mat = distance.cdist(new_centroids, new_centroids, 'euclidean')
+
+    for k in range(len(new_centroids)):
+        # dist_mat[:, k] = np.sqrt(np.sum(np.square(np.subtract(data, centroids[k])), 1))
+        dist_mat[:, k] = np.linalg.norm(new_centroids - new_centroids[k], axis=1)
+
+    mid_point_mat = np.divide(dist_mat, 2)
+
 
     for i in range(len(new_centroids)):
 
@@ -425,6 +433,7 @@ def get_midpoints_np(old_centroids, new_centroids, assigned_clusters, distances)
         centroid_neighbor[i] = neighbors
 
     return mid_point_mat, centroid_neighbor, centroid_motion
+
 
 def get_midpoints_1(new_centroids, assigned_clusters, distances):
 
