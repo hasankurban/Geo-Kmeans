@@ -1,3 +1,6 @@
+import sys
+sys.path.append("..")
+
 from utils.dataIO import *
 from base.expr_DEKmeans import *
 from pathlib import Path
