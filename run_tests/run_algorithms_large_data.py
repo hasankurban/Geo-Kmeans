@@ -1,14 +1,16 @@
+import sys
+sys.path.append("..")
+
 from utils.assign_clusters import calc_raw_accuracy
 from base.expr_DEKmeans import *
 from base.kmeans import *
 import time
-from sklearn.cluster import KMeans as km
 
 
-def run_algorithms(data, labels, dataset_name, result_dictionary, num_iterations,
-                   epsilon, num_clusters, i_seed):
+def run_algorithms(data, labels, result_dictionary, num_iterations,
+                   epsilon, num_clusters, dataset_name, i_seed):
 
-    algorithms = ['KMeans-SciPy', 'DCKMeans']
+    algorithms = ['KMeans', 'DCKMeans']
 
 
     ###########
@@ -16,12 +18,7 @@ def run_algorithms(data, labels, dataset_name, result_dictionary, num_iterations
     ###########
 
     km_start_time = time.time()
-    # km_centroids, km_iter = Kmeans(data, num_clusters, epsilon, num_iterations, [], False, i_seed)
-    km_centroids, km_iter = km_clustering(data, num_clusters, num_iterations, epsilon, i_seed)
-    centroids2 = init_centroids(data, num_clusters, i_seed)
-    res = km(n_clusters=num_clusters, init=centroids2, tol=epsilon).fit(data)
-    km_centroids = res.cluster_centers_
-    km_iter = res.n_iter_
+    km_centroids, km_iter = Kmeans(data, num_clusters, epsilon, num_iterations, [], False, i_seed)
     km_TraningTime = round(time.time() - km_start_time, 2)
 
     km_acc, _ = calc_raw_accuracy(labels, pred_membership(data, km_centroids), data)
@@ -35,8 +32,7 @@ def run_algorithms(data, labels, dataset_name, result_dictionary, num_iterations
 
     result_dictionary['Runtime'].append(km_TraningTime)
     result_dictionary['Num_iterations'].append(km_iter)
-    result_dictionary['Dataset'].append(dataset_name)
-    result_dictionary['Num_clusters'].append(num_clusters)
+    result_dictionary['Num_Points'].append(dataset_name)
 
 
     #$#########
@@ -49,8 +45,7 @@ def run_algorithms(data, labels, dataset_name, result_dictionary, num_iterations
 
     result_dictionary['Runtime'].append(dckm_TraningTime)
     result_dictionary['Num_iterations'].append(dckm_iter)
-    result_dictionary['Dataset'].append(dataset_name)
-    result_dictionary['Num_clusters'].append(num_clusters)
+    result_dictionary['Num_Points'].append(dataset_name)
 
     dckm_acc, _ = calc_raw_accuracy(labels, pred_membership(data, dckm_centroids), data)
     dckm_ari = check_ARI(pred_membership(data, dckm_centroids), labels)
