@@ -243,15 +243,16 @@ def find_all_points(dataset, centroids_neighbor, centroids, bst_list, dist):
 
 
 def find_all_points_1(dataset, midpoints_mat, centroids_neighbor, motion,
-                      new_centroids, assigned_clusters, distances):
+                      new_centroids, assigned_clusters, assign_dict, distances):
 
     he_data = []
 
     for curr_cluster in range(len(new_centroids)):
 
         center1 = new_centroids[curr_cluster]
-        temp_list_1 = np.where(assigned_clusters == curr_cluster)[0]
+        # temp_list_1 = np.where(assigned_clusters == curr_cluster)[0]
         # distances[temp_list_1] += motion[curr_cluster]
+        temp_list_1 = np.array(assign_dict[curr_cluster])
 
         # Determine the sign of other centroid
         for ot_cen in centroids_neighbor[curr_cluster]:
@@ -392,12 +393,13 @@ def find_sign_test(nv, point_on_plane, ot_point, what):
         return np.sign(np.dot(nv, (ot_point - point_on_plane).T))
 
 
-def find_all_he_indices_1(dataset, old_centroids, new_centroids, distances, assigned_clusters):
+def find_all_he_indices_1(dataset, old_centroids, new_centroids, distances, assigned_clusters, assign_dict):
 
-    midpoints, centroids_neighbor, motion = get_midpoints_np(old_centroids, new_centroids, assigned_clusters, distances)
+    midpoints, centroids_neighbor, motion = get_midpoints_np(old_centroids, new_centroids,
+                                                             assigned_clusters, assign_dict, distances)
 
     he_indices = find_all_points_1(dataset, midpoints, centroids_neighbor, motion, new_centroids,
-                                                   assigned_clusters, distances)
+                                                   assigned_clusters, assign_dict, distances)
 
     # he_indices = find_all_points_nd(dataset, midpoints, centroids_neighbor, new_centroids,
     #                                 assigned_clusters, distances)
@@ -405,7 +407,7 @@ def find_all_he_indices_1(dataset, old_centroids, new_centroids, distances, assi
     return he_indices
 
 
-def get_midpoints_np(old_centroids, new_centroids, assigned_clusters, distances):
+def get_midpoints_np(old_centroids, new_centroids, assigned_clusters, assign_dict, distances):
 
     centroid_neighbor = {}
     centroid_motion = []
@@ -424,7 +426,9 @@ def get_midpoints_np(old_centroids, new_centroids, assigned_clusters, distances)
     for i in range(len(new_centroids)):
 
         centroid_motion.append(np.sqrt(np.sum(np.square(new_centroids-old_centroids))))
-        s = np.where(assigned_clusters == i)[0]
+        # s = np.where(assigned_clusters == i)[0]
+
+        s = assign_dict[i]
 
         cen1_rad = np.max(distances[s])
 
@@ -459,6 +463,14 @@ def get_midpoints_1(new_centroids, assigned_clusters, distances):
                     centroid_neighbor[i].append(j)
 
     return centroid_neighbor
+
+
+def get_membership(assigned_clusters, assign_dict, num_clusters):
+
+    for i in range(num_clusters):
+        assign_dict[i] = np.where(assigned_clusters == i)[0].tolist()
+
+    return assign_dict
 
 
 def view_3d(data, centroids, assigned_clusters):

@@ -44,6 +44,7 @@ def DCKMeans(data, num_clusters, threshold, num_iterations, seed):
     # Calculate the cluster assignments for data points
     assigned_clusters, distances = calculate_distances(data, centroids)
     loop_counter = 0
+    assign_dict = {}
 
     # view_3d(data, centroids, assigned_clusters)
 
@@ -58,7 +59,10 @@ def DCKMeans(data, num_clusters, threshold, num_iterations, seed):
             print("Kmeans: Convergence at iteration: ", loop_counter)
             break
 
-        he_data_indices = find_all_he_indices_1(data, centroids, new_centroids, distances, assigned_clusters)
+        assign_dict = get_membership(assigned_clusters, assign_dict, num_clusters)
+
+        he_data_indices = find_all_he_indices_1(data, centroids, new_centroids, distances,
+                                                assigned_clusters, assign_dict)
 
         # break
         # Calculate the cluster assignments for data points
