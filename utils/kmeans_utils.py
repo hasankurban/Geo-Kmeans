@@ -34,7 +34,7 @@ def calculate_distances(data, centroids):
         # dist_mat[:, k] = np.sqrt(np.sum(np.square(np.subtract(data, centroids[k])), 1))
         dist_mat[k, :] = np.linalg.norm(centroids- data[k], axis=1)
 
-    return np.argmin(dist_mat, axis=1), np.round(dist_mat, 5)
+    return np.argmin(dist_mat, axis=1), np.round(np.min(dist_mat, axis=1), 5)
 
 
 def calculate_distances_specific(data, centroids, old_center, new_center, old_assign):

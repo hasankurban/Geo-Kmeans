@@ -250,51 +250,40 @@ def find_all_points_1(dataset, midpoints_mat, centroids_neighbor, motion,
     for curr_cluster in range(len(new_centroids)):
 
         center1 = new_centroids[curr_cluster]
-        # temp_list_1 = np.where(assigned_clusters == curr_cluster)[0]
-        # distances[temp_list_1] += motion[curr_cluster]
         temp_list_1 = np.array(assign_dict[curr_cluster])
+        # distances[temp_list_1] += motion[curr_cluster]
 
         # Determine the sign of other centroid
         for ot_cen in centroids_neighbor[curr_cluster]:
 
-            center2 = new_centroids[ot_cen]
+            if curr_cluster != ot_cen:
 
-            # Extract points whose distance is more than midpoint
-            # x = np.where(distances[temp_list_1] >= midpoints_mat[curr_cluster, ot_cen])[0]
-            # temp_list = temp_list_1[x]
+                center2 = new_centroids[ot_cen]
 
-            # Find the vector orthogonal to the line passing through centroids
-            # m, perp_line = find_ortho_vec(center1, center2, "line")
+                # Extract points whose distance is more than midpoint
+                #x = np.where(distances[temp_list_1] > midpoints_mat[curr_cluster, ot_cen])[0]
+                # temp_list = temp_list_1[x]
 
-            # m = find_ortho_vec(center1, center2, "line")
-            m = (center1 + center2)/2
+                # print(len(temp_list_1), len(temp_list))
 
-            # lookup_sign = find_sign(m, perp_line, center2, "point")
-            # print("Finding HE data for centroids: ", curr_cluster, ot_cen, len(temp_list_1), len(temp_list))
+                # Find the vector orthogonal to the line passing through centroids
+                # m, perp_line = find_ortho_vec(center1, center2, "line")
 
-            test_data = dataset[temp_list_1, ]
-            # point_sign = find_sign(m, perp_line, test_data, "col")
+                # m = find_ortho_vec(center1, center2, "line")
+                m = np.divide(np.add(center1, center2), 2)
 
-            point_sign = find_sign_by_product(m, center2, test_data)
+                # print("Finding HE data for centroids: ", curr_cluster, ot_cen, len(temp_list_1), len(temp_list))
 
-            # same_sign = np.where(point_sign == lookup_sign)[0]
+                test_data = dataset[temp_list_1, ]
+                # point_sign = find_sign(m, perp_line, test_data, "col")
 
-            same_sign = np.where(point_sign >= 0)[0]
-            # on_line_index = list(np.where(point_sign == 0)[0])
+                point_sign = find_sign_by_product(m, center2, test_data)
+                same_sign = np.where(point_sign >= 0)[0]
 
-            if len(same_sign) > 0:
-                same_sign = list(temp_list_1[same_sign])
-                he_data += same_sign
-                # same_sign = temp_list_1[same_sign]
+                if len(same_sign) > 0:
+                    same_sign = list(temp_list_1[same_sign])
+                    he_data += same_sign
 
-            # if len(on_line_index) > 0:
-            #     on_line_index = list(temp_list[on_line_index])
-
-            # temp_he = same_sign + on_line_index
-            # temp_he = same_sign
-
-            # if len(same_sign) > 0:
-            #     he_data += same_sign
 
     return np.unique(he_data)
 
@@ -396,7 +385,7 @@ def find_sign_test(nv, point_on_plane, ot_point, what):
 def find_all_he_indices_1(dataset, old_centroids, new_centroids, distances, assigned_clusters, assign_dict):
 
     midpoints, centroids_neighbor, motion = get_midpoints_np(old_centroids, new_centroids,
-                                                             assigned_clusters, assign_dict, distances)
+                                                             assign_dict, distances)
 
     he_indices = find_all_points_1(dataset, midpoints, centroids_neighbor, motion, new_centroids,
                                                    assigned_clusters, assign_dict, distances)
@@ -407,33 +396,29 @@ def find_all_he_indices_1(dataset, old_centroids, new_centroids, distances, assi
     return he_indices
 
 
-def get_midpoints_np(old_centroids, new_centroids, assigned_clusters, assign_dict, distances):
+def get_midpoints_np(old_centroids, new_centroids, assign_dict, distances):
 
     centroid_neighbor = {}
     centroid_motion = []
 
     dist_mat = np.zeros((len(new_centroids), len(new_centroids)), dtype=float)
 
-    # dist_mat = distance.cdist(new_centroids, new_centroids, 'euclidean')
-
     for k in range(len(new_centroids)):
         # dist_mat[:, k] = np.sqrt(np.sum(np.square(np.subtract(data, centroids[k])), 1))
-        dist_mat[:, k] = np.linalg.norm(new_centroids - new_centroids[k], axis=1)
-
+        dist_mat[:, k] = np.sqrt(np.sum(np.square(np.subtract(new_centroids, new_centroids[k])), 1))
     mid_point_mat = np.divide(dist_mat, 2)
-
 
     for i in range(len(new_centroids)):
 
-        centroid_motion.append(np.sqrt(np.sum(np.square(new_centroids-old_centroids))))
-        # s = np.where(assigned_clusters == i)[0]
-
+        # centroid_motion.append(np.sqrt(np.sum(np.square(new_centroids-old_centroids))))
         s = assign_dict[i]
 
         cen1_rad = np.max(distances[s])
 
         neighbors = np.where(mid_point_mat[i] <= cen1_rad)[0]
-        neighbors = list(neighbors[neighbors != i])
+
+        #neighbors = list(neighbors[neighbors != i])
+
         centroid_neighbor[i] = neighbors
 
     return mid_point_mat, centroid_neighbor, centroid_motion

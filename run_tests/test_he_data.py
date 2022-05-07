@@ -15,25 +15,25 @@ Algo2: DCKMeans
 '''
 
 # Set parameters
-threshold = 0.0001
+threshold = 0.01
 num_iterations = 100
 data_threshold = 3
 leaf_threshold = 3
 
 # file_list = ['test_data_case1.csv']
-# file_list = ['test_100k_500_5.csv']
-# file_list = ['crop.csv']
-file_list = ['magic.csv']
+# file_list = ['test_50_3.csv']
+file_list = ['crop.csv']
+# file_list = ['magic.csv']
 # file_list = ['user_knowledge_train.csv']
 # file_list = ['spambase.csv']
-# file_list = ['50_clusters.csv']
+file_list = ['50_clusters.csv']
 
 # Make changes for adjusting the current directory here
 file_path = os.path.join(Path(__file__).parents[1], "benchmark", "clustering_data")
-file_path = os.path.join(Path(__file__).parents[1], "benchmark", "real_data")
+# file_path = os.path.join(Path(__file__).parents[1], "benchmark", "real_data")
 # file_path = os.path.join(Path(__file__).parents[1], "sample_data")
 
-num_clusters = 10
+num_clusters = 50
 seed = 127
 
 
