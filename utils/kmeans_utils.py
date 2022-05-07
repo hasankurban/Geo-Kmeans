@@ -14,10 +14,10 @@ from sortedcontainers import SortedDict
 def init_centroids(data, num_clusters, seed):
 
     # Randomly select points from the data as centroids
-    np.random.seed(seed)
+    # np.random.seed(seed)
 
-    indices = np.random.choice(data.shape[0], num_clusters, replace=False, )
-    return np.array(data[indices, :])
+    # indices = np.random.choice(data.shape[0], num_clusters, replace=False, )
+    return np.array(data[0:num_clusters, :])
 
 
 def calculate_distances(data, centroids):
@@ -31,10 +31,9 @@ def calculate_distances(data, centroids):
     #         dist_mat[i][k] = np.linalg.norm(data[i] - centroids[k])
 
     for k in range(n):
-        # dist_mat[:, k] = np.sqrt(np.sum(np.square(np.subtract(data, centroids[k])), 1))
-        dist_mat[k, :] = np.linalg.norm(centroids- data[k], axis=1)
-
-    return np.argmin(dist_mat, axis=1), np.round(np.min(dist_mat, axis=1), 5)
+        dist_mat[k, :] = np.sqrt(np.sum(np.square(np.subtract(centroids, data[k])), 1))
+    
+    return np.argmin(dist_mat, axis=1), np.round(dist_mat, 5)
 
 
 def calculate_distances_specific(data, centroids, old_center, new_center, old_assign):
