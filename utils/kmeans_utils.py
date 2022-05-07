@@ -26,13 +26,13 @@ def calculate_distances(data, centroids):
     n, d = data.shape
     dist_mat = np.zeros((n, len(centroids)), dtype=float)
 
-    for i in range(dist_mat.shape[0]):
-        for k in range(len(centroids)):
-            dist_mat[i][k] = np.linalg.norm(data[i] - centroids[k])
+    # for i in range(dist_mat.shape[0]):
+    #     for k in range(len(centroids)):
+    #         dist_mat[i][k] = np.linalg.norm(data[i] - centroids[k])
 
-    # for k in range(len(centroids)):
-    #     dist_mat[:, k] = np.sqrt(np.sum(np.square(np.subtract(data, centroids[k])), 1))
-        # dist_mat[:, k] = np.linalg.norm(data - centroids[k], axis=1)
+    for k in range(n):
+        # dist_mat[:, k] = np.sqrt(np.sum(np.square(np.subtract(data, centroids[k])), 1))
+        dist_mat[k, :] = np.linalg.norm(centroids- data[k], axis=1)
 
     return np.argmin(dist_mat, axis=1), np.round(dist_mat, 5)
 
