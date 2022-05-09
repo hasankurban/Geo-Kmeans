@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.spatial import distance
+from scipy.spatial.distance import cdist
 from sklearn.metrics import adjusted_rand_score as ari
 from sklearn.metrics.cluster import adjusted_mutual_info_score as amis
 from sklearn.decomposition import PCA
@@ -14,10 +14,11 @@ from sortedcontainers import SortedDict
 def init_centroids(data, num_clusters, seed):
 
     # Randomly select points from the data as centroids
-    # np.random.seed(seed)
+    np.random.seed(seed)
 
-    # indices = np.random.choice(data.shape[0], num_clusters, replace=False, )
-    return np.array(data[0:num_clusters, :])
+    indices = np.random.choice(data.shape[0], num_clusters, replace=False, )
+    # return np.array(data[0:num_clusters, :])
+    return np.array(data[indices, :])
 
 
 def calculate_distances(data, centroids):
@@ -30,6 +31,8 @@ def calculate_distances(data, centroids):
     #     for k in range(len(centroids)):
     #         dist_mat[i][k] = np.linalg.norm(data[i] - centroids[k])
 
+    # dist_mat = cdist(data, centroids)
+
     for k in range(n):
         dist_mat[k, :] = np.sqrt(np.sum(np.square(np.subtract(centroids, data[k])), 1))
     
@@ -39,7 +42,7 @@ def calculate_distances(data, centroids):
 def calculate_distances_specific(data, centroids, old_center, new_center, old_assign):
 
     # Find pairwise distances
-    dist_mat = distance.cdist(data, centroids, 'euclidean')
+    dist_mat = cdist(data, centroids, 'euclidean')
 
     # Find the closest centroid
     assigned_cluster = np.argmin(dist_mat, axis=1)
@@ -56,23 +59,12 @@ def find_centroids_dist(centroid1, centroids2):
     return np.round(dist, 5)
 
 
-def calculate_distances123(data, centroids):
-
-    # Find pairwise distances
-    dist_mat = distance.cdist(data, centroids, 'euclidean')
-
-    # Find the closest centroid
-    assigned_cluster = np.argmin(dist_mat, axis=1)
-
-    return assigned_cluster, np.round(dist_mat, 5)
-
-
 def calculate_centroids(data, assigned_clusters):
 
     temp = [np.mean(data[np.where(assigned_clusters == i), ], axis=1)[0] for i in np.sort(np.unique(assigned_clusters))]
 
     centroids = np.array(temp)
-    return np.round(centroids, 4)
+    return np.round(centroids, 5)
 
 
 def create_sorted_structure(assigned_clusters, distances, num_clusters):
