@@ -45,6 +45,7 @@ def DCKMeans(data, num_clusters, threshold, num_iterations, seed):
     assigned_clusters, distances = calculate_distances(data, centroids)
     loop_counter = 0
     assign_dict = {}
+    dist_mat = np.zeros((num_clusters, num_clusters))
 
     # vis_data_with_he_test(data, centroids, assigned_clusters, distances,
     #                  loop_counter, [], [])
@@ -64,8 +65,8 @@ def DCKMeans(data, num_clusters, threshold, num_iterations, seed):
 
         assign_dict = get_membership(assigned_clusters, assign_dict, num_clusters)
 
-        he_data_indices = find_all_he_indices_1(data, new_centroids, distances,
-                                                assign_dict)
+        he_data_indices = find_all_he_indices(data, new_centroids, distances,
+                                                assign_dict, dist_mat)
 
         # break
         # Calculate the cluster assignments for data points

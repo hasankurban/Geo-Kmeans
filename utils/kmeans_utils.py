@@ -7,7 +7,6 @@ from sklearn.preprocessing import StandardScaler
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-from scipy.special import softmax
 from sortedcontainers import SortedDict
 
 
@@ -31,11 +30,9 @@ def calculate_distances(data, centroids):
     #     for k in range(len(centroids)):
     #         dist_mat[i][k] = np.linalg.norm(data[i] - centroids[k])
 
-    # dist_mat = cdist(data, centroids)
+    for i in range(n):
+        dist_mat[i, :] = np.sqrt(np.sum(np.square((data[i] - centroids)), axis=1))
 
-    for k in range(n):
-        dist_mat[k, :] = np.sqrt(np.sum(np.square(np.subtract(centroids, data[k])), 1))
-    
     return np.argmin(dist_mat, axis=1), np.round(dist_mat, 5)
 
 
@@ -52,11 +49,6 @@ def calculate_distances_specific(data, centroids, old_center, new_center, old_as
     assigned_cluster[np.where(assigned_cluster == 1)[0]] = new_center
 
     return assigned_cluster, np.round(distances, 5)
-
-
-def find_centroids_dist(centroid1, centroids2):
-    dist = np.sqrt(np.sum(np.square(centroid1 - centroids2)))
-    return np.round(dist, 5)
 
 
 def calculate_centroids(data, assigned_clusters):
@@ -186,7 +178,6 @@ def calculate_my_distances(point, centroids):
 def check_convergence(current_centroids, centroids, threshold):
 
     rms = round(np.sqrt(np.mean(np.square(current_centroids-centroids))), 5)
-
     # print("RMSD: ", rms)
     if rms <= threshold:
         return True
@@ -194,7 +185,7 @@ def check_convergence(current_centroids, centroids, threshold):
 
 
 def pred_membership(data, centroids):
-    dist_mat = distance.cdist(data, centroids, 'euclidean')
+    dist_mat = cdist(data, centroids, 'euclidean')
 
     # Find the closest centroid
     assigned_cluster = np.argmin(dist_mat, axis=1).tolist()
@@ -209,49 +200,12 @@ def check_amis(label1, label2):
     return round(amis(label1, label2), 2)
 
 
-def test_swaps(assign1, assign2, current_counts):
-
-    indices = np.where(assign1 != assign2)[0].tolist()
-    return indices
-
-
 def check_membership_swaps(assign1, assign2, current_counts):
 
     indices = np.where(assign1 != assign2)[0].tolist()
     current_counts[indices] = current_counts[indices] + 1
 
     return current_counts, len(indices), indices
-
-
-def get_swap_indices(assign1, assign2, current_counts):
-    indices = np.where(assign1 != assign2)[0]
-    return indices
-
-
-def find_swap_counts(assign1, assign2, current_counts):
-
-    indices = np.where(assign1 != assign2)[0].tolist()
-    current_counts[indices] = current_counts[indices] + 1
-
-    return current_counts, len(indices)
-
-
-def get_prob_vector(swap_counts):
-    return softmax(swap_counts)
-
-
-def sample_HE_data(assign1, assign2, current_counts, data_indices):
-
-    indices = np.where(assign1 != assign2)[0].tolist()
-    current_counts[indices] = current_counts[indices] + 1
-
-    # Get probabilities
-    prob_dist = softmax(current_counts)
-
-    # Sample points
-    indices = np.random.choice(data_indices, p=prob_dist, size=len(indices)+10, replace=False)
-
-    return current_counts, len(indices), indices #len(np.where(assign1 == assign2)[0])
 
 
 def check_empty_clusters(assignment, num_clusters):
@@ -284,18 +238,6 @@ def vis_PCA(dataset, labels):
     sns.color_palette("colorblind")
     sns.scatterplot(data=pc_esc, x='PC1', y='PC2', hue="labels")
 
-    plt.show()
-
-
-def view_3d(data, labels):
-
-    fig = plt.figure()
-    ax = fig.add_subplot(projection='3d')
-    p1 = data[:,0]
-    p2 = data[:,1]
-    p3 = data[:,2]
-    ax.scatter(p1, p2, p3, c=labels, s=100)
-    #ax.plot_surface(X, Y, Z)
     plt.show()
 
 

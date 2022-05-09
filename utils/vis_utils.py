@@ -162,7 +162,6 @@ def vis_data_with_he_test(data, centroids, assigned_clusters, distances,
     plt.show()
 
 
-
 def find_all_points(dataset, centroids_neighbor, new_centroids, assign_dict):
 
     he_data = []
@@ -171,7 +170,6 @@ def find_all_points(dataset, centroids_neighbor, new_centroids, assign_dict):
 
         center1 = new_centroids[curr_cluster]
         temp_list_1 = np.array(assign_dict[curr_cluster])
-        # distances[temp_list_1] += motion[curr_cluster]
 
         # Determine the sign of other centroid
         for ot_cen in centroids_neighbor[curr_cluster]:
@@ -179,22 +177,13 @@ def find_all_points(dataset, centroids_neighbor, new_centroids, assign_dict):
             if curr_cluster != ot_cen:
 
                 center2 = new_centroids[ot_cen]
-
-                # Extract points whose distance is more than midpoint
-                #x = np.where(distances[temp_list_1] > midpoints_mat[curr_cluster, ot_cen])[0]
-                # temp_list = temp_list_1[x]
-                # print(len(temp_list_1), len(temp_list))
-
                 mid_point = np.divide(np.add(center1, center2), 2)
 
                 test_data = dataset[temp_list_1, ]
                 point_sign = find_sign_by_product(mid_point, center2, test_data)
                 same_sign = np.where(point_sign >= 0)[0]
 
-                #if len(same_sign) > 0:
-                # same_sign = list(temp_list_1[same_sign])
                 he_data += list(temp_list_1[same_sign])
-
 
     return np.unique(he_data)
 
@@ -206,34 +195,20 @@ def find_sign_by_product(mid_point, center2, points):
     return points_vec.dot(temp_vec)
 
 
-def find_sign_test(nv, point_on_plane, ot_point, what):
+def find_all_he_indices(dataset, new_centroids, distances, assign_dict, dist_mat):
 
-    if what == "point":
-        return np.sign(np.dot(nv, ot_point-point_on_plane))
-    else:
-        return np.sign(np.dot(nv, (ot_point - point_on_plane).T))
-
-
-def find_all_he_indices_1(dataset, new_centroids, distances, assign_dict):
-
-    midpoints, centroids_neighbor = get_midpoints_np(new_centroids, assign_dict, distances)
+    centroids_neighbor = get_midpoints_np(new_centroids, assign_dict, distances, dist_mat)
     he_indices = find_all_points(dataset, centroids_neighbor, new_centroids, assign_dict)
 
     return he_indices
 
 
-def get_midpoints_np(new_centroids, assign_dict, distances):
+def get_midpoints_np(new_centroids, assign_dict, distances, dist_mat):
 
     centroid_neighbor = {}
 
-    # dist_mat = np.zeros((len(new_centroids), len(new_centroids)), dtype=float)
-
-    dist_mat = cdist(new_centroids, new_centroids)
-
-    # for k in range(len(new_centroids)):
-    #     # dist_mat[:, k] = np.sqrt(np.sum(np.square(np.subtract(data, centroids[k])), 1))
-    #     dist_mat[:, k] = np.sqrt(np.sum(np.square(np.subtract(new_centroids, new_centroids[k])), 1))
-
+    for k in range(len(new_centroids)):
+        dist_mat[:, k] = np.sqrt(np.sum(np.square(np.subtract(new_centroids, new_centroids[k])), 1))
     dist_mat = np.divide(dist_mat, 2)
 
     for i in range(len(new_centroids)):
@@ -241,13 +216,11 @@ def get_midpoints_np(new_centroids, assign_dict, distances):
         s = assign_dict[i]
 
         cen1_rad = np.max(distances[s])
-        neighbors = np.where(dist_mat[i] <= cen1_rad)[0]
-
-        #neighbors = list(neighbors[neighbors != i])
+        neighbors = np.where(dist_mat[i] < cen1_rad)[0]
 
         centroid_neighbor[i] = neighbors
 
-    return dist_mat, centroid_neighbor
+    return centroid_neighbor
 
 
 def get_membership(assigned_clusters, assign_dict, num_clusters):
@@ -257,29 +230,5 @@ def get_membership(assigned_clusters, assign_dict, num_clusters):
 
     return assign_dict
 
-
-def view_3d(data, centroids, assigned_clusters):
-
-    cols = ["col" + str(i) for i in range(data.shape[1])]
-
-    dataset = pd.DataFrame(data)
-    dataset.columns = [cols]
-    temp = pd.DataFrame(centroids)
-    temp.columns = [cols]
-
-    num = len(centroids)
-
-    labels = [i for i in assigned_clusters]
-    labels += [num for i in range(len(centroids))]
-
-    dataset = dataset.append(temp, ignore_index=True)
-
-    fig = plt.figure()
-    ax = fig.add_subplot(projection='3d')
-    p1 = dataset.iloc[:, 0]
-    p2 = dataset.iloc[:, 1]
-    p3 = dataset.iloc[:, 2]
-    ax.scatter(p1, p2, p3, c=labels, s=100)
-    plt.show()
 
 
