@@ -19,21 +19,21 @@ threshold = 0.01
 num_iterations = 100
 
 # file_list = ['test_data_case1.csv']
-file_list = ['test_50k_100_50.csv']
+file_list = ['test_100_2_3.csv']
 # file_list = ['crop.csv']
-file_list = ['magic.csv']
+# file_list = ['magic.csv']
 # file_list = ['user_knowledge_train.csv']
-file_list = ['hapt_train.csv']
+# file_list = ['hapt_train.csv']
+file_list = ['covertype.csv']
 # file_list = ['spambase.csv']
 # file_list = ['200_clusters.csv']
 
 # Make changes for adjusting the current directory here
-file_path = os.path.join(Path(__file__).parents[1], "benchmark", "clustering_data")
+# file_path = os.path.join(Path(__file__).parents[1], "benchmark", "clustering_data")
 file_path = os.path.join(Path(__file__).parents[1], "benchmark", "real_data")
 # file_path = os.path.join(Path(__file__).parents[1], "sample_data")
 
-
-num_clusters = 20
+num_clusters = 100
 seed = 4521
 
 
@@ -52,22 +52,11 @@ for data_file in file_list:
     km_TraningTime = round(time.time() - km_start_time, 2)
 
     kmlb_start_time = time.time()
-    kmlb_centroids, kmlb_iter = DCKMeans(data, num_clusters, threshold, num_iterations, seed)
+    kmlb_centroids, kmlb_iter, dckm_calc = DCKMeans(data, num_clusters, threshold, num_iterations, seed)
     kmlb_TraningTime = round(time.time() - kmlb_start_time, 2)
 
-    # km_start_time = time.time()
-    # kmlb_centroids, km_iter = kmeans_geom(data, num_clusters, threshold, num_iterations, seed)
-    # km_TraningTime = round(time.time() - km_start_time, 2)
-    #
-    # km_start_time = time.time()
-    # km_centroids, km_iter, _, _ = Kmeans_test(data, num_clusters, threshold, num_iterations, seed)
-    # km_TraningTime = round(time.time() - km_start_time, 2)
-
-    # print("Iterations: ", km_iter)
-    # kmlb_start_time = time.time()
-    # # kmlb_centroids, kmlb_iter = DEKmeans_tree(data, num_clusters, leaf_threshold, num_iterations, seed)
-    # kmlb_centroids, kmlb_iter, assign2 = my_kmeans3(data, num_clusters, threshold, num_iterations, seed, [])
-    # kmlb_TraningTime = round(time.time() - kmlb_start_time, 2)
+    print("Distance calculations by KMeans: ", num_clusters*data.shape[0]*km_iter)
+    print("Distance calculations by DCKMeans: ", dckm_calc)
 
     # acc, new_labels1 = calc_raw_accuracy(labels, assign1, data)
     # print("KM: ", acc, check_ARI(new_labels1, labels))

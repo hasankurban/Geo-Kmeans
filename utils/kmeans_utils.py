@@ -31,7 +31,7 @@ def calculate_distances(data, centroids):
     #         dist_mat[i][k] = np.linalg.norm(data[i] - centroids[k])
 
     for i in range(n):
-        dist_mat[i, :] = np.sqrt(np.sum(np.square((data[i] - centroids)), axis=1))
+        dist_mat[i, :] = np.sqrt(np.sum(np.square(data[i] - centroids), 1))
 
     return np.argmin(dist_mat, axis=1), np.round(dist_mat, 5)
 
@@ -61,7 +61,7 @@ def calculate_centroids(data, assigned_clusters):
 
 def create_sorted_structure(assigned_clusters, distances, num_clusters):
 
-        BST_List = {i:[] for i in range(num_clusters)}
+        BST_List = {i: [] for i in range(num_clusters)}
 
         # Add data to each sublist
         for i in range(len(assigned_clusters)):
@@ -77,14 +77,9 @@ def move_data_around(bst_list, he_bst_indices, he_points, assigned_clusters, new
                      he_new_assigned_centers, he_new_min_dist):
 
     data_indices = np.where(assigned_clusters[he_points] != he_new_assigned_centers)[0]
-    # print(data_indices, len(data_indices))
-    # print(he_points, len(he_points))
 
     if data_indices.size > 0:
         old_assign = assigned_clusters[he_points]
-        # print("Debug-1: Data that changed: ", len(data_indices), "out of ", len(assigned_clusters[he_points]))
-        # print("old center: ", assigned_clusters[he_points])
-        # print("new center: ", he_new_assigned_centers)
 
         for index in data_indices:
 
@@ -92,12 +87,6 @@ def move_data_around(bst_list, he_bst_indices, he_points, assigned_clusters, new
             new_center = he_new_assigned_centers[index]
 
             actual_point = he_points[index]
-
-            # print(bst_list[old_center])
-
-            # print("Debug-2: ", he_points[index], he_new_min_dist[index],
-            #       he_bst_indices[actual_point],
-            #       old_center, new_center)
 
             if new_assigned_clusters[actual_point] == old_center:
                 bst_list[old_center].pop(he_bst_indices[actual_point])
@@ -178,7 +167,6 @@ def calculate_my_distances(point, centroids):
 def check_convergence(current_centroids, centroids, threshold):
 
     rms = round(np.sqrt(np.mean(np.square(current_centroids-centroids))), 5)
-    # print("RMSD: ", rms)
     if rms <= threshold:
         return True
     return False
@@ -186,7 +174,6 @@ def check_convergence(current_centroids, centroids, threshold):
 
 def pred_membership(data, centroids):
     dist_mat = cdist(data, centroids, 'euclidean')
-
     # Find the closest centroid
     assigned_cluster = np.argmin(dist_mat, axis=1).tolist()
     return assigned_cluster
@@ -198,14 +185,6 @@ def check_ARI(label1, label2):
 
 def check_amis(label1, label2):
     return round(amis(label1, label2), 2)
-
-
-def check_membership_swaps(assign1, assign2, current_counts):
-
-    indices = np.where(assign1 != assign2)[0].tolist()
-    current_counts[indices] = current_counts[indices] + 1
-
-    return current_counts, len(indices), indices
 
 
 def check_empty_clusters(assignment, num_clusters):

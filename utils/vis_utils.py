@@ -7,11 +7,6 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
 
-def find_centroids_dist(centroid1, centroids2):
-    dist = np.sqrt(np.sum(np.square(centroid1 - centroids2)))
-    return np.round(dist, 5)
-
-
 def vis_data_with_he(data, centroids, assigned_clusters, distances,
                          loop_counter, data_changed, he_data_indices):
 
@@ -162,6 +157,34 @@ def vis_data_with_he_test(data, centroids, assigned_clusters, distances,
     plt.show()
 
 
+def find_all_he_indices(dataset, new_centroids, distances, assign_dict, dist_mat):
+
+    centroids_neighbor = get_midpoints_np(new_centroids, assign_dict, distances, dist_mat)
+    he_indices = find_all_points(dataset, centroids_neighbor, new_centroids, assign_dict)
+
+    return he_indices
+
+
+def get_midpoints_np(new_centroids, assign_dict, distances, dist_mat):
+
+    centroid_neighbor = {}
+
+    for k in range(len(new_centroids)):
+        dist_mat[:, k] = np.sqrt(np.sum(np.square(np.subtract(new_centroids, new_centroids[k])), 1))
+    dist_mat = np.divide(dist_mat, 2)
+
+    for i in range(len(new_centroids)):
+
+        s = assign_dict[i]
+
+        cen1_rad = np.max(distances[s])
+        neighbors = np.where(dist_mat[i] <= cen1_rad)[0]
+
+        centroid_neighbor[i] = neighbors
+
+    return centroid_neighbor
+
+
 def find_all_points(dataset, centroids_neighbor, new_centroids, assign_dict):
 
     he_data = []
@@ -185,6 +208,8 @@ def find_all_points(dataset, centroids_neighbor, new_centroids, assign_dict):
 
                 he_data += list(temp_list_1[same_sign])
 
+
+
     return np.unique(he_data)
 
 
@@ -195,40 +220,18 @@ def find_sign_by_product(mid_point, center2, points):
     return points_vec.dot(temp_vec)
 
 
-def find_all_he_indices(dataset, new_centroids, distances, assign_dict, dist_mat):
-
-    centroids_neighbor = get_midpoints_np(new_centroids, assign_dict, distances, dist_mat)
-    he_indices = find_all_points(dataset, centroids_neighbor, new_centroids, assign_dict)
-
-    return he_indices
-
-
-def get_midpoints_np(new_centroids, assign_dict, distances, dist_mat):
-
-    centroid_neighbor = {}
-
-    for k in range(len(new_centroids)):
-        dist_mat[:, k] = np.sqrt(np.sum(np.square(np.subtract(new_centroids, new_centroids[k])), 1))
-    dist_mat = np.divide(dist_mat, 2)
-
-    for i in range(len(new_centroids)):
-
-        s = assign_dict[i]
-
-        cen1_rad = np.max(distances[s])
-        neighbors = np.where(dist_mat[i] < cen1_rad)[0]
-
-        centroid_neighbor[i] = neighbors
-
-    return centroid_neighbor
-
-
 def get_membership(assigned_clusters, assign_dict, num_clusters):
 
     for i in range(num_clusters):
         assign_dict[i] = np.where(assigned_clusters == i)[0].tolist()
 
     return assign_dict
+
+
+
+
+
+
 
 
 
