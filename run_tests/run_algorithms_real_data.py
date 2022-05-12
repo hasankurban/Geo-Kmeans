@@ -1,5 +1,5 @@
 from utils.assign_clusters import calc_raw_accuracy
-from base.expr_DEKmeans import *
+from base.KMeans import *
 import time
 from sklearn.cluster import KMeans as km
 

@@ -2,7 +2,7 @@ import sys
 sys.path.append("..")
 
 from utils.dataIO import *
-from base.expr_DEKmeans import *
+from base.KMeans import *
 from pathlib import Path
 from run_baseline_algorithms import run_algorithms
 

@@ -2,11 +2,9 @@ import sys
 sys.path.append("..")
 
 from utils.assign_clusters import calc_raw_accuracy
-from base.expr_DEKmeans import *
-from base.kmeans import *
+from base.KMeans import *
 import time
 
-#from sklearn.cluster import KMeans as km
 
 
 def run_algorithms(data, labels, result_dictionary, num_iterations,
