@@ -26,10 +26,6 @@ def calculate_distances(data, centroids):
     n, d = data.shape
     dist_mat = np.zeros((n, len(centroids)), dtype=float)
 
-    # for i in range(dist_mat.shape[0]):
-    #     for k in range(len(centroids)):
-    #         dist_mat[i][k] = np.linalg.norm(data[i] - centroids[k])
-
     for i in range(n):
         dist_mat[i, :] = np.sqrt(np.sum(np.square(data[i] - centroids), 1))
 

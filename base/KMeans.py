@@ -1,15 +1,11 @@
 from utils.kmeans_utils import *
 
 
-def Kmeans(data, num_clusters, threshold, num_iterations, my_centroids, use_centroids, seed):
+def Kmeans(data, num_clusters, threshold, num_iterations, seed):
 
     loop_counter = 0
 
-    # Get initial centroids
-    if use_centroids:
-        centroids = my_centroids
-    else:
-        centroids = init_centroids(data, num_clusters, seed)
+    centroids = init_centroids(data, num_clusters, seed)
 
     # Calculate the cluster assignments for data points
     assigned_clusters, _ = calculate_distances(data, centroids)

@@ -179,6 +179,7 @@ def get_midpoints_np(new_centroids, assign_dict, distances, dist_mat):
 
     for k in range(len(new_centroids)):
         dist_mat[:, k] = np.sqrt(np.sum(np.square(np.subtract(new_centroids, new_centroids[k])), 1))
+
     dist_mat = np.divide(dist_mat, 2)
 
     for i in range(len(new_centroids)):
