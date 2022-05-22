@@ -21,7 +21,7 @@ class dckm_utils{
 
     template <typename TD>
     bool find_context_direction(vector<TD> &centroid_vector, vector<TD> &midpoint,
-    vector<TD> &actual_point);
+    vector<TD> &actual_point, string chk_type);
 
     template <typename TD, typename TI>
     void restore_radius(vector<vector <TD> > &dist_matrix,
@@ -36,7 +36,7 @@ class dckm_utils{
     
     template <typename TD, typename TI>
     void determine_data_expression(vector<vector<TD> > &dataset, 
-    vector<TI> &assigned_clusters, vector<vector<TI> > &neighbors, 
+    vector<TI> &assigned_clusters, vector<vector<TI> > &neighbors,
     map<string, vector<TD> > &affine_vectors, 
     map<string, vector<TD> > &mid_points, vector<vector<TI> > &he_data);
 
@@ -53,10 +53,21 @@ class dckm_utils{
     void calculate_HE_distances(const vector<vector<TDouble> > &dataset, 
     vector<vector<TDouble> > &centroids, vector<vector<TDouble> > &dist_mat,
     Tint num_clusters, vector<Tint> &assigned_clusters, 
-    vector<vector<TDouble> > &cluster_size, vector<vector<Tint> > &neighbors, 
+    vector<vector<TDouble> > &cluster_size, map<Tint, vector<Tint> > &assign_dict,
+    vector<vector<Tint> > &neighbors, 
     vector<vector <Tint> > &he_data);
 
+    int chk_sign(double &val1);
+
+    template <typename Tint>
+    void get_assign_dict(map<Tint, vector<Tint> > &assign_dict, 
+    vector<Tint> &assigned_clusters);
+
+    bool chk_validity(vector<double> &mid_points, vector<double> &centroid, 
+    vector<double> &actual_point, vector<double> &affine_vec);
+
 };
+
 
 template <typename TD>
 void find_midpoints(vector<TD> &center1, vector<TD> &center2, 
@@ -73,27 +84,46 @@ vector<TD> &midpoint){
     // print_vector(midpoint, midpoint.size(), "Test3");
 }
 
+
 template <typename TD>
 void find_affine_vector(vector<TD> &midpoint, vector<TD> &ot_point, vector<TD> &affine){
     for (int i=0; i<ot_point.size(); i++)
         affine[i] = ot_point[i] - midpoint[i];
 }
 
+
+int chk_sign(double &val1){
+
+    int sign = 0;
+    if (val1>0)
+        sign = 1;
+    else if (val1<0)
+        sign = -1;
+    return sign;
+}
+
+
 template <typename TD>
 bool find_context_direction(vector<TD> &centroid_vector, vector<TD> &midpoint,
-vector<TD> &actual_point){
+vector<TD> &actual_point, string chk_type){
 
     int mysize = midpoint.size(); 
-    
     vector<TD> cent_point_vec(mysize);
     TD vec_sum = 0.0;
     
     find_affine_vector(midpoint, actual_point, cent_point_vec);
 
-    for (int i=0; i<mysize; i++)
-        vec_sum =  vec_sum + (cent_point_vec[i] * centroid_vector[i]);
+    if (chk_type == "validity"){
+            for (int i=0; i<mysize; i++)
+                vec_sum =  vec_sum + (cent_point_vec[i] * (-1*centroid_vector[i]));
+    }
+    
+    else{
+        for (int i=0; i<mysize; i++)
+            vec_sum =  vec_sum + (cent_point_vec[i] * centroid_vector[i]);
+    }
 
-    if (vec_sum>=0)
+    if (vec_sum>0)
         return true;
 
     // cout << "Inner product: " << vec_sum << "\n";
@@ -101,7 +131,9 @@ vector<TD> &actual_point){
     // print_vector(centroid_vector, cent_point_vec.size(), "Centroid vector");
     
     return false;
+    // return status;
 }
+
 
 template <typename TD, typename TI>
 void restore_radius(vector<vector <TD> > &dist_matrix,
@@ -115,6 +147,7 @@ vector<vector <TD> > &cluster_size){
         }
     }
 }
+
 
 template <typename TD, typename TI>
 void find_neighbors(vector<vector <TD> > &centroids, 
@@ -135,6 +168,7 @@ map<string, vector<TD> > &affine_vectors){
     for(int curr_center=0; curr_center<centroids.size(); curr_center++){
         
         radius = cluster_size[curr_center][1];
+        vector<TI> temp;
         
         for (int ot_center=0; ot_center<centroids.size(); ot_center++){    
             
@@ -149,7 +183,8 @@ map<string, vector<TD> > &affine_vectors){
             if ((center_dist_mat[curr_center][ot_center] < radius)){
                 
                 // The following is the neighbor for the current center
-                neighbors[curr_center].push_back(ot_center); 
+                // neighbors[curr_center].push_back(ot_center); 
+                temp.push_back(ot_center);
                     
                 // Get the mid-point coordinates for this pair of centroids
                 find_midpoints(centroids[curr_center], centroids[ot_center], 
@@ -158,30 +193,38 @@ map<string, vector<TD> > &affine_vectors){
                 find_affine_vector(temp_midpoint, centroids[ot_center], temp_affine);
                 
                 // Update the primary containers
-                key = std::to_string(curr_center) + std::to_string(ot_center);
+                key = std::to_string(ot_center) + std::to_string(curr_center);
                 mid_points.insert_or_assign(key, temp_midpoint);
                 affine_vectors.insert_or_assign(key, temp_affine);
                 // mid_points[std::to_string(curr_center) + std::to_string(ot_center)] = temp_midpoint;
                 // affine_vectors[std::to_string(curr_center) + std::to_string(ot_center)] = temp_affine;
             }
+        neighbors[curr_center] = temp;
         }
     }
+}
+
+
+bool chk_validity(vector<double> &mid_points, vector<double> &centroid, 
+vector<double> &actual_point, vector<double> &affine_vec){
+    
+    if (find_context_direction(affine_vec, mid_points,
+    actual_point, "validity"))
+        return true;
+    
+    return false;
 }
 
 
 template <typename TD, typename TI>
 void determine_data_expression(vector<vector<TD> > &dataset, 
 vector<vector <TD> > &centroids, vector<TI> &assigned_clusters, 
-vector<vector<TI> > &neighbors, 
+vector<vector<TI> > &neighbors,
 map<string, vector<TD> > &affine_vectors, 
 map<string, vector<TD> > &mid_points, 
 vector<vector<TI> > &he_data){
     
-    TI my_cluster=0;
-    algorithm_utils alg_utils;
-
-    //reinit he container
-    alg_utils.reinit(he_data);
+    TI my_cluster = 0;
     string key = "";
     bool status = false;
 
@@ -193,10 +236,15 @@ vector<vector<TI> > &he_data){
 
         for (int j=0; j<neighbors[my_cluster].size(); j++){
             
-            key = std::to_string(my_cluster) + std::to_string(neighbors[my_cluster][j]);
+            key = std::to_string(neighbors[my_cluster][j]) + std::to_string(my_cluster);
             
+            // if(chk_validity(affine_vectors[key], 
+            // mid_points[key], dataset[i], affine_vectors[key])){
+            //     continue;
+            // }
+
             if ( (my_cluster != neighbors[my_cluster][j]) && find_context_direction(affine_vectors[key], 
-            mid_points[key], dataset[i])){
+            mid_points[key], dataset[i], "redundant")){
                 
                 // cout << "Same direction" << "\n" ;
                 if (temp.size() == 0)
@@ -205,8 +253,9 @@ vector<vector<TI> > &he_data){
                 
                 temp.push_back(neighbors[my_cluster][j]);
                 status = true;
-            }
+            } 
         }
+
         if (status){
             he_data.push_back(temp);
         }
@@ -239,7 +288,8 @@ template <typename TDouble, typename Tint>
 void calculate_HE_distances(const vector<vector<TDouble> > &dataset, 
 vector<vector<TDouble> > &centroids, vector<vector<TDouble> > &dist_mat,
 Tint num_clusters, vector<Tint> &assigned_clusters, 
-vector<vector<TDouble> > &cluster_size, vector<vector<Tint> > &neighbors, 
+vector<vector<TDouble> > &cluster_size, map<Tint, vector<Tint> > &assign_dict, 
+vector<vector<Tint> > &neighbors, 
 vector<vector <Tint> > &he_data){
 
     Tint current_center = 0;
@@ -248,7 +298,7 @@ vector<vector <Tint> > &he_data){
 
     // vector<Tint> * refer;
     Tint refer_size = 0;
-    // algorithm_utils alg_utils;
+    algorithm_utils alg_utils;
 
     // print_2d_vector(neighbors, neighbors.size(), "Neighbors");
 
@@ -275,6 +325,10 @@ vector<vector <Tint> > &he_data){
                 // cout << "Point: " << he_data[i][0] << "\t" << assigned_clusters[he_data[i][0]] << "-->" << he_data[i][j] << "\n";
                 
                 cluster_size[assigned_clusters[he_data[i][0]]][1] = 0.0;
+
+                // Update the dict
+                // assign_dict[assigned_clusters[he_data[i][0]]].de
+
                 assigned_clusters[he_data[i][0]] = he_data[i][j];
                 cluster_size[he_data[i][j]][0] = cluster_size[he_data[i][j]][0] + 1; 
             } 
@@ -283,3 +337,24 @@ vector<vector <Tint> > &he_data){
 
 }
 
+// template <typename Tint>
+// void get_assign_dict(map<Tint, vector<Tint> > &assign_dict, 
+// vector<Tint> &assigned_clusters){
+
+//     vector<Tint> temp;
+
+//     for (int i=0; i<assigned_clusters.size(); i++){
+
+//         if (assign_dict.find(assigned_clusters[i]) == assign_dict.end()){
+//             temp.push_back(i);
+//             assign_dict[assigned_clusters[i]] = temp;
+//             temp.clear();
+            
+//         }
+//         else{
+//             temp.push_back(i);
+//             assign_dict.insert_or_assign(assigned_clusters[i], temp);
+//             temp.clear();
+//         }
+//     }
+// }

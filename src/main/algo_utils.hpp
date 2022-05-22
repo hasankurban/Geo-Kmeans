@@ -32,6 +32,7 @@ class algorithm_utils{
 
     template <typename T1>
     void reinit(vector<vector<T1> > &);
+    
 };
 
 
@@ -105,7 +106,7 @@ T2 num_clusters, vector<T2> &assigned_clusters, vector<vector<T1> > &cluster_siz
         
         dist_mat[i] = temp_dist;
         assigned_clusters[i] = current_center;
-        
+
         // Increase the size of the cluster
         cluster_size[current_center][0] = cluster_size[current_center][0] + 1;
         
@@ -121,12 +122,13 @@ void algorithm_utils::update_centroids(vector<vector <T1> > &dataset,
 vector<vector<T1> > &new_centroids, vector<T2> &assigned_clusters, 
 vector<vector<T1> > &cluster_size, T2 numCols){
 
-    int point_index = 0;
+    int point_index = 0; 
     int curr_center = 0;
     int k = 0;
 
     for (int index=0; index<dataset.size(); index++){
         curr_center = assigned_clusters[index];
+        
         for (int j = 0; j<numCols; j++){
             new_centroids[curr_center][j] = new_centroids[curr_center][j] + dataset[index][j];
         }

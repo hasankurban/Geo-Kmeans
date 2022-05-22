@@ -22,15 +22,17 @@ Tint dckmeans(vector<vector <Tdouble> > &dataset, Tint num_clusters,
 Tdouble threshold, Tint num_iterations, Tint numCols){
 
     Tint loop_counter = 0;
-    vector<vector<Tdouble> > centroids(num_clusters, vector<Tdouble>(numCols, 0.0));
-    vector<vector<Tdouble> > new_centroids(num_clusters, vector<Tdouble>(numCols, 0.0));
-    vector<vector <Tdouble> > dist_matrix(dataset.size(), vector<Tdouble>(num_clusters, 0.0));
+    vector<vector<Tdouble> > centroids(num_clusters, vector<Tdouble>(numCols));
+    vector<vector<Tdouble> > new_centroids(num_clusters, vector<Tdouble>(numCols));
+    vector<vector <Tdouble> > dist_matrix(dataset.size(), vector<Tdouble>(num_clusters));
     
-    vector<Tint> assigned_clusters(dataset.size(), 0);
+    vector<Tint> assigned_clusters(dataset.size());
     
     vector<vector<Tdouble> > cluster_size(num_clusters, vector<Tdouble>(2));  
-    vector<vector <Tdouble> > center_dist_mat (num_clusters, vector<Tdouble>(num_clusters, 0.0));
+    vector<vector <Tdouble> > center_dist_mat (num_clusters, vector<Tdouble>(num_clusters));
     vector<vector<Tint> > neighbors(num_clusters);
+
+    
     vector<vector<Tint> > he_data;
 
     // vector<vector<vector <Tdouble> > > mid_points(num_clusters);
@@ -38,6 +40,8 @@ Tdouble threshold, Tint num_iterations, Tint numCols){
 
     map<string, vector<Tdouble> > mid_points;
     map<string, vector<Tdouble> > affine_vectors;
+
+    map<Tint, vector<Tint> > assign_dict;
 
     // Create objects
     algorithm_utils alg_utils;
@@ -74,6 +78,7 @@ Tdouble threshold, Tint num_iterations, Tint numCols){
     auto ne_time = 0;
     auto he_time = 0;
     auto dist_time = 0;
+    auto misc_time = 0;
 
     while (loop_counter < num_iterations){
 
@@ -93,10 +98,10 @@ Tdouble threshold, Tint num_iterations, Tint numCols){
                 cout << "Convergence at iteration: " << loop_counter << "\n";
                 break;
         }
+
         
-        //Find HE data
-        // find_HE_data(dataset, new_centroids, dist_matrix, assigned_clusters,
-        // cluster_size, center_dist_mat, mid_points, affine_vectors, neighbors, he_data);
+        // get_assign_dict(assign_dict, assigned_clusters);
+        // print_map(assign_dict, assign_dict.size(), "Initial Assignments");
 
         auto t5 = std::chrono::high_resolution_clock::now();
         
@@ -106,6 +111,9 @@ Tdouble threshold, Tint num_iterations, Tint numCols){
         auto t6 = std::chrono::high_resolution_clock::now();
         ne_time = ne_time + std::chrono::duration_cast<std::chrono::milliseconds>(t6 - t5).count();
 
+        // print_2d_vector(neighbors, neighbors.size(), "Neighbors: ");
+        
+
         auto t7 = std::chrono::high_resolution_clock::now();
         
         determine_data_expression(dataset, new_centroids, assigned_clusters, 
@@ -114,16 +122,22 @@ Tdouble threshold, Tint num_iterations, Tint numCols){
         auto t8 = std::chrono::high_resolution_clock::now();
         he_time = he_time + std::chrono::duration_cast<std::chrono::milliseconds>(t8 - t7).count();
 
+        // cout << "No. HE Data: " << he_data.size() << "\n";
+        // print_2d_vector(he_data, he_data.size(), "HE Data");
         
         // Re-calculate distances
         auto t9 = std::chrono::high_resolution_clock::now();
         
         calculate_HE_distances(dataset, new_centroids, dist_matrix,
                                         num_clusters, assigned_clusters, 
-                                        cluster_size, neighbors, he_data);
+                                        cluster_size, assign_dict, neighbors, he_data);
         
         auto t10 = std::chrono::high_resolution_clock::now();
         dist_time = dist_time + std::chrono::duration_cast<std::chrono::milliseconds>(t10 - t9).count();
+
+        he_data.clear();
+
+        // print_2d_vector(neighbors, neighbors.size(), "Neighbors");
 
         // Print for testing
         // print_2d_vector(cluster_size, cluster_size.size(), "After HE calc: Cluster Sizes");
@@ -134,17 +148,21 @@ Tdouble threshold, Tint num_iterations, Tint numCols){
         // Move the new centroids to older
         centroids = new_centroids;
 
+        auto t11 = std::chrono::high_resolution_clock::now();
         // Register the max radius
         restore_radius(dist_matrix, assigned_clusters, cluster_size);
 
         // reset centroids
         alg_utils.reinit(new_centroids);
+        auto t12 = std::chrono::high_resolution_clock::now();
+        misc_time = misc_time + std::chrono::duration_cast<std::chrono::milliseconds>(t12 - t11).count();
     }
 
     cout << "Total time for centroid updation calc: " << cent_time << " milliseconds. \n";
     cout << "Total time for neighbors calc: " << ne_time << " milliseconds. \n";
     cout << "Total time for HE calc: " << he_time << " milliseconds. \n";
     cout << "Total time for distance calc: " << dist_time << " milliseconds. \n";
+    cout << "Total time for misc calc: " << misc_time << " milliseconds. \n";
 
     // print_2d_vector(new_centroids, new_centroids.size(), "Final centroids");
 

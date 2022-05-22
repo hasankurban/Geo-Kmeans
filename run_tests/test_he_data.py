@@ -20,12 +20,12 @@ num_iterations = 100
 
 # file_list = ['test_data_case1.csv']
 file_list = ['test_100_2_3.csv']
-# file_list = ['crop.csv']
+file_list = ['crop.csv']
 # file_list = ['magic.csv']
 # file_list = ['user_knowledge_train.csv']
 # file_list = ['hapt_train.csv']
 # file_list = ['covertype.csv']
-file_list = ['spambase.csv']
+# file_list = ['spambase.csv']
 # file_list = ['10_clusters.csv']
 
 DATA_PATH = "/Users/schmuck/Documents/Box Sync/Ph.D./DATASETS"
@@ -36,9 +36,8 @@ file_path = os.path.join(DATA_PATH, "benchmark", "clustering_data")
 file_path = os.path.join(DATA_PATH, "real_data")
 # file_path = os.path.join(DATA_PATH, "sample_data")
 
-num_clusters = 5
+num_clusters = 10
 seed = 12
-
 
 for data_file in file_list:
 
@@ -50,10 +49,9 @@ for data_file in file_list:
 
     print(data.shape)
 
-    # km_start_time = time.time()
-    # km_centroids, km_iter = Kmeans(data, num_clusters, threshold, num_iterations, seed)
-    # km_centroids, km_iter = km_clustering(data, num_clusters, num_iterations, threshold, seed)
-    # km_TraningTime = round(time.time() - km_start_time, 5)
+    km_start_time = time.time()
+    km_centroids, km_iter = Kmeans(data, num_clusters, threshold, num_iterations, seed)
+    km_TraningTime = round(time.time() - km_start_time, 5)
 
     kmlb_start_time = time.time()
     # _, _, _ = DCKMeans(data, num_clusters, threshold, num_iterations, seed)
@@ -62,7 +60,7 @@ for data_file in file_list:
 
     # print(kmlb_centroids)
     # print("Distance calculations by KMeans: ", num_clusters*data.shape[0]*km_iter)
-    print("Distance calculations by DCKMeans: ", dckm_calc)
+    # print("Distance calculations by DCKMeans: ", dckm_calc)
 
     # acc, new_labels1 = calc_raw_accuracy(labels, assign1, data)
     # print("KM: ", acc, check_ARI(new_labels1, labels))
@@ -74,7 +72,8 @@ for data_file in file_list:
     # print("Diff in clustering: ", len(np.where(assign1 != assign2)[0]))
     # print(assign1[np.where(assign1 != assign2)[0]], assign2[np.where(assign1 != assign2)[0]])
 
-    # print(km_TraningTime, kmlb_TraningTime)
-    print(kmlb_TraningTime)
-    # print("Dev: ", round(np.sqrt(np.mean(np.square(km_centroids - kmlb_centroids))), 3))
+    print(km_TraningTime, kmlb_TraningTime)
+    # print(kmlb_centroids)
+    # print(kmlb_TraningTime)
+    print("Dev: ", round(np.sqrt(np.mean(np.square(km_centroids - kmlb_centroids))), 3))
     # print(km_centroids)

@@ -16,7 +16,9 @@ class print_utils{
         template <typename T> 
         void print_vector(vector<T> &, int, string);
 
-        void print_map(map<string, vector<double> > &data, int num_records, string dataname); ;
+        template <typename T1>
+        void print_map(map<T1, vector<T1> > &assign_dict, int num_records, 
+        string dataname);
 };
 
 
@@ -59,14 +61,15 @@ for (int i =0; i< data.size(); i++){
 }
 
 
-void print_map(map<string, vector<double> > &data, int num_records, string dataname){
+template <typename T1>
+void print_map(map<T1, vector<T1> > &assign_dict, int num_records, string dataname){
 
 cout << "Printing: " << dataname << " \n" ;
 int limit = 0;
 
-for(map<string, vector<double> >::iterator ii=data.begin(); ii!=data.end(); ++ii){
+for(map<int, vector<int> >::iterator ii=assign_dict.begin(); ii!=assign_dict.end(); ++ii){
        cout << (*ii).first << ": ";
-       vector <double> inVect = (*ii).second;
+       vector <T1> inVect = (*ii).second;
        for (unsigned j=0; j<inVect.size(); j++){
            cout << inVect[j] << " ";
        }
