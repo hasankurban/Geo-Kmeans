@@ -50,12 +50,10 @@ vector<vector <T1> > &dataset, T2 num_cluster){
 
     vector<T1> temp1 (dataset[0].size());
 
-    for(int i=0; i<num_cluster;i++){  
-
+    for(int i=0; i<num_cluster; i=i+500){  
         for(int j=0; j<dataset[i].size(); j++){
                 temp1[j] = dataset[i][j];
-        }
-        
+        }   
         centroids[i] = temp1;
     }
 }

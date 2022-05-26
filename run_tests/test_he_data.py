@@ -20,7 +20,7 @@ num_iterations = 100
 
 # file_list = ['test_data_case1.csv']
 file_list = ['test_100_2_3.csv']
-file_list = ['crop.csv']
+# file_list = ['crop.csv']
 # file_list = ['magic.csv']
 # file_list = ['user_knowledge_train.csv']
 # file_list = ['hapt_train.csv']
@@ -34,9 +34,9 @@ DATA_PATH = "/Users/schmuck/Documents/Box Sync/Ph.D./DATASETS"
 file_path = os.path.join(DATA_PATH, "benchmark", "clustering_data")
 # file_path = os.path.join(Path(__file__).parents[1], "benchmark", "scal_data")
 file_path = os.path.join(DATA_PATH, "real_data")
-# file_path = os.path.join(DATA_PATH, "sample_data")
+file_path = os.path.join(DATA_PATH, "sample_data")
 
-num_clusters = 10
+num_clusters = 3
 seed = 12
 
 for data_file in file_list:

@@ -43,8 +43,8 @@ def DCKMeans(data, num_clusters, threshold, num_iterations, seed):
                                                 assign_dict, dist_mat)
 
         # temp = []
-        # for i in he_indices_dict.keys():
-        #     print("iter: ", loop_counter, "\t center: ", i, "HE datas: ", len(he_indices_dict[i]), he_indices_dict[i])
+        for i in he_indices_dict.keys():
+            print("iter: ", loop_counter, "\t center: ", i, "HE datas: ", len(he_indices_dict[i]), he_indices_dict[i])
 
         for center in neighbors:
             if len(he_indices_dict[center]) > 0:

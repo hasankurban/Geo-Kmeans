@@ -21,4 +21,5 @@ test
 *.pyc
 dictionaries
 /base/__pycache__/*
+*.out
 
