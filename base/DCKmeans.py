@@ -20,6 +20,7 @@ def DCKMeans(data, num_clusters, threshold, num_iterations, seed):
 
     while loop_counter < num_iterations:
 
+        loop_counter += 1
         # assign_dict = get_membership(assigned_clusters, assign_dict, num_clusters)
         #
         # neighbors, he_indices_dict = find_all_he_indices_neighbor(data, new_centroids, distances,
@@ -43,13 +44,11 @@ def DCKMeans(data, num_clusters, threshold, num_iterations, seed):
                                                 assign_dict, dist_mat)
 
         # temp = []
-        for i in he_indices_dict.keys():
-            print("iter: ", loop_counter, "\t center: ", i, "HE datas: ", len(he_indices_dict[i]), he_indices_dict[i])
+        # for i in he_indices_dict.keys():
+        #     print("iter: ", loop_counter, "\t center: ", i, "HE datas: ", len(he_indices_dict[i]), he_indices_dict[i])
 
         for center in neighbors:
             if len(he_indices_dict[center]) > 0:
-                # print("Neighbors for ", center, ": ", neighbors[center])
-                # print(loop_counter, ": HE points for cluster: ", center, len(he_indices_dict[center]))
                 temp, dist123 = calculate_distances_specific(data[he_indices_dict[center]],
                                              new_centroids[neighbors[center]], neighbors[center])
 
@@ -64,8 +63,6 @@ def DCKMeans(data, num_clusters, threshold, num_iterations, seed):
 
         # Calculate the cluster assignments for data points
         centroids[:] = new_centroids[:]
-
-        loop_counter += 1
 
     print("KMeans exiting at: ", loop_counter, " iterations")
     return new_centroids, loop_counter, dckm_calc

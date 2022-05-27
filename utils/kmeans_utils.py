@@ -32,6 +32,13 @@ def calculate_distances(data, centroids):
     return np.argmin(dist_mat, axis=1), np.round(np.min(dist_mat, axis=1), 5)
 
 
+def calculate_distances_test(data, centroids):
+
+    # Find pairwise distances
+    dist_mat = cdist(data, centroids)
+    return np.argmin(dist_mat, axis=1), np.round(np.min(dist_mat, axis=1), 5)
+
+
 def calculate_distances_specific(data, centroids, neighbors):
 
     # Find pairwise distances

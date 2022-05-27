@@ -178,9 +178,9 @@ def get_midpoints_np(new_centroids, assign_dict, distances, dist_mat):
     centroid_neighbor = {}
 
     for k in range(len(new_centroids)):
-        dist_mat[:, k] = np.sqrt(np.sum(np.square(np.subtract(new_centroids, new_centroids[k])), 1))
+        dist_mat[:, k] = np.sqrt(np.sum(np.square(np.subtract(new_centroids, new_centroids[k])), 1))/2
 
-    dist_mat = np.divide(dist_mat, 2)
+    # dist_mat = np.divide(dist_mat, 2)
 
     for i in range(len(new_centroids)):
 
@@ -265,7 +265,8 @@ def find_all_points_neighbor(dataset, centroids_neighbor, new_centroids, assign_
                     he_data_indices += temp_list_1[same_sign].tolist()
 
             # for i in he_data_indices:
-            #     print("Point: ",i, "Data-midpoint vector: ", dataset[i]-mid_point, "\ncenter-midpoint vector: ", center2-mid_point)
+            #     if i == 67:
+            #         print("Point: ",i, "Data-midpoint vector: ", mid_point, "\ncenter-midpoint vector: ", center2-mid_point)
 
         he_data[curr_cluster] = np.unique(he_data_indices).tolist()
 
