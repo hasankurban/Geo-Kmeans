@@ -8,6 +8,7 @@ from pathlib import Path
 import time
 from utils.assign_clusters import *
 import pandas as pd
+from sklearn.cluster import kmeans_plusplus
 
 '''
 Algo1: KMeans
@@ -20,7 +21,7 @@ num_iterations = 100
 
 # file_list = ['test_data_case1.csv']
 file_list = ['test_100_2_3.csv']
-file_list = ['crop.csv']
+file_list = ['ijcnn.csv']
 # file_list = ['magic.csv']
 # file_list = ['user_knowledge_train.csv']
 # file_list = ['hapt_train.csv']
@@ -36,27 +37,37 @@ file_path = os.path.join(DATA_PATH, "benchmark", "clustering_data")
 file_path = os.path.join(DATA_PATH, "real_data")
 # file_path = os.path.join(DATA_PATH, "sample_data")
 
-num_clusters = 10
+num_clusters = 100
 seed = 12
 
 for data_file in file_list:
 
-    data, labels = read_simulated_data(os.path.join(file_path, data_file))
+    # data, labels = read_simulated_data(os.path.join(file_path, data_file))
+    data = read_simulated_data123(os.path.join(file_path, data_file))
     # data = np.array(pd.read_csv(os.path.join(file_path, data_file), sep=" "))
     # data, labels = read_real_data(os.path.join(file_path, data_file), ["user_knowledge_train.csv"])
     # vis_PCA(data, labels)
     # exit(0)
 
-    print(data.shape)
+    print("Data Shape :", data.shape)
 
-    km_start_time = time.time()
-    km_centroids, km_iter = Kmeans(data, num_clusters, threshold, num_iterations, seed)
-    km_TraningTime = round(time.time() - km_start_time, 5)
+    centers, indices = kmeans_plusplus(data, n_clusters=num_clusters, random_state=59)
+
+    # df = pd.DataFrame(centers)
+    # df.to_csv("crop_cen.csv", sep=",", index=False, header=False)
+
+    print("Centers shape: ", centers.shape)
 
     kmlb_start_time = time.time()
     # _, _, _ = DCKMeans(data, num_clusters, threshold, num_iterations, seed)
-    kmlb_centroids, kmlb_iter, dckm_calc = DCKMeans(data, num_clusters, threshold, num_iterations, seed)
+    kmlb_centroids, kmlb_iter, dckm_calc = DCKMeans(data, num_clusters, threshold, num_iterations, centers, seed)
     kmlb_TraningTime = round(time.time() - kmlb_start_time, 2)
+
+    centers, indices = kmeans_plusplus(data, n_clusters=num_clusters, random_state=59)
+
+    km_start_time = time.time()
+    km_centroids, km_iter = Kmeans(data, num_clusters, threshold, num_iterations, centers, seed)
+    km_TraningTime = round(time.time() - km_start_time, 5)
 
     # print(kmlb_centroids)
     # print("Distance calculations by KMeans: ", num_clusters*data.shape[0]*km_iter)
@@ -74,6 +85,5 @@ for data_file in file_list:
 
     print(km_TraningTime, kmlb_TraningTime)
     # print(kmlb_centroids)
-    # print(kmlb_TraningTime)
-    print("Dev: ", round(np.sqrt(np.mean(np.square(km_centroids - kmlb_centroids))), 3))
     # print(km_centroids)
+    print("Dev: ", round(np.mean(np.square(km_centroids - kmlb_centroids))), 3)

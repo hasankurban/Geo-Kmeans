@@ -65,6 +65,8 @@ const vector<T1> &center){
     T1 dist = 0.0;
     T1 temp = 0.0;
     
+    // cout << point.size() << "\n";
+
     for (int i=0; i < point.size(); i++){
         temp = point[i] - center[i];
         dist = dist + (temp*temp);
@@ -89,12 +91,18 @@ T2 num_clusters, vector<T2> &assigned_clusters, vector<vector<T1> > &cluster_siz
 
     // Calculate the distance of points to nearest center
     for (int i=0; i < dataset.size(); i++){
+
+        // cout << "inside dist :" << "\n";
         
         double shortestDist2 = std::numeric_limits<double>::max();
+        // cout << i << "\n";
         
         for (int j=0; j < centroids.size(); j++){ 
+            
             temp = calc_euclidean(dataset[i], centroids[j]);
             temp_dist[j] = temp;
+
+            // cout << "hello" << "n";
             
             if (temp < shortestDist2){
                 shortestDist2 = temp;

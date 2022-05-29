@@ -54,7 +54,7 @@ vector<Tint> &assigned_clusters){
 
     auto t4 = std::chrono::high_resolution_clock::now();
     auto temp1 = std::chrono::duration_cast<std::chrono::milliseconds>(t4 - t3);
-    cout << "Time for first center-point distance calc: " << temp1.count() << "\n";
+    // cout << "Time for first center-point distance calc: " << temp1.count() << "\n";
 
     // Print dist_matrix
     // print_2d_vector(dist_matrix, 5, "Distance matrix");

@@ -78,6 +78,44 @@ std::string& trim(std::string &s) {
 }
 
 
+template <typename Tdouble>
+void read_centroids(string filePath, 
+vector<vector <Tdouble> > &centroids){
+
+    string value, line;
+
+    // file stream handle
+    fstream f;
+    
+    // open file for reading
+    f.open(filePath, ios::in);
+
+    if(f.is_open()){
+        while(getline(f, line)){
+                // cout << line << "\n";
+                stringstream s (line);
+                vector<double> row;
+                
+                while(getline(s, value, ',')){ 
+                    
+                    try{
+                        value.erase(remove( value.begin(), value.end(), '\"' ),value.end()); 
+                        row.push_back(std::stod(value));
+                        // cout << value << " ";
+                    }
+                    catch(...){
+                        cerr << "Exception in file reading" << "\n";
+                        }
+                }
+                // cout << "\n";
+                centroids.push_back(row);
+            }
+    }
+    f.close();
+
+}
+
+
 template <typename Tdouble, typename Tint> pair<Tint, Tint> readSimulatedData(string filePath, 
 vector<vector <Tdouble> > &dataset, vector<Tint> &labels){
 

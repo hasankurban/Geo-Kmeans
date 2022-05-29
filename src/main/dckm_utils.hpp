@@ -87,13 +87,22 @@ const vector<TD> &centroid_vector, const vector<TD> &midpoint){
 
     int mysize = midpoint.size(); 
     TD vec_sum = 0.0;
+    bool stat = false;
     
     for (int i=0; i<mysize; i++)
         vec_sum = vec_sum + ((actual_point[i] - midpoint[i]) * centroid_vector[i]);
 
     if (vec_sum>0)
         return true;
-    
+
+    // for (int i=0; i<mysize; i++){
+    //     vec_sum = actual_point[i] - midpoint[i];
+    //     if ( (vec_sum<=0 & centroid_vector[i]<=0) | (vec_sum>=0 & centroid_vector[i]>=0) ){   
+    //             stat = true;
+    //     } 
+    // }
+
+    // return stat;
     return false;
 }
 
@@ -213,13 +222,14 @@ vector<vector<vector <TD> > > &mid_points,
 vector<vector <TI> > &he_data, int &some_val){
     
     TI my_cluster = 0;
-    vector<TI> temp(3);
+    vector<TI> temp;
     algorithm_utils alg_utils;
+    bool stat = false;
 
     for (int i = 0; i < assigned_clusters.size(); i++){
 
         my_cluster = assigned_clusters[i];
-        
+
         for (int j=0; j<neighbors[my_cluster].size(); j++){
                         
             // int sssize = mid_points[my_cluster][j].size();
@@ -228,15 +238,20 @@ vector<vector <TI> > &he_data, int &some_val){
             //     << neighbors[my_cluster][j] << "\n";
             //     print_2d_vector(neighbors, neighbors.size(), "Neighbors");
             // }
-            auto t3 = std::chrono::high_resolution_clock::now();
-        
+            // auto t3 = std::chrono::high_resolution_clock::now();
+
+            // cout << "Data point: " << i << " Center: " << my_cluster << " neigh: " << neighbors[my_cluster][j] << "\n";
+            
             if (find_context_direction(dataset[i], affine_vectors[my_cluster][j], 
             mid_points[my_cluster][j])){
+
+                // cout << "Data point: " << i << "\n";
                 
-                temp[0] = i;
-                temp[1] = my_cluster;
-                temp[2] = neighbors[my_cluster][j];
-                he_data.push_back(temp);
+                if (temp.size() == 0){
+                    temp.push_back(i);
+                    temp.push_back(my_cluster);
+                }
+                temp.push_back(neighbors[my_cluster][j]);
 
                 // dist_mat[i][neighbors[my_cluster][j]] = alg_utils.calc_euclidean(dataset[i], centroids[neighbors[my_cluster][j]]);
                 
@@ -250,9 +265,13 @@ vector<vector <TI> > &he_data, int &some_val){
                 
                 //break;
             }
-
-        auto t4 = std::chrono::high_resolution_clock::now();
-        some_val = some_val + std::chrono::duration_cast<std::chrono::microseconds>(t4 - t3).count();
+            //stat = false;
+        // auto t4 = std::chrono::high_resolution_clock::now();
+        // some_val = some_val + std::chrono::duration_cast<std::chrono::microseconds>(t4 - t3).count();
+        }
+        if (temp.size()>0){
+            he_data.push_back(temp);
+            temp.clear();
         }
     }
 }

@@ -34,7 +34,7 @@ int main(){
     // Declare variables
     int num_iterations = 100;
     double threshold = 0.01;
-    int num_clusters = 6;
+    int num_clusters = 20;
 
     // Read in the data
     auto t1 = std::chrono::high_resolution_clock::now();
@@ -65,12 +65,12 @@ int main(){
     auto ms_int2 = std::chrono::duration_cast<std::chrono::milliseconds>(t6 - t5);
     std::cout << "Total DCKmeans time: " << ms_int2.count() << "milliseconds\n";
 
-    // auto t3 = std::chrono::high_resolution_clock::now();
-    // km_iter = kmeans(dataset, num_clusters, threshold, num_iterations, 
-    // numRows, numCols, km_centers, km_assign);
-    // auto t4 = std::chrono::high_resolution_clock::now();
-    // auto km_int = std::chrono::duration_cast<std::chrono::milliseconds>(t4 - t3);
-    // std::cout << "\nTotal Kmeans time: " << km_int.count() << "milliseconds\n";
+    auto t3 = std::chrono::high_resolution_clock::now();
+    km_iter = kmeans(dataset, num_clusters, threshold, num_iterations, 
+    numRows, numCols, km_centers, km_assign);
+    auto t4 = std::chrono::high_resolution_clock::now();
+    auto km_int = std::chrono::duration_cast<std::chrono::milliseconds>(t4 - t3);
+    std::cout << "\nTotal Kmeans time: " << km_int.count() << "milliseconds\n";
 
 return 0;
 }

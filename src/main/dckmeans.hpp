@@ -13,7 +13,8 @@ class DataCentricKmeans{
     // T2 would be an integer
     template <typename Tdouble, typename Tint>
     Tint dckmeans(vector<vector <Tdouble> > &dataset, 
-    Tint num_clusters, Tdouble threshold, Tint num_iterations, Tint numCols);
+    Tint num_clusters, Tdouble threshold, Tint num_iterations, 
+    Tint numCols);
 };
 
 
@@ -95,6 +96,7 @@ Tdouble threshold, Tint num_iterations, Tint numCols){
         auto t6 = std::chrono::high_resolution_clock::now();
         ne_time = ne_time + std::chrono::duration_cast<std::chrono::milliseconds>(t6 - t5).count();
 
+        // cout << "counter: " << loop_counter <<"\n";
         // print_2d_vector(neighbors, neighbors.size(), "Neighbors: ");
         
         auto t7 = std::chrono::high_resolution_clock::now();

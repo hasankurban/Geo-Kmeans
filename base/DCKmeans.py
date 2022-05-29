@@ -2,14 +2,14 @@ from utils.kmeans_utils import *
 from utils.vis_utils import *
 
 
-def DCKMeans(data, num_clusters, threshold, num_iterations, seed):
+def DCKMeans(data, num_clusters, threshold, num_iterations, centroids, seed):
 
     loop_counter = 0
     assign_dict = {}
     dist_mat = np.zeros((num_clusters, num_clusters))
 
-    centroids = init_centroids(data, num_clusters, seed)
-    # new_centroids = np.zeros(centroids.shape)
+    if centroids is []:
+        centroids = init_centroids(data, num_clusters, seed)
 
     # Calculate the cluster assignments for data points
     assigned_clusters, distances = calculate_distances(data, centroids)
@@ -30,7 +30,7 @@ def DCKMeans(data, num_clusters, threshold, num_iterations, seed):
         new_centroids = calculate_centroids(data, assigned_clusters)
 
         if check_convergence(new_centroids, centroids, threshold):
-            print("Kmeans: Convergence at iteration: ", loop_counter)
+            print("DCKmeans: Convergence at iteration: ", loop_counter)
             break
 
         # print(loop_counter, " Updated centroids: ", new_centroids)
@@ -64,7 +64,6 @@ def DCKMeans(data, num_clusters, threshold, num_iterations, seed):
         # Calculate the cluster assignments for data points
         centroids[:] = new_centroids[:]
 
-    print("KMeans exiting at: ", loop_counter, " iterations")
     return new_centroids, loop_counter, dckm_calc
 
 
