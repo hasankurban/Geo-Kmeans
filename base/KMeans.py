@@ -26,8 +26,10 @@ def Kmeans(data, num_clusters, threshold, num_iterations, seed):
 
         # Calculate the cluster assignments for data points
         assigned_clusters, _ = calculate_distances(data, centroids)
+        # print(loop_counter, ":", get_quality(data, assigned_clusters, new_centroids, num_clusters))
 
     # print("KMeans exiting at: ", loop_counter, " iterations")
-    return new_centroids, loop_counter
+    sse = get_quality(data, assigned_clusters, new_centroids, num_clusters)
+    return new_centroids, loop_counter, sse
 
 

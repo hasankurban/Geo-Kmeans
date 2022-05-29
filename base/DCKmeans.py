@@ -12,7 +12,7 @@ def DCKMeans(data, num_clusters, threshold, num_iterations, seed):
 
     # Calculate the cluster assignments for data points
     assigned_clusters, distances = calculate_distances(data, centroids)
-    dckm_calc = num_clusters * data.shape[0]
+    # dckm_calc = num_clusters * data.shape[0]
 
     while loop_counter < num_iterations:
 
@@ -41,13 +41,14 @@ def DCKMeans(data, num_clusters, threshold, num_iterations, seed):
 
                 distances[he_indices_dict[center]] = dist123
                 assigned_clusters[he_indices_dict[center]] = temp
-                dckm_calc += len(he_indices_dict[center]) * len(neighbors[center])
+                # dckm_calc += len(he_indices_dict[center]) * len(neighbors[center])
 
         # Calculate the cluster assignments for data points
         centroids[:] = new_centroids[:]
 
-    print("KMeans exiting at: ", loop_counter, " iterations")
-    return new_centroids, loop_counter, dckm_calc
+    # calculate the within cluster SSE
+    sse = get_quality(data, assigned_clusters, new_centroids, num_clusters)
+    return new_centroids, loop_counter, sse
 
 
 

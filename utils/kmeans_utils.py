@@ -14,8 +14,8 @@ def init_centroids(data, num_clusters, seed):
 
     # Randomly select points from the data as centroids
     np.random.seed(seed)
+    indices = np.random.choice(data.shape[0], num_clusters, replace=False)
 
-    indices = np.random.choice(data.shape[0], num_clusters, replace=False, )
     # return np.array(data[0:num_clusters, :])
     return np.array(data[indices, :])
 
@@ -257,7 +257,15 @@ def do_PCA(dataset, centroids1, centroids2, labels, title, file_name):
     #plt.close()
 
 
+def get_quality(data, final_assign, final_centroids, num_clusters):
 
+    final_sse = 0
+
+    for i in range(len(final_centroids)):
+        indices = np.where(final_assign == i)[0]
+        final_sse += np.sqrt(np.sum(np.square(data[indices, :] - final_centroids[i, :])))
+
+    return final_sse
 
 
 
