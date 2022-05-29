@@ -88,13 +88,13 @@ Tdouble threshold, Tint num_iterations, Tint numCols){
                 break;
         }
 
-        auto t5 = std::chrono::high_resolution_clock::now();
+        // auto t5 = std::chrono::high_resolution_clock::now();
         
         find_neighbors(new_centroids, center_dist_mat, cluster_size, 
         neighbors, mid_points, affine_vectors);
         
-        auto t6 = std::chrono::high_resolution_clock::now();
-        ne_time = ne_time + std::chrono::duration_cast<std::chrono::milliseconds>(t6 - t5).count();
+        // auto t6 = std::chrono::high_resolution_clock::now();
+        // ne_time = ne_time + std::chrono::duration_cast<std::chrono::milliseconds>(t6 - t5).count();
 
         // cout << "counter: " << loop_counter <<"\n";
         // print_2d_vector(neighbors, neighbors.size(), "Neighbors: ");
@@ -102,7 +102,8 @@ Tdouble threshold, Tint num_iterations, Tint numCols){
         auto t7 = std::chrono::high_resolution_clock::now();
         
         determine_data_expression(dataset, new_centroids, dist_matrix, cluster_size,
-        assigned_clusters, neighbors, affine_vectors, mid_points, he_data, some_val);
+        assigned_clusters, neighbors, affine_vectors, mid_points, 
+        he_data, some_val, center_dist_mat);
 
         auto t8 = std::chrono::high_resolution_clock::now();
         he_time = he_time + std::chrono::duration_cast<std::chrono::milliseconds>(t8 - t7).count();
@@ -111,31 +112,31 @@ Tdouble threshold, Tint num_iterations, Tint numCols){
         // print_2d_vector(he_data, he_data.size(), "HE Data");
         
         // Re-calculate distances
-        auto t9 = std::chrono::high_resolution_clock::now();
+        // auto t9 = std::chrono::high_resolution_clock::now();
         calculate_HE_distances(dataset, new_centroids, dist_matrix,
                                         num_clusters, assigned_clusters, 
                                         cluster_size, assign_dict, neighbors, he_data);
-        auto t10 = std::chrono::high_resolution_clock::now();
-        dist_time = dist_time + std::chrono::duration_cast<std::chrono::milliseconds>(t10 - t9).count();
+        // auto t10 = std::chrono::high_resolution_clock::now();
+        // dist_time = dist_time + std::chrono::duration_cast<std::chrono::milliseconds>(t10 - t9).count();
 
 
-        auto t11 = std::chrono::high_resolution_clock::now();
+        // auto t11 = std::chrono::high_resolution_clock::now();
         // Move the new centroids to older
         centroids = new_centroids;
         he_data.clear();
         
         // reset centroids
         alg_utils.reinit(new_centroids);
-        auto t12 = std::chrono::high_resolution_clock::now();
-        misc_time = misc_time + std::chrono::duration_cast<std::chrono::milliseconds>(t12 - t11).count();
+        // auto t12 = std::chrono::high_resolution_clock::now();
+        // misc_time = misc_time + std::chrono::duration_cast<std::chrono::milliseconds>(t12 - t11).count();
     }
 
     // cout << "Total time for centroid updation calc: " << cent_time << " milliseconds. \n";
-    cout << "Total time for neighbors calc: " << ne_time << " milliseconds. \n";
+    // cout << "Total time for neighbors calc: " << ne_time << " milliseconds. \n";
     cout << "Total time for HE calc: " << he_time << " milliseconds. \n";
     cout << "Inner loop: " << some_val << "\n";
-    cout << "Total time for misc: " << misc_time << " milliseconds. \n";
-    cout << "Total time for distance calc: " << dist_time << " milliseconds. \n";
+    // cout << "Total time for misc: " << misc_time << " milliseconds. \n";
+    // cout << "Total time for distance calc: " << dist_time << " milliseconds. \n";
 
 
     return loop_counter;

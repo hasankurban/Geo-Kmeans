@@ -49,6 +49,7 @@ void algorithm_utils::init_centroids(vector<vector <T1> > &centroids,
 vector<vector <T1> > &dataset, T2 num_cluster){
 
     vector<T1> temp1 (dataset[0].size());
+    // cout << "Init:" << "\n";
 
     for(int i=0; i<num_cluster; i++){  
         for(int j=0; j<dataset[i].size(); j++){

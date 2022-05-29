@@ -3,8 +3,11 @@
 
 using namespace std;
 
-struct kmeans_output{
-    vector<vector<double> > * new_centroids;
-    vector<int> * assigned_clusters;
-    int loop_counter;
+struct neighbor_holder{
+    double dist = 0.0;
+    vector<int> my_neighbors;
+    vector<vector<vector <double> > > mid_points;
+    vector<vector<vector <double> > > affine;
 };
+
+

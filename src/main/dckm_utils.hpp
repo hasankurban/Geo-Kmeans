@@ -5,6 +5,7 @@
 #include <algorithm>
 #include "algo_utils.hpp"
 #include "misc_utils.hpp"
+#include <numeric>
 #pragma once
 
 using namespace std;
@@ -87,7 +88,7 @@ const vector<TD> &centroid_vector, const vector<TD> &midpoint){
 
     int mysize = midpoint.size(); 
     TD vec_sum = 0.0;
-    bool stat = false;
+    // bool stat = true;
     
     for (int i=0; i<mysize; i++)
         vec_sum = vec_sum + ((actual_point[i] - midpoint[i]) * centroid_vector[i]);
@@ -96,10 +97,20 @@ const vector<TD> &centroid_vector, const vector<TD> &midpoint){
         return true;
 
     // for (int i=0; i<mysize; i++){
+        
     //     vec_sum = actual_point[i] - midpoint[i];
-    //     if ( (vec_sum<=0 & centroid_vector[i]<=0) | (vec_sum>=0 & centroid_vector[i]>=0) ){   
-    //             stat = true;
+        
+    //     if (vec_sum<0){ 
+    //         if (centroid_vector[i]>0)  
+    //             stat = false;
+    //         break;
     //     } 
+
+    //     else if (vec_sum>0){
+    //         if (centroid_vector[i]<0)
+    //             stat = false;
+    //         break;
+    //     }
     // }
 
     // return stat;
@@ -134,8 +145,8 @@ vector<vector<vector <TD> > > &affine_vectors){
     TD radius = 0;
     algorithm_utils alg_utils;
 
-    vector<TI> temp;
-    // vector<vector<TD> > temp_master;
+    vector<TD> temp(3);
+    vector<vector<TD> > temp_master;
     vector<TD> temp_midpoint(centroids[0].size());
     vector<TD> temp_affine(centroids[0].size());
 
@@ -146,14 +157,15 @@ vector<vector<vector <TD> > > &affine_vectors){
     mid_points.clear();
     affine_vectors.clear();
 
-
     // Calculate inter-centroid distances
-    for(int curr_center=0; curr_center<centroids.size(); curr_center++){
+    for(vector<int>::size_type curr_center=0; curr_center<centroids.size(); ++curr_center){
         
         radius = cluster_size[curr_center][1];
         vector<TI> temp1;
+        int cnt = 0;
         
-        for (int ot_center=0; ot_center<centroids.size(); ot_center++){    
+        for (vector<int>::size_type ot_center=0; ot_center<centroids.size(); 
+        ++ot_center){    
             
             // Do only k calculation :) save some 
             if (center_dist_mat[curr_center][ot_center] == 0){
@@ -166,11 +178,15 @@ vector<vector<vector <TD> > > &affine_vectors){
             if ((curr_center != ot_center) && 
             (center_dist_mat[curr_center][ot_center] < radius)){
 
-                // temp[0] = center_dist_mat[curr_center][ot_center];
-                // temp[1] = ot_center;
-                // temp_master.push_back(temp);
+                // Create an object of neighbor holder structure
+                // and populate the fields inside it.
 
-                temp.push_back(ot_center);
+                temp[0] = center_dist_mat[curr_center][ot_center];
+                temp[1] = ot_center;
+                temp[2] = cnt;
+                temp_master.push_back(temp);
+
+                // temp.push_back(ot_center);
            
                 // Get the mid-point coordinates for this pair of centroids
                 find_midpoints(centroids[curr_center], centroids[ot_center], 
@@ -178,32 +194,50 @@ vector<vector<vector <TD> > > &affine_vectors){
                 
                 midpoint_holder.push_back(temp_midpoint);
                 affine_holder.push_back(temp_affine);
+
+                cnt++;
             }
         }   
 
-            if (temp.size()>1){
-                // sort(temp_master.begin(), temp_master.end(), [](const std::vector<TD>& a, const std::vector<TD>& b) {
-                //     return a[0] < b[0];});
+            if (temp_master.size()>1){
+                // vector<int> sorted_index(temp_master.size());
+                vector<vector<double> > temp123;
+                vector<vector<double> > temp234;
 
-                // for(int i = 0; i<temp_master.size();i++)
-                //     temp1.push_back(trunc(temp_master[i][1]));
-            
-                neighbors.push_back(temp);
-                mid_points.push_back(midpoint_holder);
-                affine_vectors.push_back(affine_holder);
+                // iota(sorted_index.begin(), sorted_index.end(), 0);
+                
+                sort(temp_master.begin(), temp_master.end(), [](const std::vector<TD>& a, const std::vector<TD>& b) {
+                    return a[0] < b[0];});
 
-                temp.clear();
+                // print_2d_vector(temp_master, temp_master.size(), "Sorted");
+
+                // sort(sorted_index.begin(), sorted_index.end(), 
+                // [&](int i, int j){return temp_master[i][0] < temp_master[j][0];} );
+
+                for(int i = 0; i<temp_master.size(); i++){
+                    temp1.push_back(trunc(temp_master[i][1]));
+                    temp123.push_back(midpoint_holder[temp_master[i][2]]);
+                    temp234.push_back(affine_holder[temp_master[i][2]]);
+                }
+
+                neighbors.push_back(temp1);
+                mid_points.push_back(temp123);
+                affine_vectors.push_back(temp234);
+
+                // temp.clear();
                 midpoint_holder.clear();
                 affine_holder.clear();
+                temp_master.clear();
             }
 
-            else if (temp.size() == 1){
-                // temp1.push_back(temp_master[0][1]);
-                neighbors.push_back(temp);
+            else if (temp_master.size() == 1){
+                temp1.push_back(temp_master[0][1]);
+                neighbors.push_back(temp1);
                 affine_vectors.push_back(affine_holder);
                 mid_points.push_back(midpoint_holder);
 
-                temp.clear();
+                // temp.clear();
+                temp_master.clear();
                 midpoint_holder.clear();
                 affine_holder.clear();
             }
@@ -219,18 +253,31 @@ vector<TI> &assigned_clusters,
 vector<vector<TI> > &neighbors,
 vector<vector<vector <TD> > > &affine_vectors, 
 vector<vector<vector <TD> > > &mid_points, 
-vector<vector <TI> > &he_data, int &some_val){
+vector<vector <TI> > &he_data, int &some_val, 
+vector<vector <TD> > &cent_dist_mat){
     
     TI my_cluster = 0;
     vector<TI> temp;
     algorithm_utils alg_utils;
     bool stat = false;
+    double temp_dist = 0.0;
 
-    for (int i = 0; i < assigned_clusters.size(); i++){
+    for (vector<int>::size_type i = 0; i < assigned_clusters.size(); ++i){
 
         my_cluster = assigned_clusters[i];
 
-        for (int j=0; j<neighbors[my_cluster].size(); j++){
+        // if (neighbors[my_cluster].size() >= 1){
+            
+        //     temp_dist = alg_utils.calc_euclidean(dataset[i], centroids[my_cluster]);
+
+        //     if (temp_dist < cent_dist_mat[my_cluster][neighbors[my_cluster][0]]){
+        //         // cout << "Data point: " << i << " Center: " << my_cluster << " neigh: " << neighbors[my_cluster][j] << "\n";
+        //         continue;
+        //     }
+
+        //else {
+
+        for (vector<int>::size_type j=0; j<neighbors[my_cluster].size(); ++j){
                         
             // int sssize = mid_points[my_cluster][j].size();
             // if(mid_points[my_cluster][j].size() == 0){
@@ -238,14 +285,10 @@ vector<vector <TI> > &he_data, int &some_val){
             //     << neighbors[my_cluster][j] << "\n";
             //     print_2d_vector(neighbors, neighbors.size(), "Neighbors");
             // }
-            // auto t3 = std::chrono::high_resolution_clock::now();
-
-            // cout << "Data point: " << i << " Center: " << my_cluster << " neigh: " << neighbors[my_cluster][j] << "\n";
+            auto t3 = std::chrono::high_resolution_clock::now();
             
             if (find_context_direction(dataset[i], affine_vectors[my_cluster][j], 
             mid_points[my_cluster][j])){
-
-                // cout << "Data point: " << i << "\n";
                 
                 if (temp.size() == 0){
                     temp.push_back(i);
@@ -265,15 +308,19 @@ vector<vector <TI> > &he_data, int &some_val){
                 
                 //break;
             }
-            //stat = false;
-        // auto t4 = std::chrono::high_resolution_clock::now();
-        // some_val = some_val + std::chrono::duration_cast<std::chrono::microseconds>(t4 - t3).count();
+
+        auto t4 = std::chrono::high_resolution_clock::now();
+        some_val = some_val + std::chrono::duration_cast<std::chrono::milliseconds>(t4 - t3).count();
         }
+
+    //}
         if (temp.size()>0){
             he_data.push_back(temp);
             temp.clear();
         }
-    }
+
+    }      
+
 }
 
 
