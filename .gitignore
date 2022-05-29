@@ -2,4 +2,8 @@
 *.data
 *.txt
 *.png
-gitignore
+*vscode*
+.idea
+.DS_Store
+*cpython*
+*main*
