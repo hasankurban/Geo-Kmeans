@@ -13,11 +13,11 @@ from sortedcontainers import SortedDict
 def init_centroids(data, num_clusters, seed):
 
     # Randomly select points from the data as centroids
-    np.random.seed(seed)
-    indices = np.random.choice(data.shape[0], num_clusters, replace=False)
+    # np.random.seed(seed)
+    # indices = np.random.choice(data.shape[0], num_clusters, replace=False)
 
-    # return np.array(data[0:num_clusters, :])
-    return np.array(data[indices, :])
+    return np.array(data[0:num_clusters, :])
+    # return np.array(data[indices, :])
 
 
 def calculate_distances(data, centroids):
@@ -30,6 +30,30 @@ def calculate_distances(data, centroids):
         dist_mat[i, :] = np.sqrt(np.sum(np.square(data[i] - centroids), 1))
 
     return np.argmin(dist_mat, axis=1), np.round(np.min(dist_mat, axis=1), 5)
+
+
+def calculate_distances_less_modalities(data, centroids, num_clusters):
+
+    # Find pairwise distances
+    while True:
+        n, d = data.shape
+        dist_mat = np.zeros((n, num_clusters), dtype=float)
+
+        for i in range(n):
+            dist_mat[i, :] = np.sqrt(np.sum(np.square(data[i] - centroids), 1))
+
+        assigned_clusters = np.argmin(dist_mat, axis=1)
+        u_clusters = np.sort(np.unique(assigned_clusters))
+
+        remove_indices = [i for i in range(num_clusters) if i not in u_clusters]
+
+        if len(remove_indices) > 0:
+            centroids = np.delete(centroids, remove_indices, 0)
+            num_clusters = len(centroids)
+        else:
+            break
+
+    return assigned_clusters, np.round(np.min(dist_mat, axis=1), 5), centroids, num_clusters
 
 
 def calculate_distances_specific(data, centroids, neighbors):
@@ -53,10 +77,14 @@ def calculate_distances_specific(data, centroids, neighbors):
 
 def calculate_centroids(data, assigned_clusters):
 
-    temp = [np.mean(data[np.where(assigned_clusters == i), ], axis=1)[0] for i in np.sort(np.unique(assigned_clusters))]
+    # if len(u_clusters) < num_clusters:
+    #     remove_indices = [i for i in range(num_clusters) if i not in u_clusters]
+    #     centroids = np.delete(centroids, remove_indices, 0)
 
-    centroids = np.array(temp)
-    return np.round(centroids, 5)
+    temp = [np.mean(data[np.where(assigned_clusters == i),], axis=1)[0] for i in np.sort(np.unique(assigned_clusters))]
+    new_centroids = np.array(temp)
+
+    return np.round(new_centroids, 5)
 
 
 def create_sorted_structure(assigned_clusters, distances, num_clusters):

@@ -8,7 +8,8 @@ def Kmeans(data, num_clusters, threshold, num_iterations, seed):
     centroids = init_centroids(data, num_clusters, seed)
 
     # Calculate the cluster assignments for data points
-    assigned_clusters, _ = calculate_distances(data, centroids)
+    assigned_clusters, _, centroids, num_clusters = \
+        calculate_distances_less_modalities(data, centroids, num_clusters)
 
     while loop_counter < num_iterations:
 

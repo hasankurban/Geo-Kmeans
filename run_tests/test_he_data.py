@@ -1,5 +1,6 @@
 import sys
 sys.path.append("../")
+
 from utils.dataIO import *
 from base.KMeans import *
 from base.DCKmeans import *
@@ -14,11 +15,11 @@ Algo2: DCKMeans
 '''
 
 # Set parameters
-threshold = 0.01
+threshold = 0
 num_iterations = 100
 
 # file_list = ['test_data_case1.csv']
-file_list = ['test_100_4.csv']
+# file_list = ['test_100_2_3.csv']
 file_list = ['crop.csv']
 # file_list = ['magic.csv']
 # file_list = ['user_knowledge_train.csv']
@@ -34,11 +35,11 @@ data_path = "/Users/schmuck/Documents/Box Sync/Ph.D./DATASETS"
 file_path = os.path.join(data_path, "clustering_data")
 # file_path = os.path.join(Path(__file__).parents[1], "benchmark", "scal_data")
 file_path = os.path.join(data_path, "real_data")
-# file_path = os.path.join(Path(__file__).parents[1], "sample_data")
+# file_path = os.path.join(data_path, "sample_data")
 
 
-num_clusters = 10
-seed = 547
+num_clusters = 45
+seed = 51
 
 
 for data_file in file_list:

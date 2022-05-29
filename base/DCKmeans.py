@@ -6,12 +6,15 @@ def DCKMeans(data, num_clusters, threshold, num_iterations, seed):
 
     loop_counter = 0
     assign_dict = {}
-    dist_mat = np.zeros((num_clusters, num_clusters))
 
     centroids = init_centroids(data, num_clusters, seed)
 
     # Calculate the cluster assignments for data points
-    assigned_clusters, distances = calculate_distances(data, centroids)
+    assigned_clusters, distances, centroids, num_clusters = \
+        calculate_distances_less_modalities(data, centroids, num_clusters)
+
+    dist_mat = np.zeros((num_clusters, num_clusters))
+
     # dckm_calc = num_clusters * data.shape[0]
 
     while loop_counter < num_iterations:
