@@ -37,14 +37,14 @@ file_path = os.path.join(data_path, "clustering_data")
 file_path = os.path.join(data_path, "real_data")
 # file_path = os.path.join(data_path, "sample_data")
 
-
-num_clusters = 45
-seed = 51
+num_clusters = 10
+seed = 662
 
 
 for data_file in file_list:
 
-    data, labels = read_simulated_data(os.path.join(file_path, data_file))
+    # data, labels = read_simulated_data(os.path.join(file_path, data_file))
+    data = np.load(os.path.join(file_path, "2022-05-30 08_32_30.582687_10_0.001_1000000000_3662.npy"))
     # data, labels = read_real_data(os.path.join(file_path, data_file), ["user_knowledge_train.csv"])
     # vis_PCA(data, labels)
     # exit(0)
