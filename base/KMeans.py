@@ -1,4 +1,5 @@
 from utils.kmeans_utils import *
+import sys
 
 
 def Kmeans(data, num_clusters, threshold, num_iterations, seed):
@@ -8,10 +9,12 @@ def Kmeans(data, num_clusters, threshold, num_iterations, seed):
     centroids = init_centroids(data, num_clusters, seed)
 
     # Calculate the cluster assignments for data points
-    # assigned_clusters, _, centroids, num_clusters = \
-    #     calculate_distances_less_modalities(data, centroids)
-
+    # assigned_clusters, _, stat = calculate_distances_less_modalities(data, centroids)
     assigned_clusters, _ = calculate_distances(data, centroids)
+
+    if len(np.unique(assigned_clusters)) < num_clusters:
+        print("KMeans: Found less modalities, safe exiting with current centroids.")
+        return centroids, loop_counter, sys.float_info.max
 
     while loop_counter < num_iterations:
 
@@ -31,11 +34,10 @@ def Kmeans(data, num_clusters, threshold, num_iterations, seed):
         # Calculate the cluster assignments for data points
         assigned_clusters, _ = calculate_distances(data, centroids)
 
-        # print(loop_counter, ":", get_quality(data, assigned_clusters, new_centroids, num_clusters))
-        # assigned_clusters, _, centroids, _ = \
-        #     calculate_distances_less_modalities(data, new_centroids)
+        if len(np.unique(assigned_clusters)) < num_clusters:
+            print("KMeans: Found less modalities, safe exiting with current centroids.")
+            return centroids, loop_counter, sys.float_info.max
 
-    # print("KMeans exiting at: ", loop_counter, " iterations")
     sse = get_quality(data, assigned_clusters, new_centroids, num_clusters)
     return new_centroids, loop_counter, sse
 

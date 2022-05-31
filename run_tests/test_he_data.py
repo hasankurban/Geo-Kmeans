@@ -7,6 +7,7 @@ from base.DCKmeans import *
 from pathlib import Path
 import time
 from utils.assign_clusters import *
+from sklearn.cluster import kmeans_plusplus
 
 
 '''
@@ -15,18 +16,18 @@ Algo2: DCKMeans
 '''
 
 # Set parameters
-threshold = 0
+threshold = 0.001
 num_iterations = 100
 
 # file_list = ['test_data_case1.csv']
-# file_list = ['test_100_2_3.csv']
-file_list = ['crop.csv']
-# file_list = ['magic.csv']
+file_list = ['test_100_2_3.csv']
+# file_list = ['crop.csv']
+# file_list = ['ms.csv']
 # file_list = ['user_knowledge_train.csv']
 # file_list = ['hapt_train.csv']
 # file_list = ['covertype.csv']
-file_list = ['spambase.csv']
-# file_list = ['10_clusters.csv']
+# file_list = ['ijcnn.csv']
+# file_list = ['50_clusters.csv']
 # file_list = ['5000000_points.csv']
 
 data_path = "/Users/schmuck/Documents/Box Sync/Ph.D./DATASETS"
@@ -36,18 +37,22 @@ file_path = os.path.join(data_path, "clustering_data")
 # file_path = os.path.join(Path(__file__).parents[1], "benchmark", "scal_data")
 file_path = os.path.join(data_path, "real_data")
 # file_path = os.path.join(data_path, "sample_data")
+# file_path = os.path.join(data_path, "clustering_data")
 
 num_clusters = 10
-seed = 662
+seed = 1795
 
 
 for data_file in file_list:
 
-    # data, labels = read_simulated_data(os.path.join(file_path, data_file))
-    data = np.load(os.path.join(file_path, "2022-05-30 08_32_30.582687_10_0.001_1000000000_3662.npy"))
+    # data = read_simulated_data123(os.path.join(file_path, data_file))
+    data = np.load(os.path.join(file_path, "2022-05-30 08_32_59.450791_10_0.001_1000000000_1795.npy"))
     # data, labels = read_real_data(os.path.join(file_path, data_file), ["user_knowledge_train.csv"])
     # vis_PCA(data, labels)
     # exit(0)
+    # np.random.seed(seed)
+    # centers, _ = kmeans_plusplus(data, n_clusters=num_clusters, random_state=seed)
+    # np.savetxt("ms_cen_ea.csv", centers, delimiter=" ")
 
     print(data.shape)
 
@@ -74,5 +79,6 @@ for data_file in file_list:
     # print("Diff in clustering: ", len(np.where(assign1 != assign2)[0]))
     # print(assign1[np.where(assign1 != assign2)[0]], assign2[np.where(assign1 != assign2)[0]])
 
+    # print(kmlb_TraningTime)
     print(km_TraningTime, kmlb_TraningTime, km_sse, dckm_sse)
     print("Dev: ", round(np.sqrt(np.mean(np.square(km_centroids - kmlb_centroids))), 3))

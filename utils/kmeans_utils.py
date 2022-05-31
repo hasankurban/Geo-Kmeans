@@ -14,13 +14,13 @@ from sklearn.cluster import kmeans_plusplus
 def init_centroids(data, num_clusters, seed):
 
     # Randomly select points from the data as centroids
-    # np.random.seed(seed)
-    # indices = np.random.choice(data.shape[0], num_clusters, replace=False)
-    centers, indices = kmeans_plusplus(data, n_clusters=num_clusters, random_state=seed)
+    np.random.seed(seed)
+    indices = np.random.choice(data.shape[0], num_clusters, replace=False)
+    # centers, _ = kmeans_plusplus(data, n_clusters=num_clusters, random_state=seed)
 
     # return np.array(data[0:num_clusters, :])
-    return centers
-    # return np.array(data[indices, :])
+    # return centers
+    return np.array(data[indices, :])
 
 
 def calculate_distances(data, centroids):
@@ -38,27 +38,24 @@ def calculate_distances(data, centroids):
 def calculate_distances_less_modalities(data, centroids):
 
     num_clusters = len(centroids)
+    stat = False
 
     # Find pairwise distances
-    while True:
-        n, d = data.shape
-        dist_mat = np.zeros((n, num_clusters), dtype=float)
+    n, d = data.shape
+    dist_mat = np.zeros((n, num_clusters), dtype=float)
 
-        for i in range(n):
-            dist_mat[i, :] = np.sqrt(np.sum(np.square(data[i] - centroids), 1))
+    for i in range(n):
+        dist_mat[i, :] = np.sqrt(np.sum(np.square(data[i] - centroids), 1))
 
-        assigned_clusters = np.argmin(dist_mat, axis=1)
-        u_clusters = np.sort(np.unique(assigned_clusters))
+    assigned_clusters = np.argmin(dist_mat, axis=1)
+    u_clusters = np.sort(np.unique(assigned_clusters))
 
-        remove_indices = [i for i in range(num_clusters) if i not in u_clusters]
+    remove_indices = [i for i in range(num_clusters) if i not in u_clusters]
 
-        if len(remove_indices) > 0:
-            centroids = np.delete(centroids, remove_indices, 0)
-            num_clusters = len(centroids)
-        else:
-            break
+    if len(remove_indices) > 0:
+        stat = True
 
-    return assigned_clusters, np.round(np.min(dist_mat, axis=1), 5), centroids, num_clusters
+    return assigned_clusters, np.round(np.min(dist_mat, axis=1), 5), stat
 
 
 def calculate_distances_specific(data, centroids, neighbors):
@@ -67,32 +64,8 @@ def calculate_distances_specific(data, centroids, neighbors):
     n, d = data.shape
     dist_mat = np.zeros((n, len(centroids)), dtype=float)
 
-    for i in range(n):
-        dist_mat[i, :] = np.sqrt(np.sum(np.square(data[i] - centroids), 1))
-
-
-    # num_clusters = len(centroids)
-    # print("Dist specific centroids: ", centroids.shape, num_clusters)
-    #
-    # while True:
-    #     n, d = data.shape
-    #     dist_mat = np.zeros((n, num_clusters), dtype=float)
-    #
-    #     for i in range(n):
-    #         dist_mat[i, :] = np.sqrt(np.sum(np.square(data[i] - centroids), 1))
-    #
-    #     assigned_clusters = np.argmin(dist_mat, axis=1)
-    #     u_clusters = np.sort(np.unique(assigned_clusters))
-    #
-    #     remove_indices = [i for i in range(num_clusters) if i not in u_clusters]
-    #     print(u_clusters)
-    #
-    #     if len(remove_indices) > 0:
-    #         centroids = np.delete(centroids, remove_indices, 0)
-    #         print("Test-1: ", len(remove_indices), centroids.shape)
-    #         num_clusters = len(centroids)
-    #     else:
-    #         break
+    for i in range(len(centroids)):
+        dist_mat[:, i] = np.sqrt(np.sum(np.square(data - centroids[i]), 1))
 
     # Find the closest centroid
     assigned_clusters = np.argmin(dist_mat, axis=1)

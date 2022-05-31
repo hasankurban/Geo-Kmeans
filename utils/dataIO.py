@@ -31,6 +31,12 @@ def read_simulated_data(file_path):
     return np.array(data), labels
 
 
+def read_simulated_data123(file_path):
+
+    data = pd.read_csv(file_path, sep=",")
+    return np.array(data)
+
+
 def write_result_data(result, output_loc, result_type):
 
     if result_type == "clustering_results":
