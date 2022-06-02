@@ -165,28 +165,26 @@ def find_all_he_indices(dataset, new_centroids, distances, assign_dict, dist_mat
     return he_indices
 
 
-def find_all_he_indices_neighbor(dataset, new_centroids, distances, assign_dict, dist_mat):
+def find_all_he_indices_neighbor(dataset, new_centroids, radius, assign_dict, dist_mat):
 
-    centroids_neighbor = get_midpoints_np(new_centroids, assign_dict, distances, dist_mat)
+    centroids_neighbor = get_midpoints_np(new_centroids, radius, dist_mat)
     he_indices_dict = find_all_points_neighbor(dataset, centroids_neighbor, new_centroids, assign_dict)
 
     return centroids_neighbor, he_indices_dict
 
 
-def get_midpoints_np(new_centroids, assign_dict, distances, dist_mat):
+def get_midpoints_np(new_centroids, radius, dist_mat):
 
     centroid_neighbor = {}
 
     for k in range(len(new_centroids)):
-        dist_mat[:, k] = np.sqrt(np.sum(np.square(np.subtract(new_centroids, new_centroids[k])), 1))
+        dist_mat[:, k] = np.sqrt(np.sum(np.square(np.subtract(new_centroids, new_centroids[k])), 1))/2
 
-    dist_mat = np.divide(dist_mat, 2)
+    # dist_mat = np.divide(dist_mat, 2)
 
     for i in range(len(new_centroids)):
 
-        s = assign_dict[i]
-
-        cen1_rad = np.max(distances[s])
+        cen1_rad = radius[i]
         neighbors = np.where(dist_mat[i] <= cen1_rad)[0]
         # neighbors = neighbors[neighbors != i]
         centroid_neighbor[i] = neighbors
@@ -258,12 +256,16 @@ def find_sign_by_product(mid_point, center2, points):
     return points_vec.dot(temp_vec)
 
 
-def get_membership(assigned_clusters, assign_dict, num_clusters):
+def get_membership(assigned_clusters, distances, num_clusters, assign_dict):
+
+    radius = {}
 
     for i in range(num_clusters):
-        assign_dict[i] = np.where(assigned_clusters == i)[0].tolist()
+        indices = np.where(assigned_clusters == i)[0].tolist()
+        assign_dict[i] = indices
+        radius[i] = np.max(distances[indices])
 
-    return assign_dict
+    return assign_dict, radius
 
 
 

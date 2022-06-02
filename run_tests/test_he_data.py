@@ -7,7 +7,7 @@ from base.DCKmeans import *
 from pathlib import Path
 import time
 from utils.assign_clusters import *
-from sklearn.cluster import kmeans_plusplus
+import glob
 
 
 '''
@@ -21,7 +21,7 @@ num_iterations = 100
 
 # file_list = ['test_data_case1.csv']
 file_list = ['test_100_2_3.csv']
-# file_list = ['crop.csv']
+file_list = ['crop.csv']
 # file_list = ['ms.csv']
 # file_list = ['user_knowledge_train.csv']
 # file_list = ['hapt_train.csv']
@@ -30,7 +30,7 @@ file_list = ['test_100_2_3.csv']
 # file_list = ['50_clusters.csv']
 # file_list = ['5000000_points.csv']
 
-data_path = "/Users/schmuck/Documents/Box Sync/Ph.D./DATASETS"
+data_path = "/Users/schmuck/Documents/Box Sync/Ph.D./DATASETS/"
 
 # Make changes for adjusting the current directory here
 file_path = os.path.join(data_path, "clustering_data")
@@ -38,15 +38,23 @@ file_path = os.path.join(data_path, "clustering_data")
 file_path = os.path.join(data_path, "real_data")
 # file_path = os.path.join(data_path, "sample_data")
 # file_path = os.path.join(data_path, "clustering_data")
+# file_path = os.path.join(data_path, "data")
 
-num_clusters = 10
-seed = 1795
+num_clusters = 5
+seed = 1245
 
+seeds = np.random.randint(1, 1200, 1000)
+seeds = [1]
+counter = 1
+
+# file_list = glob.glob(os.path.join(data_path, file_path, "*"))
 
 for data_file in file_list:
 
-    # data = read_simulated_data123(os.path.join(file_path, data_file))
-    data = np.load(os.path.join(file_path, "2022-05-30 08_32_59.450791_10_0.001_1000000000_1795.npy"))
+    data, labels = read_simulated_data(os.path.join(file_path, data_file))
+    # data = np.load(os.path.join(file_path, "264792_4_0.001_1000000000_.npy"))
+    # data = np.load(data_file)
+
     # data, labels = read_real_data(os.path.join(file_path, data_file), ["user_knowledge_train.csv"])
     # vis_PCA(data, labels)
     # exit(0)
@@ -54,31 +62,38 @@ for data_file in file_list:
     # centers, _ = kmeans_plusplus(data, n_clusters=num_clusters, random_state=seed)
     # np.savetxt("ms_cen_ea.csv", centers, delimiter=" ")
 
+    # print("Counter: ", counter, " File: ", data_file)
     print(data.shape)
 
-    km_start_time = time.time()
-    km_centroids, km_iter, km_sse = Kmeans(data, num_clusters, threshold, num_iterations, seed)
-    # km_centroids, km_iter = km_clustering(data, num_clusters, num_iterations, threshold, seed)
-    km_TraningTime = round(time.time() - km_start_time, 2)
+    for seed in seeds:
 
-    kmlb_start_time = time.time()
-    # _, _, _ = DCKMeans(data, num_clusters, threshold, num_iterations, seed)
-    kmlb_centroids, kmlb_iter, dckm_sse = DCKMeans(data, num_clusters, threshold, num_iterations, seed)
-    kmlb_TraningTime = round(time.time() - kmlb_start_time, 2)
+        km_start_time = time.time()
+        km_centroids, km_iter, km_sse = Kmeans(data, num_clusters, threshold, num_iterations, seed)
+        km_TraningTime = round(time.time() - km_start_time, 2)
 
-    # print("Distance calculations by KMeans: ", num_clusters*data.shape[0]*km_iter)
-    # print("Distance calculations by DCKMeans: ", dckm_calc)
+        kmlb_start_time = time.time()
+        kmlb_centroids, kmlb_iter, dckm_sse = DCKMeans(data, num_clusters, threshold, num_iterations, seed)
+        kmlb_TraningTime = round(time.time() - kmlb_start_time, 2)
 
-    # acc, new_labels1 = calc_raw_accuracy(labels, assign1, data)
-    # print("KM: ", acc, check_ARI(new_labels1, labels))
-    #
-    # acc, new_labels2 = calc_raw_accuracy(labels, assign2, data)
-    # print("KMLB: ", acc, check_ARI(new_labels2, labels))
-    #
-    # print("Diff in clustering: ", len(np.where(new_labels1 != new_labels2)[0]))
-    # print("Diff in clustering: ", len(np.where(assign1 != assign2)[0]))
-    # print(assign1[np.where(assign1 != assign2)[0]], assign2[np.where(assign1 != assign2)[0]])
+        # if (km_iter!=kmlb_iter):
+        #     print("Difference found: ", seed)
+        #     break
 
-    # print(kmlb_TraningTime)
-    print(km_TraningTime, kmlb_TraningTime, km_sse, dckm_sse)
-    print("Dev: ", round(np.sqrt(np.mean(np.square(km_centroids - kmlb_centroids))), 3))
+        # print("Distance calculations by KMeans: ", num_clusters*data.shape[0]*km_iter)
+        # print("Distance calculations by DCKMeans: ", dckm_calc)
+
+        # acc, new_labels1 = calc_raw_accuracy(labels, assign1, data)
+        # print("KM: ", acc, check_ARI(new_labels1, labels))
+        #
+        # acc, new_labels2 = calc_raw_accuracy(labels, assign2, data)
+        # print("KMLB: ", acc, check_ARI(new_labels2, labels))
+        #
+        # print("Diff in clustering: ", len(np.where(new_labels1 != new_labels2)[0]))
+        # print("Diff in clustering: ", len(np.where(assign1 != assign2)[0]))
+        # print(assign1[np.where(assign1 != assign2)[0]], assign2[np.where(assign1 != assign2)[0]])
+
+        # print(kmlb_TraningTime)
+        print(km_TraningTime, kmlb_TraningTime)
+        print("Dev: ", round(np.sqrt(np.mean(np.square(km_centroids - kmlb_centroids))), 3))
+
+    counter += 1

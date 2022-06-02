@@ -31,8 +31,8 @@ def DCKMeans(data, num_clusters, threshold, num_iterations, seed):
             print("Kmeans: Convergence at iteration: ", loop_counter)
             break
 
-        assign_dict = get_membership(assigned_clusters, assign_dict, num_clusters)
-        neighbors, he_indices_dict = find_all_he_indices_neighbor(data, new_centroids, distances,
+        assign_dict, radius = get_membership(assigned_clusters, distances, num_clusters, assign_dict)
+        neighbors, he_indices_dict = find_all_he_indices_neighbor(data, new_centroids, radius,
                                                 assign_dict, dist_mat)
 
         # temp = []
