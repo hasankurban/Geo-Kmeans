@@ -22,7 +22,7 @@ int main(){
     string filePath = basePath + "real_data/";
     
     // string fileName = "test_100_2_3.csv";
-    string fileName = "ijcnn.csv";
+    string fileName = "spambase.csv";
     // string fileName = "50_clusters.csv";
 
     string somefilePath = filePath + fileName;
@@ -33,8 +33,8 @@ int main(){
     
     // Declare variables
     int num_iterations = 100;
-    double threshold = 0.01;
-    int num_clusters = 10;
+    double threshold = 0.001;
+    int num_clusters = 15;
 
     // Read in the data
     auto t1 = std::chrono::high_resolution_clock::now();
