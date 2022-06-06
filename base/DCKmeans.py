@@ -8,15 +8,18 @@ def DCKMeans(data, num_clusters, threshold, num_iterations, seed):
     loop_counter = 0
     assign_dict = {}
     dist_mat = np.zeros((num_clusters, num_clusters))
+    dckm_calc = 0
 
     centroids = init_centroids(data, num_clusters, seed)
 
     # Calculate the cluster assignments for data points
     assigned_clusters, distances = calculate_distances(data, centroids)
 
+    dckm_calc += data.shape[0]*num_clusters
+
     if len(np.unique(assigned_clusters)) < num_clusters:
         print("DCKMeans: Found less modalities, safe exiting with current centroids.")
-        return centroids, loop_counter, sys.float_info.max
+        return centroids, loop_counter, sys.float_info.max, dckm_calc
 
     # dckm_calc = num_clusters * data.shape[0]
 
@@ -48,16 +51,18 @@ def DCKMeans(data, num_clusters, threshold, num_iterations, seed):
                 assigned_clusters[he_indices_dict[center]] = temp
                 # dckm_calc += len(he_indices_dict[center]) * len(neighbors[center])
 
+                dckm_calc += (len(he_indices_dict) * len(neighbors[center]))
+
         if len(np.unique(assigned_clusters)) < num_clusters:
             print("DCKMeans: Found less modalities, safe exiting with current centroids.")
-            return centroids, loop_counter, sys.float_info.max
+            return centroids, loop_counter, sys.float_info.max, dckm_calc
 
         # Calculate the cluster assignments for data points
         centroids[:] = new_centroids[:]
 
     # calculate the within cluster SSE
     sse = get_quality(data, assigned_clusters, new_centroids, num_clusters)
-    return new_centroids, loop_counter, sse
+    return new_centroids, loop_counter, sse, dckm_calc
 
 
 

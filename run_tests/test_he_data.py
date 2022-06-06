@@ -26,7 +26,7 @@ file_list = ['crop.csv']
 # file_list = ['user_knowledge_train.csv']
 # file_list = ['hapt_train.csv']
 # file_list = ['covertype.csv']
-# file_list = ['ijcnn.csv']
+file_list = ['spambase.csv']
 # file_list = ['50_clusters.csv']
 # file_list = ['5000000_points.csv']
 
@@ -40,7 +40,7 @@ file_path = os.path.join(data_path, "real_data")
 # file_path = os.path.join(data_path, "clustering_data")
 # file_path = os.path.join(data_path, "data")
 
-num_clusters = 5
+num_clusters = 30
 seed = 1245
 
 seeds = np.random.randint(1, 1200, 1000)
@@ -68,11 +68,11 @@ for data_file in file_list:
     for seed in seeds:
 
         km_start_time = time.time()
-        km_centroids, km_iter, km_sse = Kmeans(data, num_clusters, threshold, num_iterations, seed)
+        km_centroids, km_iter, km_sse, km_cacl = Kmeans(data, num_clusters, threshold, num_iterations, seed)
         km_TraningTime = round(time.time() - km_start_time, 2)
 
         kmlb_start_time = time.time()
-        kmlb_centroids, kmlb_iter, dckm_sse = DCKMeans(data, num_clusters, threshold, num_iterations, seed)
+        kmlb_centroids, kmlb_iter, dckm_sse, dckm_calc = DCKMeans(data, num_clusters, threshold, num_iterations, seed)
         kmlb_TraningTime = round(time.time() - kmlb_start_time, 2)
 
         # if (km_iter!=kmlb_iter):
@@ -94,6 +94,7 @@ for data_file in file_list:
 
         # print(kmlb_TraningTime)
         print(km_TraningTime, kmlb_TraningTime)
+        print(km_cacl, dckm_calc)
         print("Dev: ", round(np.sqrt(np.mean(np.square(km_centroids - kmlb_centroids))), 3))
 
     counter += 1
