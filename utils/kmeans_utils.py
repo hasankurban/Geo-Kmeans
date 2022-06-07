@@ -16,7 +16,6 @@ def init_centroids(data, num_clusters, seed):
     # Randomly select points from the data as centroids
     np.random.seed(seed)
     indices = np.random.choice(data.shape[0], num_clusters, replace=False)
-    # centers, _ = kmeans_plusplus(data, n_clusters=num_clusters, random_state=seed)
 
     # return np.array(data[0:num_clusters, :])
     # return centers

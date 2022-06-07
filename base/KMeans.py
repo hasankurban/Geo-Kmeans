@@ -10,9 +10,9 @@ def Kmeans(data, num_clusters, threshold, num_iterations, seed):
 
     # Calculate the cluster assignments for data points
     # assigned_clusters, _, stat = calculate_distances_less_modalities(data, centroids)
-    assigned_clusters, _ = calculate_distances(data, centroids)
+    old_assigned_clusters, _ = calculate_distances(data, centroids)
 
-    if len(np.unique(assigned_clusters)) < num_clusters:
+    if len(np.unique(old_assigned_clusters)) < num_clusters:
         print("KMeans: Found less modalities, safe exiting with current centroids.")
         return centroids, loop_counter, sys.float_info.max, data.shape[0]*num_clusters
 
@@ -22,23 +22,28 @@ def Kmeans(data, num_clusters, threshold, num_iterations, seed):
         # print("Counter: ", loop_counter)
 
         # Re-calculate the centroids
-        new_centroids = calculate_centroids(data, assigned_clusters)
+        new_centroids = calculate_centroids(data, old_assigned_clusters)
 
-        if check_convergence(new_centroids, centroids, threshold):
+        # if check_convergence(new_centroids, centroids, threshold):
+        #     print("Kmeans: Convergence at iteration: ", loop_counter)
+        #     break
+
+        # Calculate the cluster assignments for data points
+        new_assigned_clusters, _ = calculate_distances(data, new_centroids)
+
+        if (new_assigned_clusters == old_assigned_clusters).all():
             print("Kmeans: Convergence at iteration: ", loop_counter)
             break
 
-        # Calculate the cluster assignments for data points
-        centroids[:] = new_centroids[:]
-
-        # Calculate the cluster assignments for data points
-        assigned_clusters, _ = calculate_distances(data, centroids)
-
-        if len(np.unique(assigned_clusters)) < num_clusters:
+        if len(np.unique(new_assigned_clusters)) < num_clusters:
             print("KMeans: Found less modalities, safe exiting with current centroids.")
             return centroids, loop_counter, sys.float_info.max, data.shape[0]*loop_counter*num_clusters
 
-    sse = get_quality(data, assigned_clusters, new_centroids, num_clusters)
+        # Calculate the cluster assignments for data points
+        centroids[:] = new_centroids[:]
+        old_assigned_clusters[:] = new_assigned_clusters[:]
+
+    sse = get_quality(data, new_assigned_clusters, new_centroids, num_clusters)
     return new_centroids, loop_counter, sse, data.shape[0]*loop_counter*num_clusters
 
 
