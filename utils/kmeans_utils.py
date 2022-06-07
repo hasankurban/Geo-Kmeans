@@ -65,7 +65,8 @@ def calculate_distances_specific(data, centroids, neighbors):
     dist_mat = np.zeros((n, len(centroids)), dtype=float)
 
     for i in range(len(centroids)):
-        dist_mat[:, i] = np.sqrt(np.sum(np.square(data - centroids[i]), 1))
+        dist_mat[:, i] = np.sum(np.square(data - centroids[i]), 1)
+    dist_mat = np.sqrt(dist_mat)
 
     # Find the closest centroid
     assigned_clusters = np.argmin(dist_mat, axis=1)

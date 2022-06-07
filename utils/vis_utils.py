@@ -178,15 +178,15 @@ def get_midpoints_np(new_centroids, radius, dist_mat):
     centroid_neighbor = {}
 
     for k in range(len(new_centroids)):
-        dist_mat[:, k] = np.sqrt(np.sum(np.square(np.subtract(new_centroids, new_centroids[k])), 1))/2
+        dist_mat[:, k] = np.sum(np.square(np.subtract(new_centroids, new_centroids[k])), 1)
 
-    # dist_mat = np.divide(dist_mat, 2)
+    dist_mat = np.sqrt(dist_mat)
+    dist_mat = np.divide(dist_mat, 2)
 
     for i in range(len(new_centroids)):
 
         cen1_rad = radius[i]
         neighbors = np.where(dist_mat[i] <= cen1_rad)[0]
-        # neighbors = neighbors[neighbors != i]
         centroid_neighbor[i] = neighbors
 
     return centroid_neighbor
