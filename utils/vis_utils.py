@@ -2,9 +2,9 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-from scipy.spatial.distance import cdist
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
+import time
 
 
 def vis_data_with_he(data, centroids, assigned_clusters, distances,
@@ -158,18 +158,14 @@ def vis_data_with_he_test(data, centroids, assigned_clusters, distances,
 
 
 def find_all_he_indices(dataset, new_centroids, distances, assign_dict, dist_mat):
-
     centroids_neighbor = get_midpoints_np(new_centroids, assign_dict, distances, dist_mat)
     he_indices = find_all_points(dataset, centroids_neighbor, new_centroids, assign_dict)
-
     return he_indices
 
 
 def find_all_he_indices_neighbor(dataset, new_centroids, radius, assign_dict, dist_mat):
-
     centroids_neighbor = get_midpoints_np(new_centroids, radius, dist_mat)
     he_indices_dict = find_all_points_neighbor(dataset, centroids_neighbor, new_centroids, assign_dict)
-
     return centroids_neighbor, he_indices_dict
 
 

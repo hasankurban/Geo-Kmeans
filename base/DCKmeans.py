@@ -1,14 +1,16 @@
 from utils.kmeans_utils import *
 from utils.vis_utils import *
 import sys
+import time
 
 
 def DCKMeans(data, num_clusters, threshold, num_iterations, seed):
 
     loop_counter = 0
-    assign_dict = {}
-    dist_mat = np.zeros((num_clusters, num_clusters))
     dckm_calc = 0
+    assign_dict = {}
+
+    dist_mat = np.zeros((num_clusters, num_clusters))
     new_assigned_clusters = np.zeros((data.shape[0]))
 
     centroids = init_centroids(data, num_clusters, seed)
@@ -65,7 +67,6 @@ def DCKMeans(data, num_clusters, threshold, num_iterations, seed):
 
         # Calculate the cluster assignments for data points
         centroids[:] = new_centroids[:]
-
         old_assigned_clusters[:] = new_assigned_clusters[:]
 
     # calculate the within cluster SSE

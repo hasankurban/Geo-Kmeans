@@ -21,7 +21,7 @@ num_iterations = 100
 
 # file_list = ['test_data_case1.csv']
 file_list = ['test_100_2_3.csv']
-# file_list = ['crop.csv']
+file_list = ['crop.csv']
 # file_list = ['ms.csv']
 # file_list = ['user_knowledge_train.csv']
 # file_list = ['hapt_train.csv']
@@ -40,7 +40,7 @@ file_path = os.path.join(data_path, "real_data")
 # file_path = os.path.join(data_path, "clustering_data")
 # file_path = os.path.join(data_path, "data")
 
-num_clusters = 30
+num_clusters = 5
 seed = 1245
 
 seeds = np.random.randint(1, 1200, 1000)
