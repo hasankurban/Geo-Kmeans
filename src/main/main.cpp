@@ -10,7 +10,7 @@
 
 using namespace std;
 
-string basePath = "/Users/schmuck/Documents/Box Sync/Ph.D./DATASETS/";
+string basePath = "/Users/schmuck/Documents/OneDrive - Indiana University/Box Sync/PhD/DATASETS/";
 
 int main(){
 
