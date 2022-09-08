@@ -88,33 +88,24 @@ const vector<TD> &centroid_vector, const vector<TD> &midpoint){
 
     int mysize = midpoint.size(); 
     TD vec_sum = 0.0;
-    // bool stat = true;
+    bool stat = true;
     
-    for (int i=0; i<mysize; i++)
-        vec_sum = vec_sum + ((actual_point[i] - midpoint[i]) * centroid_vector[i]);
+    // for (int i=0; i<mysize; i++)
+    //     vec_sum = vec_sum + ((actual_point[i] - midpoint[i]) * centroid_vector[i]);
 
-    if (vec_sum>0)
-        return true;
+    // if (vec_sum>0)
+    //     return true;
 
-    // for (int i=0; i<mysize; i++){
-        
-    //     vec_sum = actual_point[i] - midpoint[i];
-        
-    //     if (vec_sum<0){ 
-    //         if (centroid_vector[i]>0)  
-    //             stat = false;
-    //         break;
-    //     } 
+    for (int i=0; i<mysize; i++){
+        vec_sum = actual_point[i] - midpoint[i];
+        if (std::signbit(vec_sum) != std::signbit(centroid_vector[i])){
+            stat = false;
+            break;
+        }
+    }
 
-    //     else if (vec_sum>0){
-    //         if (centroid_vector[i]<0)
-    //             stat = false;
-    //         break;
-    //     }
-    // }
-
-    // return stat;
-    return false;
+    return stat;
+    // return false;
 }
 
 
@@ -318,9 +309,7 @@ vector<vector <TD> > &cent_dist_mat){
             he_data.push_back(temp);
             temp.clear();
         }
-
     }      
-
 }
 
 
