@@ -23,14 +23,14 @@ num_iterations = 100
 file_list = ['test_100_2_3.csv']
 file_list = ['crop.csv']
 # file_list = ['ms.csv']
-# file_list = ['user_knowledge_train.csv']
-# file_list = ['hapt_train.csv']
-# file_list = ['covertype.csv']
-file_list = ['spambase.csv']
-# file_list = ['50_clusters.csv']
+file_list = ['user_knowledge_train.csv']
+file_list = ['hapt_train.csv']
+# file_list = ['covtype.csv']
+# file_list = ['spambase.csv']
+# file_list = ['magic.csv']
 # file_list = ['5000000_points.csv']
 
-data_path = "/Users/schmuck/Documents/Box Sync/Ph.D./DATASETS/"
+data_path = "/Users/schmuck/Documents/OneDrive - Indiana University/Box Sync/PhD/DATASETS"
 
 # Make changes for adjusting the current directory here
 file_path = os.path.join(data_path, "clustering_data")
@@ -68,11 +68,11 @@ for data_file in file_list:
     for seed in seeds:
 
         km_start_time = time.time()
-        km_centroids, km_iter, km_sse, km_cacl = Kmeans(data, num_clusters, threshold, num_iterations, seed)
+        km_centroids, km_iter, km_cacl = Kmeans(data, num_clusters, threshold, num_iterations, seed)
         km_TraningTime = round(time.time() - km_start_time, 2)
 
         kmlb_start_time = time.time()
-        kmlb_centroids, kmlb_iter, dckm_sse, dckm_calc = DCKMeans(data, num_clusters, threshold, num_iterations, seed)
+        kmlb_centroids, kmlb_iter, dckm_calc = DCKMeans(data, num_clusters, threshold, num_iterations, seed)
         kmlb_TraningTime = round(time.time() - kmlb_start_time, 2)
 
         # if (km_iter!=kmlb_iter):

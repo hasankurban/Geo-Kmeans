@@ -1,6 +1,6 @@
 import sys
 sys.path.append("..")
-
+import gc
 from utils.dataIO import *
 from pathlib import Path
 from run_algorithms import run_algorithms
@@ -15,15 +15,15 @@ epsilon = 0.001
 num_iterations = 100
 
 
-file_list = [['user_knowledge_train.csv', 'User_Knowledge_Data', 'user_knowledge_test.csv'],
- ['spambase.csv', 'Spambase_Data'],
- ['hapt_train.csv', 'Smartphone_Posture_Data', 'hapt_test.csv'],
- ['crop.csv', 'Cropland_Map_Data']]
+file_list = [['spambase.csv', 'Spambase_Data'], ['magic.csv', 'Telescope_Data'],
+['crop.csv', 'Cropland_Map_Data']]
+
+# file_list = [['crop.csv', 'Cropland_Map_Data']]
 
 
 np.random.seed(45125)
-# seed_array = np.array(np.random.randint(1, 10000, 25)).reshape(5, 5)
-seed_array = np.array(np.random.randint(1, 10000, 5)).reshape(5, 1)
+seed_array = np.array(np.random.randint(1, 10000, 25)).reshape(5, 5)
+# seed_array = np.array(np.random.randint(1, 10000, 5)).reshape(5, 1)
 
 
 avg_results_df = pd.DataFrame(columns=["Algorithm", 'Num_clusters', 'Dataset',  'Runtime', 'Num_iterations',
@@ -36,13 +36,13 @@ algorithms = ['KMeans', 'DCKMeans']
 
 
 # Make changes for adjusting the current directory here
-file_path = os.path.join(Path(os.path.abspath(__file__)).parents[1], "DATASETS", "real_data")
-print(file_path)
+file_path = os.path.join(Path(os.path.abspath(__file__)).parents[2], "scratch", "DATASETS", "real_data")
 
 result_dictionary = {'Algorithm': [], 'Num_clusters': [], 'Runtime': [], 'Dataset':[],
          'Num_iterations': [], 'Accuracy': [], 'ARI': [], 'Dist_Calc': []}
 
-num_clusters = [2, 5, 10, 15, 20]
+num_clusters = [2, 4, 6, 8, 10]
+# num_clusters = [2]
 run_counter = 0
 
 
@@ -52,7 +52,7 @@ for dataset in file_list:
 	data_file_path = os.path.join(file_path, dataset[0])
 	data, labels = read_real_data(data_file_path, dataset)
 
-	print("######\nStarted the run on\n######\n", dataset[1], "\n#######")
+	print("\n######\nStarted the run on\n######\n", dataset[1], "\n#######")
 
 	for numclus in num_clusters:
 
@@ -66,12 +66,13 @@ for dataset in file_list:
                                    result_dictionary, num_iterations, epsilon,
                                    numclus, seed)
 
-		run_counter += 1
+			run_counter += 1
 
 # for k in result_dictionary.keys():
 #     print(k, result_dictionary[k])
 
 all_results_df = pd.DataFrame(result_dictionary)
+
 
 for algo in algorithms:
 	for dataset in file_list:
@@ -80,8 +81,18 @@ for algo in algorithms:
 			subset = all_results_df.loc[(all_results_df['Algorithm'] == algo) & (all_results_df['Num_clusters'] == nclus) & (all_results_df['Dataset'] == dataset[1]),
                        ['Runtime', 'Num_iterations', 'Accuracy', 'ARI', 'Dist_Calc']].mean().values
 
-			avg_results_df.loc[len(avg_results_df.index)] = [algo, nclus, dataset[1], subset[0], subset[1], subset[2],
-                                           subset[3], subset[4], subset[5]]
+			# print(subset)
+
+			# avg_results_df.loc[len(avg_results_df.index)] = [algo, nclus, dataset[1], subset[0], subset[1], subset[2],
+            #                                subset[3], subset[4], subset[5]]
+			
+			avg_results_df = avg_results_df.append({'Algorithm': algo, 'Num_clusters': nclus, 'Dataset': dataset[1],
+                                              'Runtime': subset[0], 'Num_iterations': subset[1],
+                                  'Accuracy':subset[2], 'ARI': subset[3], 'Dist_Calc': subset[4]},
+                                             ignore_index=True)
+			
+	gc.collect()
+
 
 print("\n\n")
 print("Results on Real Data (after averaging)")

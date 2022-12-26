@@ -20,19 +20,19 @@ seed_array = np.array(np.random.randint(1, 10000, 5)).reshape(5, 1)
 
 
 avg_results_df = pd.DataFrame(columns=["Algorithm", 'Num_clusters', 'Dataset',  'Runtime', 'Num_iterations',
-                          'Accuracy', 'ARI', 'AMI', 'Deviation'])
+                          'Accuracy', 'ARI', 'Dist_Calc'])
 
 all_results_df = pd.DataFrame(columns=["Algorithm", 'Num_clusters', 'Dataset', 'Runtime', 'Num_iterations',
-                          'Accuracy', 'ARI', 'AMI', 'Deviation'])
+                          'Accuracy', 'ARI', 'Dist_Calc'])
 
 algorithms = ['KMeans', 'DCKMeans']
 
 
 # Make changes for adjusting the current directory here
-file_path = os.path.join(Path(os.path.abspath(__file__)).parents[1], "benchmark", "scal_data")
+file_path = os.path.join(Path(os.path.abspath(__file__)).parents[1], "DATASETS", "scal_data")
 
 result_dictionary = {'Algorithm': [], 'Num_Points': [], 'Runtime': [], 
-                     'Num_iterations': [], 'Accuracy': [], 'ARI': [], 'AMI': [], 'Deviation': []}
+                     'Num_iterations': [], 'Accuracy': [], 'ARI': [], 'Dist_Calc': []}
 
 
 num_points = [1000000, 3000000, 5000000, 8000000]
@@ -56,7 +56,7 @@ for points in num_points:
 	run_counter += 1
 
 all_results_df = pd.DataFrame(result_dictionary)
-print(all_results_df)
+# print(all_results_df)
 
 ## Write the results to a file
 all_results_df.to_csv("simulated_scal_all_results.csv", index=False, sep=",")

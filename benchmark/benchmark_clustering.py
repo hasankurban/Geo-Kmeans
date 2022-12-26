@@ -29,13 +29,14 @@ algorithms = ['KMeans', 'DCKMeans']
 
 
 # Make changes for adjusting the current directory here
-file_path = os.path.join(Path(os.path.abspath(__file__)).parents[1], "DATASETS", "clustering_data")
+file_path = os.path.join(Path(os.path.abspath(__file__)).parents[2], "scratch", "DATASETS", "clustering_data")
 
 result_dictionary = {'Algorithm': [], 'Num_clusters': [], 'Runtime': [], 'Dataset':[],
                      'Num_iterations': [], 'Accuracy': [], 'ARI': [], 'Dist_Calc': []}
 
 
 num_clusters = [10, 50, 100, 200, 500]
+# num_clusters = [10]
 run_counter = 0
 
 
@@ -55,7 +56,7 @@ for numclus in num_clusters:
 	run_counter += 1
 
 all_results_df = pd.DataFrame(result_dictionary)
-# print(all_results_df)
+print(all_results_df)
 
 ## Write the results to a file
 all_results_df.to_csv("simulated_clustering_all_results.csv", index=False, sep=",")

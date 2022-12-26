@@ -34,9 +34,9 @@ def DCKMeans(data, num_clusters, threshold, num_iterations, seed):
         # Re-calculate the centroids
         new_centroids = calculate_centroids(data, old_assigned_clusters)
 
-        # if check_convergence(new_centroids, centroids, threshold):
-        #     print("Kmeans: Convergence at iteration: ", loop_counter)
-        #     break
+        if check_convergence(new_centroids, centroids, threshold):
+            print("Kmeans: Convergence at iteration: ", loop_counter)
+            break
 
         assign_dict, radius = get_membership(old_assigned_clusters, distances, num_clusters, assign_dict)
         neighbors, he_indices_dict = find_all_he_indices_neighbor(data, new_centroids, radius,
@@ -57,21 +57,21 @@ def DCKMeans(data, num_clusters, threshold, num_iterations, seed):
 
                 dckm_calc += (len(he_indices_dict) * len(neighbors[center]))
 
-        if (new_assigned_clusters == old_assigned_clusters).all():
-            print("Kmeans: Convergence at iteration: ", loop_counter)
-            break
+        # if (new_assigned_clusters == old_assigned_clusters).all():
+        #     print("DCKmeans: Convergence at iteration: ", loop_counter)
+        #     break
 
-        if len(np.unique(new_assigned_clusters)) < num_clusters:
-            print("DCKMeans: Found less modalities, safe exiting with current centroids.")
-            return centroids, loop_counter, sys.float_info.max, dckm_calc
+        # if len(np.unique(new_assigned_clusters)) < num_clusters:
+        #     print("DCKMeans: Found less modalities, safe exiting with current centroids.")
+        #     return centroids, loop_counter, sys.float_info.max, dckm_calc
 
         # Calculate the cluster assignments for data points
         centroids[:] = new_centroids[:]
         old_assigned_clusters[:] = new_assigned_clusters[:]
 
     # calculate the within cluster SSE
-    sse = get_quality(data, new_assigned_clusters, new_centroids, num_clusters)
-    return new_centroids, loop_counter, sse, dckm_calc
+    # sse = get_quality(data, new_assigned_clusters, new_centroids, num_clusters)
+    return new_centroids, loop_counter, dckm_calc
 
 
 
