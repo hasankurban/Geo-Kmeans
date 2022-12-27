@@ -9,7 +9,7 @@
 
 using namespace std;
 
-string basePath = "/Users/schmuck/Documents/Box Sync/Ph.D./DATASETS/";
+string basePath = "/Users/schmuck/Documents/OneDrive - Indiana University/Box Sync/PhD/DATASETS/";
 
 int main(){
 
@@ -32,7 +32,7 @@ int main(){
     // Declare variables
     int num_iterations = 100;
     double threshold = 0.001;
-    int num_clusters = 10;
+    int num_clusters = 3;
 
     // Read in the data
     auto t1 = std::chrono::high_resolution_clock::now();
@@ -56,12 +56,12 @@ int main(){
     // print_2d_vector(dataset, 5, "Dataset");
     // print_vector(labels, 5, "Labels");
 
-    // auto t3 = std::chrono::high_resolution_clock::now();
-    // km_iter = kmeans(dataset, num_clusters, threshold, num_iterations, 
-    // numRows, numCols, km_centers, km_assign);
-    // auto t4 = std::chrono::high_resolution_clock::now();
-    // auto km_int = std::chrono::duration_cast<std::chrono::milliseconds>(t4 - t3);
-    // std::cout << km_int.count() << "milliseconds\n";
+    auto t3 = std::chrono::high_resolution_clock::now();
+    km_iter = kmeans(dataset, num_clusters, threshold, num_iterations, 
+    numRows, numCols, km_centers, km_assign);
+    auto t4 = std::chrono::high_resolution_clock::now();
+    auto km_int = std::chrono::duration_cast<std::chrono::milliseconds>(t4 - t3);
+    std::cout << km_int.count() << "milliseconds\n";
     
     auto t5 = std::chrono::high_resolution_clock::now();
     km_iter = dckmeans(dataset, num_clusters, threshold, num_iterations, numCols);

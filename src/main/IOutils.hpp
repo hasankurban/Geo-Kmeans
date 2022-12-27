@@ -125,7 +125,7 @@ vector<vector <Tdouble> > &dataset, vector<Tint> &labels){
     3) Return the pointer to that array
     */  
 
-    int numRows, numCols= 0;
+    int numRows = 0, numCols= 0;
 
     // temporary variables
     string value, line;

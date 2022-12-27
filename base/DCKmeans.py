@@ -1,19 +1,32 @@
 from utils.kmeans_utils import *
 from utils.vis_utils import *
+import sys
+import time
 
 
 def DCKMeans(data, num_clusters, threshold, num_iterations, centroids, seed):
 
     loop_counter = 0
+    dckm_calc = 0
     assign_dict = {}
+
     dist_mat = np.zeros((num_clusters, num_clusters))
+    new_assigned_clusters = np.zeros((data.shape[0]))
 
     if centroids is []:
         centroids = init_centroids(data, num_clusters, seed)
 
     # Calculate the cluster assignments for data points
-    assigned_clusters, distances = calculate_distances(data, centroids)
-    dckm_calc = num_clusters * data.shape[0]
+    old_assigned_clusters, distances = calculate_distances(data, centroids)
+
+    dckm_calc += data.shape[0]*num_clusters
+
+    if len(np.unique(old_assigned_clusters)) < num_clusters:
+        print("DCKMeans: Found less modalities, safe exiting with current centroids.")
+        return centroids, loop_counter, sys.float_info.max, dckm_calc
+
+    # dckm_calc = num_clusters * data.shape[0]
+    new_assigned_clusters[:] = old_assigned_clusters[:]
 
     # print("Initial centroids: ", centroids, "\n")
     # print(assigned_clusters[0:5])
@@ -27,20 +40,14 @@ def DCKMeans(data, num_clusters, threshold, num_iterations, centroids, seed):
         #                                         assign_dict, dist_mat)
 
         # Re-calculate the centroids
-        new_centroids = calculate_centroids(data, assigned_clusters)
+        new_centroids = calculate_centroids(data, old_assigned_clusters)
 
         if check_convergence(new_centroids, centroids, threshold):
             print("DCKmeans: Convergence at iteration: ", loop_counter)
             break
 
-        # print(loop_counter, " Updated centroids: ", new_centroids)
-
-        assign_dict = get_membership(assigned_clusters, assign_dict, num_clusters)
-
-        # for i in assign_dict:
-        #     print(i,": ", len(assign_dict[i]))
-
-        neighbors, he_indices_dict = find_all_he_indices_neighbor(data, new_centroids, distances,
+        assign_dict, radius = get_membership(old_assigned_clusters, distances, num_clusters, assign_dict)
+        neighbors, he_indices_dict = find_all_he_indices_neighbor(data, new_centroids, radius,
                                                 assign_dict, dist_mat)
 
         # temp = []
@@ -58,12 +65,25 @@ def DCKMeans(data, num_clusters, threshold, num_iterations, centroids, seed):
                 #           " old dist: ", distances[point], " new distance: ", dist123[index])
 
                 distances[he_indices_dict[center]] = dist123
-                assigned_clusters[he_indices_dict[center]] = temp
-                dckm_calc += len(he_indices_dict[center]) * len(neighbors[center])
+                new_assigned_clusters[he_indices_dict[center]] = temp
+                # dckm_calc += len(he_indices_dict[center]) * len(neighbors[center])
+
+                dckm_calc += (len(he_indices_dict) * len(neighbors[center]))
+
+        # if (new_assigned_clusters == old_assigned_clusters).all():
+        #     print("DCKmeans: Convergence at iteration: ", loop_counter)
+        #     break
+
+        # if len(np.unique(new_assigned_clusters)) < num_clusters:
+        #     print("DCKMeans: Found less modalities, safe exiting with current centroids.")
+        #     return centroids, loop_counter, sys.float_info.max, dckm_calc
 
         # Calculate the cluster assignments for data points
         centroids[:] = new_centroids[:]
+        old_assigned_clusters[:] = new_assigned_clusters[:]
 
+    # calculate the within cluster SSE
+    # sse = get_quality(data, new_assigned_clusters, new_centroids, num_clusters)
     return new_centroids, loop_counter, dckm_calc
 
 
