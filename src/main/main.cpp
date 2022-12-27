@@ -20,8 +20,8 @@ int main(){
     // string filePath = basePath + "sample_data/";
     string filePath = basePath + "real_data/";
     
-    string fileName = "test_100_2_3.csv";
-    // string fileName = "spambase.csv";
+    // string fileName = "test_100_2_3.csv";
+    string fileName = "spambase.csv";
 
     string somefilePath = filePath + fileName;
     cout << somefilePath << "\n" ;
