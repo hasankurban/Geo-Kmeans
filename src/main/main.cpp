@@ -9,7 +9,8 @@
 
 using namespace std;
 
-string basePath = "/Users/schmuck/Documents/OneDrive - Indiana University/Box Sync/PhD/DATASETS/";
+// string basePath = "/Users/schmuck/Documents/OneDrive - Indiana University/Box Sync/PhD/DATASETS/";
+string basePath = "/Users/schmuck/Documents/OneDrive - Indiana University/Box Sync/PhD/Data-Centric-KMeans/";
 
 int main(){
 
@@ -17,11 +18,11 @@ int main(){
     // string filePath = basePath + "clustering_data";
     // string filePath = basePath + "dims_data";
     // string filePath = basePath + "scal_data";
-    // string filePath = basePath + "sample_data/";
-    string filePath = basePath + "real_data/";
+    string filePath = basePath + "sample_data/";
+    // string filePath = basePath + "real_data/";
     
-    // string fileName = "test_100_2_3.csv";
-    string fileName = "spambase.csv";
+    string fileName = "50_2_5.csv";
+    // string fileName = "spambase.csv";
 
     string somefilePath = filePath + fileName;
     cout << somefilePath << "\n" ;
@@ -53,9 +54,8 @@ int main(){
     int km_iter = 0;
     
     // Debug - Testing
-    // print_2d_vector(dataset, 5, "Dataset");
-    // print_vector(labels, 5, "Labels");
 
+    cout << "KMeans" << "\n" ;
     auto t3 = std::chrono::high_resolution_clock::now();
     km_iter = kmeans(dataset, num_clusters, threshold, num_iterations, 
     numRows, numCols, km_centers, km_assign);
@@ -63,6 +63,7 @@ int main(){
     auto km_int = std::chrono::duration_cast<std::chrono::milliseconds>(t4 - t3);
     std::cout << km_int.count() << "milliseconds\n";
     
+    cout << "DCKM" << "\n" ;
     auto t5 = std::chrono::high_resolution_clock::now();
     km_iter = dckmeans(dataset, num_clusters, threshold, num_iterations, numCols);
     auto t6 = std::chrono::high_resolution_clock::now();

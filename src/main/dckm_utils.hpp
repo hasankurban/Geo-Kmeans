@@ -75,34 +75,19 @@ vector<TD> &midpoint, vector<TD> &affine){
 }
 
 
-// template <typename TD>
-// void find_affine_vector(vector<TD> &midpoint, vector<TD> &ot_point, vector<TD> &affine){
-//     for (int i=0; i<ot_point.size(); i++)
-//         affine[i] = ot_point[i] - midpoint[i];
-// }
-
-
 template <typename TD>
 bool find_context_direction(const vector<TD> &actual_point, 
 const vector<TD> &centroid_vector, const vector<TD> &midpoint){
 
     int mysize = midpoint.size(); 
     TD vec_sum = 0.0;
-    bool stat = true;
+    bool stat = false;
     
-    // for (int i=0; i<mysize; i++)
-    //     vec_sum = vec_sum + ((actual_point[i] - midpoint[i]) * centroid_vector[i]);
+    for (int i=0; i<mysize; i++)
+        vec_sum = vec_sum + ((actual_point[i] - midpoint[i]) * centroid_vector[i]);
 
-    // if (vec_sum>0)
-    //     return true;
-
-    for (int i=0; i<mysize; i++){
-        vec_sum = actual_point[i] - midpoint[i];
-        if (std::signbit(vec_sum) != std::signbit(centroid_vector[i])){
-            stat = false;
-            break;
-        }
-    }
+    if (vec_sum>0)
+        stat = true;
 
     return stat;
     // return false;
