@@ -28,13 +28,15 @@ Tdouble threshold, Tint num_iterations, Tint numCols){
     vector<vector<Tdouble> > dist_matrix(dataset.size(), vector<Tdouble>(num_clusters));
     vector<Tint> assigned_clusters(dataset.size());
     
-    vector<vector<Tdouble> > cluster_size(num_clusters, vector<Tdouble>(2));  
+    vector<vector<Tdouble> > cluster_size(num_clusters, vector<Tdouble>(3));  
     vector<vector <Tdouble> > center_dist_mat (num_clusters, vector<Tdouble>(num_clusters));
-    vector<vector<Tint> > neighbors;
+    
+    // vector<vector<Tint> > neighbors;
+    vector<Tint> neighbors;
+    vector<vector<Tint> > neighbor_indices(num_clusters, vector<Tint>(2));
 
-    vector<vector<vector <Tdouble> > > mid_points;
-    vector<vector<vector <Tdouble> > > affine_vectors;
-    map<Tint, vector<Tint> > assign_dict;
+    vector<vector<vector <Tdouble> > > mid_points(num_clusters);
+    vector<vector<vector <Tdouble> > > affine_vectors(num_clusters);
     vector<vector <Tint> > he_data;
 
     // Create objects
@@ -45,6 +47,8 @@ Tdouble threshold, Tint num_iterations, Tint numCols){
     
     // Initialize centroids
     alg_utils.init_centroids(centroids, dataset, num_clusters);
+
+    
 
     // auto t2 = std::chrono::high_resolution_clock::now();
     // auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
@@ -97,17 +101,21 @@ Tdouble threshold, Tint num_iterations, Tint numCols){
 
         // auto t5 = std::chrono::high_resolution_clock::now();
         
-        find_neighbors(new_centroids, center_dist_mat, cluster_size, neighbors, mid_points, affine_vectors);
+        find_neighbors(new_centroids, center_dist_mat, cluster_size, neighbors, neighbor_indices, 
+        mid_points, affine_vectors);
         
         // auto t6 = std::chrono::high_resolution_clock::now();
         // ne_time = ne_time + std::chrono::duration_cast<std::chrono::milliseconds>(t6 - t5).count();
-        // print_2d_vector(neighbors, neighbors.size(), "Neighbors: ");
+        // print_2d_vector(neighbor_indices, neighbor_indices.size(), "Neighbors: ");
         
         // auto t7 = std::chrono::high_resolution_clock::now();
-        
-        determine_data_expression(dataset, new_centroids, dist_matrix, cluster_size,
-        assigned_clusters, neighbors, affine_vectors, mid_points, 
+
+        determine_data_expression(dataset, new_centroids, cluster_size,
+        assigned_clusters, neighbors, neighbor_indices, affine_vectors, mid_points, 
         he_data, inner_loop_time, affine_calc_time);
+
+
+        // cout << "Check 2" << "\n";
 
         // auto t8 = std::chrono::high_resolution_clock::now();
         // he_time = he_time + std::chrono::duration_cast<std::chrono::milliseconds>(t8 - t7).count();
@@ -119,7 +127,8 @@ Tdouble threshold, Tint num_iterations, Tint numCols){
         // auto t9 = std::chrono::high_resolution_clock::now();
         calculate_HE_distances(dataset, new_centroids, dist_matrix,
                                         num_clusters, assigned_clusters, 
-                                        cluster_size, assign_dict, neighbors, he_data);
+                                        cluster_size, he_data);
+
         // auto t10 = std::chrono::high_resolution_clock::now();
         // dist_time = dist_time + std::chrono::duration_cast<std::chrono::milliseconds>(t10 - t9).count();
 

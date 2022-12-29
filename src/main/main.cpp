@@ -10,7 +10,7 @@
 using namespace std;
 
  string basePath = "/Users/schmuck/Documents/OneDrive - Indiana University/Box Sync/PhD/DATASETS/";
-//string basePath = "/Users/schmuck/Documents/OneDrive - Indiana University/Box Sync/PhD/Data-Centric-KMeans/";
+// string basePath = "/Users/schmuck/Documents/OneDrive - Indiana University/Box Sync/PhD/Data-Centric-KMeans/";
 
 int main(){
 
@@ -22,7 +22,7 @@ int main(){
      string filePath = basePath + "real_data/";
     
 //    string fileName = "50_2_5.csv";
-     string fileName = "magic.csv";
+     string fileName = "crop.csv";
 
     string somefilePath = filePath + fileName;
     cout << somefilePath << "\n" ;
@@ -31,9 +31,9 @@ int main(){
     vector<int> labels;
     
     // Declare variables
-    int num_iterations = 100;
-    double threshold = 0.001;
-    int num_clusters = 20;
+    int num_iterations = 200;
+    double threshold = 0.0001;
+    int num_clusters = 15;
 
     // Read in the data
     auto t1 = std::chrono::high_resolution_clock::now();
