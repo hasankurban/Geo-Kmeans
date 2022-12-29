@@ -42,7 +42,7 @@ class dckm_utils{
     vector<TI> &assigned_clusters, vector<vector<TI> > &neighbors,
     vector<vector<vector <TD> > > &affine_vectors, 
     vector<vector<vector <TD> > > &mid_points,
-    vector<vector <TI> > &he_data, int &some_val);
+    vector<vector <TI> > &he_data, int &inner_loop_time, int &affine_time);
 
     template <typename TDouble, typename Tint>
     void calculate_HE_distances(const vector<vector<TDouble> > &dataset, 
@@ -81,15 +81,17 @@ const vector<TD> &centroid_vector, const vector<TD> &midpoint){
 
     int mysize = midpoint.size(); 
     TD vec_sum = 0.0;
-    bool stat = false;
+    TD temp = 0.0;
     
-    for (int i=0; i<mysize; i++)
-        vec_sum = vec_sum + ((actual_point[i] - midpoint[i]) * centroid_vector[i]);
+    for (int i=0; i<mysize; i++){
+        temp = actual_point[i] - midpoint[i];
+        vec_sum = vec_sum + (temp * centroid_vector[i]);
+    }
 
     if (vec_sum>0)
-        stat = true;
+        return true;
 
-    return stat;
+    return false;
     // return false;
 }
 
@@ -133,15 +135,18 @@ vector<vector<vector <TD> > > &affine_vectors){
     mid_points.clear();
     affine_vectors.clear();
 
+    int ot_center = 0;
+    int curr_center = 0;
+
     // Calculate inter-centroid distances
-    for(vector<int>::size_type curr_center=0; curr_center<centroids.size(); ++curr_center){
+    for(curr_center=0; curr_center<centroids.size(); curr_center++){
         
         radius = cluster_size[curr_center][1];
         vector<TI> temp1;
         int cnt = 0;
         
-        for (vector<int>::size_type ot_center=0; ot_center<centroids.size(); 
-        ++ot_center){    
+        for (ot_center=0; ot_center<centroids.size(); 
+        ot_center++){    
             
             // Do only k calculation :) save some 
             if (center_dist_mat[curr_center][ot_center] == 0){
@@ -229,18 +234,20 @@ vector<TI> &assigned_clusters,
 vector<vector<TI> > &neighbors,
 vector<vector<vector <TD> > > &affine_vectors, 
 vector<vector<vector <TD> > > &mid_points, 
-vector<vector <TI> > &he_data, int &some_val, 
-vector<vector <TD> > &cent_dist_mat){
+vector<vector <TI> > &he_data, int &inner_loop_time, int &affine_time){
     
     TI my_cluster = 0;
     vector<TI> temp;
     algorithm_utils alg_utils;
     bool stat = false;
     double temp_dist = 0.0;
+    int j=0;
+    int i = 0;
 
-    for (vector<int>::size_type i = 0; i < assigned_clusters.size(); ++i){
+    for (i = 0; i < assigned_clusters.size(); i++){
 
-        my_cluster = assigned_clusters[i];
+        
+        // my_cluster = assigned_clusters[i];
 
         // if (neighbors[my_cluster].size() >= 1){
             
@@ -252,8 +259,10 @@ vector<vector <TD> > &cent_dist_mat){
         //     }
 
         //else {
-
-        for (vector<int>::size_type j=0; j<neighbors[my_cluster].size(); ++j){
+        
+        // auto t3 = std::chrono::high_resolution_clock::now();
+        for (j=0; j<neighbors[assigned_clusters[i]].size(); j++){
+        // for (j=0; j<neighbors[my_cluster].size(); j++){
                         
             // int sssize = mid_points[my_cluster][j].size();
             // if(mid_points[my_cluster][j].size() == 0){
@@ -261,16 +270,21 @@ vector<vector <TD> > &cent_dist_mat){
             //     << neighbors[my_cluster][j] << "\n";
             //     print_2d_vector(neighbors, neighbors.size(), "Neighbors");
             // }
-            auto t3 = std::chrono::high_resolution_clock::now();
             
-            if (find_context_direction(dataset[i], affine_vectors[my_cluster][j], 
-            mid_points[my_cluster][j])){
+            // auto t5 = std::chrono::high_resolution_clock::now();
+            // if (find_context_direction(dataset[i], affine_vectors[my_cluster][j], 
+            // mid_points[my_cluster][j])){
+            
+            if (find_context_direction(dataset[i], affine_vectors[assigned_clusters[i]][j], 
+            mid_points[assigned_clusters[i]][j])){
                 
                 if (temp.size() == 0){
                     temp.push_back(i);
-                    temp.push_back(my_cluster);
+                    // temp.push_back(my_cluster);
+                    temp.push_back(assigned_clusters[i]);
                 }
-                temp.push_back(neighbors[my_cluster][j]);
+                temp.push_back(neighbors[assigned_clusters[i]][j]);
+                // temp.push_back(neighbors[my_cluster][j]);
 
                 // dist_mat[i][neighbors[my_cluster][j]] = alg_utils.calc_euclidean(dataset[i], centroids[neighbors[my_cluster][j]]);
                 
@@ -284,16 +298,17 @@ vector<vector <TD> > &cent_dist_mat){
                 
                 //break;
             }
-
-        auto t4 = std::chrono::high_resolution_clock::now();
-        some_val = some_val + std::chrono::duration_cast<std::chrono::milliseconds>(t4 - t3).count();
+            // auto t6 = std::chrono::high_resolution_clock::now();
+            // affine_time = affine_time + std::chrono::duration_cast<std::chrono::microseconds>(t6 - t5).count();
         }
+        // auto t4 = std::chrono::high_resolution_clock::now();
+        // inner_loop_time = inner_loop_time + std::chrono::duration_cast<std::chrono::microseconds>(t4 - t3).count();
 
-    //}
         if (temp.size()>0){
             he_data.push_back(temp);
             temp.clear();
         }
+        
     }      
 }
 
@@ -309,12 +324,13 @@ vector<vector <Tint> > &he_data){
     TDouble temp = 0.0;
     Tint refer_size = 0;
     algorithm_utils alg_utils;
+    int j = 1;
 
     for (int i=0; i < he_data.size(); i++){
 
         refer_size = he_data[i].size();
 
-        for (int j = 1; j<refer_size; j++){
+        for (j = 1; j<refer_size; j++){
             
             temp = alg_utils.calc_euclidean(dataset[he_data[i][0]], centroids[he_data[i][j]]);
             dist_mat[he_data[i][0]][he_data[i][j]] = temp;

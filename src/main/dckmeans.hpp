@@ -67,7 +67,9 @@ Tdouble threshold, Tint num_iterations, Tint numCols){
     auto he_time = 0;
     auto dist_time = 0;
     auto misc_time = 0;
-    auto some_val = 0;
+    auto inner_loop_time = 0;
+    auto affine_calc_time = 0;
+    auto rand_time = 0;
     int my_cluster = 0;
 
 
@@ -75,51 +77,51 @@ Tdouble threshold, Tint num_iterations, Tint numCols){
 
         loop_counter++;
 
-        cout << "Iter: " << loop_counter <<"\n";
+        // cout << "Iter: " << loop_counter <<"\n";
         
         // Calculate new centroids
-        auto t3 = std::chrono::high_resolution_clock::now();
-        // alg_utils.update_centroids(dataset, new_centroids, assigned_clusters, 
-        cluster_size, numCols);
+        // auto t3 = std::chrono::high_resolution_clock::now();
         
-        print_2d_vector(new_centroids, new_centroids.size(), "Updated Centroids");
-        auto t4 = std::chrono::high_resolution_clock::now();
-        cent_time = cent_time + std::chrono::duration_cast<std::chrono::milliseconds>(t4 - t3).count();
+        alg_utils.update_centroids(dataset, new_centroids, assigned_clusters, cluster_size, numCols);
         
+        // auto t4 = std::chrono::high_resolution_clock::now();
+        // cent_time = cent_time + std::chrono::duration_cast<std::chrono::milliseconds>(t4 - t3).count();
+        
+        // print_2d_vector(new_centroids, new_centroids.size(), "Updated Centroids");
+
         // Check Convergence
         if (alg_utils.check_convergence(new_centroids, centroids, threshold)){
                 cout << "Convergence at iteration: " << loop_counter << "\n";
                 break;
         }
 
-        auto t5 = std::chrono::high_resolution_clock::now();
+        // auto t5 = std::chrono::high_resolution_clock::now();
         
-        find_neighbors(new_centroids, center_dist_mat, cluster_size, 
-        neighbors, mid_points, affine_vectors);
+        find_neighbors(new_centroids, center_dist_mat, cluster_size, neighbors, mid_points, affine_vectors);
         
-        auto t6 = std::chrono::high_resolution_clock::now();
-        ne_time = ne_time + std::chrono::duration_cast<std::chrono::milliseconds>(t6 - t5).count();
-        print_2d_vector(neighbors, neighbors.size(), "Neighbors: ");
+        // auto t6 = std::chrono::high_resolution_clock::now();
+        // ne_time = ne_time + std::chrono::duration_cast<std::chrono::milliseconds>(t6 - t5).count();
+        // print_2d_vector(neighbors, neighbors.size(), "Neighbors: ");
         
-        auto t7 = std::chrono::high_resolution_clock::now();
+        // auto t7 = std::chrono::high_resolution_clock::now();
         
         determine_data_expression(dataset, new_centroids, dist_matrix, cluster_size,
         assigned_clusters, neighbors, affine_vectors, mid_points, 
-        he_data, some_val, center_dist_mat);
+        he_data, inner_loop_time, affine_calc_time);
 
-        auto t8 = std::chrono::high_resolution_clock::now();
-        he_time = he_time + std::chrono::duration_cast<std::chrono::milliseconds>(t8 - t7).count();
+        // auto t8 = std::chrono::high_resolution_clock::now();
+        // he_time = he_time + std::chrono::duration_cast<std::chrono::milliseconds>(t8 - t7).count();
 
         // cout << "No. HE Data: " << he_data.size() << "\n";
         // print_2d_vector(he_data, he_data.size(), "HE Data");
         
         // Re-calculate distances
-        auto t9 = std::chrono::high_resolution_clock::now();
+        // auto t9 = std::chrono::high_resolution_clock::now();
         calculate_HE_distances(dataset, new_centroids, dist_matrix,
                                         num_clusters, assigned_clusters, 
                                         cluster_size, assign_dict, neighbors, he_data);
-        auto t10 = std::chrono::high_resolution_clock::now();
-        dist_time = dist_time + std::chrono::duration_cast<std::chrono::milliseconds>(t10 - t9).count();
+        // auto t10 = std::chrono::high_resolution_clock::now();
+        // dist_time = dist_time + std::chrono::duration_cast<std::chrono::milliseconds>(t10 - t9).count();
 
 
         // auto t11 = std::chrono::high_resolution_clock::now();
@@ -133,13 +135,28 @@ Tdouble threshold, Tint num_iterations, Tint numCols){
         // misc_time = misc_time + std::chrono::duration_cast<std::chrono::milliseconds>(t12 - t11).count();
     }
 
-    cout << "Total time for centroid updation calc: " << cent_time << " milliseconds. \n";
-    cout << "Total time for neighbors calc: " << ne_time << " milliseconds. \n";
-    cout << "Total time for HE calc: " << he_time << " milliseconds. \n";
-    cout << "Inner loop: " << some_val << "\n";
-    // cout << "Total time for misc: " << misc_time << " milliseconds. \n";
-    cout << "Total time for distance calc: " << dist_time << " milliseconds. \n";
+    // int some_r = 0;
+    // int some_s = 0;
+    // int some_p = 0;
+    // auto t11 = std::chrono::high_resolution_clock::now();
+    // while (some_r < 10){
+    // for (some_p = 0; some_p < assigned_clusters.size(); some_p++){
+    //     for (some_s=0; some_s<neighbors[assigned_clusters[some_p]].size(); some_s++){
+    //     }
+    // }
+    // some_r++;
+    // }
+    // auto t12 = std::chrono::high_resolution_clock::now();
+    // rand_time = rand_time + std::chrono::duration_cast<std::chrono::milliseconds>(t12 - t11).count();
 
+    // cout << "Total time for random calc: " << rand_time << " milliseconds. \n";
 
+    // cout << "Total time for centroid updation calc: " << cent_time << " milliseconds. \n";
+    // cout << "Total time for distance calc: " << dist_time << " milliseconds. \n";
+    // cout << "Total time for neighbors calc: " << ne_time << " milliseconds. \n";
+    // cout << "Affine calc time: " << affine_calc_time << "\n";
+    // cout << "Inner loop: " << inner_loop_time << "\n";
+    // cout << "Total time for HE calc: " << he_time << " milliseconds. \n";
+    
     return loop_counter;
 }

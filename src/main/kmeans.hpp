@@ -70,15 +70,15 @@ vector<Tint> &assigned_clusters){
         
         // print_map(assign_dict, 5, "Before Erasing");
 
-        auto t5 = std::chrono::high_resolution_clock::now();
+        // auto t5 = std::chrono::high_resolution_clock::now();
 
         // Calculate new centroids
         alg_utils.update_centroids(dataset, new_centroids, assigned_clusters, 
         cluster_size, numCols);
         
-        auto t6 = std::chrono::high_resolution_clock::now();
-        auto temp2 = std::chrono::duration_cast<std::chrono::milliseconds>(t6 - t5);
-        cent_int = cent_int + temp2.count();
+        // auto t6 = std::chrono::high_resolution_clock::now();
+        // auto temp2 = std::chrono::duration_cast<std::chrono::milliseconds>(t6 - t5);
+        // cent_int = cent_int + temp2.count();
 
         // print_2d_vector(new_centroids, centroids.size(), "Updated Centroids");
         // print_2d_vector(dist_matrix, 3, "Before: Distance matrix");
@@ -90,13 +90,13 @@ vector<Tint> &assigned_clusters){
         }
 
         // Re-calculate distances
-        auto t11 = std::chrono::high_resolution_clock::now();
+        // auto t11 = std::chrono::high_resolution_clock::now();
         alg_utils.calculate_distances(dataset, new_centroids, dist_matrix,
                                     num_clusters, assigned_clusters, cluster_size);
 
-        auto t12 = std::chrono::high_resolution_clock::now();
-        auto temp5 = std::chrono::duration_cast<std::chrono::milliseconds>(t12 - t11);
-        dist_int = dist_int + temp5.count();
+        // auto t12 = std::chrono::high_resolution_clock::now();
+        // auto temp5 = std::chrono::duration_cast<std::chrono::milliseconds>(t12 - t11);
+        // dist_int = dist_int + temp5.count();
 
         // Print for testing
         // print_2d_vector(cluster_size, 5, "After: Cluster Size");
@@ -111,8 +111,8 @@ vector<Tint> &assigned_clusters){
         // break;
     }
 
-    cout << "Total time for centroid updation: " << cent_int << " milliseconds. \n";
-    cout << "Total time for distance calc: " << dist_int << " milliseconds. \n";
+    // cout << "Total time for centroid updation: " << cent_int << " milliseconds. \n";
+    // cout << "Total time for distance calc: " << dist_int << " milliseconds. \n";
 
     // print_2d_vector(new_centroids, new_centroids.size(), "Final centroids");
 
