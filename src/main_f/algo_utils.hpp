@@ -20,7 +20,7 @@ class algorithm_utils{
     vector<vector<T1> > &cluster_size);
 
     template <typename T1>
-    double calc_euclidean(const vector<T1> &, const vector<T1> &);
+    float calc_euclidean(const vector<T1> &, const vector<T1> &);
 
     template <typename T1, typename T2>
     void update_centroids(vector<vector <T1> > &dataset, 
@@ -28,7 +28,10 @@ class algorithm_utils{
     vector<vector<T1> > &cluster_size, T2 numCols);
 
     template <typename T1>
-    bool check_convergence(vector<vector <T1> > &, vector<vector <T1> > &, T1);
+    bool check_convergence(vector<vector <T1> > &new_centroids, 
+    vector<vector <T1> > &centroids, T1 threshold, float &diff, float &temp_diff, int &i, int &j);
+
+    // bool check_convergence(vector<vector <T1> > &, vector<vector <T1> > &, T1);
 
     template <typename T1>
     void reinit(vector<vector<T1> > &);
@@ -60,7 +63,7 @@ vector<vector <T1> > &dataset, T2 num_cluster){
 }
 
 template <typename T1>
-double algorithm_utils::calc_euclidean(const vector<T1> &point, 
+float algorithm_utils::calc_euclidean(const vector<T1> &point, 
 const vector<T1> &center){
     
     T1 dist = 0.0;
@@ -85,20 +88,22 @@ T2 num_clusters, vector<T2> &assigned_clusters, vector<vector<T1> > &cluster_siz
 
     T2 current_center = 0;
     vector<T1> temp_dist (num_clusters);
-    double temp = 0.0;
+    float temp = 0.0;
+    float shortestDist2 = 0.0;
+    int i =0, j =0;
 
     assigned_clusters.assign(assigned_clusters.size(), 0);
     algorithm_utils::reinit(cluster_size);
 
     // Calculate the distance of points to nearest center
-    for (int i=0; i < dataset.size(); i++){
+    for (i=0; i < dataset.size(); i++){
 
         // cout << "inside dist :" << "\n";
         
-        double shortestDist2 = std::numeric_limits<double>::max();
+        shortestDist2 = std::numeric_limits<float>::max();
         // cout << i << "\n";
         
-        for (int j=0; j < centroids.size(); j++){ 
+        for (j=0; j < centroids.size(); j++){ 
             
             temp = calc_euclidean(dataset[i], centroids[j]);
             temp_dist[j] = temp;
@@ -129,14 +134,12 @@ void algorithm_utils::update_centroids(vector<vector <T1> > &dataset,
 vector<vector<T1> > &new_centroids, vector<T2> &assigned_clusters, 
 vector<vector<T1> > &cluster_size, T2 numCols){
 
-    int point_index = 0; 
-    int curr_center = 0;
-    int k = 0;
+    int point_index = 0, curr_center = 0, index = 0, k = 0, j =0;
 
-    for (int index=0; index<dataset.size(); index++){
+    for (index=0; index<dataset.size(); index++){
         curr_center = assigned_clusters[index];
         
-        for (int j = 0; j<numCols; j++){
+        for (j = 0; j<numCols; j++){
             new_centroids[curr_center][j] = new_centroids[curr_center][j] + dataset[index][j];
         }
     }
@@ -144,7 +147,7 @@ vector<vector<T1> > &cluster_size, T2 numCols){
     for(int i=0; i<new_centroids.size();i++){
         k = cluster_size[i][0];
 
-        for (int j = 0; j < new_centroids[i].size(); j++){
+        for (j = 0; j < new_centroids[i].size(); j++){
             if (k > 0)
                 new_centroids[i][j] = new_centroids[i][j]/k;
             else
@@ -158,17 +161,19 @@ vector<vector<T1> > &cluster_size, T2 numCols){
 
 template <typename T1>
 bool algorithm_utils::check_convergence(vector<vector <T1> > &new_centroids, 
-vector<vector <T1> > &centroids, T1 threshold){
+vector<vector <T1> > &centroids, T1 threshold, float &diff, float &temp_diff, int &i, int &j){
 
-    float diff = 0.0;
+    temp_diff = 0;
+    diff = 0;
 
     if (new_centroids.size() == centroids.size()){
         
-        for (int i= 0; i<new_centroids.size(); i++){
-            for (int j =0; j< new_centroids[i].size(); j++)
-                diff = diff + pow((new_centroids[i][j] - centroids[i][j]), 2);
+        for (i=0; i<new_centroids.size(); i++){
+            for (j=0; j< new_centroids[i].size(); j++)
+                temp_diff = new_centroids[i][j] - centroids[i][j];
+                diff = diff + (temp_diff * temp_diff);
         }
-        // diff = sqrt(diff);
+        diff = sqrt(diff);
     }
     else
         return false;

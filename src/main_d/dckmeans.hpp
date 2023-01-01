@@ -29,30 +29,35 @@ Tdouble threshold, Tint num_iterations, Tint numCols){
     vector<Tint> assigned_clusters(dataset.size());
     
     vector<vector<Tdouble> > cluster_size(num_clusters, vector<Tdouble>(3));  
-    vector<vector <Tdouble> > center_dist_mat (num_clusters, vector<Tdouble>(num_clusters));
     
-    // vector<vector<Tint> > neighbors;
-    vector<Tint> neighbors;
-    vector<vector<Tint> > neighbor_indices(num_clusters, vector<Tint>(2));
+    
+    vector<vector <Tdouble> > center_dist_mat (num_clusters, vector<Tdouble>(num_clusters, 0));
+    vector<vector<Tint> > neighbors(num_clusters);
 
-    vector<vector<vector <Tdouble> > > mid_points(num_clusters);
-    vector<vector<vector <Tdouble> > > affine_vectors(num_clusters);
+    
+    vector<vector<vector <Tdouble> > > mid_points(num_clusters, vector<vector<Tdouble> >(num_clusters, vector<Tdouble>(numCols, 0)));
+    vector<vector<vector <Tdouble> > > affine_vectors(num_clusters, vector<vector<Tdouble> >(num_clusters, vector<Tdouble>(numCols, 0)));
     vector<vector <Tint> > he_data;
+
+    vector<Tint> temp1;
+    vector<Tdouble> temp2(3);
+    vector<vector<Tdouble> > temp_master;
+    vector<Tdouble> temp_midpoint(numCols);
+    vector<Tdouble> temp_affine(numCols);
+
+    vector<vector<Tdouble> > midpoint_holder;
+    vector<vector<Tdouble> > affine_holder;
+
+    Tint my_cluster = 0, i = 0, j = 0, k = 0, l = 0, m = 0;
+    float temp_diff = 0, diff = 0;
+    Tdouble vec_sum = 0;
 
     // Create objects
     algorithm_utils alg_utils;
     dckm_utils dc_utils;
 
-    // auto t1 = std::chrono::high_resolution_clock::now();
-    
     // Initialize centroids
     alg_utils.init_centroids(centroids, dataset, num_clusters);
-
-    
-
-    // auto t2 = std::chrono::high_resolution_clock::now();
-    // auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
-    // cout << "Time for centroid init: " << ms.count() << "\n";
 
     // Print centroids
     // print_2d_vector(centroids, centroids.size(), "Initial Centroids");
@@ -66,15 +71,15 @@ Tdouble threshold, Tint num_iterations, Tint numCols){
     // print_vector(assigned_clusters, 5, "Assigned clusters");
     // print_2d_vector(cluster_size, 5, "Cluster Size and Radious");
 
-    auto cent_time = 0;
-    auto ne_time = 0;
-    auto he_time = 0;
-    auto dist_time = 0;
-    auto misc_time = 0;
+    // auto cent_time = 0;
+    // auto ne_time = 0;
+    // auto he_time = 0;
+    // auto dist_time = 0;
+    // auto misc_time = 0;
     auto inner_loop_time = 0;
     auto affine_calc_time = 0;
-    auto rand_time = 0;
-    int my_cluster = 0;
+    // auto rand_time = 0;
+    // int my_cluster = 0;
 
 
     while (loop_counter < num_iterations){
@@ -94,35 +99,39 @@ Tdouble threshold, Tint num_iterations, Tint numCols){
         // print_2d_vector(new_centroids, new_centroids.size(), "Updated Centroids");
 
         // Check Convergence
-        if (alg_utils.check_convergence(new_centroids, centroids, threshold)){
+        if (alg_utils.check_convergence(new_centroids, centroids, threshold, diff, temp_diff, i, j)){
                 cout << "Convergence at iteration: " << loop_counter << "\n";
                 break;
         }
 
         // auto t5 = std::chrono::high_resolution_clock::now();
         
-        find_neighbors(new_centroids, center_dist_mat, cluster_size, neighbors, neighbor_indices, 
-        mid_points, affine_vectors);
+        find_neighbors(new_centroids, center_dist_mat, cluster_size, neighbors, 
+        mid_points, affine_vectors, temp2, temp_master, temp_midpoint, temp_affine, midpoint_holder, affine_holder);
+
         
         // auto t6 = std::chrono::high_resolution_clock::now();
         // ne_time = ne_time + std::chrono::duration_cast<std::chrono::milliseconds>(t6 - t5).count();
-        // print_2d_vector(neighbor_indices, neighbor_indices.size(), "Neighbors: ");
-        
+        // print_2d_vector(neighbors, neighbors.size(), "Neighbors: ");
+   
+        // print_3d_vector(mid_points, mid_points.size(), "Midpoints");
+        // print_3d_vector(affine_vectors, affine_vectors.size(), "Affine vectors");
+
         // auto t7 = std::chrono::high_resolution_clock::now();
-
+        
         determine_data_expression(dataset, new_centroids, cluster_size,
-        assigned_clusters, neighbors, neighbor_indices, affine_vectors, mid_points, 
-        he_data, inner_loop_time, affine_calc_time);
-
+        assigned_clusters, neighbors, affine_vectors, mid_points, 
+        he_data, inner_loop_time, affine_calc_time, temp1, my_cluster, i, j, vec_sum);
 
         // cout << "Check 2" << "\n";
 
         // auto t8 = std::chrono::high_resolution_clock::now();
         // he_time = he_time + std::chrono::duration_cast<std::chrono::milliseconds>(t8 - t7).count();
 
+        // if (loop_counter == 9){
         // cout << "No. HE Data: " << he_data.size() << "\n";
         // print_2d_vector(he_data, he_data.size(), "HE Data");
-        
+        // }
         // Re-calculate distances
         // auto t9 = std::chrono::high_resolution_clock::now();
         calculate_HE_distances(dataset, new_centroids, dist_matrix,

@@ -29,6 +29,8 @@ cout << "Printing: " << dataname << " \n" ;
 
 int limit = 0;
 
+cout << "\n";
+
 for (int i =0; i< data.size(); i++){
     if (limit < num_records){
         cout << "Record- " << i << "\t" ;
@@ -41,6 +43,41 @@ for (int i =0; i< data.size(); i++){
         cout << "\n";
         limit++;
     } 
+
+    cout << "\n";
+}
+
+
+template <typename T> void print_3d_vector(vector<vector<vector<T> > > &data, int num_records,
+string dataname){
+
+cout << "Printing: " << dataname << " \n" ;
+
+int limit = 0;
+
+cout << "\n";
+
+for (int i=0; i<data.size(); i++){
+    
+    cout << "Printing for record: " << i << endl;
+    cout << "------------\n";
+
+    if (limit < num_records){
+        for (int j=0; j<data[i].size(); j++){
+            cout << i <<"-" << j << "\t" ; 
+            for (int k = 0; k<data[i][j].size(); k++){
+                cout << data[i][j][k] << "\t";
+            }
+            cout << "\n"; 
+        }
+    }
+    else{
+        break;
+    }
+        cout << "------------\n";
+        limit++;
+    }
+    cout << "\n"; 
 }
 
 
@@ -49,16 +86,18 @@ template <typename T> void print_vector(vector<T> &data, int num_records, string
 cout << "Printing: " << dataname << " \n" ;
 int limit = 0;
 
+cout << "\n";
+
 for (int i =0; i< data.size(); i++){
     if (limit < num_records){
         cout << data[i] << "\n";
         limit++;
-        }
+    }
     else{
         break;
     }
     }
-
+cout << "\n";
 }
 
 

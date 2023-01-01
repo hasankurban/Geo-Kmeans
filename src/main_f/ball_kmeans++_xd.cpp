@@ -16,6 +16,7 @@
 // typedef VectorXf VectorOur;
 
 // typedef MatrixXf MatrixOur;
+// // typedef MatrixX3d MatrixOur;
 
 // typedef vector<vector<OurType> > ClusterDistVector;
 
@@ -74,8 +75,41 @@
 //                 ClusterIndexVector& clusters_neighbors_index,
 //                 ClusterDistVector& temp_dis);
 
+// bool check_convergence(MatrixOur&new_centroids, 
+// MatrixOur&centroids, float threshold);
 
-// VectorXi ball_k_means_Ring(MatrixOur& dataset, MatrixOur& centroids, bool detail = false) {
+// bool check_convergence(MatrixOur& new_centroids, 
+// MatrixOur&centroids, float threshold){
+
+//     // float diff = 0.0;
+//     // float temp = 0.0;
+//     int i =0, j =0;
+//     float temp_diff = 0;
+//     float diff = 0;
+
+//     if (new_centroids.size() == centroids.size()){
+        
+//         for (i=0; i<new_centroids.rows(); i++){
+//             for (j=0; j<new_centroids.cols(); j++)
+//                 temp_diff = new_centroids(i, j) - centroids(i, j);
+//                 diff = diff + (temp_diff * temp_diff);
+//         }
+//         diff = sqrt(diff);
+//     }
+//     else
+//         return false;
+    
+//     cout << diff << endl;
+
+//     if (diff <= threshold)
+//         return true;
+//     return false;
+// }
+
+
+
+// VectorXi ball_k_means_Ring(MatrixOur& dataset, MatrixOur& centroids, bool detail = false, 
+// double thres = 0.0001, int iters = 100) {
 
 //     double start_time, end_time;
 
@@ -128,7 +162,10 @@
 
 //     start_time = clock();
 
-//     while (true) {
+//     while (iteration_counter < iters) {
+
+//         cout << "Iter: " << iteration_counter << endl;
+
 //         old_flag = flag;
 //         //record cluster_point_index from the previous round
 //         cluster_point_index.assign(temp_cluster_point_index.begin(), temp_cluster_point_index.end());
@@ -138,8 +175,11 @@
 //         //update the matrix of centroids
 //         new_centroids = update_centroids(dataset, cluster_point_index, k, dataset_cols, flag, iteration_counter,
 //                                          old_centroids);
+        
+//         if (check_convergence(new_centroids, old_centroids, thres) == false) {
 
-//         if (new_centroids != old_centroids) {
+//         // if (new_centroids != old_centroids) {
+            
 //             //delta: distance between each center and the previous center
 //             delta = (((new_centroids - old_centroids).rowwise().squaredNorm())).array().sqrt();
 
@@ -974,17 +1014,18 @@
 // }
 
 // VectorXi ball_k_means(MatrixOur& dataset, int k, bool isRing = false, bool detail = false,
-//                       int random_seed = -1, const char* filename = "0") {
+//                       int random_seed = -1, double thres = 0.001, int iters = 100, const char* filename = "0") {
 //     MatrixOur centroids;
 //     if (filename == "0") {
 //         centroids = initial_centroids(dataset, k, random_seed);
 //     }
 //     else {
 //         centroids = load_data(filename);
+//         cout << "Centroids loaded" << endl;
 //     }
 //     VectorXi labels;
 //     if (isRing) {
-//         labels = ball_k_means_Ring(dataset, centroids, detail);
+//         labels = ball_k_means_Ring(dataset, centroids, detail, thres, iters);
 //     }
 //     else {
 //         labels = ball_k_means_noRing(dataset, centroids, detail);
@@ -995,22 +1036,27 @@
 
 // int main(int argc, char* argv[]) {
 //     double start_time, end_time;
+
+//     // string filename = "ijcnn.csv"
+
+//     double thres = 0.01;
+//     int iters = 100;
     
 //     // MatrixOur dataset = load_data("/Users/schmuck/Documents/Box Sync/Ph.D./ball-k-means/data+centers(1)/dataset/crop.csv");
-//     MatrixOur dataset = load_data("/Users/schmuck/Documents/Box Sync/Ph.D./DATASETS/real_data/crop_test.csv");
+//     MatrixOur dataset = load_data("/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/Box Sync/PhD/DATASETS/real_data/crop.csv");
 
 //     auto t3 = std::chrono::high_resolution_clock::now();
-//     VectorXi labels = ball_k_means(dataset, 20, true, true, -1, "/Users/schmuck/Documents/Box Sync/Ph.D./DATASETS/real_data/crop_cen.csv");
+//     VectorXi labels = ball_k_means(dataset, 5, true, true, -1, thres, iters, "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/Box Sync/PhD/DATASETS/real_data/crop_cen.csv");
     
 //     auto t4 = std::chrono::high_resolution_clock::now();
-//     auto ring_int = std::chrono::duration_cast<std::chrono::seconds>(t4 - t3);
-//     std::cout << "\nRing Kmeans time: " << ring_int.count() << "seconds\n";
+//     auto ring_int = std::chrono::duration_cast<std::chrono::milliseconds>(t4 - t3);
+//     std::cout << "\nRing Kmeans time: " << ring_int.count() << "milliseconds\n";
 
-//     auto t5 = std::chrono::high_resolution_clock::now();
+//     // auto t5 = std::chrono::high_resolution_clock::now();
     
-//     VectorXi labels123 = ball_k_means(dataset, 20, false, true, -1, "/Users/schmuck/Documents/Box Sync/Ph.D./DATASETS/real_data/crop_cen.csv");
+//     // VectorXi labels123 = ball_k_means(dataset, 30, false, false, -1, "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/Box Sync/PhD/DATASETS/real_data/ijcnn_cen.csv", thres);
     
-//     auto t6 = std::chrono::high_resolution_clock::now();
-//     auto km_int = std::chrono::duration_cast<std::chrono::seconds>(t6 - t5);
-//     std::cout << "\nKmeans time: " << km_int.count() << "seconds\n";
+//     // auto t6 = std::chrono::high_resolution_clock::now();
+//     // auto km_int = std::chrono::duration_cast<std::chrono::seconds>(t6 - t5);
+//     // std::cout << "\nKmeans time: " << km_int.count() << "seconds\n";
 // }
