@@ -119,7 +119,7 @@ Tfloat threshold, Tint num_iterations, Tint numCols){
 
         // auto t7 = std::chrono::high_resolution_clock::now();
         
-        determine_data_expression(dataset, new_centroids, cluster_size,
+        determine_data_expression(dataset, new_centroids, cluster_size, center_dist_mat,
         assigned_clusters, neighbors, affine_vectors, mid_points, 
         he_data, inner_loop_time, affine_calc_time, temp1, my_cluster, i, j, vec_sum);
 

@@ -34,7 +34,7 @@ class dckm_utils{
 
     template <typename TD, typename TI>
     void determine_data_expression(vector<vector<TD> > &dataset, 
-    vector<vector <TD> > &centroids, vector<vector<TD> > &cluster_size, 
+    vector<vector <TD> > &centroids, vector<vector<TD> > &cluster_size, vector<vector <TD> > &center_dist_mat,
     vector<TI> &assigned_clusters, vector<vector<TI> > &neighbors,
     vector<vector<vector <TD> > > &affine_vectors, 
     vector<vector<vector <TD> > > &mid_points, 
@@ -284,6 +284,7 @@ vector<TD> &temp_affine, vector<vector<TD> > &midpoint_holder, vector<vector<TD>
         }   
 
             if (cnt>1){
+                // print_2d_vector(temp_master, temp_master.size(), " Sorted: ");
                 vector<vector<float> > temp123;
                 vector<vector<float> > temp234;
                 
@@ -303,6 +304,7 @@ vector<TD> &temp_affine, vector<vector<TD> > &midpoint_holder, vector<vector<TD>
             }
 
             else if (cnt == 1){
+                // print_2d_vector(temp_master, temp_master.size(), " Sorted: ");
                 temp1.push_back(temp_master[0][1]);
                 neighbors.push_back(temp1);
                 affine_vectors.push_back(affine_holder);
@@ -329,7 +331,7 @@ vector<TD> &temp_affine, vector<vector<TD> > &midpoint_holder, vector<vector<TD>
 
 template <typename TD, typename TI>
 void determine_data_expression(vector<vector<TD> > &dataset, 
-vector<vector <TD> > &centroids, vector<vector<TD> > &cluster_size, 
+vector<vector <TD> > &centroids, vector<vector<TD> > &cluster_size, vector<vector <TD> > &center_dist_mat, 
 vector<TI> &assigned_clusters, 
 vector<vector<TI> > &neighbors,
 vector<vector<vector <TD> > > &affine_vectors, 
@@ -337,28 +339,31 @@ vector<vector<vector <TD> > > &mid_points,
 vector<vector <TI> > &he_data, int &inner_loop_time, int &affine_time, 
 vector<TI> &temp, TI &my_cluster, TI &i, TI &j, TD &vec_sum){
     
-    // vector<TI> temp;
-    // TI my_cluster = 0, i = 0, j = 0;
+
+    algorithm_utils alg_utils;
 
     for (i = 0; i < assigned_clusters.size(); i++){
 
         my_cluster = assigned_clusters[i];
-
-        // if (i == 18){
-        //     cout << "my cluster: " << my_cluster << endl;
-        //     cout << "neighbor size: " << cluster_size[my_cluster][2] << endl;
-        // }
 
         // auto t3 = std::chrono::high_resolution_clock::now();
         if (cluster_size[my_cluster][2] > 0){
 
             for (j=0; j<neighbors[my_cluster].size(); j++){ 
                 
-                // if (i == 18){
-                //   cout << "my :" << my_cluster << " neigh: " << neighbors[my_cluster][j] << endl;
+                // if (i == 5){
+                //   cout << "Point: "  << i << " cluster: " << my_cluster << " first closet neigh: " << neighbors[my_cluster][j] << endl;
+                //   print_vector(dataset[i], dataset[i].size(), " Coordinataes");
+                //   print_vector(centroids[my_cluster], centroids[my_cluster].size(), " Centroid:");
+                //   print_vector(centroids[neighbors[my_cluster][0]], 2, "Cnetroid of 1st neighbor");
+                //   print_vector(centroids[neighbors[my_cluster][1]], 2, "Cnetroid of 2nd neighbor");
                 //   print_2d_vector(affine_vectors[my_cluster], affine_vectors[my_cluster].size(), "Affine: ");  
                 //   print_2d_vector(mid_points[my_cluster], mid_points[my_cluster].size(), " Midpoints");  
                 // }
+
+                if(alg_utils.calc_euclidean(dataset[i], centroids[my_cluster]) < center_dist_mat[my_cluster][neighbors[my_cluster][j]]){
+                    break;
+                }
 
                 // auto t5 = std::chrono::high_resolution_clock::now();
                 if (find_context_direction(dataset[i], affine_vectors[my_cluster][j], 
@@ -371,6 +376,9 @@ vector<TI> &temp, TI &my_cluster, TI &i, TI &j, TD &vec_sum){
                     temp.push_back(neighbors[my_cluster][j]);
 
                 }
+                // else{
+                //     break;
+                // }
                 // auto t6 = std::chrono::high_resolution_clock::now();
                 // affine_time = affine_time + std::chrono::duration_cast<std::chrono::microseconds>(t6 - t5).count();
             }

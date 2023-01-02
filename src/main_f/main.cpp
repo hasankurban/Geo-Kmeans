@@ -22,7 +22,7 @@ int main(){
      string filePath = basePath + "real_data/";
     
 //    string fileName = "50_2_10.csv";
-    string fileName = "crop.csv";
+    string fileName = "epileptic.csv";
 
     string somefilePath = filePath + fileName;
     cout << somefilePath << "\n" ;
@@ -33,7 +33,7 @@ int main(){
     // Declare variables
     int num_iterations = 100;
     float threshold = 0.0001;
-    int num_clusters = 50;
+    int num_clusters = 100;
 
     // Read in the data
     auto t1 = std::chrono::high_resolution_clock::now();
@@ -52,7 +52,7 @@ int main(){
     int km_iter = 0;
     
     // Debug - Testing
-    cout << "DCKM" << "\n" ;
+    cout << "Algo: DCKM" << " Clusters: " << num_clusters << " Threshold: " << threshold << endl;
     auto t5 = std::chrono::high_resolution_clock::now();
     km_iter = dckmeans(dataset, num_clusters, threshold, num_iterations, numCols);
     auto t6 = std::chrono::high_resolution_clock::now();
@@ -60,7 +60,7 @@ int main(){
     std::cout << "Total DCKmeans time: " << ms_int2.count() << " milliseconds\n";
 
 
-    // cout << "KMeans" << "\n" ;
+    // cout << "Algo: KMeans" << " Clusters: " << num_clusters << " Threshold: " << threshold << endl;
     // auto t3 = std::chrono::high_resolution_clock::now();
     // km_iter = kmeans(dataset, num_clusters, threshold, num_iterations, 
     // numRows, numCols, km_centers, km_assign);
