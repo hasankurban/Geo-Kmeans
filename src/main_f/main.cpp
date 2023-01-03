@@ -9,7 +9,8 @@
 
 using namespace std;
 
- string basePath = "/nobackup/parishar/DATASETS/";
+//  string basePath = "/nobackup/parishar/DATASETS/";
+string basePath = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/Box Sync/PhD/DATASETS/";
 // string basePath = "/Users/schmuck/Documents/OneDrive - Indiana University/Box Sync/PhD/Data-Centric-KMeans/";
 
 int main(){
@@ -17,12 +18,12 @@ int main(){
     // Experiment specific path
     // string filePath = basePath + "clustering_data/";
     // string filePath = basePath + "dims_data/";
-    string filePath = basePath + "scal_data/";
+    // string filePath = basePath + "scal_data/";
 //    string filePath = basePath + "sample_data/";
-    //  string filePath = basePath + "real_data/";
+     string filePath = basePath + "real_data/";
     
 //    string fileName = "50_2_10.csv";
-    string fileName = "1000000_points.csv";
+    string fileName = "ijcnn.csv";
 
     string somefilePath = filePath + fileName;
     cout << somefilePath << "\n" ;
@@ -30,17 +31,17 @@ int main(){
     std::vector<vector <float> > dataset;
     vector<int> labels;
 
-    cout << dataset.max_size() << endl;
+    // cout << dataset.max_size() << endl;
     
     // Declare variables
-    int num_iterations = 100;
-    float threshold = 0.001;
-    int num_clusters = 10;
+    int num_iterations = 200;
+    float threshold = 0.0001;
+    int num_clusters = 100;
 
     // Read in the data
     auto t1 = std::chrono::high_resolution_clock::now();
     
-    std::pair<int, int> p = readSimulatedData(somefilePath, dataset, labels, true, true);
+    std::pair<int, int> p = readSimulatedData(somefilePath, dataset, labels, false, false);
 
     cout << "Data size: " << dataset.size() << " X " << dataset[0].size() << endl;
     

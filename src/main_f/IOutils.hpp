@@ -152,14 +152,14 @@ vector<vector <Tfloat> > &dataset, vector<Tint> &labels, bool label_present, boo
     }
     f.close();
 
-    cout << "Rows: " << numRows << "\t Cols: " << numCols << "\n";
+    // cout << "Rows: " << numRows << "\t Cols: " << numCols << "\n";
 
     if (head_present)
         index = 0;
     if (label_present)
         numCols -= 1;
 
-    cout << "Rows: " << numRows << "\t Cols: " << numCols << "\n";
+    // cout << "Rows: " << numRows << "\t Cols: " << numCols << "\n";
  
     f.open(filePath, ios::in);
     if(f.is_open()){
