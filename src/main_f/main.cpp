@@ -9,36 +9,40 @@
 
 using namespace std;
 
- string basePath = "/Users/schmuck/Documents/OneDrive - Indiana University/Box Sync/PhD/DATASETS/";
+ string basePath = "/nobackup/parishar/DATASETS/";
 // string basePath = "/Users/schmuck/Documents/OneDrive - Indiana University/Box Sync/PhD/Data-Centric-KMeans/";
 
 int main(){
 
     // Experiment specific path
-    // string filePath = basePath + "clustering_data";
-    // string filePath = basePath + "dims_data";
-    // string filePath = basePath + "scal_data";
+    // string filePath = basePath + "clustering_data/";
+    // string filePath = basePath + "dims_data/";
+    string filePath = basePath + "scal_data/";
 //    string filePath = basePath + "sample_data/";
-     string filePath = basePath + "real_data/";
+    //  string filePath = basePath + "real_data/";
     
 //    string fileName = "50_2_10.csv";
-    string fileName = "crop.csv";
+    string fileName = "1000000_points.csv";
 
     string somefilePath = filePath + fileName;
     cout << somefilePath << "\n" ;
 
     std::vector<vector <float> > dataset;
     vector<int> labels;
+
+    cout << dataset.max_size() << endl;
     
     // Declare variables
     int num_iterations = 100;
-    float threshold = 0.0001;
-    int num_clusters = 30;
+    float threshold = 0.001;
+    int num_clusters = 10;
 
     // Read in the data
     auto t1 = std::chrono::high_resolution_clock::now();
     
-    std::pair<int, int> p = readSimulatedData(somefilePath, dataset, labels);
+    std::pair<int, int> p = readSimulatedData(somefilePath, dataset, labels, true, true);
+
+    cout << "Data size: " << dataset.size() << " X " << dataset[0].size() << endl;
     
     auto t2 = std::chrono::high_resolution_clock::now();
     auto file_int = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
@@ -52,7 +56,7 @@ int main(){
     int km_iter = 0;
     
     // Debug - Testing
-    cout << "\nAlgo: DCKM" << " Clusters: " << num_clusters << " Threshold: " << threshold << endl;
+    cout << "\nAlgo: DCKM," << " Clusters: " << num_clusters << ", Threshold: " << threshold << endl;
     auto t5 = std::chrono::high_resolution_clock::now();
     km_iter = dckmeans(dataset, num_clusters, threshold, num_iterations, numCols);
     auto t6 = std::chrono::high_resolution_clock::now();
@@ -60,7 +64,7 @@ int main(){
     std::cout << "Total DCKmeans time: " << ms_int2.count() << " milliseconds\n";
 
 
-    // cout << "\nAlgo: KMeans" << " Clusters: " << num_clusters << " Threshold: " << threshold << endl;
+    // cout << "\nAlgo: KMeans," << " Clusters: " << num_clusters << ", Threshold: " << threshold << endl;
     // auto t3 = std::chrono::high_resolution_clock::now();
     // km_iter = kmeans(dataset, num_clusters, threshold, num_iterations, 
     // numRows, numCols, km_centers, km_assign);

@@ -14,7 +14,7 @@ class dataIO{
     public:
         template <typename Tfloat, typename Tint>
         pair<Tint, Tint> readSimulatedData(string, vector<vector<Tfloat> > &, 
-        vector<Tint> &);
+        vector<Tint> &, bool label_present, bool head_present);
         
         float ** alloc_data_memory(int numRows, int numCols);
         int * alloc_label_memory(int);
@@ -117,7 +117,7 @@ vector<vector <Tfloat> > &centroids){
 
 
 template <typename Tfloat, typename Tint> pair<Tint, Tint> readSimulatedData(string filePath, 
-vector<vector <Tfloat> > &dataset, vector<Tint> &labels){
+vector<vector <Tfloat> > &dataset, vector<Tint> &labels, bool label_present, bool head_present){
 
     /* 
     1) Find the number of rows and columns.
@@ -125,7 +125,7 @@ vector<vector <Tfloat> > &dataset, vector<Tint> &labels){
     3) Return the pointer to that array
     */  
 
-    int numRows = 0, numCols= 0;
+    int numRows = 0, numCols= 0, i =0, j = 0, index = -1;
 
     // temporary variables
     string value, line;
@@ -152,14 +152,19 @@ vector<vector <Tfloat> > &dataset, vector<Tint> &labels){
     }
     f.close();
 
-    // cout << "Rows: " << numRows << "\t Cols: " << numCols << "\n";
+    cout << "Rows: " << numRows << "\t Cols: " << numCols << "\n";
+
+    if (head_present)
+        index = 0;
+    if (label_present)
+        numCols -= 1;
+
+    cout << "Rows: " << numRows << "\t Cols: " << numCols << "\n";
  
     f.open(filePath, ios::in);
-    int i = 0;
-    int j = 0;
     if(f.is_open()){
         while(getline(f, line)){
-            if (i > 0){
+            if (i > index){
                 // cout << line << "\n";
                 stringstream s (line);
                 vector<float> row;
@@ -169,7 +174,7 @@ vector<vector <Tfloat> > &dataset, vector<Tint> &labels){
                     try{
                         value.erase(remove( value.begin(), value.end(), '\"' ),value.end()); 
                         
-                        if (j == numCols-1){
+                        if (j == numCols){
                             // cout << value << "\t";
                             labels.push_back(stoi(value));
                         }
