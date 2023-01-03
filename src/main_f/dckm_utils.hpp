@@ -349,6 +349,10 @@ vector<TI> &temp, TI &my_cluster, TI &i, TI &j, TD &vec_sum){
         // auto t3 = std::chrono::high_resolution_clock::now();
         if (cluster_size[my_cluster][2] > 0){
 
+            if(alg_utils.calc_euclidean(dataset[i], centroids[my_cluster]) < center_dist_mat[my_cluster][neighbors[my_cluster][0]]){
+                    continue;
+                }
+
             for (j=0; j<neighbors[my_cluster].size(); j++){ 
                 
                 // if (i == 5){
@@ -361,10 +365,6 @@ vector<TI> &temp, TI &my_cluster, TI &i, TI &j, TD &vec_sum){
                 //   print_2d_vector(mid_points[my_cluster], mid_points[my_cluster].size(), " Midpoints");  
                 // }
 
-                if(alg_utils.calc_euclidean(dataset[i], centroids[my_cluster]) < center_dist_mat[my_cluster][neighbors[my_cluster][j]]){
-                    break;
-                }
-
                 // auto t5 = std::chrono::high_resolution_clock::now();
                 if (find_context_direction(dataset[i], affine_vectors[my_cluster][j], 
                 mid_points[my_cluster][j], vec_sum)){
@@ -374,7 +374,7 @@ vector<TI> &temp, TI &my_cluster, TI &i, TI &j, TD &vec_sum){
                         temp.push_back(my_cluster);
                     }
                     temp.push_back(neighbors[my_cluster][j]);
-
+                    // break;
                 }
                 // else{
                 //     break;
