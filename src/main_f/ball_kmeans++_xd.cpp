@@ -1061,9 +1061,9 @@
 
 //     // string filename = "ijcnn.csv"
 
-//     double thres = 0.001;
+//     double thres = 0.0001;
 //     int iters = 200;
-//     int num_clusters = 50;
+//     int num_clusters = 100;
 
 //     cout << "Algo : Ball_KMeans," << " Clusters: " << num_clusters << ", Thresh: " << thres << endl;
     

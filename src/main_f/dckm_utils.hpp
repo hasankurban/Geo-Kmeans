@@ -14,7 +14,7 @@ class dckm_utils{
 
     template <typename TD>
     void find_midpoints(const vector<TD> &center1, const vector<TD> &center2, 
-    vector<TD> &midpoint, vector<TD> &affine);
+    vector<vector<vector<TD> > > &midpoint, vector<vector<vector<TD> > > &affine, int &, int &);
 
     template <typename TD>
     bool find_context_direction(const vector<TD> &actual_point,
@@ -57,18 +57,21 @@ class dckm_utils{
 
 
 template <typename TD>
-void find_midpoints(const vector<TD> &center1, const vector<TD> &center2, 
-vector<TD> &midpoint, vector<TD> &affine){
+inline void find_midpoints(const vector<TD> &center1, const vector<TD> &center2, 
+vector<vector<vector<TD> > > &midpoint, vector<vector<vector<TD> > > &affine, int &curr_center, int &ot_cen){
 
     for (int i=0; i<center1.size(); i++){
-        midpoint[i] = (center1[i] + center2[i])/2;
-        affine[i] = center2[i] - midpoint[i];
+        // midpoint[i] = (center1[i] + center2[i])/2;
+        // affine[i] = center2[i] - midpoint[i];
+
+        midpoint[curr_center][ot_cen][i] = (center1[i] + center2[i])/2;
+        affine[curr_center][ot_cen][i] = center2[i] - midpoint[curr_center][ot_cen][i];
     }
 }
 
 
 template <typename TD>
-bool find_context_direction(const vector<TD> &actual_point, 
+inline bool find_context_direction(const vector<TD> &actual_point, 
 const vector<TD> &centroid_vector, const vector<TD> &midpoint, TD &vec_sum){
 
     int mysize = midpoint.size(); 
@@ -87,7 +90,7 @@ const vector<TD> &centroid_vector, const vector<TD> &midpoint, TD &vec_sum){
 
 
 template <typename TD, typename TI>
-void restore_radius(vector<vector <TD> > &dist_matrix,
+inline void restore_radius(vector<vector <TD> > &dist_matrix,
 vector<TI> &assigned_clusters, 
 vector<vector <TD> > &cluster_size){
 
@@ -217,7 +220,7 @@ vector<vector <TD> > &cluster_size){
 
 
 template <typename TD, typename TI>
-void find_neighbors(vector<vector <TD> > &centroids, 
+inline void find_neighbors(vector<vector <TD> > &centroids, 
 vector<vector <TD> > &center_dist_mat, vector<vector <TD> > &cluster_size, 
 vector<vector<TI> > &neighbors, vector<vector<vector <TD> > > &mid_points, 
 vector<vector<vector <TD> > > &affine_vectors,  vector<TD> &temp, vector<vector<TD> > &temp_master, vector<TD> &temp_midpoint,
@@ -235,9 +238,11 @@ vector<TD> &temp_affine, vector<vector<TD> > &midpoint_holder, vector<vector<TD>
     // vector<vector<TD> > midpoint_holder;
     // vector<vector<TD> > affine_holder;
 
-    neighbors.clear();
-    mid_points.clear();
-    affine_vectors.clear();
+    // neighbors.clear();
+    // mid_points.clear();
+    // affine_vectors.clear();
+
+    vector<TI> temp1;
 
     int curr_center = 0, ot_center = 0, cnt = 0;
 
@@ -245,7 +250,7 @@ vector<TD> &temp_affine, vector<vector<TD> > &midpoint_holder, vector<vector<TD>
     for(curr_center=0; curr_center<centroids.size(); curr_center++){
         
         radius = cluster_size[curr_center][1];
-        vector<TI> temp1;
+        // vector<TI> temp1;
         cnt = 0;
         
         for (ot_center=0; ot_center<centroids.size(); 
@@ -273,11 +278,15 @@ vector<TD> &temp_affine, vector<vector<TD> > &midpoint_holder, vector<vector<TD>
                 temp_master.push_back(temp);
            
                 // Get the mid-point coordinates for this pair of centroids
-                find_midpoints(centroids[curr_center], centroids[ot_center], 
-                                    temp_midpoint, temp_affine);
+                find_midpoints(centroids[curr_center], centroids[ot_center], mid_points, affine_vectors, curr_center, ot_center);
                 
-                midpoint_holder.push_back(temp_midpoint);
-                affine_holder.push_back(temp_affine);
+                // midpoint_holder.push_back(temp_midpoint);
+                // affine_holder.push_back(temp_affine);
+
+                // print_2d_vector(midpoint_holder, midpoint_holder.size(), "Midpoint: ");
+
+                // mid_points[curr_center][ot_center] = temp_midpoint;
+                // affine_vectors[curr_center][ot_center] = temp_affine;
 
                 cnt++;
             }
@@ -285,52 +294,77 @@ vector<TD> &temp_affine, vector<vector<TD> > &midpoint_holder, vector<vector<TD>
 
             if (cnt>1){
                 // print_2d_vector(temp_master, temp_master.size(), " Sorted: ");
-                vector<vector<float> > temp123;
-                vector<vector<float> > temp234;
+                // vector<vector<float> > temp123;
+                // vector<vector<float> > temp234;
+
+                // cout << "Curr_center: " << curr_center << " other: " << ot_center << endl;
                 
                 sort(temp_master.begin(), temp_master.end(), [](const std::vector<TD>& a, const std::vector<TD>& b) {
                     return a[0] < b[0];});
 
+                    // print_2d_vector(temp_master, temp_master.size(), " Sorted neigh: ");
+                    // print_2d_vector(midpoint_holder, midpoint_holder.size(), "Midpoint: ");
+
                 for(int i = 0; i<temp_master.size(); i++){
                     temp1.push_back(trunc(temp_master[i][1]));
-                    temp123.push_back(midpoint_holder[temp_master[i][2]]);
-                    temp234.push_back(affine_holder[temp_master[i][2]]);
+                    // neighbors[curr_center].push_back(trunc(temp_master[i][1]));
+                    // temp123.push_back(midpoint_holder[temp_master[i][2]]);
+                    // temp234.push_back(affine_holder[temp_master[i][2]]);
+                    
+                    // neighbors[curr_center] = trunc(temp_master[i][1]);
+                    // cout << temp_master[i][2] << endl;
+
+                    
+                    // print_vector(midpoint_holder[temp_master[i][2]], midpoint_holder[temp_master[i][2]].size(), "Midpoint: ");
+
+                    // mid_points[curr_center][ot_center] = midpoint_holder[temp_master[i][2]];
+                    // affine_vectors[curr_center][ot_center] = affine_holder[temp_master[i][2]];
+
                 }
 
-                neighbors.push_back(temp1);
-                mid_points.push_back(temp123);
-                affine_vectors.push_back(temp234);
+                neighbors[curr_center] = temp1;
+                // mid_points.push_back(temp123);
+                // affine_vectors.push_back(temp234);
 
             }
 
             else if (cnt == 1){
                 // print_2d_vector(temp_master, temp_master.size(), " Sorted: ");
                 temp1.push_back(temp_master[0][1]);
-                neighbors.push_back(temp1);
-                affine_vectors.push_back(affine_holder);
-                mid_points.push_back(midpoint_holder);
+                // neighbors.push_back(temp_master[0][1]);
+                // affine_vectors.push_back(affine_holder);
+                // mid_points.push_back(midpoint_holder);
+
+                neighbors[curr_center] = temp1;
+                // affine_vectors[curr_center] = affine_holder;
+                // mid_points[curr_center] = midpoint_holder;
             }
 
             else if(cnt == 0){
               temp1.push_back(-100);
-              midpoint_holder.push_back(temp_midpoint);
-              affine_holder.push_back(temp_affine);
-              affine_vectors.push_back(affine_holder);
-              mid_points.push_back(midpoint_holder);
-              neighbors.push_back(temp1); 
+            //   midpoint_holder.push_back(temp_midpoint);
+            //   affine_holder.push_back(temp_affine);
+            //   affine_vectors.push_back(affine_holder);
+            //   mid_points.push_back(midpoint_holder);
+            //   neighbors.push_back(temp1); 
+
+                neighbors[curr_center] = temp1;
+                // affine_vectors[curr_center][ot_center] = temp_affine;
+                // mid_points[curr_center][ot_center] = temp_midpoint;
             }
 
             cluster_size[curr_center][2] = cnt;
-            midpoint_holder.clear();
-            affine_holder.clear();
+            // midpoint_holder.clear();
+            // affine_holder.clear();
             temp_master.clear();
+            temp1.clear();
     }
 }
 
 
 
 template <typename TD, typename TI>
-void determine_data_expression(vector<vector<TD> > &dataset, 
+inline void determine_data_expression(vector<vector<TD> > &dataset, 
 vector<vector <TD> > &centroids, vector<vector<TD> > &cluster_size, vector<vector <TD> > &center_dist_mat, 
 vector<TI> &assigned_clusters, 
 vector<vector<TI> > &neighbors,
@@ -349,6 +383,8 @@ vector<TI> &temp, TI &my_cluster, TI &i, TI &j, TD &vec_sum){
         // auto t3 = std::chrono::high_resolution_clock::now();
         if (cluster_size[my_cluster][2] > 0){
 
+            // cout << my_cluster << "\t" << neighbors[my_cluster][0] << endl; 
+
             if(alg_utils.calc_euclidean(dataset[i], centroids[my_cluster]) < center_dist_mat[my_cluster][neighbors[my_cluster][0]]){
                     continue;
                 }
@@ -365,9 +401,12 @@ vector<TI> &temp, TI &my_cluster, TI &i, TI &j, TD &vec_sum){
                 //   print_2d_vector(mid_points[my_cluster], mid_points[my_cluster].size(), " Midpoints");  
                 // }
 
+                // cout << neighbors[j] << endl;
+                // print_vector(affine_vectors[my_cluster][neighbors[j]], affine_vectors[my_cluster][neighbors[j]].size(), "test:");
+
                 // auto t5 = std::chrono::high_resolution_clock::now();
-                if (find_context_direction(dataset[i], affine_vectors[my_cluster][j], 
-                mid_points[my_cluster][j], vec_sum)){
+                if (find_context_direction(dataset[i], affine_vectors[my_cluster][neighbors[my_cluster][j]], 
+                mid_points[my_cluster][neighbors[my_cluster][j]], vec_sum)){
 
                     if (temp.size() == 0){
                         temp.push_back(i);
@@ -435,7 +474,7 @@ vector<TI> &temp, TI &my_cluster, TI &i, TI &j, TD &vec_sum){
 
 
 template <typename Tfloat, typename Tint>
-void calculate_HE_distances(const vector<vector<Tfloat> > &dataset, 
+inline void calculate_HE_distances(const vector<vector<Tfloat> > &dataset, 
 vector<vector<Tfloat> > &centroids, vector<vector<Tfloat> > &dist_mat,
 Tint num_clusters, vector<Tint> &assigned_clusters, 
 vector<vector<Tfloat> > &cluster_size, 

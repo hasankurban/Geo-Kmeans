@@ -156,6 +156,7 @@ vector<vector <Tfloat> > &dataset, vector<Tint> &labels, bool label_present, boo
 
     if (head_present)
         index = 0;
+        numRows-=1;
     if (label_present)
         numCols -= 1;
 

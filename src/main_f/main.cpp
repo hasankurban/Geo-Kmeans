@@ -36,7 +36,7 @@ int main(){
     // Declare variables
     int num_iterations = 200;
     float threshold = 0.0001;
-    int num_clusters = 100;
+    int num_clusters = 30;
 
     // Read in the data
     auto t1 = std::chrono::high_resolution_clock::now();
@@ -49,8 +49,8 @@ int main(){
     auto file_int = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
     cout << "File reading: " << file_int.count() << " MS\n";
     
-    int numRows = p.first-1;
-    int numCols = p.second-1;
+    int numRows = p.first;
+    int numCols = p.second;
 
     vector<vector<float> > km_centers(num_clusters, vector<float>(numCols, 0.0));
     vector<int> km_assign(dataset.size());

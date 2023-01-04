@@ -63,7 +63,7 @@ vector<vector <T1> > &dataset, T2 num_cluster){
 }
 
 template <typename T1>
-float algorithm_utils::calc_euclidean(const vector<T1> &point, 
+inline float algorithm_utils::calc_euclidean(const vector<T1> &point, 
 const vector<T1> &center){
     
     T1 dist = 0.0;
@@ -82,7 +82,7 @@ const vector<T1> &center){
 
 
 template <typename T1, typename T2>
-void algorithm_utils::calculate_distances(const vector<vector<T1> > &dataset, 
+inline void algorithm_utils::calculate_distances(const vector<vector<T1> > &dataset, 
 vector<vector<T1> > &centroids, vector<vector<T1> > &dist_mat,
 T2 num_clusters, vector<T2> &assigned_clusters, vector<vector<T1> > &cluster_size){
 
@@ -130,7 +130,7 @@ T2 num_clusters, vector<T2> &assigned_clusters, vector<vector<T1> > &cluster_siz
 
 
 template <typename T1, typename T2>
-void algorithm_utils::update_centroids(vector<vector <T1> > &dataset, 
+inline void algorithm_utils::update_centroids(vector<vector <T1> > &dataset, 
 vector<vector<T1> > &new_centroids, vector<T2> &assigned_clusters, 
 vector<vector<T1> > &cluster_size, T2 numCols){
 
@@ -160,7 +160,7 @@ vector<vector<T1> > &cluster_size, T2 numCols){
 
 
 template <typename T1>
-bool algorithm_utils::check_convergence(vector<vector <T1> > &new_centroids, 
+inline bool algorithm_utils::check_convergence(vector<vector <T1> > &new_centroids, 
 vector<vector <T1> > &centroids, T1 threshold, float &diff, float &temp_diff, int &i, int &j){
 
     temp_diff = 0;

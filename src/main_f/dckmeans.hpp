@@ -32,7 +32,7 @@ Tfloat threshold, Tint num_iterations, Tint numCols){
     
     
     vector<vector <Tfloat> > center_dist_mat (num_clusters, vector<Tfloat>(num_clusters, 0));
-    vector<vector<Tint> > neighbors(num_clusters);
+    vector<vector<int> > neighbors(num_clusters);
 
     
     vector<vector<vector <Tfloat> > > mid_points(num_clusters, vector<vector<Tfloat> >(num_clusters, vector<Tfloat>(numCols, 0)));
