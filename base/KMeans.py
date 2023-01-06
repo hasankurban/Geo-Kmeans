@@ -2,11 +2,13 @@ from utils.kmeans_utils import *
 import sys
 
 
-def Kmeans(data, num_clusters, threshold, num_iterations, seed):
+def Kmeans(data, num_clusters, threshold, num_iterations, centroids, seed):
 
     loop_counter = 0
 
-    centroids = init_centroids(data, num_clusters, seed)
+    if centroids is []:
+        centroids = init_centroids(data, num_clusters, seed)
+        print("Initialized centroids manually")
 
     # Calculate the cluster assignments for data points
     # assigned_clusters, _, stat = calculate_distances_less_modalities(data, centroids)
