@@ -134,7 +134,7 @@ inline void algorithm_utils::update_centroids(vector<vector <T1> > &dataset,
 vector<vector<T1> > &new_centroids, vector<T2> &assigned_clusters, 
 vector<vector<T1> > &cluster_size, T2 numCols){
 
-    int point_index = 0, curr_center = 0, index = 0, k = 0, j =0;
+    int curr_center = 0, index = 0, k = 0, j =0;
 
     for (index=0; index<dataset.size(); index++){
         curr_center = assigned_clusters[index];
@@ -173,7 +173,7 @@ vector<vector <T1> > &centroids, T1 threshold, float &diff, float &temp_diff, in
                 temp_diff = new_centroids[i][j] - centroids[i][j];
                 diff = diff + (temp_diff * temp_diff);
         }
-        diff = sqrt(diff);
+        diff = sqrt(diff/new_centroids.size());
     }
     else
         return false;

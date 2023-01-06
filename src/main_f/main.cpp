@@ -34,9 +34,9 @@ int main(){
     // cout << dataset.max_size() << endl;
     
     // Declare variables
-    int num_iterations = 200;
+    int num_iterations = 100;
     float threshold = 0.0001;
-    int num_clusters = 30;
+    int num_clusters = 100;
 
     // Read in the data
     auto t1 = std::chrono::high_resolution_clock::now();
@@ -64,7 +64,6 @@ int main(){
     auto ms_int2 = std::chrono::duration_cast<std::chrono::milliseconds>(t6 - t5);
     std::cout << "Total DCKmeans time: " << ms_int2.count() << " milliseconds\n";
 
-
     // cout << "\nAlgo: KMeans," << " Clusters: " << num_clusters << ", Threshold: " << threshold << endl;
     // auto t3 = std::chrono::high_resolution_clock::now();
     // km_iter = kmeans(dataset, num_clusters, threshold, num_iterations, 
@@ -73,7 +72,29 @@ int main(){
     // auto km_int = std::chrono::duration_cast<std::chrono::milliseconds>(t4 - t3);
     // std::cout << "Total KMeans time: " << km_int.count() << " milliseconds\n";
 
-    // print_2d_vector(km_centers, num_clusters, "Final Centroids");
+
+    // for(int i=2; i<=20; i++){
+
+    //     num_clusters = i;
+    //     vector<vector<float> > km_centers(num_clusters, vector<float>(numCols, 0.0));
+    //     vector<int> km_assign(dataset.size());
+
+    //     cout << "\nAlgo: DCKM," << " Clusters: " << num_clusters << ", Threshold: " << threshold << endl;
+    //     auto t5 = std::chrono::high_resolution_clock::now();
+    //     km_iter = dckmeans(dataset, num_clusters, threshold, num_iterations, numCols);
+    //     auto t6 = std::chrono::high_resolution_clock::now();
+    //     auto ms_int2 = std::chrono::duration_cast<std::chrono::milliseconds>(t6 - t5);
+    //     std::cout << "Total DCKmeans time: " << ms_int2.count() << " milliseconds\n";
+
+    //     cout << "\nAlgo: KMeans," << " Clusters: " << num_clusters << ", Threshold: " << threshold << endl;
+    //     auto t3 = std::chrono::high_resolution_clock::now();
+    //     km_iter = kmeans(dataset, num_clusters, threshold, num_iterations, 
+    //     numRows, numCols, km_centers, km_assign);
+    //     auto t4 = std::chrono::high_resolution_clock::now();
+    //     auto km_int = std::chrono::duration_cast<std::chrono::milliseconds>(t4 - t3);
+    //     std::cout << "Total KMeans time: " << km_int.count() << " milliseconds\n";
+
+    // }
 
 return 0;
 }

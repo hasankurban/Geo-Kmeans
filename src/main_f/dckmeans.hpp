@@ -112,14 +112,14 @@ Tfloat threshold, Tint num_iterations, Tint numCols){
         
         // auto t6 = std::chrono::high_resolution_clock::now();
         // ne_time = ne_time + std::chrono::duration_cast<std::chrono::milliseconds>(t6 - t5).count();
+        // print_3d_vector(mid_points, mid_points.size(), "Midpoints");
         // print_2d_vector(neighbors, neighbors.size(), "Neighbors: ");
    
-        // print_3d_vector(mid_points, mid_points.size(), "Midpoints");
         // print_3d_vector(affine_vectors, affine_vectors.size(), "Affine vectors");
 
         // auto t7 = std::chrono::high_resolution_clock::now();
         
-        determine_data_expression(dataset, new_centroids, cluster_size, center_dist_mat,
+        determine_data_expression(dataset, new_centroids, cluster_size, center_dist_mat, dist_matrix,
         assigned_clusters, neighbors, affine_vectors, mid_points, 
         he_data, inner_loop_time, affine_calc_time, temp1, my_cluster, i, j, vec_sum);
 
@@ -134,9 +134,9 @@ Tfloat threshold, Tint num_iterations, Tint numCols){
         // }
         // Re-calculate distances
         // auto t9 = std::chrono::high_resolution_clock::now();
-        calculate_HE_distances(dataset, new_centroids, dist_matrix,
-                                        num_clusters, assigned_clusters, 
-                                        cluster_size, he_data);
+        // calculate_HE_distances(dataset, new_centroids, dist_matrix,
+        //                                 num_clusters, assigned_clusters, 
+        //                                 cluster_size, he_data);
 
         // auto t10 = std::chrono::high_resolution_clock::now();
         // dist_time = dist_time + std::chrono::duration_cast<std::chrono::milliseconds>(t10 - t9).count();
@@ -145,10 +145,11 @@ Tfloat threshold, Tint num_iterations, Tint numCols){
         // auto t11 = std::chrono::high_resolution_clock::now();
         // Move the new centroids to older
         centroids = new_centroids;
-        he_data.clear();
+        // he_data.clear();
         
         // reset centroids
         alg_utils.reinit(new_centroids);
+        // restore_radius(dist_matrix, assigned_clusters, cluster_size);
         // auto t12 = std::chrono::high_resolution_clock::now();
         // misc_time = misc_time + std::chrono::duration_cast<std::chrono::milliseconds>(t12 - t11).count();
     }
