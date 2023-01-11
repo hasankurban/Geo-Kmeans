@@ -173,7 +173,7 @@ vector<vector <T1> > &centroids, T1 threshold, float &diff, float &temp_diff, in
                 temp_diff = new_centroids[i][j] - centroids[i][j];
                 diff = diff + (temp_diff * temp_diff);
         }
-        diff = sqrt(diff/new_centroids.size());
+        diff = sqrt(diff/centroids.size());
     }
     else
         return false;
