@@ -6,7 +6,7 @@ def Kmeans(data, num_clusters, threshold, num_iterations, centroids, seed):
 
     loop_counter = 0
 
-    if centroids is []:
+    if centroids == []:
         centroids = init_centroids(data, num_clusters, seed)
         print("Initialized centroids manually")
 
