@@ -198,7 +198,8 @@ Tint &i, Tint &j, Tfloat &temp_result){
             
             temp_result = alg_utils.calc_euclidean(dataset[i], centroids[my_cluster]);
             if(temp_result < center_dist_mat[my_cluster][neighbors[my_cluster][0]]){
-                    continue;
+                he_counter += 1; 
+                continue;    
             }
 
             dist_mat[i][my_cluster] = temp_result;

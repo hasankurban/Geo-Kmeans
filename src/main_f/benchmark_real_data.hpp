@@ -6,6 +6,9 @@
 #include "data_holder.hpp"
 #include "kmeans.hpp"
 #include "dckmeans.hpp"
+#include "ball_kmeans++_xf.hpp"
+#include <time.h>
+
 #include <chrono>
 #include <filesystem>
 
@@ -32,7 +35,7 @@ Tfloat time, Tint iters, Tint distanceCalc){
         if (i == 0 & j ==0){
             resFile << "Data, Algorithm, Clusters, Time, Iters, DistanceCalc\n" ;
         }
-        resFile << DataName << "," << algorithm << "," << std::to_string(clusters) << "," << std::to_string(0) << "," << to_string(iters)
+        resFile << DataName << "," << algorithm << "," << std::to_string(clusters) << "," << std::to_string(time) << "," << to_string(iters)
         << "," << std::to_string(distanceCalc) << "\n";
     }
 }
@@ -43,7 +46,7 @@ void run_clustering_benchmark(Tfloat threshold, Tint num_iterations,
 string input_path, string output_path){
 
     // Set the parameters
-    vector<Tint> num_clusters = {5, 10, 15, 20, 25, 30, 35};
+    vector<Tint> num_clusters = {5, 10, 15};
     
     // vector<string> file_names = {"Breastcancer.csv", "CustomerSaleRecords.csv",
     // "SeedData.csv", "Kegg.csv", "EpilepticDetection.csv", "UserLocation.csv",
@@ -54,10 +57,11 @@ string input_path, string output_path){
     // "crop", "Twitter", "XorData"};
 
 
-    vector<string> file_names = {"Breastcancer.csv", "CustomerSaleRecords.csv", "SeedData.csv"};
-    vector<string> labelNames = {"Breastcancer", "CustomerSaleRecords", "SeedData"};
+    vector<string> file_names = {"CreditRisk.csv", "EpilepticDetection.csv", "XorData.csv"};
+    vector<string> labelNames = {"CreditRisk", "EpilepticDetection", "XorData"};
 
     Tint iters = 0, numRows = 0, numCols = 0, clus = 0;
+    double start_time = 0, end_time = 0, runTime=0;
 
     std::vector<vector <Tfloat> > dataset;
     vector<Tint> labels;
@@ -94,41 +98,71 @@ string input_path, string output_path){
             clus = num_clusters[j];
             output_data res;
 
+
+            //####################
+            // KMeans
+            //####################
+
             cout << "\nAlgo: KMeans," << " Data: " << fileName << " Clusters: " << clus << ", Threshold: " << threshold << endl;
-            auto km_start_time = std::chrono::high_resolution_clock::now();
+            
+            start_time = clock();
             res = kmeans(dataset, clus, threshold, num_iterations, numCols);
-            auto km_end_time = std::chrono::high_resolution_clock::now();
-            auto km_runTime = std::chrono::duration_cast<std::chrono::seconds>(km_end_time - km_start_time);
+            runTime = (clock() - start_time)/CLOCKS_PER_SEC;
+
+            if (runTime < 0){
+                runTime = runTime*1000;
+            }
 
             // Write to output file
             write_result(resFile, i, j, labelNames[i], "KMeans", clus, 
-            0, res.loop_counter, res.num_he);
+            runTime, res.loop_counter, res.num_he);
 
-            cout << "\nAlgo: DCKM," << " Data: " << fileName << " Clusters: " << clus << ", Threshold: " << threshold << endl;
-            auto kmdc_start_time = std::chrono::high_resolution_clock::now();
+            
+            //####################
+            // KMeans
+            //####################
+
+            cout << "\nAlgo: KMeans-DC," << " Data: " << fileName << " Clusters: " << clus << ", Threshold: " << threshold << endl;
+            
+            start_time = clock();
             res = dckmeans(dataset, clus, threshold, num_iterations, numCols);
-            auto kmdc_end_time = std::chrono::high_resolution_clock::now();
-            auto kmdc_runTime = std::chrono::duration_cast<std::chrono::seconds>(kmdc_end_time - kmdc_start_time);
+            runTime = (clock() - start_time)/CLOCKS_PER_SEC;
+
+            if (runTime < 0){
+                runTime = runTime*1000;
+            }
 
             // Write to output file
             write_result(resFile, 1, 1, labelNames[i], "KMeans-DC", clus, 
-            0, res.loop_counter, res.num_he);
+            runTime, res.loop_counter, res.num_he);
 
-            // if(resFile.is_open()){
-            //     if (i == 0 & j ==0){
-            //         resFile << "Data, Algorithm, Clusters, Time, Iters, DistanceCalc\n" ;
-            //     }
-            //     resFile << labelNames[i] << "," << "KMeansDC," << std::to_string(clus) << "," << std::to_string(0) << "," << to_string(res.loop_counter)
-            //     << "," << std::to_string(res.num_he) << "\n" ;
-            // }
+
+            //####################
+            // Ball Kmeans
+            //####################
+
+            cout << "\nAlgo: Ball-KMeans," << " Data: " << fileName << " Clusters: " << clus << ", Threshold: " << threshold << endl;
+
+            // Load data in Eigen format for Ball KMeans
+            MatrixOur BallK_dataset = load_data(somefilePath);
+            MatrixOur ballKm_centroids = init_centroids(BallK_dataset, clus);
+
+            start_time = clock();
+            res = ball_k_means_Ring(BallK_dataset, ballKm_centroids, false, threshold, num_iterations);
+            runTime = (clock() - start_time)/CLOCKS_PER_SEC;
+
+            if (runTime < 0){
+                runTime = runTime*1000;
+            }
+
+            // Write to output file
+            write_result(resFile, 1, 1, labelNames[i], "Ball-Kmeans", clus, 
+            runTime, res.loop_counter, res.num_he);
            
         }
 
         // Clear the contents of the dataset
         dataset.clear();
-
     }
-
     resFile.close(); 
-    
-    }
+}

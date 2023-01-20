@@ -22,7 +22,7 @@ template <typename Tfloat, typename Tint>
 output_data dckmeans(vector<vector <Tfloat> > &dataset, Tint num_clusters, 
 Tfloat threshold, Tint num_iterations, Tint numCols){
 
-    Tint loop_counter = 0;
+    Tint loop_counter = 1;
     vector<vector<Tfloat> > centroids(num_clusters, vector<Tfloat>(numCols));
     vector<vector<Tfloat> > new_centroids(num_clusters, vector<Tfloat>(numCols));
     vector<vector<Tfloat> > dist_matrix(dataset.size(), vector<Tfloat>(num_clusters));

@@ -17,7 +17,7 @@ template <typename Tfloat, typename Tint>
 output_data kmeans(vector<vector <Tfloat> > &dataset, 
 Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols){
 
-    Tint loop_counter = 0;
+    Tint loop_counter = 1;
     vector<vector<Tfloat> > centroids(num_clusters, vector<Tfloat>(numCols));
     vector<vector<Tfloat> > new_centroids(num_clusters, vector<Tfloat>(numCols));
     vector<vector <Tfloat> > dist_matrix(dataset.size(), vector<Tfloat>(num_clusters));
@@ -74,7 +74,7 @@ Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols){
     output_data result;
 
     result.loop_counter = loop_counter;
-    result.num_he = loop_counter * dataset.size();
+    result.num_he = loop_counter * dataset.size() * num_clusters;
     result.assigned_labels = assigned_clusters;
 
     return result;
