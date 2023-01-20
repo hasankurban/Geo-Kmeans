@@ -44,7 +44,7 @@ class dckm_utils{
     vector<vector<Tint> > &neighbors,
     vector<vector<vector <Tfloat> > > &affine_vectors, 
     vector<vector<vector <Tfloat> > > &mid_points, 
-    vector<vector <Tint> > &he_data, vector<Tint> &temp, Tint &my_cluster, 
+    Tint &he_counter, vector<Tint> &temp, Tint &my_cluster, 
     Tint &i, Tint &j, Tfloat &temp_result);
 
 };
@@ -184,7 +184,7 @@ vector<Tint> &assigned_clusters,
 vector<vector<Tint> > &neighbors,
 vector<vector<vector <Tfloat> > > &affine_vectors, 
 vector<vector<vector <Tfloat> > > &mid_points, 
-vector<vector <Tint> > &he_data, vector<Tint> &temp, Tint &my_cluster, 
+Tint &he_counter, vector<Tint> &temp, Tint &my_cluster, 
 Tint &i, Tint &j, Tfloat &temp_result){
     
 
@@ -220,7 +220,8 @@ Tint &i, Tint &j, Tfloat &temp_result){
                         assigned_clusters[i] = neighbors[my_cluster][j];
                         cluster_size[neighbors[my_cluster][j]][0] += 1;
                     } 
-                    
+
+                    he_counter += 1; 
                 }
             }
         } 

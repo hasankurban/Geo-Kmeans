@@ -8,16 +8,18 @@
 
 using namespace std;
 
+
 class DataCentricKmeans{
     template <typename Tfloat, typename Tint>
-    Tint dckmeans(vector<vector <Tfloat> > &dataset, 
+    output_data dckmeans(vector<vector <Tfloat> > &dataset, 
     Tint num_clusters, Tfloat threshold, Tint num_iterations, 
     Tint numCols);
 };
 
 
+
 template <typename Tfloat, typename Tint>
-Tint dckmeans(vector<vector <Tfloat> > &dataset, Tint num_clusters, 
+output_data dckmeans(vector<vector <Tfloat> > &dataset, Tint num_clusters, 
 Tfloat threshold, Tint num_iterations, Tint numCols){
 
     Tint loop_counter = 0;
@@ -33,7 +35,7 @@ Tfloat threshold, Tint num_iterations, Tint numCols){
     
     vector<vector<vector <Tfloat> > > mid_points(num_clusters, vector<vector<Tfloat> >(num_clusters, vector<Tfloat>(numCols, 0)));
     vector<vector<vector <Tfloat> > > affine_vectors(num_clusters, vector<vector<Tfloat> >(num_clusters, vector<Tfloat>(numCols, 0)));
-    vector<vector <Tint> > he_data;
+    Tint he_counter = 0;
 
     vector<Tint> temp1;
     vector<Tfloat> temp2(3);
@@ -47,12 +49,16 @@ Tfloat threshold, Tint num_iterations, Tint numCols){
     Tint my_cluster = 0, i = 0, j = 0, k = 0, l = 0, m = 0;
     Tfloat temp_diff = 0, diff = 0, vec_sum = 0;
 
+    output_data result;
+
     // Create objects
     algorithm_utils alg_utils;
     dckm_utils dc_utils;
 
     // Initialize centroids
     alg_utils.init_centroids(centroids, dataset, num_clusters);
+
+    // print_2d_vector(centroids, 5, "initial");
 
     // Assign data to nearest center
     alg_utils.calculate_distances(dataset, centroids, dist_matrix,
@@ -75,7 +81,7 @@ Tfloat threshold, Tint num_iterations, Tint numCols){
         
         determine_data_expression(dataset, new_centroids, cluster_size, center_dist_mat, dist_matrix,
         assigned_clusters, neighbors, affine_vectors, mid_points, 
-        he_data, temp1, my_cluster, i, j, vec_sum);
+        he_counter, temp1, my_cluster, i, j, vec_sum);
 
         // Move the new centroids to older
         centroids = new_centroids;
@@ -84,5 +90,10 @@ Tfloat threshold, Tint num_iterations, Tint numCols){
         alg_utils.reinit(new_centroids);
 
     }
-    return loop_counter;
+
+    result.loop_counter = loop_counter;
+    result.num_he = he_counter + dataset.size();
+    result.assigned_labels = assigned_clusters;
+
+    return result;
 }
