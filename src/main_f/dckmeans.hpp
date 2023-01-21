@@ -11,19 +11,18 @@ using namespace std;
 
 class DataCentricKmeans{
     template <typename Tfloat, typename Tint>
-    output_data dckmeans(vector<vector <Tfloat> > &dataset, 
+    output_data dckmeans(vector<vector <Tfloat> > &dataset, vector<vector<Tfloat> > &centroids,
     Tint num_clusters, Tfloat threshold, Tint num_iterations, 
     Tint numCols);
 };
 
 
-
 template <typename Tfloat, typename Tint>
-output_data dckmeans(vector<vector <Tfloat> > &dataset, Tint num_clusters, 
+output_data dckmeans(vector<vector <Tfloat> > &dataset, vector<vector<Tfloat> > &centroids, Tint num_clusters, 
 Tfloat threshold, Tint num_iterations, Tint numCols){
 
     Tint loop_counter = 1;
-    vector<vector<Tfloat> > centroids(num_clusters, vector<Tfloat>(numCols));
+    // vector<vector<Tfloat> > centroids(num_clusters, vector<Tfloat>(numCols));
     vector<vector<Tfloat> > new_centroids(num_clusters, vector<Tfloat>(numCols));
     vector<vector<Tfloat> > dist_matrix(dataset.size(), vector<Tfloat>(num_clusters));
     vector<Tint> assigned_clusters(dataset.size());
@@ -55,8 +54,10 @@ Tfloat threshold, Tint num_iterations, Tint numCols){
     algorithm_utils alg_utils;
     dckm_utils dc_utils;
 
+
     // Initialize centroids
-    alg_utils.init_centroids(centroids, dataset, num_clusters);
+    // alg_utils.init_centroids(centroids, dataset, num_clusters);
+    
 
     // print_2d_vector(centroids, 5, "initial");
 
@@ -72,7 +73,7 @@ Tfloat threshold, Tint num_iterations, Tint numCols){
 
         // Check Convergence
         if (alg_utils.check_convergence(new_centroids, centroids, threshold, diff, temp_diff, i, j)){
-                cout << "Convergence at iteration: " << loop_counter << "\n";
+                // cout << "Convergence at iteration: " << loop_counter << "\n";
                 break;
         }
         

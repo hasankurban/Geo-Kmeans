@@ -8,6 +8,7 @@
 #include "dckmeans.hpp"
 #include "ball_kmeans++_xf.hpp"
 #include <time.h>
+#include <map>
 
 #include <chrono>
 #include <filesystem>
@@ -47,18 +48,23 @@ string input_path, string output_path){
 
     // Set the parameters
     vector<Tint> num_clusters = {5, 10, 15};
-    
-    // vector<string> file_names = {"Breastcancer.csv", "CustomerSaleRecords.csv",
-    // "SeedData.csv", "Kegg.csv", "EpilepticDetection.csv", "UserLocation.csv",
+    int num_rep  = 1;
+    // vector<string> file_names = {"Breastcancer.csv", "CustomerSaleRecords.csv", "CreditRisk.csv"
+    // "SeedData.csv", "Kegg.csv", "Census.csv", "UserLocation.csv",
     // "crop.csv", "Twitter.csv", "XorData.csv"};
 
-    // vector<string> labelNames = {"BreastCancer", "CustomerSaleRecords", "SeedData", 
-    // "Kegg", "EpilepticDetection", "UserLocation",
+    // vector<string> labelNames = {"BreastCancer", "CustomerSaleRecords", "CreditRisk", 
+    // "Kegg", "Census", "UserLocation",
     // "crop", "Twitter", "XorData"};
 
+    // vector<string> centroidFiles = {"BreastCancerCentroids.txt", "CustomerSaleRecordsCentroids.txt", "CreditRiskCentroids.txt",
+    // "KeggCentroids.txt", "CensusCentroids.txt", "UserLocationCentroids.txt",
+    // "cropCentroids.txt", "TwitterCentroids.txt", "XorDataCentroids.txt"}
 
-    vector<string> file_names = {"CreditRisk.csv", "EpilepticDetection.csv", "XorData.csv"};
-    vector<string> labelNames = {"CreditRisk", "EpilepticDetection", "XorData"};
+
+    vector<string> file_names = {"Kegg.csv"};
+    vector<string> labelNames = {"Kegg"};
+    vector<string> centroidFiles = {"KeggCentroids.txt"};
 
     Tint iters = 0, numRows = 0, numCols = 0, clus = 0;
     double start_time = 0, end_time = 0, runTime=0;
@@ -66,9 +72,10 @@ string input_path, string output_path){
     std::vector<vector <Tfloat> > dataset;
     vector<Tint> labels;
 
-    string somefilePath = "", outFile = "";
+    string somefilePath = "", outFile = "", centroidFilePath = "";
     string fileName = "";
     ofstream resFile;
+
 
     cout << "#################################\n" ;
     cout << "Starting Experiments on Real Data\n" ;
@@ -88,25 +95,30 @@ string input_path, string output_path){
         fileName = file_names[i];
         somefilePath = input_path + fileName;
 
-        std::pair<int, int> p = readSimulatedData(somefilePath, dataset, labels, true, true);
+        std::pair<int, int> p = readSimulatedData(somefilePath, dataset, labels, false, false);
 
         numRows = p.first;
         numCols = p.second;
 
+        centroidFilePath = input_path + centroidFiles[i];
+
         for(int j = 0; j < num_clusters.size(); j++){
-
+            
             clus = num_clusters[j];
-            output_data res;
 
+            vector<vector<float> > centroids(clus, vector<float>(numCols, 0.0));
+
+            output_data res;
+            
+            read_kplus_plus_centroids(centroidFilePath, centroids, clus);
 
             //####################
             // KMeans
             //####################
-
             cout << "\nAlgo: KMeans," << " Data: " << fileName << " Clusters: " << clus << ", Threshold: " << threshold << endl;
             
             start_time = clock();
-            res = kmeans(dataset, clus, threshold, num_iterations, numCols);
+            res = kmeans(dataset, centroids, clus, threshold, num_iterations, numCols);
             runTime = (clock() - start_time)/CLOCKS_PER_SEC;
 
             if (runTime < 0){
@@ -121,11 +133,12 @@ string input_path, string output_path){
             //####################
             // KMeans
             //####################
-
             cout << "\nAlgo: KMeans-DC," << " Data: " << fileName << " Clusters: " << clus << ", Threshold: " << threshold << endl;
             
+            read_kplus_plus_centroids(centroidFilePath, centroids, clus);
+            runTime = 0;
             start_time = clock();
-            res = dckmeans(dataset, clus, threshold, num_iterations, numCols);
+            res = dckmeans(dataset, centroids, clus, threshold, num_iterations, numCols);
             runTime = (clock() - start_time)/CLOCKS_PER_SEC;
 
             if (runTime < 0){
@@ -145,7 +158,7 @@ string input_path, string output_path){
 
             // Load data in Eigen format for Ball KMeans
             MatrixOur BallK_dataset = load_data(somefilePath);
-            MatrixOur ballKm_centroids = init_centroids(BallK_dataset, clus);
+            MatrixOur ballKm_centroids = load_data(centroidFilePath);
 
             start_time = clock();
             res = ball_k_means_Ring(BallK_dataset, ballKm_centroids, false, threshold, num_iterations);

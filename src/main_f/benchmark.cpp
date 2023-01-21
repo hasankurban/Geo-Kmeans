@@ -12,7 +12,7 @@ int main(){
 
     // Declare variables
     int num_iterations = 100;
-    float threshold = 0;
+    float threshold = 0.001;
 
     run_clustering_benchmark(threshold,  num_iterations, input_path, output_path);
 

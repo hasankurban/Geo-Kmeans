@@ -8,17 +8,17 @@ using namespace std;
 
 class conv_kmeans{
     template <typename Tfloat, typename Tint>
-    output_data kmeans(vector<vector <Tfloat> > &dataset, 
+    output_data kmeans(vector<vector <Tfloat> > &dataset, vector<vector<Tfloat> > &centroids,
     Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols);
 
 };
 
 template <typename Tfloat, typename Tint>
-output_data kmeans(vector<vector <Tfloat> > &dataset, 
+output_data kmeans(vector<vector <Tfloat> > &dataset, vector<vector<Tfloat> > &centroids,
 Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols){
 
     Tint loop_counter = 1;
-    vector<vector<Tfloat> > centroids(num_clusters, vector<Tfloat>(numCols));
+    // vector<vector<Tfloat> > centroids(num_clusters, vector<Tfloat>(numCols));
     vector<vector<Tfloat> > new_centroids(num_clusters, vector<Tfloat>(numCols));
     vector<vector <Tfloat> > dist_matrix(dataset.size(), vector<Tfloat>(num_clusters));
     vector<vector<Tfloat> > cluster_size(num_clusters, vector<Tfloat>(2));  
@@ -30,9 +30,7 @@ Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols){
     print_utils pu;
     
     // Initialize centroids
-    alg_utils.init_centroids(centroids, dataset, num_clusters);
-
-    // print_2d_vector(centroids, 5, "initial");
+    // alg_utils.init_centroids(centroids, dataset, num_clusters);
 
     alg_utils.calculate_distances(dataset, centroids, dist_matrix, 
     num_clusters, assigned_clusters, cluster_size);
@@ -51,7 +49,7 @@ Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols){
 
         // Check Convergence
         if (alg_utils.check_convergence(new_centroids, centroids, threshold, diff, temp_diff, i, j)){
-                cout << "Convergence at iteration: " << loop_counter << "\n";
+                // cout << "Convergence at iteration: " << loop_counter << "\n";
                 break;
         }
 
@@ -65,7 +63,6 @@ Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols){
         // reset centroids
         alg_utils.reinit(new_centroids);
         
-        // break;
     }
 
     // cout << "Total time for centroid updation: " << cent_int << " milliseconds. \n";

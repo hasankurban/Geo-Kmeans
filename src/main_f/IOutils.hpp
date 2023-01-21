@@ -6,6 +6,7 @@
 #include <vector>
 #include <cmath>
 #include <algorithm>
+#include "misc_utils.hpp"
 #pragma once
 
 using namespace std;
@@ -15,43 +16,16 @@ class dataIO{
         template <typename Tfloat, typename Tint>
         pair<Tint, Tint> readSimulatedData(string, vector<vector<Tfloat> > &, 
         vector<Tint> &, bool label_present, bool head_present);
-        
-        float ** alloc_data_memory(int numRows, int numCols);
-        int * alloc_label_memory(int);
-
-        template <typename T1>
-        void readCSV(string filepath, vector<vector<T1> > & );
 
         template <typename T1>
         void readLabels(string, vector<T1> &);
+
+        template <typename Tfloat>
+        void read_kplus_plus_centroids(string filePath, 
+        vector<vector <Tfloat> > &centroids, int num_centroids);
 };
 
-float ** dataIO::alloc_data_memory(int numRows, int numCols){
 
-    float **array_pointer = 0;
-    array_pointer = new float *[numRows];
-
-    for (int i = 0; i<numRows;i++){
-        array_pointer[i] = new float [numCols];
-    }
-
-    for(int i =0; i < numRows; i++){
-        for(int j =0; j<numCols; j++)
-            array_pointer[i][j] = 0;
-    }
-    return array_pointer;
-}
-
-int * dataIO::alloc_label_memory(int numRows){
-
-    int *temp = 0;
-    temp = new int[numRows];
-
-    for (int i =0; i < numRows; i++){
-        temp[i] = 0;
-    }
-    return temp;
-}
 
 std::string& ltrim(std::string &s)
 {
@@ -76,6 +50,54 @@ std::string& rtrim(std::string &s)
 std::string& trim(std::string &s) {
     return ltrim(rtrim(s));
 }
+
+
+template <typename Tfloat>
+void read_kplus_plus_centroids(string filePath, 
+vector<vector<Tfloat> > &centroids, int num_centroids){
+
+    string value, line;
+
+    // file stream handle
+    fstream f;
+    
+    // open file for reading
+    f.open(filePath, ios::in);
+
+    int counter = 0;
+
+    if(f.is_open()){
+        
+        while(getline(f, line)){
+
+            if (counter < num_centroids) {
+                
+            stringstream s (line);
+            vector<float> row;
+                 
+                while(getline(s, value, ',')){
+
+                        try{
+                            value.erase(remove( value.begin(), value.end(), '\"' ),value.end()); 
+                            row.push_back(std::stof(value));
+                        }
+                        catch(...){
+                            cerr << "Exception in centroid reading" << "\n";
+                            }
+                        }
+                    centroids[counter] = row;
+                    counter += 1;
+
+                }
+            }
+        }
+
+    else{
+        cout << "File is not opened" << endl;
+    }
+    f.close();
+}
+
 
 
 template <typename Tfloat>
@@ -173,20 +195,22 @@ vector<vector <Tfloat> > &dataset, vector<Tint> &labels, bool label_present, boo
                 while(getline(s, value, ',')){ 
                     
                     try{
-                        value.erase(remove( value.begin(), value.end(), '\"' ),value.end()); 
+                        value.erase(remove(value.begin(), value.end(), '\"' ),value.end()); 
+                        // cout << value << endl;
                         
                         if (j == numCols){
                             // cout << value << "\t";
                             labels.push_back(stoi(value));
                         }
                         else{
-                            // cout << value << "\t";
-                            row.push_back(std::stod(value));
+                            row.push_back(std::stof(value));
                         }
                         j++;
                     }
-                    catch(...){
-                        cerr << "Exception in file reading" << "\n";
+                    catch(std::exception const& e){
+                        cout << e.what() << endl;
+                        // cerr << "Exception in file reading" << "\n";
+                        // break;
                         }
                 }
                 dataset.push_back(row);
@@ -200,30 +224,4 @@ vector<vector <Tfloat> > &dataset, vector<Tint> &labels, bool label_present, boo
     return std::make_pair(numRows, numCols);
 }
 
-// template <typename T1>
-// void readCSV(string filepath, vector<vector<T1> > & output) {
-//             boost::filesystem::ifstream fileHandler(filepath);
-//             std::string line;
-//             while (getline(fileHandler, line)) {
-//                 boost::tokenizer<boost::escaped_list_separator<char>> tokenizer { line };
-//                 kmeans::common::DataVector<float> row;
-//                 for (const auto & token : tokenizer) {
-//                     row.push_back(std::stod(token));
-//                 }
-//                 output.push_back(row);
-//             }
-//         }
 
-// template <typename T1>
-// void readLabels(std::string filepath, vector<T1> & labels) {
-//             boost::filesystem::ifstream fileHandler(filepath);
-//             std::string line;
-//             while (getline(fileHandler, line)) {
-//                 boost::tokenizer<boost::escaped_list_separator<char>> tokenizer { line };
-//                 kmeans::common::DataVector<std::size_t> row;
-//                 for (const auto & token : tokenizer) {
-//                     row.push_back(std::stod(token));
-//                 }
-//                 labels.push_back(row[0]);
-//     }
-// }
