@@ -7,8 +7,10 @@
 #include "kmeans.hpp"
 #include "dckmeans.hpp"
 #include "ball_kmeans++_xf.hpp"
+#include "ball-ann.hpp"
+#include "ball-exp.hpp"
+#include "ball-hamerly.hpp"
 #include <time.h>
-#include <map>
 
 #include <chrono>
 #include <filesystem>
@@ -47,7 +49,7 @@ void run_clustering_benchmark(Tfloat threshold, Tint num_iterations,
 string input_path, string output_path){
 
     // Set the parameters
-    vector<Tint> num_clusters = {5, 10, 15};
+    vector<Tint> num_clusters = {50};
     int num_rep  = 1;
     // vector<string> file_names = {"Breastcancer.csv", "CustomerSaleRecords.csv", "CreditRisk.csv"
     // "SeedData.csv", "Kegg.csv", "Census.csv", "UserLocation.csv",
@@ -100,6 +102,8 @@ string input_path, string output_path){
         numRows = p.first;
         numCols = p.second;
 
+        // cout << "Rows: " << numRows << " C: " << numCols << endl;
+
         centroidFilePath = input_path + centroidFiles[i];
 
         for(int j = 0; j < num_clusters.size(); j++){
@@ -107,6 +111,9 @@ string input_path, string output_path){
             clus = num_clusters[j];
 
             vector<vector<float> > centroids(clus, vector<float>(numCols, 0.0));
+            // vector<vector<float> > centroids1(clus, vector<float>(numCols, 0.0));
+
+            cout << centroids[0][0] << endl;
 
             output_data res;
             
@@ -129,14 +136,14 @@ string input_path, string output_path){
             write_result(resFile, i, j, labelNames[i], "KMeans", clus, 
             runTime, res.loop_counter, res.num_he);
 
-            
-            //####################
-            // KMeans
-            //####################
+            // ####################
+            // KMeans Data Centric
+            // ####################
             cout << "\nAlgo: KMeans-DC," << " Data: " << fileName << " Clusters: " << clus << ", Threshold: " << threshold << endl;
             
             read_kplus_plus_centroids(centroidFilePath, centroids, clus);
             runTime = 0;
+            
             start_time = clock();
             res = dckmeans(dataset, centroids, clus, threshold, num_iterations, numCols);
             runTime = (clock() - start_time)/CLOCKS_PER_SEC;
@@ -149,28 +156,97 @@ string input_path, string output_path){
             write_result(resFile, 1, 1, labelNames[i], "KMeans-DC", clus, 
             runTime, res.loop_counter, res.num_he);
 
-
+           
             //####################
             // Ball Kmeans
             //####################
 
-            cout << "\nAlgo: Ball-KMeans," << " Data: " << fileName << " Clusters: " << clus << ", Threshold: " << threshold << endl;
+            // cout << "\nAlgo: Ball-KMeans," << " Data: " << fileName << " Clusters: " << clus << ", Threshold: " << threshold << endl;
 
-            // Load data in Eigen format for Ball KMeans
-            MatrixOur BallK_dataset = load_data(somefilePath);
-            MatrixOur ballKm_centroids = load_data(centroidFilePath);
+            // // Load data in Eigen format for Ball KMeans
+            // MatrixOur BallK_dataset = load_data(somefilePath);
+            // MatrixOur ballKm_centroids = load_centroids(centroidFilePath, clus, numCols);
 
-            start_time = clock();
-            res = ball_k_means_Ring(BallK_dataset, ballKm_centroids, false, threshold, num_iterations);
-            runTime = (clock() - start_time)/CLOCKS_PER_SEC;
+            // // // cout << BallK_dataset.rows() << " X " << BallK_dataset.cols() << endl;
+            // // // cout << ballKm_centroids.rows() << " X " << ballKm_centroids.cols() << endl;
+            // // // cout << ballKm_centroids(4, 2) << endl;
 
-            if (runTime < 0){
-                runTime = runTime*1000;
-            }
+            // start_time = clock();
+            // res = ball_k_means_Ring(BallK_dataset, ballKm_centroids, true, threshold, num_iterations);
+            // runTime = (clock() - start_time)/CLOCKS_PER_SEC;
 
-            // Write to output file
-            write_result(resFile, 1, 1, labelNames[i], "Ball-Kmeans", clus, 
-            runTime, res.loop_counter, res.num_he);
+            // if (runTime < 0){
+            //     runTime = runTime*1000;
+            // }
+
+            // // // Write to output file
+            // write_result(resFile, 1, 1, labelNames[i], "Ball-Kmeans", clus, 
+            // runTime, res.loop_counter, res.num_he);
+
+           
+            // //####################
+            // // Hamerly Kmeans
+            // //####################
+
+            // cout << "\nAlgo: Hamerly Kmeans," << " Data: " << fileName << " Clusters: " << clus << ", Threshold: " << threshold << endl;
+
+            // start_time = clock();
+            // res = run_ham(BallK_dataset, ballKm_centroids, threshold, num_iterations);
+            // runTime = (clock() - start_time)/CLOCKS_PER_SEC;
+
+            // if (runTime < 0){
+            //     runTime = runTime*1000;
+            // }
+
+            // // Write to output file
+            // write_result(resFile, 1, 1, labelNames[i], "Hamerly", clus, 
+            // runTime, res.loop_counter, res.num_he);
+
+
+            // //####################
+            // // Annulus Kmeans
+            // //####################
+
+            // cout << "\nAlgo: Annulus Kmeans," << " Data: " << fileName << " Clusters: " << clus << ", Threshold: " << threshold << endl;
+
+            // start_time = clock();
+            // res = run_ann(BallK_dataset, ballKm_centroids, threshold, num_iterations);
+            // runTime = (clock() - start_time)/CLOCKS_PER_SEC;
+
+            // if (runTime < 0){
+            //     runTime = runTime*1000;
+            // }
+
+            // // Write to output file
+            // write_result(resFile, 1, 1, labelNames[i], "Annulus", clus, 
+            // runTime, res.loop_counter, res.num_he);
+
+
+            // //####################
+            // // Annulus Kmeans
+            // //####################
+
+            // cout << "\nAlgo: Exponion Kmeans," << " Data: " << fileName << " Clusters: " << clus << ", Threshold: " << threshold << endl;
+
+            // // Load data in Eigen format for Ball KMeans
+            // // MatrixOur exp_centroids = load_centroids(centroidFilePath, clus, numCols);
+
+            // // cout << exp_centroids.rows() << " X " << exp_centroids.cols() << endl;
+            // // cout << ballKm_centroids(5, 2) << endl;
+            // // cout << ham_centroids(5, 2) << endl;
+            // // cout << exp_centroids(5, 2) << endl;
+
+            // start_time = clock();
+            // res = run_exp(BallK_dataset, ballKm_centroids, threshold, num_iterations);
+            // runTime = (clock() - start_time)/CLOCKS_PER_SEC;
+
+            // if (runTime < 0){
+            //     runTime = runTime*1000;
+            // }
+
+            // // Write to output file
+            // write_result(resFile, 1, 1, labelNames[i], "Exponion", clus, 
+            // runTime, res.loop_counter, res.num_he);
            
         }
 

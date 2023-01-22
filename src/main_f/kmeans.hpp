@@ -14,10 +14,10 @@ class conv_kmeans{
 };
 
 template <typename Tfloat, typename Tint>
-output_data kmeans(vector<vector <Tfloat> > &dataset, vector<vector<Tfloat> > &centroids,
+inline output_data kmeans(vector<vector <Tfloat> > &dataset, vector<vector<Tfloat> > &centroids,
 Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols){
 
-    Tint loop_counter = 1;
+    Tint loop_counter = 0;
     // vector<vector<Tfloat> > centroids(num_clusters, vector<Tfloat>(numCols));
     vector<vector<Tfloat> > new_centroids(num_clusters, vector<Tfloat>(numCols));
     vector<vector <Tfloat> > dist_matrix(dataset.size(), vector<Tfloat>(num_clusters));
@@ -28,16 +28,17 @@ Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols){
     // Create objects
     algorithm_utils alg_utils;
     print_utils pu;
+
+    int i =0, j =0, he_counter = 0;
+    float temp_diff =0, diff = 0;
     
     // Initialize centroids
     // alg_utils.init_centroids(centroids, dataset, num_clusters);
 
     alg_utils.calculate_distances(dataset, centroids, dist_matrix, 
-    num_clusters, assigned_clusters, cluster_size);
+    num_clusters, assigned_clusters, cluster_size, he_counter);
 
-    int i =0, j =0;
-    float temp_diff =0, diff = 0;
-
+   
     while (loop_counter < num_iterations){
 
         loop_counter++;
@@ -49,13 +50,13 @@ Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols){
 
         // Check Convergence
         if (alg_utils.check_convergence(new_centroids, centroids, threshold, diff, temp_diff, i, j)){
-                // cout << "Convergence at iteration: " << loop_counter << "\n";
+                cout << "Convergence at iteration: " << loop_counter << "\n";
                 break;
         }
 
         // Re-calculate distances
         alg_utils.calculate_distances(dataset, new_centroids, dist_matrix,
-                                    num_clusters, assigned_clusters, cluster_size);
+                                    num_clusters, assigned_clusters, cluster_size, he_counter);
 
         // Move the new centroids to older
         centroids = new_centroids;
@@ -71,7 +72,7 @@ Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols){
     output_data result;
 
     result.loop_counter = loop_counter;
-    result.num_he = loop_counter * dataset.size() * num_clusters;
+    result.num_he = he_counter;
     result.assigned_labels = assigned_clusters;
 
     return result;
