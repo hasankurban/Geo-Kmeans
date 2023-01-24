@@ -164,8 +164,8 @@ output_data run_ham(MatrixOur &dataset, MatrixOur &centroids, double thres=0.001
             //get the radius of each centroids
             update_radius_ham(dataset, clusters_point_index, new_centroids, point_center_dist, the_rs, flag,
                           iteration_counter, cal_dist_num, k);
+            
             //Calculate distance between centers
-
             cal_centers_dist_ham(new_centroids, iteration_counter, k, the_rs, delta, centers_dist);
 
             flag.setZero();

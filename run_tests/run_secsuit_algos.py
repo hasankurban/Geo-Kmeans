@@ -4,7 +4,7 @@ import time
 
 
 basePath = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/Box Sync/PhD/DATASETS/real_data/"
-program_basePath = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/Box Sync/PhD/eakmeans/bin/blaslesskmeans"
+program_basePath = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/Box Sync/PhD/DATASETS/real_data/experiment_data/programs/blaslesskmeans"
 
 data_basePath = basePath + "experiment_data/comma_seperated_files/";
 centroid_basePath = basePath + "experiment_data/comma_seperated_centroids/";
@@ -22,20 +22,20 @@ out_list = ["BreastcancerCentroids", "CustomerSaleRecordsCentroids", "CreditRisk
             "CensusCentroids", "UserLocationCentroids",
             "cropCentroids", "TwitterCentroids", "birchCentroids"]
 
-# num_clusters = [2, 5, 10, 20, 30]
-algorithms = ["ann" ,"syin-ns", "exp-ns"]
-# num_rep = 5
-# num_iters = 500
-
-
 num_clusters = [2, 5, 10, 20, 30]
-# algorithms = ["ann"]
+algorithms = ["exp-ns"]
 num_rep = 5
 num_iters = 500
 
-file_list = ["Breastcancer.csv"]
-data_list = ["Breastcancer"]
-out_list = ["BreastcancerCentroids"]
+
+# num_clusters = [2, 5, 10, 20, 30]
+# # algorithms = ["ann"]
+# num_rep = 5
+# num_iters = 500
+
+# file_list = ["Breastcancer.csv"]
+# data_list = ["Breastcancer"]
+# out_list = ["BreastcancerCentroids"]
 
 
 def run_sec_algos(km_dist, km_runtime):
@@ -119,16 +119,16 @@ def run_sec_algos(km_dist, km_runtime):
                         for q in range(len(runtime_Counter)):
                             runtime_Counter[q] = 1
 
-                    time_speed_up = "{:.4f}".format(km_runtime[clus]/np.mean(runtime_Counter))
+                    time_speed_up = "{:.4f}".format(km_runtime[data_list[i]+str(clus)]/np.mean(runtime_Counter))
 
                     output_file.write(alg_out + "," + data_list[i] + ","+ str(clus) + "," + 
                     str("{:.2f}".format(np.mean(iteration_counter))) + "," + str("{:.2f}".format(np.mean(runtime_Counter))) + "," +
                     str("{:.6f}".format(np.mean(runtime_per_iteration))) + "," + str(time_speed_up) + 
                     "," + str("{:.2f}".format(np.mean(dist_counter))) + "," 
-                    + str("{:.2f}".format((km_dist[clus]/np.mean(dist_counter)))) + "\n")
+                    + str("{:.2f}".format((km_dist[data_list[i]+str(clus)]/np.mean(dist_counter)))) + "\n")
 
                 
-                time.sleep(2)
+                time.sleep(5)
 
     
     with open("Full_output.csv", "a") as full_file:

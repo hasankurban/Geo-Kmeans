@@ -27,6 +27,17 @@ with open("run_stat.txt", "w") as file:
 with open("dist_stat.txt", "w") as file:
     file.write(json.dumps(km_dist))
 
+# with open("run_stat.txt", "r") as file:
+#     a = file.read()
+#     km_runtime = json.loads(a)
+
+# with open("dist_stat.txt", "r") as file:
+#     a = file.read()
+#     km_dist = json.loads(a)
+
+# print(km_runtime)
+
+
 print("Starting 2nd suit benchmark\n")
 run_sec_algos(km_dist, km_runtime)
 print("\nCompleted the 2nd suit benchmark")

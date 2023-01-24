@@ -4,7 +4,7 @@ import time
 
 
 basePath = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/Box Sync/PhD/DATASETS/real_data/"
-program_basePath = "/Users/schmuck/Downloads/mlpack_inst/bin/mlpack_kmeans"
+program_basePath = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/Box Sync/PhD/DATASETS/real_data/experiment_data/programs/mlpack_kmeans"
 
 data_basePath = basePath + "experiment_data/comma_seperated_files/";
 centroid_basePath = basePath + "experiment_data/comma_seperated_centroids/";
@@ -29,21 +29,20 @@ num_rep = 5
 num_iters = 500
 
 
-num_clusters = [2, 5, 10]
-algorithms = ["naive", "dualtree"]
-num_rep = 5
-num_iters = 500
+# num_clusters = [20]
+algorithms = ["naive"]
+# num_rep = 5
+# num_iters = 500
 
-file_list = ["birch.csv"]
-data_list = ["birch"]
-out_list = ["birchCentroids"]
+# file_list = ["birch.csv"]
+# data_list = ["birch"]
+# out_list = ["birchCentroids"]
 
 
 def run_algos():
 
     with open(out_path+"Avg_output.csv", "w") as output_file:
         output_file.write("Algorithm,Data,Clusters,Iters,Runtime,Runtime_per_Iter,Runtime_speedup,Distances,Dist_speed_up\n")
-
 
         km_runtime = {}
         km_dist = {}
@@ -136,8 +135,8 @@ def run_algos():
                     # Algorithm,Data,Clusters,Iters,Runtime,Runtime_per_iter,Distances,Dist_speed_up
                     
                     if alg_out == "Lloyd":
-                        km_dist[clus] = np.mean(dist_counter)
-                        km_runtime[clus] = np.mean(runtime_Counter)
+                        km_dist[data_list[i]+str(clus)] = np.mean(dist_counter)
+                        km_runtime[data_list[i]+str(clus)] = np.mean(runtime_Counter)
 
                         output_file.write(alg_out + "," + data_list[i] + "," + str(clus) + "," + 
                         str("{:.2f}".format(np.mean(iteration_counter))) + "," + str("{:.2f}".format(np.mean(runtime_Counter))) + "," +
@@ -147,11 +146,11 @@ def run_algos():
 
                         output_file.write(alg_out + "," + data_list[i] + ","+ str(clus) + "," + 
                         str("{:.2f}".format(np.mean(iteration_counter))) + "," + str("{:.2f}".format(np.mean(runtime_Counter))) + "," +
-                        str("{:.6f}".format(np.mean(runtime_per_iteration))) + "," + str("{:.4f}".format((km_runtime[clus]/np.mean(runtime_Counter)))) + 
+                        str("{:.6f}".format(np.mean(runtime_per_iteration))) + "," + str("{:.4f}".format((km_runtime[data_list[i]+str(clus)]/np.mean(runtime_Counter)))) + 
                         "," + str("{:.2f}".format(np.mean(dist_counter))) + "," 
-                        + str("{:.2f}".format((km_dist[clus]/np.mean(dist_counter)))) + "\n")
+                        + str("{:.2f}".format((km_dist[data_list[i]+str(clus)]/np.mean(dist_counter)))) + "\n")
 
-                # time.sleep(1)
+                time.sleep(1)
 
     
     with open("Full_output.csv", "w") as full_file:
