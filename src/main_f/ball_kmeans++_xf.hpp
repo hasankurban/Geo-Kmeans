@@ -97,17 +97,19 @@ MatrixOur&centroids, float threshold){
         
         for (i=0; i<new_centroids.rows(); i++){
             for (j=0; j<new_centroids.cols(); j++)
-                temp_diff = new_centroids(i, j) - centroids(i, j);
-                diff = diff + (temp_diff * temp_diff);
+                // temp_diff = new_centroids(i, j) - centroids(i, j);
+                // diff = diff + (temp_diff * temp_diff);
+                if (centroids[i][j] != new_centroids[i][j])
+                    return false;
         }
-        diff = sqrt(diff/new_centroids.rows());
+        // diff = sqrt(diff/new_centroids.rows());
     }
-    else
-        return false;
+    // else
+    //     return false;
     
-    if (diff <= threshold)
-        return true;
-    return false;
+    // if (diff <= threshold)
+    //     return true;
+    return true;
 }
 
 

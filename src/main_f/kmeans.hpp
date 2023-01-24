@@ -31,6 +31,9 @@ Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols){
 
     int i =0, j =0, he_counter = 0;
     float temp_diff =0, diff = 0;
+
+    // Start time counter 
+    auto start = std::chrono::high_resolution_clock::now();
     
     // Initialize centroids
     // alg_utils.init_centroids(centroids, dataset, num_clusters);
@@ -66,14 +69,15 @@ Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols){
         
     }
 
-    // cout << "Total time for centroid updation: " << cent_int << " milliseconds. \n";
-    // cout << "Total time for distance calc: " << dist_int << " milliseconds. \n";
+    auto end = std::chrono::high_resolution_clock::now();
+    auto Totaltime = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
     output_data result;
 
     result.loop_counter = loop_counter;
-    result.num_he = he_counter;
+    result.num_he = dataset.size() * loop_counter * num_clusters;
     result.assigned_labels = assigned_clusters;
+    result.runtime = float(Totaltime.count());
 
     return result;
 

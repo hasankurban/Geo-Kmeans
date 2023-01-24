@@ -31,6 +31,18 @@ def read_simulated_data(file_path):
     return np.array(data), labels
 
 
+def read_simulated_data_test(file_path):
+
+    data = pd.read_csv(file_path, sep=",", header=None)
+    return np.array(data)
+
+
+def read_centroids(file_path):
+
+    data = pd.read_csv(file_path, sep=",", header=None)
+    return np.array(data)
+
+
 def read_simulated_data123(file_path):
 
     data = pd.read_csv(file_path, sep=",")

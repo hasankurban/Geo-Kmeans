@@ -26,7 +26,7 @@ num_iterations = 100
 
 
 file_list = ['test_100_2_3.csv']
-file_list = ['ijcnn.csv']
+
 # file_list = ['magic.csv']
 # file_list = ['user_knowledge_train.csv']
 # file_list = ['hapt_train.csv']
@@ -34,17 +34,22 @@ file_list = ['ijcnn.csv']
 # file_list = ['spambase.csv']
 # file_list = ['10_clusters.csv']
 
+file_list = ['Census.csv']
+cenfile = 'CensusCentroids_10_0.txt'
+
 DATA_PATH = "/Users/schmuck/Documents/Box Sync/Ph.D./DATASETS"
-data_path = "/Users/schmuck/Documents/OneDrive - Indiana University/Box Sync/PhD/DATASETS"
+DATA_PATH = "/Users/schmuck/Documents/OneDrive - Indiana University/Box Sync/PhD/DATASETS/"
 
 # Make changes for adjusting the current directory here
 file_path = os.path.join(DATA_PATH, "benchmark", "clustering_data")
 # file_path = os.path.join(Path(__file__).parents[1], "benchmark", "scal_data")
-file_path = os.path.join(DATA_PATH, "real_data")
+# file_path = os.path.join(DATA_PATH, "real_data")
+file_path = os.path.join(DATA_PATH, "real_data", "experiment_data", "comma_seperated_files")
+
 # file_path = os.path.join(DATA_PATH, "sample_data")
 
 
-num_clusters = 5
+num_clusters = [10]
 seed = 1245
 
 seeds = np.random.randint(1, 1200, 1000)
@@ -54,35 +59,29 @@ counter = 1
 
 for data_file in file_list:
 
-    data, labels = read_simulated_data(os.path.join(file_path, data_file))
-    # data = np.load(os.path.join(file_path, "264792_4_0.001_1000000000_.npy"))
-    # data = np.load(data_file)
-
-    # data, labels = read_real_data(os.path.join(file_path, data_file), ["user_knowledge_train.csv"])
-    # vis_PCA(data, labels)
-    # exit(0)
-    # np.random.seed(seed)
-    # centers, _ = kmeans_plusplus(data, n_clusters=num_clusters, random_state=seed)
-    # np.savetxt("ms_cen_ea.csv", centers, delimiter=" ")
-
+    # data, labels = read_simulated_data(os.path.join(file_path, data_file))
+    data = read_simulated_data_test(os.path.join(file_path, data_file))
+    centroids1 = read_simulated_data_test(os.path.join(DATA_PATH, "real_data", "experiment_data", "comma_seperated_centroids", cenfile))
+    centroids2 = read_simulated_data_test(os.path.join(DATA_PATH, "real_data", "experiment_data", "comma_seperated_centroids", cenfile))
+    
     print("Data Shape :", data.shape)
+    print(centroids1.shape)
+
+    for centers in num_clusters:
+
+        km_start_time = time.time()
+        km_centroids, km_iter, km_calc = Kmeans(data, centers, threshold, num_iterations, centroids1, seed)
+        km_TraningTime = round(time.time() - km_start_time, 5)
+
+        kmdc_start_time = time.time()
+        kmdc_centroids, kmdc_iter, kmdc_calc = DCKMeans(data, centers, threshold, num_iterations, centroids2, seed)
+        kmdc_TraningTime = round(time.time() - kmdc_start_time, 2)
 
 
-    kmlb_start_time = time.time()
-    # _, _, _ = DCKMeans(data, num_clusters, threshold, num_iterations, seed)
-    kmlb_centroids, kmlb_iter, dckm_calc = DCKMeans(data, num_clusters, threshold, num_iterations, centers, seed)
-    kmlb_TraningTime = round(time.time() - kmlb_start_time, 2)
-
-    centers, indices = kmeans_plusplus(data, n_clusters=num_clusters, random_state=59)
-
-    km_start_time = time.time()
-    km_centroids, km_iter = Kmeans(data, num_clusters, threshold, num_iterations, centers, seed)
-    km_TraningTime = round(time.time() - km_start_time, 5)
-
-    print(km_TraningTime, kmlb_TraningTime)
-    # print(kmlb_centroids)
-    # print(km_centroids)
-    print("Dev: ", round(np.mean(np.square(km_centroids - kmlb_centroids))), 3)
+        print(km_TraningTime, kmdc_TraningTime)
+        # print(kmlb_centroids)
+        # print(km_centroids)
+        # print("Dev: ", round(np.mean(np.square(km_centroids - kmlb_centroids))), 3)
 
         # print("Distance calculations by KMeans: ", num_clusters*data.shape[0]*km_iter)
         # print("Distance calculations by DCKMeans: ", dckm_calc)
@@ -97,10 +96,5 @@ for data_file in file_list:
         # print("Diff in clustering: ", len(np.where(assign1 != assign2)[0]))
         # print(assign1[np.where(assign1 != assign2)[0]], assign2[np.where(assign1 != assign2)[0]])
 
-        # print(kmlb_TraningTime)
-        print(km_TraningTime, kmlb_TraningTime)
-        print(km_cacl, dckm_calc)
-        print("Dev: ", round(np.sqrt(np.mean(np.square(km_centroids - kmlb_centroids))), 3))
-
     counter += 1
->>>>>>> origin
+

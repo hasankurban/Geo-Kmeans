@@ -17,10 +17,10 @@ class algorithm_utils{
     void calculate_distances(const vector<vector<T1> > &dataset, 
     vector<vector<T1> > &centroids, vector<vector<T1> > &dist_mat,
     T2 num_clusters, vector<T2> &assigned_clusters, 
-    vector<vector<T1> > &cluster_size);
+    vector<vector<T1> > &cluster_size, T2 &he_counter);
 
     template <typename T1>
-    float calc_euclidean(const vector<T1> &, const vector<T1> &);
+    float calc_euclidean(const vector<T1> &, const vector<T1> &, int &he_counter);
 
     template <typename T1, typename T2>
     void update_centroids(vector<vector <T1> > &dataset, 
@@ -47,24 +47,22 @@ void algorithm_utils::reinit(vector<vector<T1> > &container){
     }
 }
 
+
 template <typename T1, typename T2>
 void algorithm_utils::init_centroids(vector<vector <T1> > &centroids, 
 vector<vector <T1> > &dataset, T2 num_cluster){
 
-    vector<T1> temp1 (dataset[0].size());
-    // cout << "Init:" << "\n";
-
     for(int i=0; i<num_cluster; i++){  
         for(int j=0; j<dataset[i].size(); j++){
-                temp1[j] = dataset[i][j];
+                centroids[i][j] = dataset[i][j];
         }   
-        centroids[i] = temp1;
     }
 }
 
+
 template <typename T1>
 inline float algorithm_utils::calc_euclidean(const vector<T1> &point, 
-const vector<T1> &center){
+const vector<T1> &center, int &he_counter){
     
     T1 dist = 0.0;
     T1 temp = 0.0;
@@ -84,7 +82,8 @@ const vector<T1> &center){
 template <typename T1, typename T2>
 inline void algorithm_utils::calculate_distances(const vector<vector<T1> > &dataset, 
 vector<vector<T1> > &centroids, vector<vector<T1> > &dist_mat,
-T2 num_clusters, vector<T2> &assigned_clusters, vector<vector<T1> > &cluster_size){
+T2 num_clusters, vector<T2> &assigned_clusters, vector<vector<T1> > &cluster_size, 
+T2 &he_counter){
 
     T2 current_center = 0;
     vector<T1> temp_dist (num_clusters);
@@ -105,7 +104,7 @@ T2 num_clusters, vector<T2> &assigned_clusters, vector<vector<T1> > &cluster_siz
         
         for (j=0; j < centroids.size(); j++){ 
             
-            temp = calc_euclidean(dataset[i], centroids[j]);
+            temp = calc_euclidean(dataset[i], centroids[j], he_counter);
             temp_dist[j] = temp;
 
             // cout << "hello" << "n";
@@ -173,7 +172,7 @@ vector<vector <T1> > &centroids, T1 threshold, float &diff, float &temp_diff, in
                 temp_diff = new_centroids[i][j] - centroids[i][j];
                 diff = diff + (temp_diff * temp_diff);
         }
-        diff = sqrt(diff/centroids.size());
+        diff = sqrt(diff/new_centroids.size());
     }
     else
         return false;
