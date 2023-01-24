@@ -72,8 +72,7 @@ int main(){
 
         int num_iters = 500;
         float threshold = 0.001;
-        int num_rep = 1; 
-        vector<int> num_clusters = {5, 10, 20, 30};  
+        vector<int> num_clusters = {5, 8, 10, 12, 25};  
         
        
        string inputfilePath = "", centroidFilePath = "";
@@ -82,7 +81,7 @@ int main(){
        vector<int> labels;
       
        output_data ballkm_res;
-       int time_limit = 350000;
+       int time_limit = 1800000;
 
        ofstream avgresFile;
        string outFile = out_path + "benchmark_out.csv" ;
@@ -111,12 +110,8 @@ int main(){
                 for (int j = 0; j< num_clusters.size(); j++){
             
                     int clus = num_clusters[j];
-                    
-
-                        for (int rep = 0 ; rep < num_rep ; rep++){
-
-                             
-                            vector<vector<float> > centroids(clus, vector<float>(numCols, 0.0));
+                        
+                        vector<vector<float> > centroids(clus, vector<float>(numCols, 0.0));
 
                         string km_timeout = "no";
                         string dckm_timeout = "no";
@@ -124,7 +119,7 @@ int main(){
 
                         
                         // Read centroids  
-                        centroidFilePath = centroid_path + out_list[i] + "_" + to_string(clus) + "_" + to_string(rep) +".txt";
+                        centroidFilePath = centroid_path + out_list[i] + "_" + to_string(clus) + "_.txt";
 
                         // cout << "Clus: " << clus << " rep: " << rep << endl;
                         // cout << inputfilePath << endl;
@@ -133,7 +128,7 @@ int main(){
                         //####################
                         // KMeans
                         //####################
-                        // read_kplus_plus_centroids(centroidFilePath, centroids, clus);
+                        read_kplus_plus_centroids(centroidFilePath, centroids, clus);
                         output_data km_res;
                         km_res = kmeans(dataset, centroids, clus, threshold, num_iters, numCols, time_limit);
                         
@@ -150,7 +145,7 @@ int main(){
                         //####################
 
                         cout << "Algo: DCKM" << endl; 
-                        // read_kplus_plus_centroids(centroidFilePath, centroids, clus);
+                        read_kplus_plus_centroids(centroidFilePath, centroids, clus);
                         output_data dckm_res;
                         
                         dckm_res = dckmeans(dataset, centroids, clus, threshold, num_iters, numCols, time_limit);
@@ -170,53 +165,46 @@ int main(){
 
                         // cout << "Algo: Ball-Kmeans" << endl;
                         
-                        // // Load data in Eigen format for Ball KMeans
-                        // MatrixOur BallK_dataset = load_data(inputfilePath);
-                        // MatrixOur ballKm_centroids = load_centroids(centroidFilePath, clus, numCols);
+                        // Load data in Eigen format for Ball KMeans
+                        MatrixOur BallK_dataset = load_data(inputfilePath);
+                        MatrixOur ballKm_centroids = load_centroids(centroidFilePath, clus, numCols);
 
-                        // auto t7 = std::chrono::high_resolution_clock::now();
-                        // res = ball_k_means_Ring(BallK_dataset, ballKm_centroids, false, threshold, num_iters, time_limit);
-                        // auto t8 = std::chrono::high_resolution_clock::now();
-                        // auto ball_time = std::chrono::duration_cast<std::chrono::milliseconds>(t8 - t7);
+                        ballkm_res = ball_k_means_Ring(BallK_dataset, ballKm_centroids, false, threshold, num_iters, time_limit);
 
-                        // if (res.timeout == true){
-                        //     ballkm_timeout = "yes";
-                        //     cout << "Timeout: BallKmeans time: " << res.runtime << " milliseconds" << endl;
-                        // }
-                        // else{
-                        //     cout << "Total BallKmeans time: " << res.runtime << " milliseconds" << endl;
-                        // }
+                        if (ballkm_res.timeout == true){
+                            ballkm_timeout = "yes";
+                            cout << "Timeout: BallKmeans time: " << ballkm_res.runtime << " milliseconds" << endl;
+                        }
+                        else{
+                            cout << "Total BallKmeans time: " << ballkm_res.runtime << " milliseconds" << endl;
+                        }
 
 
                         avgresFile.open(outFile, ios::app);
 
-                        cout << km_res.runtime << " " << to_string(km_res.runtime/km_res.loop_counter) << " " << km_res.num_he << endl;
-                        cout << dckm_res.num_he << endl;
 
                         avgresFile << "\nKM" << "," << data_list[i] << "," << to_string(clus) 
                         << "," << std::setprecision(2) << to_string(km_res.loop_counter) <<  "," << 
                         std::setprecision(2) << to_string(km_res.runtime) << "," << std::setprecision(6) <<
-                        to_string(km_res.runtime/km_res.loop_counter) << "," << std::setprecision(2) << to_string(0)
+                        to_string(float(km_res.runtime/km_res.loop_counter)) << "," << std::setprecision(2) << to_string(0)
                             << "," << std::setprecision(2) << to_string(km_res.num_he) <<
                         "," << std::setprecision(2) << to_string(0) << "," << km_timeout;
 
                             avgresFile << "\nDCKM" << "," << data_list[i] << "," << to_string(clus) 
                         << "," << std::setprecision(2) << to_string(dckm_res.loop_counter) <<  "," << 
                         std::setprecision(2) << to_string(dckm_res.runtime) << "," << std::setprecision(6) <<
-                        to_string(dckm_res.runtime/dckm_res.loop_counter) << "," << std::setprecision(2) << to_string(km_res.runtime/dckm_res.runtime)
+                        to_string(float(dckm_res.runtime/dckm_res.loop_counter)) << "," << std::setprecision(2) << to_string(float(km_res.runtime/dckm_res.runtime))
                             << "," << std::setprecision(2) << to_string(dckm_res.num_he) <<
-                        "," << std::setprecision(2) << to_string(km_res.num_he/dckm_res.num_he) << "," << dckm_timeout;
+                        "," << std::setprecision(2) << to_string(float(km_res.num_he/dckm_res.num_he)) << "," << dckm_timeout;
 
-                        // avgresFile << "\nBall-Kmeans" << "," << data_list[i] << "," << to_string(clus) 
-                        // << "," << std::setprecision(2) << to_string(ball_iters[rep]) <<  "," << 
-                        // std::setprecision(2) << to_string(ball_runTime[rep]) << "," << std::setprecision(6) <<
-                        // to_string(ball_runTime_per_iter[rep]) << "," << std::setprecision(2) << to_string(runTime[rep]/ball_runTime[rep])
-                        //     << "," << std::setprecision(2) << to_string(ball_dist_calcs[rep]) <<
-                        // "," << std::setprecision(2) << to_string(dist_calcs[rep]/ball_dist_calcs[rep]) << "," << ballkm_timeout;    
+                        avgresFile << "\nBall-Kmeans" << "," << data_list[i] << "," << to_string(clus) 
+                        << "," << std::setprecision(2) << to_string(ballkm_res.loop_counter) <<  "," << 
+                        std::setprecision(2) << to_string(ballkm_res.runtime) << "," << std::setprecision(6) <<
+                        to_string(float(ballkm_res.runtime/ballkm_res.loop_counter)) << "," << std::setprecision(2) << to_string(float(km_res.runtime/ballkm_res.runtime))
+                            << "," << std::setprecision(2) << to_string(ballkm_res.num_he) <<
+                        "," << std::setprecision(2) << to_string(float(km_res.num_he/ballkm_res.num_he)) << "," << ballkm_timeout;    
 
                         avgresFile.close();
-                        
-                    }
                     
                 }
 

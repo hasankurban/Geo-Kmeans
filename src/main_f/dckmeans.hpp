@@ -59,11 +59,26 @@ Tfloat threshold, Tint num_iterations, Tint numCols, Tint time_limit){
     auto start = std::chrono::high_resolution_clock::now();
 
     // Initialize centroids
-    alg_utils.init_centroids(centroids, dataset, num_clusters);
+    // alg_utils.init_centroids(centroids, dataset, num_clusters);
 
     // Assign data to nearest center
     alg_utils.calculate_distances(dataset, centroids, dist_matrix,
     num_clusters, assigned_clusters, cluster_size, he_counter);
+
+
+    // Check for empty clusters and return
+    //  for (i=0; i<num_clusters; i++){
+        
+    //     if(cluster_size[i][0] == 0){
+            
+    //         cout << "Empty cluster found after initialization, safe exiting" << endl;
+    //         result.loop_counter = 1;
+    //         result.num_he = 0;
+    //         result.runtime = 0;
+    //         result.timeout = false;
+    //         return result;
+    //     }
+    // }
 
 
     while (loop_counter < num_iterations){
@@ -90,6 +105,20 @@ Tfloat threshold, Tint num_iterations, Tint numCols, Tint time_limit){
         
         // reset centroids
         alg_utils.reinit(new_centroids);
+
+        // Check for empty clusters and return
+        //  for (i=0; i<num_clusters; i++){
+        
+        //     if(cluster_size[i][0] == 0){
+                
+        //         cout << "Empty cluster found after initialization, safe exiting" << endl;
+        //         result.loop_counter = 1;
+        //         result.num_he = 0;
+        //         result.runtime = 0;
+        //         result.timeout = false;
+        //         return result;
+        //     }
+        // }
 
         auto temp_end = std::chrono::high_resolution_clock::now();
         auto temptime = std::chrono::duration_cast<std::chrono::milliseconds>(temp_end - start);
