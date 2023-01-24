@@ -7,21 +7,22 @@ output_path = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/Bo
 
 
 file_list = ["Breastcancer.csv", "CustomerSaleRecords.csv", "CreditRisk.csv",
-            "Census.csv", "UserLocation.csv",
+            "magic.csv", "spambase.csv",
             "crop.csv", "Twitter.csv", "birch.csv"]
 
 out_list = ["BreastcancerCentroids", "CustomerSaleRecordsCentroids", "CreditRiskCentroids", 
-            "CensusCentroids", "UserLocationCentroids",
+            "magicCentroids", "spambaseCentroids",
             "cropCentroids", "TwitterCentroids", "birchCentroids"]
 
-np.random.seed(25)
-seeds = np.random.randint(45, size=(9, 5))
+
+np.random.seed(9)
+seeds = np.random.randint(27, size=(9, 3))
 
 # file_list = ["codrna.csv"]
 # out_list = ["codrnaCentroids"]
 # seeds = [856]
 
-max_centers = [2, 5, 10, 20, 30]
+max_centers = [5, 10, 20, 30]
 
 
 for i in range(len(file_list)):
@@ -33,7 +34,7 @@ for i in range(len(file_list)):
 
     for clus in max_centers:
 
-        for rep in range(5):
+        for rep in range(3):
 
             centers_init, _ = kmeans_plusplus(data, n_clusters=clus, random_state=seeds[i, rep])
             centers_init = pd.DataFrame(centers_init)

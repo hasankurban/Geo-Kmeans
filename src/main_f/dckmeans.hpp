@@ -69,8 +69,6 @@ Tfloat threshold, Tint num_iterations, Tint numCols){
     while (loop_counter < num_iterations){
 
         loop_counter++;
-        cout << loop_counter << endl;
-
         alg_utils.update_centroids(dataset, new_centroids, assigned_clusters, cluster_size, numCols);
 
         // Check Convergence
@@ -82,9 +80,6 @@ Tfloat threshold, Tint num_iterations, Tint numCols){
         find_neighbors(new_centroids, center_dist_mat, cluster_size, neighbors, 
         mid_points, affine_vectors, temp2, temp_master, temp_midpoint, temp_affine, 
         midpoint_holder, affine_holder, he_counter);
-
-        // print_2d_vector(neighbors, neighbors.size(), "Neighbors");
-
         
         determine_data_expression(dataset, new_centroids, cluster_size, center_dist_mat, dist_matrix,
         assigned_clusters, neighbors, affine_vectors, mid_points, 
