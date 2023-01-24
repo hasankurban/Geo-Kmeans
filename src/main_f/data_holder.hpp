@@ -7,4 +7,5 @@ struct output_data {
     int num_he = 0;
     vector<int> assigned_labels;
     float runtime = 0;
+    bool timeout = false;
 };

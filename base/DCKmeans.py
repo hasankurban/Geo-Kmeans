@@ -23,7 +23,7 @@ def DCKMeans(data, num_clusters, threshold, num_iterations, centroids, seed):
 
     if len(np.unique(old_assigned_clusters)) < num_clusters:
         print("DCKMeans: Found less modalities, safe exiting with current centroids.")
-        return centroids, loop_counter, sys.float_info.max, dckm_calc
+        return centroids, loop_counter, dckm_calc
 
     # dckm_calc = num_clusters * data.shape[0]
     new_assigned_clusters[:] = old_assigned_clusters[:]

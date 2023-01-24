@@ -56,7 +56,7 @@ template <typename Tfloat>
 void read_kplus_plus_centroids(string filePath, 
 vector<vector<Tfloat> > &centroids, int num_centroids){
 
-    string value, line;
+    string value = "", line = "";
 
     // file stream handle
     fstream f;

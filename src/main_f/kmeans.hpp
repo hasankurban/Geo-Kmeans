@@ -9,13 +9,13 @@ using namespace std;
 class conv_kmeans{
     template <typename Tfloat, typename Tint>
     output_data kmeans(vector<vector <Tfloat> > &dataset, vector<vector<Tfloat> > &centroids,
-    Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols);
+    Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols, Tint time_limit);
 
 };
 
 template <typename Tfloat, typename Tint>
 inline output_data kmeans(vector<vector <Tfloat> > &dataset, vector<vector<Tfloat> > &centroids,
-Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols){
+Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols, Tint time_limit){
 
     Tint loop_counter = 0;
     // vector<vector<Tfloat> > centroids(num_clusters, vector<Tfloat>(numCols));
@@ -31,12 +31,13 @@ Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols){
 
     int i =0, j =0, he_counter = 0;
     float temp_diff =0, diff = 0;
+    output_data result;
 
     // Start time counter 
     auto start = std::chrono::high_resolution_clock::now();
     
     // Initialize centroids
-    // alg_utils.init_centroids(centroids, dataset, num_clusters);
+    alg_utils.init_centroids(centroids, dataset, num_clusters);
 
     alg_utils.calculate_distances(dataset, centroids, dist_matrix, 
     num_clusters, assigned_clusters, cluster_size, he_counter);
@@ -66,18 +67,30 @@ Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols){
         
         // reset centroids
         alg_utils.reinit(new_centroids);
+
+        auto temp_end = std::chrono::high_resolution_clock::now();
+        auto temptime = std::chrono::duration_cast<std::chrono::milliseconds>(temp_end - start);
+
+        if (temptime.count() >= time_limit){
+            result.loop_counter = loop_counter;
+            result.num_he = dataset.size() * loop_counter * num_clusters;
+            result.assigned_labels = assigned_clusters;
+            result.runtime = float(temptime.count());
+            result.timeout = true;
+            cout << "Kmeans Timed Out :(" << endl;
+            return result;
+        }
         
     }
 
     auto end = std::chrono::high_resolution_clock::now();
     auto Totaltime = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
-    output_data result;
-
     result.loop_counter = loop_counter;
     result.num_he = dataset.size() * loop_counter * num_clusters;
     result.assigned_labels = assigned_clusters;
     result.runtime = float(Totaltime.count());
+    result.timeout = false;
 
     return result;
 

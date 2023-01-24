@@ -7,9 +7,6 @@ from base.DCKmeans import *
 from pathlib import Path
 import time
 from utils.assign_clusters import *
-import pandas as pd
-import glob
-
 
 
 '''
@@ -34,8 +31,8 @@ file_list = ['test_100_2_3.csv']
 # file_list = ['spambase.csv']
 # file_list = ['10_clusters.csv']
 
-file_list = ['Census.csv']
-cenfile = 'CensusCentroids_10_0.txt'
+file_list = ['ringnorm.csv']
+cenfile = 'ringnormCentroids_5_0.txt'
 
 DATA_PATH = "/Users/schmuck/Documents/Box Sync/Ph.D./DATASETS"
 DATA_PATH = "/Users/schmuck/Documents/OneDrive - Indiana University/Box Sync/PhD/DATASETS/"
@@ -61,20 +58,25 @@ for data_file in file_list:
 
     # data, labels = read_simulated_data(os.path.join(file_path, data_file))
     data = read_simulated_data_test(os.path.join(file_path, data_file))
-    centroids1 = read_simulated_data_test(os.path.join(DATA_PATH, "real_data", "experiment_data", "comma_seperated_centroids", cenfile))
-    centroids2 = read_simulated_data_test(os.path.join(DATA_PATH, "real_data", "experiment_data", "comma_seperated_centroids", cenfile))
+    # centroids1 = read_simulated_data_test(os.path.join(DATA_PATH, "real_data", "experiment_data", "comma_seperated_centroids", cenfile))
+    # centroids2 = read_simulated_data_test(os.path.join(DATA_PATH, "real_data", "experiment_data", "comma_seperated_centroids", cenfile))
     
+    centroids = read_simulated_data_test(os.path.join(DATA_PATH, "real_data", "experiment_data", "test1", cenfile))
+    
+    # print(centroids1)
+    # print(centroids2)
+
     print("Data Shape :", data.shape)
-    print(centroids1.shape)
+    print(centroids.shape)
 
     for centers in num_clusters:
 
         km_start_time = time.time()
-        km_centroids, km_iter, km_calc = Kmeans(data, centers, threshold, num_iterations, centroids1, seed)
+        km_centroids, km_iter, km_calc = Kmeans(data, centers, threshold, num_iterations, centroids, seed)
         km_TraningTime = round(time.time() - km_start_time, 5)
 
         kmdc_start_time = time.time()
-        kmdc_centroids, kmdc_iter, kmdc_calc = DCKMeans(data, centers, threshold, num_iterations, centroids2, seed)
+        dckm_centroids, dckm_iter, dckm_calc = DCKMeans(data, centers, threshold, num_iterations, centroids, seed)
         kmdc_TraningTime = round(time.time() - kmdc_start_time, 2)
 
 

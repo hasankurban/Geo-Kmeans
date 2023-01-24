@@ -75,6 +75,7 @@ const vector<T1> &center, int &he_counter){
     }
 
     dist = sqrt(dist);
+    he_counter += 1;
     return dist;
 }
 

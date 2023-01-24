@@ -30,11 +30,6 @@ typedef struct Neighbor
     int index;
 };
 
-// struct output_data {
-//     int loop_counter = 0;
-//     int num_he = 0;
-//     vector<int> assigned_labels;
-// };
 
 typedef vector<Neighbor> sortedNeighbors;
 
@@ -97,19 +92,18 @@ MatrixOur&centroids, float threshold){
         
         for (i=0; i<new_centroids.rows(); i++){
             for (j=0; j<new_centroids.cols(); j++)
-                // temp_diff = new_centroids(i, j) - centroids(i, j);
-                // diff = diff + (temp_diff * temp_diff);
-                if (centroids[i][j] != new_centroids[i][j])
-                    return false;
+                temp_diff = new_centroids(i, j) - centroids(i, j);
+                diff = diff + (temp_diff * temp_diff);
         }
-        // diff = sqrt(diff/new_centroids.rows());
+        diff = sqrt(diff/new_centroids.rows());
     }
-    // else
-    //     return false;
+    else
+        return false;
     
-    // if (diff <= threshold)
-    //     return true;
-    return true;
+    if (diff <= threshold)
+        return true;
+    
+    return false;
 }
 
 
@@ -127,8 +121,41 @@ MatrixOur init_centroids(MatrixOur &dataset, int num_cluster){
 }
 
 
+// MatrixOur load_centroids(string filename, int num_clusters, int numCols) {
+//     /*
+//     *Summary: Read data through file path
+//     *Parameters:
+//     *     filename: file path.*    
+//     *Return : Dataset in eigen matrix format.
+//     */
+    
+//     MatrixOur data(num_clusters, numCols);
+//     ifstream inFile2(filename, ios::in);
+//     string lineStr2;
+
+//     int counter = 0, i =0;
+    
+//     while (getline(inFile2, lineStr2)) {
+//         if (counter < num_clusters){
+//             stringstream ss2(lineStr2);
+//             string str2;
+//             int j = 0;
+//             while (getline(ss2, str2, ',')) {
+//                 data(i, j) = atof(const_cast<const char*>(str2.c_str()));
+//                 j++;
+//             }
+//             i++;
+//         }
+//         else{
+//             break;
+//         }
+//         counter += 1;
+//     }
+//     return data;
+// }
+
 output_data ball_k_means_Ring(MatrixOur& dataset, MatrixOur& centroids, bool detail, 
-double thres= 0.001, int iters = 100) {
+double thres= 0.001, int iters = 100, int time_limit = 60000) {
 
     double start_time = 0, end_time = 0;
 
@@ -174,6 +201,10 @@ double thres= 0.001, int iters = 100) {
     cal_dist_num = 0;
     flag.setZero();
 
+    output_data res;
+
+
+    auto start = std::chrono::high_resolution_clock::now();
     //initialize cluster_point_index and temp_dis
     initialize(dataset, centroids, labels, cluster_point_index, clusters_neighbors_index, temp_dis);
 
@@ -323,6 +354,20 @@ double thres= 0.001, int iters = 100) {
         }
         else
             break;
+
+
+    auto temp_end = std::chrono::high_resolution_clock::now();
+    auto temptime = std::chrono::duration_cast<std::chrono::milliseconds>(temp_end - start);
+
+    if (temptime.count() >= time_limit){
+        res.loop_counter = iteration_counter;
+        res.num_he = cal_dist_num;
+        res.runtime = float(temptime.count());
+        res.timeout = false;
+        cout << "Ball-Kmeans Timed Out :(" << endl;
+        return res;
+    }
+
     }
     end_time = clock();
 
@@ -336,10 +381,14 @@ double thres= 0.001, int iters = 100) {
              << (double)(end_time - start_time) / CLOCKS_PER_SEC * 1000 / iteration_counter << endl;
 
     }
+    auto end = std::chrono::high_resolution_clock::now();
+    auto Totaltime = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
-    output_data res;
     res.loop_counter = iteration_counter;
     res.num_he = cal_dist_num;
+    res.runtime = float(Totaltime.count());
+    res.timeout = false;
+
     return res;
 }
 
@@ -392,6 +441,9 @@ double thres= 0.001, int iters = 100) {
     num_of_neighbour = 0;
     cal_dist_num = 0;
     flag.setZero();
+
+
+    auto start = std::chrono::high_resolution_clock::now();
 
     //initialize clusters_point_index and point_center_dist
     initialize(dataset, centroids, labels, clusters_point_index, clusters_neighbors_index, point_center_dist);
@@ -554,10 +606,16 @@ double thres= 0.001, int iters = 100) {
 
     }
     
+    auto end = std::chrono::high_resolution_clock::now();
+    auto Totaltime = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+
     output_data res;
     res.loop_counter = iteration_counter;
     res.num_he = cal_dist_num;
-    return res;
+    res.runtime = float(Totaltime.count());
+    res.timeout = false;
+
+    return res;  
 }
 
 MatrixOur load_data(string filename) {

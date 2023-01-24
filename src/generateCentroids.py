@@ -15,12 +15,12 @@ out_list = ["BreastcancerCentroids", "CustomerSaleRecordsCentroids", "CreditRisk
             "cropCentroids", "TwitterCentroids", "birchCentroids"]
 
 
-np.random.seed(9)
+np.random.seed(27)
 seeds = np.random.randint(27, size=(9, 3))
 
-# file_list = ["codrna.csv"]
-# out_list = ["codrnaCentroids"]
-# seeds = [856]
+file_list = ["ringnorm.csv"]
+out_list = ["ringnormCentroids"]
+seeds = [856, 785, 142]
 
 max_centers = [5, 10, 20, 30]
 
@@ -36,9 +36,13 @@ for i in range(len(file_list)):
 
         for rep in range(3):
 
-            centers_init, _ = kmeans_plusplus(data, n_clusters=clus, random_state=seeds[i, rep])
+            centers_init, _ = kmeans_plusplus(data, n_clusters=clus, random_state=seeds[rep])
             centers_init = pd.DataFrame(centers_init)
             
-            centers_init.to_csv(output_path+"comma_seperated_centroids/"+out_list[i]+"_" + str(clus) + "_" + str(rep) + ".txt", sep=",", index=False, header=False)
+            # centers_init.to_csv(output_path+"comma_seperated_centroids/"+out_list[i]+"_" + str(clus) + "_" + str(rep) + ".txt", sep=",", index=False, header=False)
             
-            centers_init.to_csv(output_path+"space_seperated_centroids/"+out_list[i]+"_" + str(clus) + "_" + str(rep) + ".txt", sep=" ", index=False, header=False)
+            # centers_init.to_csv(output_path+"space_seperated_centroids/"+out_list[i]+"_" + str(clus) + "_" + str(rep) + ".txt", sep=" ", index=False, header=False)
+
+            centers_init.to_csv(output_path+"test1/"+out_list[i]+"_" + str(clus) + "_" + str(rep) + ".txt", sep=",", index=False, header=False)
+            
+            centers_init.to_csv(output_path+"test2/"+out_list[i]+"_" + str(clus) + "_" + str(rep) + ".txt", sep=" ", index=False, header=False)
