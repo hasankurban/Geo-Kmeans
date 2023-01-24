@@ -34,7 +34,7 @@ class dckm_utils{
     vector<vector<vector <TD> > > &affine_vectors,  vector<TD> &temp, 
     vector<vector<TD> > &temp_master, vector<TD> &temp_midpoint,
     vector<TD> &temp_affine, vector<vector<TD> > &midpoint_holder, 
-    vector<vector<TD> > &affine_holder);
+    vector<vector<TD> > &affine_holder, TI &he_counter);
 
     template <typename Tfloat, typename Tint>
     inline void determine_data_expression(vector<vector<Tfloat> > &dataset, 
@@ -105,7 +105,7 @@ vector<vector<TI> > &neighbors, vector<vector<vector <TD> > > &mid_points,
 vector<vector<vector <TD> > > &affine_vectors, vector<TD> &temp, 
 vector<vector<TD> > &temp_master, vector<TD> &temp_midpoint,
 vector<TD> &temp_affine, vector<vector<TD> > &midpoint_holder, 
-vector<vector<TD> > &affine_holder){
+vector<vector<TD> > &affine_holder, TI &he_counter){
 
     TD dist = 0;
     TD radius = 0;
@@ -125,7 +125,7 @@ vector<vector<TD> > &affine_holder){
             
             // Do only k calculations, save so many :)
             if (curr_center < ot_center){
-                dist = alg_utils.calc_euclidean(centroids[curr_center], centroids[ot_center]);
+                dist = alg_utils.calc_euclidean(centroids[curr_center], centroids[ot_center], he_counter);
                 center_dist_mat[curr_center][ot_center] = dist/2;
                 center_dist_mat[ot_center][curr_center] = center_dist_mat[curr_center][ot_center];
             }
@@ -163,7 +163,7 @@ vector<vector<TD> > &affine_holder){
                 temp1.push_back(temp_master[0][1]);
                 neighbors[curr_center] = temp1;
             }
-
+ 
             else if(cnt == 0){
                 temp1.push_back(-100);
                 neighbors[curr_center] = temp1;
@@ -196,9 +196,8 @@ Tint &i, Tint &j, Tfloat &temp_result){
 
         if (cluster_size[my_cluster][2] > 0){
             
-            temp_result = alg_utils.calc_euclidean(dataset[i], centroids[my_cluster]);
+            temp_result = alg_utils.calc_euclidean(dataset[i], centroids[my_cluster], he_counter);
             if(temp_result < center_dist_mat[my_cluster][neighbors[my_cluster][0]]){
-                he_counter += 1; 
                 continue;    
             }
 
@@ -210,7 +209,7 @@ Tint &i, Tint &j, Tfloat &temp_result){
                 if (find_context_direction(dataset[i], affine_vectors[my_cluster][neighbors[my_cluster][j]], 
                 mid_points[my_cluster][neighbors[my_cluster][j]], temp_result)){
 
-                    temp_result = alg_utils.calc_euclidean(dataset[i], centroids[neighbors[my_cluster][j]]);
+                    temp_result = alg_utils.calc_euclidean(dataset[i], centroids[neighbors[my_cluster][j]], he_counter);
                     dist_mat[i][neighbors[my_cluster][j]] = temp_result;
 
                     if(temp_result > cluster_size[neighbors[my_cluster][j]][1])
@@ -222,7 +221,6 @@ Tint &i, Tint &j, Tfloat &temp_result){
                         cluster_size[neighbors[my_cluster][j]][0] += 1;
                     } 
 
-                    he_counter += 1; 
                 }
             }
         } 

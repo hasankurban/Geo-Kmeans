@@ -21,7 +21,7 @@ template <typename Tfloat, typename Tint>
 output_data dckmeans(vector<vector <Tfloat> > &dataset, vector<vector<Tfloat> > &centroids, Tint num_clusters, 
 Tfloat threshold, Tint num_iterations, Tint numCols){
 
-    Tint loop_counter = 1;
+    Tint loop_counter = 0;
     // vector<vector<Tfloat> > centroids(num_clusters, vector<Tfloat>(numCols));
     vector<vector<Tfloat> > new_centroids(num_clusters, vector<Tfloat>(numCols));
     vector<vector<Tfloat> > dist_matrix(dataset.size(), vector<Tfloat>(num_clusters));
@@ -58,27 +58,33 @@ Tfloat threshold, Tint num_iterations, Tint numCols){
     // Initialize centroids
     // alg_utils.init_centroids(centroids, dataset, num_clusters);
     
-
-    // print_2d_vector(centroids, 5, "initial");
+    // Start time counter 
+    auto start = std::chrono::high_resolution_clock::now();
 
     // Assign data to nearest center
     alg_utils.calculate_distances(dataset, centroids, dist_matrix,
-    num_clusters, assigned_clusters, cluster_size);
+    num_clusters, assigned_clusters, cluster_size, he_counter);
 
 
     while (loop_counter < num_iterations){
 
         loop_counter++;
+        cout << loop_counter << endl;
+
         alg_utils.update_centroids(dataset, new_centroids, assigned_clusters, cluster_size, numCols);
 
         // Check Convergence
         if (alg_utils.check_convergence(new_centroids, centroids, threshold, diff, temp_diff, i, j)){
-                // cout << "Convergence at iteration: " << loop_counter << "\n";
+                cout << "Convergence at iteration: " << loop_counter << "\n";
                 break;
         }
         
         find_neighbors(new_centroids, center_dist_mat, cluster_size, neighbors, 
-        mid_points, affine_vectors, temp2, temp_master, temp_midpoint, temp_affine, midpoint_holder, affine_holder);
+        mid_points, affine_vectors, temp2, temp_master, temp_midpoint, temp_affine, 
+        midpoint_holder, affine_holder, he_counter);
+
+        // print_2d_vector(neighbors, neighbors.size(), "Neighbors");
+
         
         determine_data_expression(dataset, new_centroids, cluster_size, center_dist_mat, dist_matrix,
         assigned_clusters, neighbors, affine_vectors, mid_points, 
@@ -92,9 +98,13 @@ Tfloat threshold, Tint num_iterations, Tint numCols){
 
     }
 
+    auto end = std::chrono::high_resolution_clock::now();
+    auto Totaltime = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+
     result.loop_counter = loop_counter;
-    result.num_he = he_counter + dataset.size();
+    result.num_he = he_counter;
     result.assigned_labels = assigned_clusters;
+    result.runtime = float(Totaltime.count());
 
     return result;
 }
