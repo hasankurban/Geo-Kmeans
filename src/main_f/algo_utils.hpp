@@ -17,10 +17,10 @@ class algorithm_utils{
     void calculate_distances(const vector<vector<T1> > &dataset, 
     vector<vector<T1> > &centroids, vector<vector<T1> > &dist_mat,
     T2 num_clusters, vector<T2> &assigned_clusters, 
-    vector<vector<T1> > &cluster_size, T2 &he_counter);
+    vector<vector<T1> > &cluster_size, unsigned long long &he_counter);
 
     template <typename T1>
-    float calc_euclidean(const vector<T1> &, const vector<T1> &, int &he_counter);
+    float calc_euclidean(const vector<T1> &, const vector<T1> &, unsigned long long &he_counter);
 
     template <typename T1, typename T2>
     void update_centroids(vector<vector <T1> > &dataset, 
@@ -62,7 +62,7 @@ vector<vector <T1> > &dataset, T2 num_cluster){
 
 template <typename T1>
 inline float algorithm_utils::calc_euclidean(const vector<T1> &point, 
-const vector<T1> &center, int &he_counter){
+const vector<T1> &center, unsigned long long &he_counter){
     
     T1 dist = 0.0;
     T1 temp = 0.0;
@@ -84,7 +84,7 @@ template <typename T1, typename T2>
 inline void algorithm_utils::calculate_distances(const vector<vector<T1> > &dataset, 
 vector<vector<T1> > &centroids, vector<vector<T1> > &dist_mat,
 T2 num_clusters, vector<T2> &assigned_clusters, vector<vector<T1> > &cluster_size, 
-T2 &he_counter){
+unsigned long long &he_counter){
 
     T2 current_center = 0;
     vector<T1> temp_dist (num_clusters);

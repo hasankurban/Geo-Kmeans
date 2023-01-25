@@ -13,12 +13,12 @@ class conv_kmeans{
 
 };
 
+
 template <typename Tfloat, typename Tint>
 inline output_data kmeans(vector<vector <Tfloat> > &dataset, vector<vector<Tfloat> > &centroids,
 Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols, Tint time_limit){
 
     Tint loop_counter = 0;
-    // vector<vector<Tfloat> > centroids(num_clusters, vector<Tfloat>(numCols));
     vector<vector<Tfloat> > new_centroids(num_clusters, vector<Tfloat>(numCols));
     vector<vector <Tfloat> > dist_matrix(dataset.size(), vector<Tfloat>(num_clusters));
     vector<vector<Tfloat> > cluster_size(num_clusters, vector<Tfloat>(2));  
@@ -29,8 +29,11 @@ Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols, Tint tim
     algorithm_utils alg_utils;
     print_utils pu;
 
-    int i =0, j =0, he_counter = 0;
+    int i =0, j =0 ;
     float temp_diff =0, diff = 0;
+    unsigned long long he_counter = 0;
+
+
     output_data result;
 
     // Start time counter 

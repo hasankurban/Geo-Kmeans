@@ -10,40 +10,10 @@
 #include <map>
 #include <iomanip>
 #include <chrono>
-#include <thread>
-#include <mutex>
-#include <condition_variable>
 
 using namespace std;
 
-string basePath = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/Box Sync/PhD/DATASETS/real_data/";
-
-
-output_data run_km_algo(vector<vector<float> > &dataset, vector<vector<float>> &centroids, int clus, 
-float threshold, int num_iters, int numCols, int time_limit){
-
-    output_data res;
-
-    auto t1 = std::chrono::high_resolution_clock::now();
-        res = kmeans(dataset, centroids, clus, threshold, num_iters, numCols, time_limit);
-        auto t2 = std::chrono::high_resolution_clock::now();
-        auto km_time = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
-
-    return res;
-}
-
-
-output_data run_dckm_algo(vector<vector<float> > &dataset, vector<vector<float>> &centroids, int clus, 
-float threshold, int num_iters, int numCols, int time_limit){
-
-    output_data res;
-    auto t1 = std::chrono::high_resolution_clock::now();
-    res = dckmeans(dataset, centroids, clus, threshold, num_iters, numCols, time_limit);
-    auto t2 = std::chrono::high_resolution_clock::now();
-    auto km_time = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
-
-    return res;
-}
+string basePath = "/u/parishar/scratch/DATASETS/real_data/";
 
 
 int main(){
@@ -66,9 +36,9 @@ int main(){
             "magic", "spambase", "crop", "Twitter", "birch"};
 
 
-    //    vector<string> file_list = {"Breastcancer.csv"};
-    //    vector<string> out_list = {"BreastcancerCentroids"};
-    //    vector<string> data_list = {"Breastcancer"};
+    //    vector<string> file_list = {"Twitter.csv"};
+    //    vector<string> out_list = {"TwitterCentroids"};
+    //    vector<string> data_list = {"Twitter"};
 
         int num_iters = 500;
         float threshold = 0.001;
@@ -79,8 +49,11 @@ int main(){
        bool run_stat = false;
        
        vector<int> labels;
-      
+       
+       output_data km_res;
+       output_data dckm_res;
        output_data ballkm_res;
+       
        int time_limit = 1800000;
 
        ofstream avgresFile;
@@ -129,7 +102,7 @@ int main(){
                         // KMeans
                         //####################
                         read_kplus_plus_centroids(centroidFilePath, centroids, clus);
-                        output_data km_res;
+                        
                         km_res = kmeans(dataset, centroids, clus, threshold, num_iters, numCols, time_limit);
                         
                         if (km_res.timeout == true){
@@ -146,7 +119,7 @@ int main(){
 
                         cout << "Algo: DCKM" << endl; 
                         read_kplus_plus_centroids(centroidFilePath, centroids, clus);
-                        output_data dckm_res;
+                        
                         
                         dckm_res = dckmeans(dataset, centroids, clus, threshold, num_iters, numCols, time_limit);
                         
@@ -162,8 +135,6 @@ int main(){
                         //####################
                         // Ball-KMeans
                         //####################
-
-                        // cout << "Algo: Ball-Kmeans" << endl;
                         
                         // Load data in Eigen format for Ball KMeans
                         MatrixOur BallK_dataset = load_data(inputfilePath);
@@ -183,14 +154,14 @@ int main(){
                         avgresFile.open(outFile, ios::app);
 
 
-                        avgresFile << "\nKM" << "," << data_list[i] << "," << to_string(clus) 
+                        avgresFile << "\nKMeans" << "," << data_list[i] << "," << to_string(clus) 
                         << "," << std::setprecision(2) << to_string(km_res.loop_counter) <<  "," << 
                         std::setprecision(2) << to_string(km_res.runtime) << "," << std::setprecision(6) <<
                         to_string(float(km_res.runtime/km_res.loop_counter)) << "," << std::setprecision(2) << to_string(0)
                             << "," << std::setprecision(2) << to_string(km_res.num_he) <<
                         "," << std::setprecision(2) << to_string(0) << "," << km_timeout;
 
-                            avgresFile << "\nDCKM" << "," << data_list[i] << "," << to_string(clus) 
+                            avgresFile << "\nDataCentric-KMeans" << "," << data_list[i] << "," << to_string(clus) 
                         << "," << std::setprecision(2) << to_string(dckm_res.loop_counter) <<  "," << 
                         std::setprecision(2) << to_string(dckm_res.runtime) << "," << std::setprecision(6) <<
                         to_string(float(dckm_res.runtime/dckm_res.loop_counter)) << "," << std::setprecision(2) << to_string(float(km_res.runtime/dckm_res.runtime))

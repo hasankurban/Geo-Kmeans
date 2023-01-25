@@ -34,7 +34,7 @@ class dckm_utils{
     vector<vector<vector <TD> > > &affine_vectors,  vector<TD> &temp, 
     vector<vector<TD> > &temp_master, vector<TD> &temp_midpoint,
     vector<TD> &temp_affine, vector<vector<TD> > &midpoint_holder, 
-    vector<vector<TD> > &affine_holder, TI &he_counter);
+    vector<vector<TD> > &affine_holder, unsigned long long &he_counter);
 
     template <typename Tfloat, typename Tint>
     inline void determine_data_expression(vector<vector<Tfloat> > &dataset, 
@@ -44,7 +44,7 @@ class dckm_utils{
     vector<vector<Tint> > &neighbors,
     vector<vector<vector <Tfloat> > > &affine_vectors, 
     vector<vector<vector <Tfloat> > > &mid_points, 
-    Tint &he_counter, vector<Tint> &temp, Tint &my_cluster, 
+    unsigned long long &he_counter, vector<Tint> &temp, Tint &my_cluster, 
     Tint &i, Tint &j, Tfloat &temp_result);
 
 };
@@ -105,7 +105,7 @@ vector<vector<TI> > &neighbors, vector<vector<vector <TD> > > &mid_points,
 vector<vector<vector <TD> > > &affine_vectors, vector<TD> &temp, 
 vector<vector<TD> > &temp_master, vector<TD> &temp_midpoint,
 vector<TD> &temp_affine, vector<vector<TD> > &midpoint_holder, 
-vector<vector<TD> > &affine_holder, TI &he_counter){
+vector<vector<TD> > &affine_holder, unsigned long long &he_counter){
 
     TD dist = 0;
     TD radius = 0;
@@ -184,7 +184,7 @@ vector<Tint> &assigned_clusters,
 vector<vector<Tint> > &neighbors,
 vector<vector<vector <Tfloat> > > &affine_vectors, 
 vector<vector<vector <Tfloat> > > &mid_points, 
-Tint &he_counter, vector<Tint> &temp, Tint &my_cluster, 
+unsigned long long &he_counter, vector<Tint> &temp, Tint &my_cluster, 
 Tint &i, Tint &j, Tfloat &temp_result){
     
 

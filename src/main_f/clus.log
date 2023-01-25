@@ -1,0 +1,47 @@
+nohup: ignoring input
+
+%%%%%%%%%%%%%%%%%%%%%%%
+Processing 20_clusters.csv
+%%%%%%%%%%%%%%%%%%%%%%%
+
+Algo: DCKM
+Convergence at iteration: 174
+Total DCKmeans time: 281304 milliseconds
+Total BallKmeans time: 797866 milliseconds
+
+%%%%%%%%%%%%%%%%%%%%%%%
+Processing 50_clusters.csv
+%%%%%%%%%%%%%%%%%%%%%%%
+
+Algo: DCKM
+Convergence at iteration: 216
+Total DCKmeans time: 836287 milliseconds
+Total BallKmeans time: 734107 milliseconds
+
+%%%%%%%%%%%%%%%%%%%%%%%
+Processing 100_clusters.csv
+%%%%%%%%%%%%%%%%%%%%%%%
+
+Algo: DCKM
+DCKmeans Timed Out :(
+Timeout: DCKmeans time: 3.00373e+06 milliseconds
+Total BallKmeans time: 1.56607e+06 milliseconds
+
+%%%%%%%%%%%%%%%%%%%%%%%
+Processing 200_clusters.csv
+%%%%%%%%%%%%%%%%%%%%%%%
+
+Algo: DCKM
+DCKmeans Timed Out :(
+Timeout: DCKmeans time: 3.01031e+06 milliseconds
+Total BallKmeans time: 1.8678e+06 milliseconds
+
+%%%%%%%%%%%%%%%%%%%%%%%
+Processing 500_clusters.csv
+%%%%%%%%%%%%%%%%%%%%%%%
+
+Algo: DCKM
+DCKmeans Timed Out :(
+Timeout: DCKmeans time: 3.01036e+06 milliseconds
+Total BallKmeans time: 1.03862e+06 milliseconds
+Completed Clustering benchmarks

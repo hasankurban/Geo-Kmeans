@@ -107,7 +107,7 @@ MatrixOur&centroids, float threshold){
 }
 
 
-MatrixOur init_centroids(MatrixOur &dataset, int num_cluster){
+MatrixOur init_ball_centroids(MatrixOur &dataset, int num_cluster){
 
     MatrixOur centroids(num_cluster, dataset.cols());;
 

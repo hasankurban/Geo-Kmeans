@@ -34,7 +34,6 @@ Tfloat threshold, Tint num_iterations, Tint numCols, Tint time_limit){
     
     vector<vector<vector <Tfloat> > > mid_points(num_clusters, vector<vector<Tfloat> >(num_clusters, vector<Tfloat>(numCols, 0)));
     vector<vector<vector <Tfloat> > > affine_vectors(num_clusters, vector<vector<Tfloat> >(num_clusters, vector<Tfloat>(numCols, 0)));
-    Tint he_counter = 0;
 
     vector<Tint> temp1;
     vector<Tfloat> temp2(3);
@@ -48,6 +47,8 @@ Tfloat threshold, Tint num_iterations, Tint numCols, Tint time_limit){
     Tint my_cluster = 0, i = 0, j = 0, k = 0, l = 0, m = 0;
     Tfloat temp_diff = 0, diff = 0, vec_sum = 0;
 
+    unsigned long long he_counter = 0;
+
     output_data result;
 
     // Create objects
@@ -60,6 +61,7 @@ Tfloat threshold, Tint num_iterations, Tint numCols, Tint time_limit){
 
     // Initialize centroids
     // alg_utils.init_centroids(centroids, dataset, num_clusters);
+
 
     // Assign data to nearest center
     alg_utils.calculate_distances(dataset, centroids, dist_matrix,

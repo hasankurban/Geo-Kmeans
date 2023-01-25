@@ -1,0 +1,48 @@
+nohup: ignoring input
+
+%%%%%%%%%%%%%%%%%%%%%%%
+Processing 1000000_points.csv
+%%%%%%%%%%%%%%%%%%%%%%%
+
+Algo: DCKM
+Convergence at iteration: 41
+Total DCKmeans time: 3789 milliseconds
+Total BallKmeans time: 56089 milliseconds
+
+%%%%%%%%%%%%%%%%%%%%%%%
+Processing 3000000_points.csv
+%%%%%%%%%%%%%%%%%%%%%%%
+
+Algo: DCKM
+Convergence at iteration: 24
+Total DCKmeans time: 6731 milliseconds
+Total BallKmeans time: 404297 milliseconds
+
+%%%%%%%%%%%%%%%%%%%%%%%
+Processing 5000000_points.csv
+%%%%%%%%%%%%%%%%%%%%%%%
+
+Algo: DCKM
+Convergence at iteration: 39
+Total DCKmeans time: 17999 milliseconds
+Total BallKmeans time: 1.1395e+06 milliseconds
+
+%%%%%%%%%%%%%%%%%%%%%%%
+Processing 8000000_points.csv
+%%%%%%%%%%%%%%%%%%%%%%%
+
+Algo: DCKM
+Convergence at iteration: 24
+Total DCKmeans time: 17849 milliseconds
+Ball-Kmeans Timed Out :(
+Total BallKmeans time: 5.45248e+06 milliseconds
+
+%%%%%%%%%%%%%%%%%%%%%%%
+Processing 10000000_points.csv
+%%%%%%%%%%%%%%%%%%%%%%%
+
+Algo: DCKM
+Total DCKmeans time: 941972 milliseconds
+Ball-Kmeans Timed Out :(
+Total BallKmeans time: 6.7288e+06 milliseconds
+Completed Scalability benchmarks
