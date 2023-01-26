@@ -3,8 +3,8 @@ import numpy as np
 import time
 
 
-basePath = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/Box Sync/PhD/DATASETS/real_data/"
-program_basePath = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/Box Sync/PhD/DATASETS/real_data/experiment_data/programs/mlpack_kmeans"
+basePath = "/u/parishar/scratch/DATASETS/real_data/"
+program_basePath = "/u/parishar/scratch/programs/mlpack_kmeans"
 
 data_basePath = basePath + "experiment_data/comma_seperated_files/";
 centroid_basePath = basePath + "experiment_data/comma_seperated_centroids/";
@@ -12,28 +12,26 @@ out_path = basePath + "experiment_data/"
 
 
 file_list = ["Breastcancer.csv", "CustomerSaleRecords.csv" , "CreditRisk.csv",
-            "Census.csv", "UserLocation.csv",
+            "magic.csv", "spambase.csv",
             "crop.csv", "Twitter.csv", "birch.csv"]
 
-data_list = ["Breastcancer", "CustomerSaleRecords", "CreditRisk",
-            "Census", "UserLocation",
-            "crop", "Twitter", "birch"]
-
-out_list = ["BreastcancerCentroids", "CustomerSaleRecordsCentroids", "CreditRiskCentroids",
-            "CensusCentroids", "UserLocationCentroids",
+data_list = ["BreastcancerCentroids", "CustomerSaleRecordsCentroids", "CreditRiskCentroids",
+            "magicCentroids", "spambaseCentroids",
             "cropCentroids", "TwitterCentroids", "birchCentroids"]
 
-num_clusters = [2, 5, 10, 20, 30]
+out_list = ["Breastcancer", "CustomerSaleRecords", "CreditRisk",
+            "magic", "spambase", "crop", "Twitter", "birch"]
+
+num_clusters = [5, 8, 10, 12, 25]
 algorithms = ["naive", "hamerly", "pelleg-moore", "dualtree"]
 num_rep = 5
 num_iters = 500
 
 
 # num_clusters = [20]
-algorithms = ["naive"]
-# num_rep = 5
+# algorithms = ["naive", "hamerly", "pelleg-moore"]
+# num_rep = 2
 # num_iters = 500
-
 # file_list = ["birch.csv"]
 # data_list = ["birch"]
 # out_list = ["birchCentroids"]
@@ -41,7 +39,7 @@ algorithms = ["naive"]
 
 def run_algos():
 
-    with open(out_path+"Avg_output.csv", "w") as output_file:
+    with open(out_path+"benchmark_packages_output.csv", "w") as output_file:
         output_file.write("Algorithm,Data,Clusters,Iters,Runtime,Runtime_per_Iter,Runtime_speedup,Distances,Dist_speed_up\n")
 
         km_runtime = {}
@@ -72,7 +70,7 @@ def run_algos():
 
                 for rep in range(num_rep):
             
-                    read_centroid_path = centroid_basePath + out_list[i] +"_" + str(clus) + "_" + str(rep) +".txt"
+                    read_centroid_path = centroid_basePath + data_list[i] +"_" + str(clus) + "_" + str(rep) +".txt"
 
                     # print("Data: ", read_file_path)
                     # print("Centroid: ", read_centroid_path)
@@ -130,13 +128,14 @@ def run_algos():
                     full_output.append(temp456)
 
                 # print(alg_out, dist_counter, runtime_Counter, iteration_counter, runtime_per_iteration)
-                with open(out_path+"Avg_output.csv", "a") as output_file:
+                with open(out_path+"benchmark_packages_output.csv", "a") as output_file:
 
                     # Algorithm,Data,Clusters,Iters,Runtime,Runtime_per_iter,Distances,Dist_speed_up
                     
                     if alg_out == "Lloyd":
                         km_dist[data_list[i]+str(clus)] = np.mean(dist_counter)
                         km_runtime[data_list[i]+str(clus)] = np.mean(runtime_Counter)
+
 
                         output_file.write(alg_out + "," + data_list[i] + "," + str(clus) + "," + 
                         str("{:.2f}".format(np.mean(iteration_counter))) + "," + str("{:.2f}".format(np.mean(runtime_Counter))) + "," +

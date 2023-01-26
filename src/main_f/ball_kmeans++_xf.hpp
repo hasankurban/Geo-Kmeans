@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <fstream>
 #include <time.h>
@@ -7,6 +6,8 @@
 #include <Eigen/Dense>
 #include <vector>
 #include <cfloat>
+#include <cmath>
+#include <random>
 
 using namespace std;
 using namespace Eigen;
@@ -120,39 +121,46 @@ MatrixOur init_ball_centroids(MatrixOur &dataset, int num_cluster){
     return centroids;
 }
 
+// The following function is taken from the following question thread.
+// https://stackoverflow.com/questions/20734774/random-array-generation-with-no-duplicates
+void get_ball_ranodm_indices(int *arr, size_t size, int seed)
+{
+    if (size > 1) 
+    {
+        size_t i;
+        srand(seed);
+        for (i = 0; i < size - 1; i++) 
+        {
+          size_t j = i + rand() / (RAND_MAX / (size - i) + 1);
+          int t = arr[j];
+          arr[j] = arr[i];
+          arr[i] = t;
+        }
+    }
+}
 
-// MatrixOur load_centroids(string filename, int num_clusters, int numCols) {
-//     /*
-//     *Summary: Read data through file path
-//     *Parameters:
-//     *     filename: file path.*    
-//     *Return : Dataset in eigen matrix format.
-//     */
-    
-//     MatrixOur data(num_clusters, numCols);
-//     ifstream inFile2(filename, ios::in);
-//     string lineStr2;
 
-//     int counter = 0, i =0;
-    
-//     while (getline(inFile2, lineStr2)) {
-//         if (counter < num_clusters){
-//             stringstream ss2(lineStr2);
-//             string str2;
-//             int j = 0;
-//             while (getline(ss2, str2, ',')) {
-//                 data(i, j) = atof(const_cast<const char*>(str2.c_str()));
-//                 j++;
-//             }
-//             i++;
-//         }
-//         else{
-//             break;
-//         }
-//         counter += 1;
-//     }
-//     return data;
-// }
+void extract_ball_data(MatrixOur &dataset, 
+MatrixOur &extracted_data, int data_prop, int seed, 
+int num_cluster){
+
+    int i = 0, j = 0, size = dataset.rows();
+    int test_array[size];
+
+    for (i = 0; i<size ; i++){
+        test_array[i] = i;
+    }
+
+    get_ball_ranodm_indices(test_array, size, seed);
+
+    for(i=0; i<num_cluster; i++){  
+        for(j=0; j <dataset.cols(); j++){
+            extracted_data(i, j) = dataset(test_array[i], j);
+        }   
+    }
+}
+
+
 
 output_data ball_k_means_Ring(MatrixOur& dataset, MatrixOur& centroids, bool detail, 
 double thres= 0.001, int iters = 100, int time_limit = 60000) {

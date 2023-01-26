@@ -1,0 +1,69 @@
+nohup: ignoring input
+Starting 1st suit benchmark
+
+Algorithm:  naive
+Processing:  BreastcancerCentroids
+Processing:  CustomerSaleRecordsCentroids
+Processing:  CreditRiskCentroids
+Processing:  magicCentroids
+Processing:  spambaseCentroids
+Processing:  cropCentroids
+Processing:  TwitterCentroids
+Processing:  birchCentroids
+Algorithm:  hamerly
+Processing:  BreastcancerCentroids
+Processing:  CustomerSaleRecordsCentroids
+Processing:  CreditRiskCentroids
+Processing:  magicCentroids
+Processing:  spambaseCentroids
+Processing:  cropCentroids
+Processing:  TwitterCentroids
+Processing:  birchCentroids
+Algorithm:  pelleg-moore
+Processing:  BreastcancerCentroids
+Processing:  CustomerSaleRecordsCentroids
+Processing:  CreditRiskCentroids
+Processing:  magicCentroids
+Processing:  spambaseCentroids
+Processing:  cropCentroids
+Processing:  TwitterCentroids
+Processing:  birchCentroids
+Algorithm:  dualtree
+Processing:  BreastcancerCentroids
+Processing:  CustomerSaleRecordsCentroids
+Processing:  CreditRiskCentroids
+Processing:  magicCentroids
+Processing:  spambaseCentroids
+Processing:  cropCentroids
+Processing:  TwitterCentroids
+Processing:  birchCentroids
+
+Completed the 1st suit benchmark
+Starting 2nd suit benchmark
+
+Processing:  BreastcancerCentroids
+Processing:  CustomerSaleRecordsCentroids
+Processing:  CreditRiskCentroids
+Processing:  magicCentroids
+Processing:  spambaseCentroids
+Processing:  cropCentroids
+Processing:  TwitterCentroids
+Processing:  birchCentroids
+Processing:  BreastcancerCentroids
+Processing:  CustomerSaleRecordsCentroids
+Processing:  CreditRiskCentroids
+Processing:  magicCentroids
+Processing:  spambaseCentroids
+Processing:  cropCentroids
+Processing:  TwitterCentroids
+Processing:  birchCentroids
+Processing:  BreastcancerCentroids
+Processing:  CustomerSaleRecordsCentroids
+Processing:  CreditRiskCentroids
+Processing:  magicCentroids
+Processing:  spambaseCentroids
+Processing:  cropCentroids
+Processing:  TwitterCentroids
+Processing:  birchCentroids
+
+Completed the 2nd suit benchmark

@@ -38,15 +38,13 @@ int main(){
        int time_limit = 5400000, dims = 0, clus = 20;
         
        string inputfilePath = "";
-       
-       output_data km_res;
        output_data dckm_res;
        output_data ballkm_res;
        
 
        ofstream dimsoutFile;
        dimsoutFile.open(dims_output_path, ios::trunc);
-       dimsoutFile << "Algorithm,Num_Points,Iters,Runtime,Runtime_per_Iter,Runtime_speedup,Distances,Dist_speed_up,Timeout";
+       dimsoutFile << "Algorithm,Num_Dims,Runtime,Runtime_per_Iter,Runtime_speedup,Distances,Dist_speed_up,Timeout";
        dimsoutFile.close();
 
        algorithm_utils alg_utils;
@@ -115,18 +113,18 @@ int main(){
                 dimsoutFile.open(dims_output_path, ios::app);
 
                 dimsoutFile << "\nDataCentric-KMeans" << "," << to_string(dims) 
-                << "," << std::setprecision(2) << to_string(dckm_res.loop_counter) <<  "," << 
+                <<  "," << 
                 std::setprecision(2) << to_string(dckm_res.runtime) << "," << std::setprecision(6) <<
-                to_string(float(dckm_res.runtime/dckm_res.loop_counter)) << "," << std::setprecision(2) << to_string(float(km_res.runtime/dckm_res.runtime))
+                to_string(float(dckm_res.runtime/dckm_res.loop_counter)) << "," << std::setprecision(2) << to_string(float(ballkm_res.runtime/dckm_res.runtime))
                     << "," << std::setprecision(2) << to_string(dckm_res.num_he) <<
-                "," << std::setprecision(2) << to_string(float(km_res.num_he/dckm_res.num_he)) << "," << dckm_timeout;
+                "," << std::setprecision(2) << to_string(float(ballkm_res.num_he/dckm_res.num_he)) << "," << dckm_timeout;
 
                 dimsoutFile << "\nBall-Kmeans" << "," << to_string(dims) 
-                << "," << std::setprecision(2) << to_string(ballkm_res.loop_counter) <<  "," << 
+                << "," << 
                 std::setprecision(2) << to_string(ballkm_res.runtime) << "," << std::setprecision(6) <<
-                to_string(float(ballkm_res.runtime/ballkm_res.loop_counter)) << "," << std::setprecision(2) << to_string(float(km_res.runtime/ballkm_res.runtime))
+                to_string(float(ballkm_res.runtime/ballkm_res.loop_counter)) << "," << std::setprecision(2) << to_string(1)
                     << "," << std::setprecision(2) << to_string(ballkm_res.num_he) <<
-                "," << std::setprecision(2) << to_string(float(km_res.num_he/ballkm_res.num_he)) << "," << ballkm_timeout;    
+                "," << std::setprecision(2) << to_string(1) << "," << ballkm_timeout;    
 
                 dimsoutFile.close();
 

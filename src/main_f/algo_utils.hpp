@@ -3,6 +3,8 @@
 #include "math.h"
 #include <map>
 #include <algorithm>
+#include <cmath>
+#include <random>
 #pragma once
 
 using namespace std;
@@ -11,7 +13,13 @@ class algorithm_utils{
     public:
     
     template <typename T1, typename T2>
-    void init_centroids(vector<vector<T1> > &, vector<vector<T1> > &, T2);
+    void init_centroids_sequentially(vector<vector<T1> > &, vector<vector<T1> > &, T2);
+
+    template <typename T1, typename T2>
+    void init_centroids_randomly(vector<vector <T1> > &centroids, 
+    vector<vector <T1> > &dataset, T2 num_cluster, T2 seed);
+    
+    void get_ranodm_indices(int *arr, int size, int seed);
     
     template <typename T1, typename T2>
     void calculate_distances(const vector<vector<T1> > &dataset, 
@@ -31,8 +39,10 @@ class algorithm_utils{
     bool check_convergence(vector<vector <T1> > &new_centroids, 
     vector<vector <T1> > &centroids, T1 threshold, float &diff, float &temp_diff, int &i, int &j);
 
-    // bool check_convergence(vector<vector <T1> > &, vector<vector <T1> > &, T1);
-
+    template <typename T1, typename T2>
+    void extract_data(vector<vector <T1> > &dataset, 
+    vector<vector <T1> > &extracted_data, T2 seed, T2 num_cluster);
+    
     template <typename T1>
     void reinit(vector<vector<T1> > &);
     
@@ -48,8 +58,79 @@ void algorithm_utils::reinit(vector<vector<T1> > &container){
 }
 
 
+// The following function is taken from the following question thread.
+// https://stackoverflow.com/questions/20734774/random-array-generation-with-no-duplicates
+void algorithm_utils::get_ranodm_indices(int *arr, int size, int seed)
+{
+    if (size > 1) 
+    {
+        int i = 0, j = 0, t = 0;
+        srand(seed);
+        
+        for (i = 0; i < size - 1; i++) 
+        {
+          
+          j = i + rand() / (RAND_MAX / (size - i) + 1);
+          t = arr[j];
+          arr[j] = arr[i];
+          arr[i] = t;
+        }
+    }
+}
+
 template <typename T1, typename T2>
-void algorithm_utils::init_centroids(vector<vector <T1> > &centroids, 
+void algorithm_utils::init_centroids_randomly(vector<vector <T1> > &centroids, 
+vector<vector <T1> > &dataset, T2 num_cluster, T2 seed){
+
+    int i = 0, j = 0, size = dataset.size();
+    int test_array[size];
+
+    for (i = 0; i<size ; i++){
+        test_array[i] = i;
+    }
+    
+    get_ranodm_indices(test_array, size, seed);
+
+    for(i=0; i<num_cluster; i++){  
+        for(j=0; j <dataset[i].size(); j++){
+            centroids[i][j] = dataset[test_array[i]][j];
+        }   
+    }
+}
+
+template <typename T1, typename T2>
+void algorithm_utils::extract_data(vector<vector <T1> > &dataset, vector<vector <T1> > &extracted_data, 
+T2 seed, T2 num_cluster){
+
+
+    int i = 0, j = 0, size = dataset.size(), num_points;
+    int test_array[size];
+
+    for (i = 0; i<size ; i++){
+        test_array[i] = i;
+    }
+
+    get_ranodm_indices(test_array, size, seed);
+    
+     for (i = 0; i< num_cluster; i++){
+        cout << test_array[i] << endl;
+    }
+
+    cout << "Test-1" << endl;
+
+    for(i=0; i<num_cluster; i++){  
+        for(j=0; j<dataset[i].size(); j++){
+            extracted_data[i][j] = dataset[test_array[i]][j];
+        }   
+    }
+
+    cout << "Test-1" << endl;
+}
+
+
+
+template <typename T1, typename T2>
+void algorithm_utils::init_centroids_sequentially(vector<vector <T1> > &centroids, 
 vector<vector <T1> > &dataset, T2 num_cluster){
 
     for(int i=0; i<num_cluster; i++){  
@@ -67,8 +148,6 @@ const vector<T1> &center, unsigned long long &he_counter){
     T1 dist = 0.0;
     T1 temp = 0.0;
     
-    // cout << point.size() << "\n";
-
     for (int i=0; i < point.size(); i++){
         temp = point[i] - center[i];
         dist = dist + (temp*temp);
@@ -98,10 +177,7 @@ unsigned long long &he_counter){
     // Calculate the distance of points to nearest center
     for (i=0; i < dataset.size(); i++){
 
-        // cout << "inside dist :" << "\n";
-        
         shortestDist2 = std::numeric_limits<float>::max();
-        // cout << i << "\n";
         
         for (j=0; j < centroids.size(); j++){ 
             

@@ -40,14 +40,13 @@ int main(){
        string inputfilePath = "";
        bool run_stat = false;
        
-       output_data km_res;
        output_data dckm_res;
        output_data ballkm_res;
        
 
        ofstream scaloutFile;
        scaloutFile.open(scal_output_path, ios::trunc);
-       scaloutFile << "Algorithm,Num_Points,Iters,Runtime,Runtime_per_Iter,Runtime_speedup,Distances,Dist_speed_up,Timeout";
+       scaloutFile << "Algorithm,Num_Points,Runtime,Runtime_per_Iter,Runtime_speedup,Distances,Dist_speed_up,Timeout";
        scaloutFile.close();
 
        algorithm_utils alg_utils;
@@ -115,19 +114,19 @@ int main(){
 
                 scaloutFile.open(scal_output_path, ios::app);
 
-                scaloutFile << "\nDataCentric-KMeans" << "," << to_string(clus) 
-                << "," << std::setprecision(2) << to_string(dckm_res.loop_counter) <<  "," << 
+                scaloutFile << "\nDataCentric-KMeans" << "," << to_string(points) 
+                 <<  "," << 
                 std::setprecision(2) << to_string(dckm_res.runtime) << "," << std::setprecision(6) <<
-                to_string(float(dckm_res.runtime/dckm_res.loop_counter)) << "," << std::setprecision(2) << to_string(float(km_res.runtime/dckm_res.runtime))
+                to_string(float(dckm_res.runtime/dckm_res.loop_counter)) << "," << std::setprecision(2) << to_string(float(ballkm_res.runtime/dckm_res.runtime))
                     << "," << std::setprecision(2) << to_string(dckm_res.num_he) <<
-                "," << std::setprecision(2) << to_string(float(km_res.num_he/dckm_res.num_he)) << "," << dckm_timeout;
+                "," << std::setprecision(2) << to_string(float(ballkm_res.num_he/dckm_res.num_he)) << "," << dckm_timeout;
 
-                scaloutFile << "\nBall-Kmeans" << "," << to_string(clus) 
-                << "," << std::setprecision(2) << to_string(ballkm_res.loop_counter) <<  "," << 
+                scaloutFile << "\nBall-Kmeans" << "," << to_string(points) 
+                << "," << 
                 std::setprecision(2) << to_string(ballkm_res.runtime) << "," << std::setprecision(6) <<
-                to_string(float(ballkm_res.runtime/ballkm_res.loop_counter)) << "," << std::setprecision(2) << to_string(float(km_res.runtime/ballkm_res.runtime))
+                to_string(float(ballkm_res.runtime/ballkm_res.loop_counter)) << "," << std::setprecision(2) << to_string(1)
                     << "," << std::setprecision(2) << to_string(ballkm_res.num_he) <<
-                "," << std::setprecision(2) << to_string(float(km_res.num_he/ballkm_res.num_he)) << "," << ballkm_timeout;    
+                "," << std::setprecision(2) << to_string(1) << "," << ballkm_timeout;    
 
                 scaloutFile.close();
 

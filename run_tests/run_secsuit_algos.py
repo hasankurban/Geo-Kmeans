@@ -3,45 +3,40 @@ import numpy as np
 import time
 
 
-basePath = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/Box Sync/PhD/DATASETS/real_data/"
-program_basePath = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/Box Sync/PhD/DATASETS/real_data/experiment_data/programs/blaslesskmeans"
+basePath = "/u/parishar/scratch/DATASETS/real_data/"
+program_basePath = "/u/parishar/scratch/programs/blaslesskmeans"
 
-data_basePath = basePath + "experiment_data/comma_seperated_files/";
-centroid_basePath = basePath + "experiment_data/comma_seperated_centroids/";
+data_basePath = basePath + "experiment_data/space_seperated_files/";
+centroid_basePath = basePath + "experiment_data/space_seperated_centroids/";
 out_path = basePath + "experiment_data/"
 
 file_list = ["Breastcancer.csv", "CustomerSaleRecords.csv" , "CreditRisk.csv",
-            "Census.csv", "UserLocation.csv",
+            "magic.csv", "spambase.csv",
             "crop.csv", "Twitter.csv", "birch.csv"]
 
-data_list = ["Breastcancer", "CustomerSaleRecords", "CreditRisk",
-            "Census", "UserLocation",
-            "crop", "Twitter", "birch"]
-
-out_list = ["BreastcancerCentroids", "CustomerSaleRecordsCentroids", "CreditRiskCentroids",
-            "CensusCentroids", "UserLocationCentroids",
+data_list = ["BreastcancerCentroids", "CustomerSaleRecordsCentroids", "CreditRiskCentroids",
+            "magicCentroids", "spambaseCentroids",
             "cropCentroids", "TwitterCentroids", "birchCentroids"]
 
-num_clusters = [2, 5, 10, 20, 30]
-algorithms = ["exp-ns"]
+out_list = ["Breastcancer", "CustomerSaleRecords", "CreditRisk",
+            "magic", "spambase", "crop", "Twitter", "birch"]
+
+
+num_clusters = [5, 8, 10, 12, 25]
+algorithms = ["ann" ,"syin-ns", "exp-ns"]
 num_rep = 5
 num_iters = 500
 
 
-# num_clusters = [2, 5, 10, 20, 30]
-# # algorithms = ["ann"]
-# num_rep = 5
+# algorithms = ["ann"]
+# num_rep = 2
 # num_iters = 500
-
-# file_list = ["Breastcancer.csv"]
-# data_list = ["Breastcancer"]
-# out_list = ["BreastcancerCentroids"]
+# file_list = ["birch.csv"]
+# data_list = ["birch"]
+# out_list = ["birchCentroids"]
 
 
 def run_sec_algos(km_dist, km_runtime):
-
-    # with open(out_path+"Avg_output.csv", "w") as output_file:
-    #     output_file.write("Algorithm,Data,Clusters,Iters,Runtime,Runtime_per_Iter,Runtime_speedup,Distances,Dist_speed_up\n")
 
     full_output = []
 
@@ -65,7 +60,7 @@ def run_sec_algos(km_dist, km_runtime):
 
                 for rep in range(num_rep):
             
-                    read_centroid_path = centroid_basePath + out_list[i] +"_" + str(clus) + "_" + str(rep) +".txt"
+                    read_centroid_path = centroid_basePath + data_list[i] +"_" + str(clus) + "_" + str(rep) +".txt"
 
                     # print("Data: ", read_file_path)
                     # print("Centroid: ", read_centroid_path)
@@ -113,7 +108,7 @@ def run_sec_algos(km_dist, km_runtime):
                     full_output.append(temp456)
 
 
-                with open(out_path+"Avg_output.csv", "a") as output_file:
+                with open(out_path+"benchmark_packages_output.csv", "a") as output_file:
                     
                     if np.mean(runtime_Counter) == 0:
                         for q in range(len(runtime_Counter)):

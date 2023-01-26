@@ -2,8 +2,11 @@ from sklearn.cluster import kmeans_plusplus
 import pandas as pd
 import numpy as np
 
-input_path = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/Box Sync/PhD/DATASETS/real_data/experiment_data/";
-output_path = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/Box Sync/PhD/DATASETS/real_data/experiment_data/";
+
+basePath = "/u/parishar/scratch/DATASETS/real_data/"
+input_path = basePath + "experiment_data/comma_seperated_files/"
+out_path_comma = basePath + "experiment_data/comma_seperated_centroids/"
+out_path_space = basePath + "experiment_data/space_seperated_centroids/"
 
 
 file_list = ["Breastcancer.csv", "CustomerSaleRecords.csv", "CreditRisk.csv",
@@ -15,13 +18,14 @@ out_list = ["BreastcancerCentroids", "CustomerSaleRecordsCentroids", "CreditRisk
             "cropCentroids", "TwitterCentroids", "birchCentroids"]
 
 
-np.random.seed(741025369)
+# np.random.seed(741025369)
 # seeds = np.random.randint(8, size=(1, 8))
-seeds = np.random.choice(100, 8, replace=False)
+# seeds = np.random.choice(100, 8, replace=False)
 
-# file_list = ["ringnorm.csv"]
-# out_list = ["ringnormCentroids"]
-# seeds = [856, 785, 142]
+np.random.seed(741025369)
+seeds = np.random.choice(100, 40, replace=False).reshape(8, 5)
+num_rep = 5
+
 
 max_centers = [5, 8, 10, 12, 25]
 
@@ -35,13 +39,14 @@ for i in range(len(file_list)):
 
     for clus in max_centers:
 
-        centers_init, _ = kmeans_plusplus(data, n_clusters=clus, random_state=seeds[i])
-        centers_init = pd.DataFrame(centers_init)
-        
-        centers_init.to_csv(output_path+"comma_seperated_centroids/"+out_list[i]+"_" + str(clus) + "_.txt", sep=",", index=False, header=False)
-        
-        centers_init.to_csv(output_path+"space_seperated_centroids/"+out_list[i]+"_" + str(clus) + "_.txt", sep=" ", index=False, header=False)
+        for rep in range(num_rep):
 
-        # centers_init.to_csv(output_path+"test1/"+out_list[i]+"_" + str(clus) + "_" + str(rep) + ".txt", sep=",", index=False, header=False)
+            centers_init, _ = kmeans_plusplus(data, n_clusters=clus, random_state=seeds[i, rep])
+            centers_init = pd.DataFrame(centers_init)
+
+        # centers_init.to_csv(output_path+"comma_seperated_centroids/"+out_list[i]+"_" + str(clus) + "_.txt", sep=",", index=False, header=False)
         
-        # centers_init.to_csv(output_path+"test2/"+out_list[i]+"_" + str(clus) + "_" + str(rep) + ".txt", sep=" ", index=False, header=False)
+        # centers_init.to_csv(output_path+"space_seperated_centroids/"+out_list[i]+"_" + str(clus) + "_.txt", sep=" ", index=False, header=False)
+
+            centers_init.to_csv(out_path_comma+out_list[i] + "_" + str(clus) + "_" + str(rep) + ".txt", sep=",", index=False, header=False)
+            centers_init.to_csv(out_path_space+out_list[i] + "_" + str(clus) + "_" + str(rep) + ".txt", sep=" ", index=False, header=False)

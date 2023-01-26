@@ -30,7 +30,6 @@ int main(){
     //  vector<string> clus_file_list = {"100_clusters.csv"};
     //  vector<int> num_clusters = {100};
 
-
      int num_iters = 1000;
      float threshold = 0.01;
      
@@ -40,14 +39,12 @@ int main(){
         
        
        string inputfilePath = "";
-              
-       output_data km_res;
        output_data dckm_res;
        output_data ballkm_res;
     
        ofstream clusoutFile;
        clusoutFile.open(clus_output_path, ios::trunc);
-       clusoutFile << "Algorithm,Clusters,Iters,Runtime,Runtime_per_Iter,Runtime_speedup,Distances,Dist_speed_up,Timeout";
+       clusoutFile << "Algorithm,Clusters,Runtime,Runtime_per_Iter,Runtime_speedup,Distances,Dist_speed_up,Timeout";
        clusoutFile.close();
 
        algorithm_utils alg_utils;
@@ -116,18 +113,18 @@ int main(){
                 clusoutFile.open(clus_output_path, ios::app);
 
                 clusoutFile << "\nDataCentric-KMeans" << "," << to_string(clus) 
-                << "," << std::setprecision(2) << to_string(dckm_res.loop_counter) <<  "," << 
+                << "," << 
                 std::setprecision(2) << to_string(dckm_res.runtime) << "," << std::setprecision(6) <<
-                to_string(float(dckm_res.runtime/dckm_res.loop_counter)) << "," << std::setprecision(2) << to_string(float(km_res.runtime/dckm_res.runtime))
+                to_string(float(dckm_res.runtime/dckm_res.loop_counter)) << "," << std::setprecision(2) << to_string(float(ballkm_res.runtime/dckm_res.runtime))
                     << "," << std::setprecision(2) << to_string(dckm_res.num_he) <<
-                "," << std::setprecision(2) << to_string(float(km_res.num_he/dckm_res.num_he)) << "," << dckm_timeout;
+                "," << std::setprecision(2) << to_string(float(ballkm_res.num_he/dckm_res.num_he)) << "," << dckm_timeout;
 
                 clusoutFile << "\nBall-Kmeans" << "," << to_string(clus) 
-                << "," << std::setprecision(2) << to_string(ballkm_res.loop_counter) <<  "," << 
+                << "," << 
                 std::setprecision(2) << to_string(ballkm_res.runtime) << "," << std::setprecision(6) <<
-                to_string(float(ballkm_res.runtime/ballkm_res.loop_counter)) << "," << std::setprecision(2) << to_string(float(km_res.runtime/ballkm_res.runtime))
+                to_string(float(ballkm_res.runtime/ballkm_res.loop_counter)) << "," << std::setprecision(2) << to_string(1)
                     << "," << std::setprecision(2) << to_string(ballkm_res.num_he) <<
-                "," << std::setprecision(2) << to_string(float(km_res.num_he/ballkm_res.num_he)) << "," << ballkm_timeout;    
+                "," << std::setprecision(2) << to_string(1) << "," << ballkm_timeout;    
 
                 clusoutFile.close();
 
