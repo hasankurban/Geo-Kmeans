@@ -80,7 +80,7 @@ int main(){
                 //####################
 
                 cout << "Algo: DCKM" << endl; 
-                alg_utils.init_centroids(centroids, dataset, clus);               
+                alg_utils.init_centroids_sequentially(centroids, dataset, clus);               
                 dckm_res = dckmeans(dataset, centroids, clus, threshold, num_iters, numCols, time_limit);
                 
                 if (dckm_res.timeout == true){
@@ -114,15 +114,15 @@ int main(){
 
                 dimsoutFile << "\nDataCentric-KMeans" << "," << to_string(dims) 
                 <<  "," << 
-                std::setprecision(2) << to_string(dckm_res.runtime) << "," << std::setprecision(6) <<
-                to_string(float(dckm_res.runtime/dckm_res.loop_counter)) << "," << std::setprecision(2) << to_string(float(ballkm_res.runtime/dckm_res.runtime))
+                std::setprecision(2) << to_string(dckm_res.runtime) << "," << std::setprecision(2) <<
+                to_string(float(dckm_res.runtime/dckm_res.loop_counter)) << "," << std::setprecision(2) << to_string(ballkm_res.runtime/dckm_res.runtime)
                     << "," << std::setprecision(2) << to_string(dckm_res.num_he) <<
-                "," << std::setprecision(2) << to_string(float(ballkm_res.num_he/dckm_res.num_he)) << "," << dckm_timeout;
+                "," << std::setprecision(2) << to_string(ballkm_res.num_he/dckm_res.num_he) << "," << dckm_timeout;
 
                 dimsoutFile << "\nBall-Kmeans" << "," << to_string(dims) 
                 << "," << 
-                std::setprecision(2) << to_string(ballkm_res.runtime) << "," << std::setprecision(6) <<
-                to_string(float(ballkm_res.runtime/ballkm_res.loop_counter)) << "," << std::setprecision(2) << to_string(1)
+                std::setprecision(2) << to_string(ballkm_res.runtime) << "," << std::setprecision(2) <<
+                to_string(ballkm_res.runtime/ballkm_res.loop_counter) << "," << std::setprecision(2) << to_string(1)
                     << "," << std::setprecision(2) << to_string(ballkm_res.num_he) <<
                 "," << std::setprecision(2) << to_string(1) << "," << ballkm_timeout;    
 

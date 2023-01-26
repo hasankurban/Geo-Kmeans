@@ -1,0 +1,27 @@
+nohup: ignoring input
+
+%%%%%%%%%%%%%%%%%%%%%%%
+Processing 1000000_points.csv
+%%%%%%%%%%%%%%%%%%%%%%%
+
+Algo: DCKM
+Convergence at iteration: 41
+Total DCKmeans time: 4914 milliseconds
+Total BallKmeans time: 73267 milliseconds
+
+%%%%%%%%%%%%%%%%%%%%%%%
+Processing 3000000_points.csv
+%%%%%%%%%%%%%%%%%%%%%%%
+
+Algo: DCKM
+Convergence at iteration: 24
+Total DCKmeans time: 8760 milliseconds
+Total BallKmeans time: 539984 milliseconds
+
+%%%%%%%%%%%%%%%%%%%%%%%
+Processing 5000000_points.csv
+%%%%%%%%%%%%%%%%%%%%%%%
+
+Algo: DCKM
+Convergence at iteration: 39
+Total DCKmeans time: 23573 milliseconds

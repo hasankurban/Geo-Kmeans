@@ -1,0 +1,132 @@
+nohup: ignoring input
+
+%%%%%%%%%%%%%%%%%%%%%%%
+Processing magic.csv
+%%%%%%%%%%%%%%%%%%%%%%%
+
+magic.csv19020
+Convergence at iteration: 14
+Algo: DCKM
+Convergence at iteration: 14
+Data: magic.csv Prop: 0.2	 Clusters:5	 calc: 2662800
+Convergence at iteration: 23
+Algo: DCKM
+Convergence at iteration: 23
+Data: magic.csv Prop: 0.4	 Clusters:5	 calc: 8749200
+Convergence at iteration: 14
+Algo: DCKM
+Convergence at iteration: 14
+Data: magic.csv Prop: 0.6	 Clusters:5	 calc: 7988400
+Convergence at iteration: 22
+Algo: DCKM
+Convergence at iteration: 22
+Data: magic.csv Prop: 0.8	 Clusters:5	 calc: 16737600
+Convergence at iteration: 52
+Algo: DCKM
+Convergence at iteration: 52
+Data: magic.csv Prop: 1	 Clusters:5	 calc: 49452000
+
+%%%%%%%%%%%%%%%%%%%%%%%
+Processing spambase.csv
+%%%%%%%%%%%%%%%%%%%%%%%
+
+spambase.csv4600
+Convergence at iteration: 27
+Algo: DCKM
+Convergence at iteration: 27
+Data: spambase.csv Prop: 0.2	 Clusters:5	 calc: 7079400
+Convergence at iteration: 14
+Algo: DCKM
+Convergence at iteration: 14
+Data: spambase.csv Prop: 0.4	 Clusters:5	 calc: 7341600
+Convergence at iteration: 36
+Algo: DCKM
+Convergence at iteration: 36
+Data: spambase.csv Prop: 0.6	 Clusters:5	 calc: 28317600
+Convergence at iteration: 33
+Algo: DCKM
+Convergence at iteration: 33
+Data: spambase.csv Prop: 0.8	 Clusters:5	 calc: 34610400
+Convergence at iteration: 35
+Algo: DCKM
+Convergence at iteration: 35
+Data: spambase.csv Prop: 1	 Clusters:5	 calc: 45885000
+
+%%%%%%%%%%%%%%%%%%%%%%%
+Processing crop.csv
+%%%%%%%%%%%%%%%%%%%%%%%
+
+crop.csv321093
+Convergence at iteration: 14
+Algo: DCKM
+Convergence at iteration: 14
+Data: crop.csv Prop: 0.2	 Clusters:5	 calc: 44953300
+Convergence at iteration: 21
+Algo: DCKM
+Convergence at iteration: 21
+Data: crop.csv Prop: 0.4	 Clusters:5	 calc: 134859900
+Convergence at iteration: 40
+Algo: DCKM
+Convergence at iteration: 40
+Data: crop.csv Prop: 0.6	 Clusters:5	 calc: 385312000
+Convergence at iteration: 34
+Algo: DCKM
+Convergence at iteration: 34
+Data: crop.csv Prop: 0.8	 Clusters:5	 calc: 436687500
+Convergence at iteration: 40
+Algo: DCKM
+Convergence at iteration: 40
+Data: crop.csv Prop: 1	 Clusters:5	 calc: 642186000
+
+%%%%%%%%%%%%%%%%%%%%%%%
+Processing Twitter.csv
+%%%%%%%%%%%%%%%%%%%%%%%
+
+Twitter.csv583249
+Convergence at iteration: 74
+Algo: DCKM
+Convergence at iteration: 74
+Data: Twitter.csv Prop: 0.2	 Clusters:5	 calc: -928448296
+Convergence at iteration: 69
+Algo: DCKM
+Convergence at iteration: 69
+Data: Twitter.csv Prop: 0.4	 Clusters:5	 calc: 1983135704
+Convergence at iteration: 82
+Algo: DCKM
+Convergence at iteration: 82
+Data: Twitter.csv Prop: 0.6	 Clusters:5	 calc: -1693500888
+Convergence at iteration: 79
+Algo: DCKM
+Convergence at iteration: 79
+Data: Twitter.csv Prop: 0.8	 Clusters:5	 calc: 1491044112
+Convergence at iteration: 85
+Algo: DCKM
+Convergence at iteration: 85
+Data: Twitter.csv Prop: 1	 Clusters:5	 calc: -2140132130
+
+%%%%%%%%%%%%%%%%%%%%%%%
+Processing birch.csv
+%%%%%%%%%%%%%%%%%%%%%%%
+
+birch.csv100000
+Convergence at iteration: 21
+Algo: DCKM
+Convergence at iteration: 21
+Data: birch.csv Prop: 0.2	 Clusters:5	 calc: 4200000
+Convergence at iteration: 11
+Algo: DCKM
+Convergence at iteration: 11
+Data: birch.csv Prop: 0.4	 Clusters:5	 calc: 4400000
+Convergence at iteration: 24
+Algo: DCKM
+Convergence at iteration: 24
+Data: birch.csv Prop: 0.6	 Clusters:5	 calc: 14400240
+Convergence at iteration: 35
+Algo: DCKM
+Convergence at iteration: 35
+Data: birch.csv Prop: 0.8	 Clusters:5	 calc: 28000000
+Convergence at iteration: 39
+Algo: DCKM
+Convergence at iteration: 39
+Data: birch.csv Prop: 1	 Clusters:5	 calc: 39000000
+Completed Doubling Experiments

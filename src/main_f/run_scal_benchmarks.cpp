@@ -82,7 +82,7 @@ int main(){
                 //####################
 
                 cout << "Algo: DCKM" << endl; 
-                alg_utils.init_centroids(centroids, dataset, clus);               
+                alg_utils.init_centroids_sequentially(centroids, dataset, clus);               
                 dckm_res = dckmeans(dataset, centroids, clus, threshold, num_iters, numCols, time_limit);
                 
                 if (dckm_res.timeout == true){

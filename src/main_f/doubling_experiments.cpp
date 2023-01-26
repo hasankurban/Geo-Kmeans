@@ -14,7 +14,7 @@
 
 using namespace std;
 
-string basePath = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/Box Sync/PhD/DATASETS/real_data/";
+string basePath = "/scratch/parishar/DATASETS/real_data/";
 
 
 int main(){
@@ -25,13 +25,13 @@ int main(){
        string out_path = basePath + "experiment_data/";
        
     //    // Declare variables
-    //    vector<string> file_list = {"magic.csv", "spambase.csv",
-    //         "crop.csv", "Twitter.csv", "birch.csv", "scalData.csv"};
+       vector<string> file_list = {"magic.csv", "spambase.csv",
+            "crop.csv", "Twitter.csv", "birch.csv"};
 
-    //    vector<string> data_list = {"magic", "spambase", "crop", "Twitter", "birch", "scalData"};
+       vector<string> data_list = {"magic", "spambase", "crop", "Twitter", "birch"};
 
-       vector<string> file_list = {"spambase.csv"};
-       vector<string> data_list = {"spambase"};
+    //    vector<string> file_list = {"magic.csv"};
+    //    vector<string> data_list = {"magic"};
 
         int num_iters = 2000;
         float threshold = 0.0001;
@@ -65,7 +65,6 @@ int main(){
        algorithm_utils alg_utils;
 
         for(int i=0; i < file_list.size(); i++){
-              
                 cout << "\n%%%%%%%%%%%%%%%%%%%%%%%" << endl;
                 cout << "Processing " << file_list[i] << endl;
                 cout << "%%%%%%%%%%%%%%%%%%%%%%%\n" << endl;
@@ -90,7 +89,7 @@ int main(){
                         string ballkm_timeout = "no";
 
                         // Extrct the proportion of data from original dataset to run the experiments
-                        num_points = dataset.size() * prop;
+                        num_points = ceil(dataset.size() * prop);
                         vector<vector<float> > extracted_data(num_points, vector<float>(numCols, 0.0));
                         vector<vector<float> > centroids(clus, vector<float>(numCols, 0));
 
@@ -142,6 +141,9 @@ int main(){
                             ballkm_timeout = "yes";
                             cout << "Timeout: BallKmeans time: " << ballkm_res.runtime << " milliseconds" << endl;
                         }
+
+                        // cout << "Data: " << file_list[i] << " Prop: " << prop << "\t" << " Clusters:" << clus 
+                        // << "\t calc: " << km_res.num_he << endl;
 
                         avgresFile.open(outFile, ios::app);
 
