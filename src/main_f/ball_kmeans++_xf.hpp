@@ -141,8 +141,8 @@ void get_ball_ranodm_indices(int *arr, size_t size, int seed)
 
 
 void extract_ball_data(MatrixOur &dataset, 
-MatrixOur &extracted_data, int data_prop, int seed, 
-int num_cluster){
+MatrixOur &extracted_data, int data_prop, int num_points, int num_cluster, int seed)
+{
 
     int i = 0, j = 0, size = dataset.rows();
     int test_array[size];
@@ -153,8 +153,8 @@ int num_cluster){
 
     get_ball_ranodm_indices(test_array, size, seed);
 
-    for(i=0; i<num_cluster; i++){  
-        for(j=0; j <dataset.cols(); j++){
+    for(i=0; i<num_points; i++){  
+        for(j=0; j<dataset.cols(); j++){
             extracted_data(i, j) = dataset(test_array[i], j);
         }   
     }

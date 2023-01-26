@@ -40,8 +40,8 @@ class algorithm_utils{
     vector<vector <T1> > &centroids, T1 threshold, float &diff, float &temp_diff, int &i, int &j);
 
     template <typename T1, typename T2>
-    void extract_data(vector<vector <T1> > &dataset, 
-    vector<vector <T1> > &extracted_data, T2 seed, T2 num_cluster);
+    void extract_data(vector<vector <T1> > &dataset, vector<vector <T1> > &extracted_data, 
+    T2 num_points, T2 num_cluster, T2 seed);
     
     template <typename T1>
     void reinit(vector<vector<T1> > &);
@@ -69,7 +69,6 @@ void algorithm_utils::get_ranodm_indices(int *arr, int size, int seed)
         
         for (i = 0; i < size - 1; i++) 
         {
-          
           j = i + rand() / (RAND_MAX / (size - i) + 1);
           t = arr[j];
           arr[j] = arr[i];
@@ -100,10 +99,10 @@ vector<vector <T1> > &dataset, T2 num_cluster, T2 seed){
 
 template <typename T1, typename T2>
 void algorithm_utils::extract_data(vector<vector <T1> > &dataset, vector<vector <T1> > &extracted_data, 
-T2 seed, T2 num_cluster){
+T2 num_points, T2 num_cluster, T2 seed){
 
 
-    int i = 0, j = 0, size = dataset.size(), num_points;
+    int i = 0, j = 0, size = dataset.size();
     int test_array[size];
 
     for (i = 0; i<size ; i++){
@@ -112,19 +111,12 @@ T2 seed, T2 num_cluster){
 
     get_ranodm_indices(test_array, size, seed);
     
-     for (i = 0; i< num_cluster; i++){
-        cout << test_array[i] << endl;
-    }
-
-    cout << "Test-1" << endl;
-
-    for(i=0; i<num_cluster; i++){  
-        for(j=0; j<dataset[i].size(); j++){
+    for(i=0; i < num_points; i++){ 
+        for(j=0; j<dataset[0].size(); j++){
             extracted_data[i][j] = dataset[test_array[i]][j];
         }   
+        cout << endl;
     }
-
-    cout << "Test-1" << endl;
 }
 
 

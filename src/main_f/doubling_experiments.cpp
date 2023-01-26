@@ -10,10 +10,11 @@
 #include <map>
 #include <iomanip>
 #include <chrono>
+#include <vector>
 
 using namespace std;
 
-string basePath = "/u/parishar/scratch/DATASETS/real_data/";
+string basePath = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/Box Sync/PhD/DATASETS/real_data/";
 
 
 int main(){
@@ -57,7 +58,7 @@ int main(){
        string outFile = out_path + "doubling_experiments.csv" ;
        
        avgresFile.open(outFile, ios::trunc);
-       avgresFile << "Algorithm,Data,Clusters,Distances,Dist_speed_up,Timeout";
+       avgresFile << "Algorithm,Data,Clusters,Prop,Distances,Timeout";
        avgresFile.close();
        string alg = "";
 
@@ -76,27 +77,26 @@ int main(){
                 int numRows = p.first;
                 int numCols = p.second;
 
-                cout << file_list[i] << " " << dataset.size() << endl;
+                // print_2d_vector(dataset, 5, "Test");
+
+                cout << file_list[i] << dataset.size() << endl;
 
                 for (int j = 0; j< data_prop.size(); j++){
             
-                        int prop = data_prop[j];
+                        float prop = data_prop[j];
                         
                         string km_timeout = "no";
                         string dckm_timeout = "no";
                         string ballkm_timeout = "no";
 
-                        
-
                         // Extrct the proportion of data from original dataset to run the experiments
-                        num_points = ceil(dataset.size() * prop);
-                        vector<vector <float> > extracted_data(num_points, vector<float>(numCols, 0));
-                        alg_utils.extract_data(dataset, extracted_data, seed+j, clus);
-                        cout << extracted_data.size() << " " << extracted_data[0][5] << endl;
-                        cout << "Test" << endl; 
-                        
+                        num_points = dataset.size() * prop;
+                        vector<vector<float> > extracted_data(num_points, vector<float>(numCols, 0.0));
                         vector<vector<float> > centroids(clus, vector<float>(numCols, 0));
 
+                        alg_utils.extract_data(dataset, extracted_data, num_points, clus, seed+j);
+                        // cout << extracted_data.size() << " " << extracted_data[0][5] << endl;  
+                        
                         //####################
                         // KMeans
                         //####################
@@ -131,7 +131,7 @@ int main(){
                         MatrixOur BallK_dataset = load_data(inputfilePath);
                         num_points  = ceil(BallK_dataset.rows() * prop);
                         MatrixOur extracted_ball_data(num_points, BallK_dataset.cols());
-                        extract_ball_data(BallK_dataset, extracted_ball_data, prop, seed+j, clus);
+                        extract_ball_data(BallK_dataset, extracted_ball_data, prop, num_points, clus, seed+j);
                         
                         MatrixOur ballKm_centroids = init_ball_centroids(extracted_ball_data, clus);
 
@@ -145,28 +145,21 @@ int main(){
 
                         avgresFile.open(outFile, ios::app);
 
+                        // Algorithm,Data,Clusters,Prop,Distances,Timeout
+
                         avgresFile << "\nKMeans" << "," << data_list[i] << "," << to_string(clus) 
-                        << "," << 
-                        std::setprecision(2) << to_string(km_res.runtime) << "," << std::setprecision(6) <<
-                        to_string(float(km_res.runtime/km_res.loop_counter)) << "," << std::setprecision(2) << to_string(0)
-                            << "," << std::setprecision(2) << to_string(km_res.num_he) <<
-                        "," << std::setprecision(2) << to_string(0) << "," << km_timeout;
+                        << "," << to_string(prop) << "," << to_string(km_res.num_he) << ","
+                        << km_timeout;
 
                         
                         avgresFile << "\nDataCentric-KMeans" << "," << data_list[i] << "," << to_string(clus) 
-                        << "," << 
-                        std::setprecision(2) << to_string(dckm_res.runtime) << "," << std::setprecision(6) <<
-                        to_string(float(dckm_res.runtime/dckm_res.loop_counter)) << "," << std::setprecision(2) << to_string(float(km_res.runtime/dckm_res.runtime))
-                            << "," << std::setprecision(2) << to_string(dckm_res.num_he) <<
-                        "," << std::setprecision(2) << to_string(float(km_res.num_he/dckm_res.num_he)) << "," << dckm_timeout;
+                        << "," << to_string(prop) << "," << to_string(dckm_res.num_he)
+                        << "," << dckm_timeout;
 
                         
                         avgresFile << "\nBall-Kmeans" << "," << data_list[i] << "," << to_string(clus) 
-                        << "," << std::setprecision(2) << to_string(ballkm_res.loop_counter) <<  "," << 
-                        std::setprecision(2) << to_string(ballkm_res.runtime) << "," << std::setprecision(6) <<
-                        to_string(float(ballkm_res.runtime/ballkm_res.loop_counter)) << "," << std::setprecision(2) << to_string(float(km_res.runtime/ballkm_res.runtime))
-                            << "," << std::setprecision(2) << to_string(ballkm_res.num_he) <<
-                        "," << std::setprecision(2) << to_string(float(km_res.num_he/ballkm_res.num_he)) << "," << ballkm_timeout;    
+                        << "," << to_string(prop) << "," << to_string(ballkm_res.num_he)
+                        << "," << ballkm_timeout;    
 
                         avgresFile.close();
 
