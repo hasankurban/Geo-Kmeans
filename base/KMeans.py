@@ -27,7 +27,7 @@ def Kmeans(data, num_clusters, threshold, num_iterations, centroids, seed):
         new_centroids = calculate_centroids(data, old_assigned_clusters)
 
         if check_convergence(new_centroids, centroids, threshold):
-            print("Kmeans: Convergence at iteration: ", loop_counter)
+            print("Kmeans: Convergence at iteration: ", loop_counter, "\n")
             break
 
         # Calculate the cluster assignments for data points

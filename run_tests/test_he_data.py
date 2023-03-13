@@ -20,7 +20,7 @@ num_iterations = 100
 
 # file_list = ['test_100_2_3.csv']
 
-file_list = ['crop.csv']
+file_list = ['census.csv']
 # file_list = ['user_knowledge_train.csv']
 # file_list = ['hapt_train.csv']
 # file_list = ['covertype.csv']
@@ -70,10 +70,10 @@ for data_file in file_list:
         dckm_centroids, dckm_iter, dckm_sse, dckm_calc = DCKMeans(data, centers, threshold, num_iterations, [], seed)
         kmdc_TraningTime = round(time.time() - kmdc_start_time, 2)
 
-        print("Total runtime: Kmeans- ", km_TraningTime, "DCKMeans- ", kmdc_TraningTime)
+        print("\nRuntime-Kmeans:", km_TraningTime, "DCKMeans:", kmdc_TraningTime)
 
         print("Distance calculations by KMeans: ", km_calc)
-        print("Distance calculations by DCKMeans: ", dckm_calc)
+        print("Distance calculations by DCKMeans: ", dckm_calc, "\n")
 
         # acc, new_labels1 = calc_raw_accuracy(labels, assign1, data)
         # print("KM: ", acc, check_ARI(new_labels1, labels))
