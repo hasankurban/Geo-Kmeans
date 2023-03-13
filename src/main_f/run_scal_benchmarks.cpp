@@ -81,9 +81,15 @@
 //                 // KMeans-DataCentric
 //                 //####################
 
+<<<<<<< HEAD
 //                 cout << "Algo: DCKM" << endl; 
 //                 alg_utils.init_centroids(centroids, dataset, clus);               
 //                 dckm_res = dckmeans(dataset, centroids, clus, threshold, num_iters, numCols, time_limit);
+=======
+                cout << "Algo: DCKM" << endl; 
+                alg_utils.init_centroids_sequentially(centroids, dataset, clus);               
+                dckm_res = dckmeans(dataset, centroids, clus, threshold, num_iters, numCols, time_limit);
+>>>>>>> c64f489b00daebbb1fcec305899055ce549d29cb
                 
 //                 if (dckm_res.timeout == true){
 //                     dckm_timeout = "yes";

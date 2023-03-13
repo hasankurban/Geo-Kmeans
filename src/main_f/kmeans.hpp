@@ -31,7 +31,7 @@ Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols, Tint tim
 
     int i =0, j =0 ;
     float temp_diff =0, diff = 0;
-    unsigned long long he_counter = 0;
+    unsigned long long int he_counter = 0;
 
 
     output_data result;
@@ -102,7 +102,7 @@ Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols, Tint tim
 
         if (temptime.count() >= time_limit){
             result.loop_counter = loop_counter;
-            result.num_he = dataset.size() * loop_counter * num_clusters;
+            result.num_he = he_counter;
             result.assigned_labels = assigned_clusters;
             result.runtime = float(temptime.count());
             result.timeout = true;
@@ -116,7 +116,7 @@ Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols, Tint tim
     auto Totaltime = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
     result.loop_counter = loop_counter;
-    result.num_he = dataset.size() * loop_counter * num_clusters;
+    result.num_he = he_counter;
     result.assigned_labels = assigned_clusters;
     result.runtime = float(Totaltime.count());
     result.timeout = false;

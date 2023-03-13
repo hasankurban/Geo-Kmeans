@@ -47,7 +47,7 @@ Tfloat threshold, Tint num_iterations, Tint numCols, Tint time_limit){
     Tint my_cluster = 0, i = 0, j = 0, k = 0, l = 0, m = 0;
     Tfloat temp_diff = 0, diff = 0, vec_sum = 0;
 
-    unsigned long long he_counter = 0;
+    unsigned long long int he_counter = 0;
 
     output_data result;
 
@@ -96,7 +96,7 @@ Tfloat threshold, Tint num_iterations, Tint numCols, Tint time_limit){
         
         find_neighbors(new_centroids, center_dist_mat, cluster_size, neighbors, 
         mid_points, affine_vectors, temp2, temp_master, temp_midpoint, temp_affine, 
-        midpoint_holder, affine_holder, he_counter);
+        midpoint_holder, affine_holder);
         
         determine_data_expression(dataset, new_centroids, cluster_size, center_dist_mat, dist_matrix,
         assigned_clusters, neighbors, affine_vectors, mid_points, 
@@ -127,7 +127,7 @@ Tfloat threshold, Tint num_iterations, Tint numCols, Tint time_limit){
 
         if (temptime.count() >= time_limit){
             result.loop_counter = loop_counter;
-            result.num_he = dataset.size() * loop_counter * num_clusters;
+            result.num_he = he_counter;
             result.assigned_labels = assigned_clusters;
             result.runtime = float(temptime.count());
             result.timeout = true;

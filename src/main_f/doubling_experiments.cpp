@@ -14,7 +14,11 @@
 
 // using namespace std;
 
+<<<<<<< HEAD
 // string basePath = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/Box Sync/PhD/DATASETS/real_data/";
+=======
+string basePath = "/scratch/parishar/DATASETS/real_data/";
+>>>>>>> c64f489b00daebbb1fcec305899055ce549d29cb
 
 
 // int main(){
@@ -24,6 +28,7 @@
 //        string centroid_path = basePath + "experiment_data/comma_seperated_centroids/";
 //        string out_path = basePath + "experiment_data/";
        
+<<<<<<< HEAD
 //     //    // Declare variables
 //     //    vector<string> file_list = {"magic.csv", "spambase.csv",
 //     //         "crop.csv", "Twitter.csv", "birch.csv", "scalData.csv"};
@@ -32,6 +37,16 @@
 
 //        vector<string> file_list = {"spambase.csv"};
 //        vector<string> data_list = {"spambase"};
+=======
+    //    // Declare variables
+       vector<string> file_list = {"magic.csv", "spambase.csv",
+            "crop.csv", "Twitter.csv", "birch.csv"};
+
+       vector<string> data_list = {"magic", "spambase", "crop", "Twitter", "birch"};
+
+    //    vector<string> file_list = {"magic.csv"};
+    //    vector<string> data_list = {"magic"};
+>>>>>>> c64f489b00daebbb1fcec305899055ce549d29cb
 
 //         int num_iters = 2000;
 //         float threshold = 0.0001;
@@ -64,11 +79,18 @@
 
 //        algorithm_utils alg_utils;
 
+<<<<<<< HEAD
 //         for(int i=0; i < file_list.size(); i++){
               
 //                 cout << "\n%%%%%%%%%%%%%%%%%%%%%%%" << endl;
 //                 cout << "Processing " << file_list[i] << endl;
 //                 cout << "%%%%%%%%%%%%%%%%%%%%%%%\n" << endl;
+=======
+        for(int i=0; i < file_list.size(); i++){
+                cout << "\n%%%%%%%%%%%%%%%%%%%%%%%" << endl;
+                cout << "Processing " << file_list[i] << endl;
+                cout << "%%%%%%%%%%%%%%%%%%%%%%%\n" << endl;
+>>>>>>> c64f489b00daebbb1fcec305899055ce549d29cb
 
 //                 inputfilePath = input_path + file_list[i];
 //                 vector<vector <float> > dataset;
@@ -89,10 +111,17 @@
 //                         string dckm_timeout = "no";
 //                         string ballkm_timeout = "no";
 
+<<<<<<< HEAD
 //                         // Extrct the proportion of data from original dataset to run the experiments
 //                         num_points = dataset.size() * prop;
 //                         vector<vector<float> > extracted_data(num_points, vector<float>(numCols, 0.0));
 //                         vector<vector<float> > centroids(clus, vector<float>(numCols, 0));
+=======
+                        // Extrct the proportion of data from original dataset to run the experiments
+                        num_points = ceil(dataset.size() * prop);
+                        vector<vector<float> > extracted_data(num_points, vector<float>(numCols, 0.0));
+                        vector<vector<float> > centroids(clus, vector<float>(numCols, 0));
+>>>>>>> c64f489b00daebbb1fcec305899055ce549d29cb
 
 //                         alg_utils.extract_data(dataset, extracted_data, num_points, clus, seed+j);
 //                         // cout << extracted_data.size() << " " << extracted_data[0][5] << endl;  
@@ -143,7 +172,14 @@
 //                             cout << "Timeout: BallKmeans time: " << ballkm_res.runtime << " milliseconds" << endl;
 //                         }
 
+<<<<<<< HEAD
 //                         avgresFile.open(outFile, ios::app);
+=======
+                        // cout << "Data: " << file_list[i] << " Prop: " << prop << "\t" << " Clusters:" << clus 
+                        // << "\t calc: " << km_res.num_he << endl;
+
+                        avgresFile.open(outFile, ios::app);
+>>>>>>> c64f489b00daebbb1fcec305899055ce549d29cb
 
 //                         // Algorithm,Data,Clusters,Prop,Distances,Timeout
 
