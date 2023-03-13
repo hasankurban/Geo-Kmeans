@@ -218,13 +218,12 @@ vector<vector<T1> > &cluster_size, T2 numCols){
         for (j = 0; j < new_centroids[i].size(); j++){
             if (k > 0)
                 new_centroids[i][j] = new_centroids[i][j]/k;
-            else
-                new_centroids[i][j] = 0.0;
+            // else
+            //     new_centroids[i][j] = 0.0;
         }
     } 
 
 }
-
 
 
 template <typename T1>

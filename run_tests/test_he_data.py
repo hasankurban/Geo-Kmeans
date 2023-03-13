@@ -4,7 +4,6 @@ sys.path.append("../")
 from utils.dataIO import *
 from base.KMeans import *
 from base.DCKmeans import *
-from pathlib import Path
 import time
 from utils.assign_clusters import *
 
@@ -18,9 +17,6 @@ Algo2: DCKMeans
 
 threshold = 0.0
 num_iterations = 100
-
-
-
 
 file_list = ['test_100_2_3.csv']
 
@@ -62,7 +58,6 @@ for data_file in file_list:
     # centroids2 = read_simulated_data_test(os.path.join(DATA_PATH, "real_data", "experiment_data", "comma_seperated_centroids", cenfile))
     
     centroids = read_simulated_data_test(os.path.join(DATA_PATH, "real_data", "experiment_data", "test1", cenfile))
-    
     # print(centroids1)
     # print(centroids2)
 
@@ -72,20 +67,16 @@ for data_file in file_list:
     for centers in num_clusters:
 
         km_start_time = time.time()
-        km_centroids, km_iter, km_calc = Kmeans(data, centers, threshold, num_iterations, centroids, seed)
+        km_centroids, km_iter, km_sse, km_calc = Kmeans(data, centers, threshold, num_iterations, centroids, seed)
         km_TraningTime = round(time.time() - km_start_time, 5)
 
         kmdc_start_time = time.time()
-        dckm_centroids, dckm_iter, dckm_calc = DCKMeans(data, centers, threshold, num_iterations, centroids, seed)
+        dckm_centroids, dckm_iter, dckm_sse, dckm_calc = DCKMeans(data, centers, threshold, num_iterations, centroids, seed)
         kmdc_TraningTime = round(time.time() - kmdc_start_time, 2)
 
-
         print(km_TraningTime, kmdc_TraningTime)
-        # print(kmlb_centroids)
-        # print(km_centroids)
-        # print("Dev: ", round(np.mean(np.square(km_centroids - kmlb_centroids))), 3)
 
-        # print("Distance calculations by KMeans: ", num_clusters*data.shape[0]*km_iter)
+        # print("Distance calculations by KMeans: ", km_calc)
         # print("Distance calculations by DCKMeans: ", dckm_calc)
 
         # acc, new_labels1 = calc_raw_accuracy(labels, assign1, data)

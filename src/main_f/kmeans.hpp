@@ -40,7 +40,7 @@ Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols, Tint tim
     auto start = std::chrono::high_resolution_clock::now();
     
     // Initialize centroids
-    // alg_utils.init_centroids(centroids, dataset, num_clusters);
+    alg_utils.init_centroids_sequentially(centroids, dataset, num_clusters);
 
     alg_utils.calculate_distances(dataset, centroids, dist_matrix, 
     num_clusters, assigned_clusters, cluster_size, he_counter);

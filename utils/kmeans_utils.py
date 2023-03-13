@@ -5,10 +5,10 @@ from sklearn.metrics.cluster import adjusted_mutual_info_score as amis
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 import pandas as pd
-import seaborn as sns
+# import seaborn as sns
 import matplotlib.pyplot as plt
-from sortedcontainers import SortedDict
-from sklearn.cluster import kmeans_plusplus
+# from sortedcontainers import SortedDict
+# from sklearn.cluster import kmeans_plusplus
 
 
 def init_centroids(data, num_clusters, seed):
@@ -89,100 +89,100 @@ def calculate_centroids(data, assigned_clusters):
     return np.round(new_centroids, 5)
 
 
-def create_sorted_structure(assigned_clusters, distances, num_clusters):
+# def create_sorted_structure(assigned_clusters, distances, num_clusters):
 
-        BST_List = {i: [] for i in range(num_clusters)}
+#         BST_List = {i: [] for i in range(num_clusters)}
 
-        # Add data to each sublist
-        for i in range(len(assigned_clusters)):
-            BST_List[assigned_clusters[i]].append([distances[i], i])
+#         # Add data to each sublist
+#         for i in range(len(assigned_clusters)):
+#             BST_List[assigned_clusters[i]].append([distances[i], i])
 
-        # Create the balanced BST out of each list in the dictionary
-        for i in range(num_clusters):
-            BST_List[i] = SortedDict(BST_List[i])
-        return BST_List
-
-
-def move_data_around(bst_list, he_bst_indices, he_points, assigned_clusters, new_assigned_clusters,
-                     he_new_assigned_centers, he_new_min_dist):
-
-    data_indices = np.where(assigned_clusters[he_points] != he_new_assigned_centers)[0]
-
-    if data_indices.size > 0:
-        old_assign = assigned_clusters[he_points]
-
-        for index in data_indices:
-
-            old_center = old_assign[index]
-            new_center = he_new_assigned_centers[index]
-
-            actual_point = he_points[index]
-
-            if new_assigned_clusters[actual_point] == old_center:
-                bst_list[old_center].pop(he_bst_indices[actual_point])
-                bst_list[new_center].update({he_new_min_dist[index]: actual_point})
-                he_bst_indices[actual_point] = he_new_min_dist[index]
-                new_assigned_clusters[actual_point] = new_center
-            else:
-                if he_new_min_dist[index] < he_bst_indices[actual_point]:
-                    old_center = new_assigned_clusters[actual_point]
-                    bst_list[old_center].pop(he_bst_indices[actual_point])
-                    bst_list[new_center].update({he_new_min_dist[index]: actual_point})
-                    he_bst_indices[actual_point] = he_new_min_dist[index]
-                    new_assigned_clusters[actual_point] = new_center
-
-    return bst_list, new_assigned_clusters
+#         # Create the balanced BST out of each list in the dictionary
+#         for i in range(num_clusters):
+#             BST_List[i] = SortedDict(BST_List[i])
+#         return BST_List
 
 
-def move_all_data_around(bst_list, he_bst_indices, he_points, assigned_clusters,
-                     he_new_assigned_centers, he_new_min_dist):
+# def move_data_around(bst_list, he_bst_indices, he_points, assigned_clusters, new_assigned_clusters,
+#                      he_new_assigned_centers, he_new_min_dist):
 
-    moved_indices = np.where(assigned_clusters[he_points] != he_new_assigned_centers)[0]
-    non_moved_indices = np.where(assigned_clusters[he_points] == he_new_assigned_centers)[0]
+#     data_indices = np.where(assigned_clusters[he_points] != he_new_assigned_centers)[0]
 
-    # Handling the non moved data
-    if non_moved_indices.size > 0:
-        # print("Debug-1.0", assigned_clusters[he_points][non_moved_indices], he_points[non_moved_indices])
-        for index in non_moved_indices:
-            actual_point = he_points[index]
-            if he_new_min_dist[index] < he_bst_indices[actual_point]:
+#     if data_indices.size > 0:
+#         old_assign = assigned_clusters[he_points]
 
-                # print("Debug-1.1", "Point:", actual_point, "old: ", assigned_clusters[actual_point],
-                #       "new: ", he_new_assigned_centers[index],
-                #       "old dist: ", he_bst_indices[actual_point],
-                #       "new dist: ", he_new_min_dist[index])
-                #
-                # for i in range(len(bst_list)):
-                #     print(i, bst_list[i])
+#         for index in data_indices:
 
-                old_center = assigned_clusters[actual_point]
-                # print(bst_list[old_center])
-                bst_list[old_center].pop(he_bst_indices[actual_point])
-                bst_list[old_center].update({he_new_min_dist[index]: actual_point})
-                he_bst_indices[actual_point] = he_new_min_dist[index]
+#             old_center = old_assign[index]
+#             new_center = he_new_assigned_centers[index]
 
-    # Handling the moved data
-    if moved_indices.size > 0:
-        old_assign = assigned_clusters[he_points]
-        # print("Debug-0:", he_points, len(he_points), len(moved_indices), np.array(he_points)[moved_indices])
+#             actual_point = he_points[index]
 
-        for index in moved_indices:
+#             if new_assigned_clusters[actual_point] == old_center:
+#                 bst_list[old_center].pop(he_bst_indices[actual_point])
+#                 bst_list[new_center].update({he_new_min_dist[index]: actual_point})
+#                 he_bst_indices[actual_point] = he_new_min_dist[index]
+#                 new_assigned_clusters[actual_point] = new_center
+#             else:
+#                 if he_new_min_dist[index] < he_bst_indices[actual_point]:
+#                     old_center = new_assigned_clusters[actual_point]
+#                     bst_list[old_center].pop(he_bst_indices[actual_point])
+#                     bst_list[new_center].update({he_new_min_dist[index]: actual_point})
+#                     he_bst_indices[actual_point] = he_new_min_dist[index]
+#                     new_assigned_clusters[actual_point] = new_center
 
-            old_center = old_assign[index]
-            new_center = he_new_assigned_centers[index]
+#     return bst_list, new_assigned_clusters
 
-            actual_point = he_points[index]
 
-            # print("Debug-1:", old_center, new_center, actual_point, he_bst_indices[actual_point], he_new_min_dist[index])
+# def move_all_data_around(bst_list, he_bst_indices, he_points, assigned_clusters,
+#                      he_new_assigned_centers, he_new_min_dist):
 
-            # print(bst_list[old_center])
-            # print(bst_list[new_center])
+#     moved_indices = np.where(assigned_clusters[he_points] != he_new_assigned_centers)[0]
+#     non_moved_indices = np.where(assigned_clusters[he_points] == he_new_assigned_centers)[0]
 
-            bst_list[old_center].pop(he_bst_indices[actual_point])
-            bst_list[new_center].update({he_new_min_dist[index]: actual_point})
-            he_bst_indices[actual_point] = he_new_min_dist[index]
+#     # Handling the non moved data
+#     if non_moved_indices.size > 0:
+#         # print("Debug-1.0", assigned_clusters[he_points][non_moved_indices], he_points[non_moved_indices])
+#         for index in non_moved_indices:
+#             actual_point = he_points[index]
+#             if he_new_min_dist[index] < he_bst_indices[actual_point]:
 
-    return bst_list
+#                 # print("Debug-1.1", "Point:", actual_point, "old: ", assigned_clusters[actual_point],
+#                 #       "new: ", he_new_assigned_centers[index],
+#                 #       "old dist: ", he_bst_indices[actual_point],
+#                 #       "new dist: ", he_new_min_dist[index])
+#                 #
+#                 # for i in range(len(bst_list)):
+#                 #     print(i, bst_list[i])
+
+#                 old_center = assigned_clusters[actual_point]
+#                 # print(bst_list[old_center])
+#                 bst_list[old_center].pop(he_bst_indices[actual_point])
+#                 bst_list[old_center].update({he_new_min_dist[index]: actual_point})
+#                 he_bst_indices[actual_point] = he_new_min_dist[index]
+
+#     # Handling the moved data
+#     if moved_indices.size > 0:
+#         old_assign = assigned_clusters[he_points]
+#         # print("Debug-0:", he_points, len(he_points), len(moved_indices), np.array(he_points)[moved_indices])
+
+#         for index in moved_indices:
+
+#             old_center = old_assign[index]
+#             new_center = he_new_assigned_centers[index]
+
+#             actual_point = he_points[index]
+
+#             # print("Debug-1:", old_center, new_center, actual_point, he_bst_indices[actual_point], he_new_min_dist[index])
+
+#             # print(bst_list[old_center])
+#             # print(bst_list[new_center])
+
+#             bst_list[old_center].pop(he_bst_indices[actual_point])
+#             bst_list[new_center].update({he_new_min_dist[index]: actual_point})
+#             he_bst_indices[actual_point] = he_new_min_dist[index]
+
+#     return bst_list
 
 
 def calculate_my_distances(point, centroids):
