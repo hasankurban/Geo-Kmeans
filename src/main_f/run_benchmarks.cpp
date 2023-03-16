@@ -19,7 +19,7 @@ int main(){
 
     string basePath = "/u/parishar/scratch/DATASETS/real_data/";
 
-    double_prop(basePath);
+    // double_prop(basePath);
     double_clusters(basePath);
 
     return 0;

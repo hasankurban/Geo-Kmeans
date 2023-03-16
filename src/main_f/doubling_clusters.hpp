@@ -15,11 +15,11 @@ void double_clusters(string basePath){
        string out_path = basePath + "experiment_data/";
        
        // Declare variable
-    //    vector<string> file_list = {"magic.csv", "spambase.csv", "crop.csv", "Twitter.csv", "birch.csv"};
-    //    vector<string> data_list = {"Magic", "Spambase", "Crop", "Twitter", "Birch"};
+       vector<string> file_list = {"magic.csv", "spambase.csv", "crop.csv", "Twitter.csv", "birch.csv"};
+       vector<string> data_list = {"Magic", "Spambase", "Crop", "Twitter", "Birch"};
 
-       vector<string> file_list = {"magic.csv", "spambase.csv"};
-       vector<string> data_list = {"Magic", "Spambase"};
+    //    vector<string> file_list = {"magic.csv", "spambase.csv"};
+    //    vector<string> data_list = {"Magic", "Spambase"};
 
         int num_iters = 2000;
         float threshold = 0.001;
