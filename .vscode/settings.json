@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "vector": "cpp",
+        "iosfwd": "cpp",
+        "iostream": "cpp",
+        "ostream": "cpp",
+        "fstream": "cpp",
+        "ios": "cpp",
+        "string": "cpp",
+        "chrono": "cpp"
+    },
+    "cmake.configureOnOpen": true
+}
