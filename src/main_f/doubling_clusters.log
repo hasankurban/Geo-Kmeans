@@ -1,0 +1,136 @@
+nohup: ignoring input
+
+%%%%%%%%%%%%%%%%%%%%%%%
+Processing magic.csv
+%%%%%%%%%%%%%%%%%%%%%%%
+
+/u/parishar/scratch/DATASETS/real_data/experiment_data/comma_seperated_files/magic.csv
+
+
+Clusters: 3
+
+Algo: KMeans
+Convergence at iteration: 20
+Algo: DCKM
+Convergence at iteration: 20
+Algo: DCKM
+Data: magic.csv	 Clusters:3	 calc: 1141140 423812 928934 20 173 124 1996
+
+
+Clusters: 6
+
+Algo: KMeans
+Convergence at iteration: 32
+Algo: DCKM
+Convergence at iteration: 32
+Algo: DCKM
+Data: magic.csv	 Clusters:6	 calc: 3651648 711164 1741416 32 428 305 1587
+
+
+Clusters: 12
+
+Algo: KMeans
+Convergence at iteration: 90
+Algo: DCKM
+Convergence at iteration: 90
+Algo: DCKM
+Data: magic.csv	 Clusters:12	 calc: 20540520 1953416 7701327 90 2083 1747 5330
+
+
+Clusters: 24
+
+Algo: KMeans
+Convergence at iteration: 68
+Algo: DCKM
+Convergence at iteration: 68
+Algo: DCKM
+Data: magic.csv	 Clusters:24	 calc: 31039008 1772324 7670505 68 2875 2557 4043
+
+%%%%%%%%%%%%%%%%%%%%%%%
+Processing spambase.csv
+%%%%%%%%%%%%%%%%%%%%%%%
+
+/u/parishar/scratch/DATASETS/real_data/experiment_data/comma_seperated_files/spambase.csv
+
+
+Clusters: 3
+
+Algo: KMeans
+Convergence at iteration: 11
+Algo: DCKM
+Convergence at iteration: 11
+Algo: DCKM
+Data: spambase.csv	 Clusters:3	 calc: 151800 59974 59150 11 83 48 216
+
+
+Clusters: 6
+
+Algo: KMeans
+Convergence at iteration: 35
+Algo: DCKM
+Convergence at iteration: 35
+Algo: DCKM
+Data: spambase.csv	 Clusters:6	 calc: 966000 188565 288407 37 434 193 995
+
+
+Clusters: 12
+
+Algo: KMeans
+Convergence at iteration: 136
+Algo: DCKM
+Convergence at iteration: 136
+Algo: DCKM
+Data: spambase.csv	 Clusters:12	 calc: 7507200 694718 1262640 153 3014 853 3870
+
+
+Clusters: 24
+
+Algo: KMeans
+Convergence at iteration: 120
+Algo: DCKM
+Convergence at iteration: 120
+Algo: DCKM
+Data: spambase.csv	 Clusters:24	 calc: 13248000 704178 1379491 131 4945 1271 3561
+
+%%%%%%%%%%%%%%%%%%%%%%%
+Processing crop.csv
+%%%%%%%%%%%%%%%%%%%%%%%
+
+/u/parishar/scratch/DATASETS/real_data/experiment_data/comma_seperated_files/crop.csv
+
+
+Clusters: 3
+
+Algo: KMeans
+Convergence at iteration: 14
+Algo: DCKM
+Convergence at iteration: 14
+Algo: DCKM
+Data: crop.csv	 Clusters:3	 calc: 13485906 5345725 15525226 14 2023 1755 267188
+
+
+Clusters: 6
+
+Algo: KMeans
+Convergence at iteration: 17
+Algo: DCKM
+Convergence at iteration: 17
+Algo: DCKM
+Data: crop.csv	 Clusters:6	 calc: 32751486 7298969 21893370 17 3900 3110 295159
+
+
+Clusters: 12
+
+Algo: KMeans
+Convergence at iteration: 60
+Algo: DCKM
+Convergence at iteration: 60
+Algo: DCKM
+Data: crop.csv	 Clusters:12	 calc: 231186960 23393813 107798934 60 23614 21869 536338
+
+
+Clusters: 24
+
+Algo: KMeans
+Convergence at iteration: 95
+Algo: DCKM

@@ -1,24 +1,13 @@
 #include <iostream>
 #include <string>
-#include <tuple>
-#include "data_holder.hpp"
-#include "IOutils.hpp"
-#include "algo_utils.hpp"
-#include "kmeans.hpp"
-#include "dckmeans.hpp"
-#include "ball_kmeans++_xf.hpp"
-#include "misc_utils.hpp"
-#include <map>
 #include <iomanip>
 #include <chrono>
 #include <vector>
 
 using namespace std;
 
-string basePath = "/u/parishar/scratch/DATASETS/real_data/";
 
-
-int main(){
+void double_clusters(string basePath){
 
        string input_path = basePath + "experiment_data/comma_seperated_files/";     
        string output_path = basePath + "experiment_data/";
@@ -26,16 +15,14 @@ int main(){
        string out_path = basePath + "experiment_data/";
        
        // Declare variable
-    //    vector<string> file_list = {"magic.csv", "spambase.csv", "crop.csv", "Twitter.csv", "birch.csv"};
-    //    vector<string> data_list = {"Magic", "Spambase", "Crop", "Twitter", "Birch"};
+       vector<string> file_list = {"magic.csv", "spambase.csv", "crop.csv", "Twitter.csv", "birch.csv"};
+       vector<string> data_list = {"Magic", "Spambase", "Crop", "Twitter", "Birch"};
 
-       vector<string> file_list = {"magic.csv", "spambase.csv"};
-       vector<string> data_list = {"Magic", "Spambase"};
+    //    vector<string> file_list = {"magic.csv", "spambase.csv"};
+    //    vector<string> data_list = {"Magic", "Spambase"};
 
         int num_iters = 2000;
         float threshold = 0.001;
-        vector<float> data_prop = {0.2, 0.4};  
-        // vector<float> data_prop = {0.2, 0.4, 0.6, 0.8, 1.0};
         
        string inputfilePath = "", centroidFilePath = "";
        bool run_stat = false;
@@ -46,19 +33,18 @@ int main(){
        output_data ballkm_res;
        
        // Timeout limit
-       int time_limit = 600000;
+       int time_limit = 900000;
        
        //initial seed for replication (due to random data selection)
        int seed = 78;
-       vector<int> clusters = {5, 10, 15};
-       int clus = 5;
+       vector<int> clusters = {3, 6, 12, 24};
        int num_points = 0;
 
        ofstream avgresFile;
-       string outFile = out_path + "doubling_experiments.csv" ;
+       string outFile = out_path + "doubling_clusters.csv" ;
        
        avgresFile.open(outFile, ios::trunc);
-       avgresFile << "Algorithm,Data,Clusters,Prop,Distances,Runtime,Timeout";
+       avgresFile << "Algorithm,Data,Clusters,Distances,Runtime,Timeout";
        avgresFile.close();
        string alg = "";
 
@@ -72,7 +58,6 @@ int main(){
             cout << "%%%%%%%%%%%%%%%%%%%%%%%\n" << endl;
 
             inputfilePath = input_path + file_list[i];
-
             cout << inputfilePath << endl;
 
             vector<vector <float> > dataset;
@@ -84,37 +69,27 @@ int main(){
             // Load data in Eigen format for Ball KMeans
             MatrixOur BallK_dataset = load_data(inputfilePath);
 
-            for (int j = 0; j<data_prop.size(); j++){
+            for (int j = 0; j<clusters.size(); j++){
 
-                float prop = data_prop[j];
+                int clus = clusters[j];
 
                 cout << "\n" << endl;
-                cout << "Data prop: " << prop << endl;
+                cout << "Clusters: " << clus << endl;
                 cout << "\n";
                 
                 string km_timeout = "no";
                 string dckm_timeout = "no";
                 string ballkm_timeout = "no";
 
-                // Extract the proportion of data from original dataset to run the experiments
-                num_points = ceil(dataset.size() * prop);
-                vector<vector<float> > extracted_data(num_points, vector<float>(numCols, 0.0));
                 vector<vector<float> > centroids(clus, vector<float>(numCols, 0));
-
-                alg_utils.extract_data(dataset, extracted_data, num_points, seed+j);
-
-                // Extract data for Ball KMeans
-                num_points = ceil(BallK_dataset.rows() * prop);
-                MatrixOur extracted_ball_data(num_points, BallK_dataset.cols());
-                extract_ball_data(BallK_dataset, extracted_ball_data, prop, num_points, seed+j);
 
                 //####################
                 // KMeans
                 //####################
                 cout << "Algo: KMeans" << endl; 
-                alg_utils.init_centroids_sequentially(centroids, extracted_data, clus);   
+                alg_utils.init_centroids_sequentially(centroids, dataset, clus);   
 
-                km_res = kmeans(extracted_data, centroids, clus, threshold, num_iters, numCols, time_limit);
+                km_res = kmeans(dataset, centroids, clus, threshold, num_iters, numCols, time_limit);
                 
                 if (km_res.timeout == true){
                     km_timeout = "yes";
@@ -126,9 +101,9 @@ int main(){
                 //####################
 
                 cout << "Algo: DCKM" << endl; 
-                alg_utils.init_centroids_sequentially(centroids, extracted_data, clus);
+                alg_utils.init_centroids_sequentially(centroids, dataset, clus);
                 
-                dckm_res = dckmeans(extracted_data, centroids, clus, threshold, num_iters, numCols, time_limit);
+                dckm_res = dckmeans(dataset, centroids, clus, threshold, num_iters, numCols, time_limit);
                 
                 if (dckm_res.timeout == true){
                     dckm_timeout = "yes";
@@ -139,34 +114,31 @@ int main(){
                 // Ball-KMeans
                 //####################
                 cout << "Algo: DCKM" << endl; 
-                MatrixOur ballKm_centroids = init_ball_centroids(extracted_ball_data, clus);
-
-                ballkm_res = ball_k_means_Ring(extracted_ball_data, ballKm_centroids, false, threshold, num_iters, time_limit);
-                // ballkm_res = run_ham(extracted_ball_data, ballKm_centroids, false, threshold, num_iters, time_limit);
+                MatrixOur ballKm_centroids = init_ball_centroids(BallK_dataset, clus);
+                ballkm_res = ball_k_means_Ring(BallK_dataset, ballKm_centroids, false, threshold, num_iters, time_limit);
 
                 if (ballkm_res.timeout == true){
                     ballkm_timeout = "yes";
                     cout << "Timeout: BallKmeans time: " << ballkm_res.runtime << " milliseconds" << endl;
                 }
 
-                cout << "Data: " << file_list[i] << " Prop: " << prop << "\t" << " Clusters:" << clus 
+                cout << "Data: " << file_list[i] << "\t Clusters:" << clus 
                 << "\t calc: " << km_res.num_he <<  " " << dckm_res.num_he <<  " " << ballkm_res.num_he << " " << 
                 ballkm_res.loop_counter << " " << km_res.runtime << " " << dckm_res.runtime << " " << ballkm_res.runtime << endl;
 
                 avgresFile.open(outFile, ios::app);
 
                 // Algorithm,Data,Clusters,Prop,Distances,Timeout
-
                 avgresFile << "\nKMeans" << "," << data_list[i] << "," << to_string(clus) 
-                << "," << to_string(prop) << "," << to_string(km_res.num_he) << "," << to_string(km_res.runtime) << "," 
+                << "," << to_string(km_res.num_he) << "," << to_string(km_res.runtime) << "," 
                 << km_timeout;
 
                 avgresFile << "\nDataCentric-KMeans" << "," << data_list[i] << "," << to_string(clus) 
-                << "," << to_string(prop) << "," << to_string(dckm_res.num_he) << ","  << to_string(dckm_res.runtime) << "," 
+                << "," << to_string(dckm_res.num_he) << ","  << to_string(dckm_res.runtime) << "," 
                 << dckm_timeout;
 
                 avgresFile << "\nBall-Kmeans" << "," << data_list[i] << "," << to_string(clus) 
-                << "," << to_string(prop) << "," << to_string(ballkm_res.num_he) << "," << to_string(ballkm_res.runtime) << "," 
+                << "," << to_string(ballkm_res.num_he) << "," << to_string(ballkm_res.runtime) << "," 
                 << ballkm_timeout;    
 
                 avgresFile.close();
@@ -175,7 +147,6 @@ int main(){
 
         }
 
-       cout << "Completed Doubling Experiments" << endl;
-       return 0;
+       cout << "Completed Doubling Cluster Experiments" << endl;
 
 }

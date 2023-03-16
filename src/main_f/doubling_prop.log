@@ -1,0 +1,174 @@
+nohup: ignoring input
+
+%%%%%%%%%%%%%%%%%%%%%%%
+Processing magic.csv
+%%%%%%%%%%%%%%%%%%%%%%%
+
+/u/parishar/scratch/DATASETS/real_data/experiment_data/comma_seperated_files/magic.csv
+
+
+Data prop: 0.2
+
+Algo: KMeans
+Convergence at iteration: 26
+Algo: DCKM
+Convergence at iteration: 26
+Algo: DCKM
+Data: magic.csv Prop: 0.2	 Clusters:5	 calc: 494520 115364 277946 26 63 45 246
+
+
+Data prop: 0.4
+
+Algo: KMeans
+Convergence at iteration: 24
+Algo: DCKM
+Convergence at iteration: 24
+Algo: DCKM
+Data: magic.csv Prop: 0.4	 Clusters:5	 calc: 912960 220386 588793 24 112 87 633
+
+
+Data prop: 0.8
+
+Algo: KMeans
+Convergence at iteration: 54
+Algo: DCKM
+Convergence at iteration: 54
+Algo: DCKM
+Data: magic.csv Prop: 0.8	 Clusters:5	 calc: 4108320 904472 2757629 54 515 405 3406
+
+
+Data prop: 1
+
+Algo: KMeans
+Convergence at iteration: 25
+Algo: DCKM
+Convergence at iteration: 25
+Algo: DCKM
+Data: magic.csv Prop: 1	 Clusters:5	 calc: 2377375 566199 1397630 25 295 214 2074
+
+%%%%%%%%%%%%%%%%%%%%%%%
+Processing spambase.csv
+%%%%%%%%%%%%%%%%%%%%%%%
+
+/u/parishar/scratch/DATASETS/real_data/experiment_data/comma_seperated_files/spambase.csv
+
+
+Data prop: 0.2
+
+Algo: KMeans
+Convergence at iteration: 27
+Algo: DCKM
+Convergence at iteration: 27
+Algo: DCKM
+Data: spambase.csv Prop: 0.2	 Clusters:5	 calc: 124200 31109 41437 27 58 30 136
+
+
+Data prop: 0.4
+
+Algo: KMeans
+Convergence at iteration: 14
+Algo: DCKM
+Convergence at iteration: 14
+Algo: DCKM
+Data: spambase.csv Prop: 0.4	 Clusters:5	 calc: 128800 27562 43342 14 61 27 142
+
+
+Data prop: 0.8
+
+Algo: KMeans
+Convergence at iteration: 30
+Algo: DCKM
+Convergence at iteration: 30
+Algo: DCKM
+Data: spambase.csv Prop: 0.8	 Clusters:5	 calc: 552000 130981 174836 30 260 125 615
+
+
+Data prop: 1
+
+Algo: KMeans
+Convergence at iteration: 36
+Algo: DCKM
+Convergence at iteration: 36
+Algo: DCKM
+Data: spambase.csv Prop: 1	 Clusters:5	 calc: 828000 199015 287195 36 393 200 992
+
+%%%%%%%%%%%%%%%%%%%%%%%
+Processing crop.csv
+%%%%%%%%%%%%%%%%%%%%%%%
+
+/u/parishar/scratch/DATASETS/real_data/experiment_data/comma_seperated_files/crop.csv
+
+
+Data prop: 0.2
+
+Algo: KMeans
+Convergence at iteration: 9
+Algo: DCKM
+Convergence at iteration: 9
+Algo: DCKM
+Data: crop.csv Prop: 0.2	 Clusters:5	 calc: 2889855 853807 2629629 9 363 312 9509
+
+
+Data prop: 0.4
+
+Algo: KMeans
+Convergence at iteration: 16
+Algo: DCKM
+Convergence at iteration: 16
+Algo: DCKM
+Data: crop.csv Prop: 0.4	 Clusters:5	 calc: 10275040 2592991 7958587 16 1315 1067 19684
+
+
+Data prop: 0.8
+
+Algo: KMeans
+Convergence at iteration: 25
+Algo: DCKM
+Convergence at iteration: 25
+Algo: DCKM
+Data: crop.csv Prop: 0.8	 Clusters:5	 calc: 32109375 7532661 30006470 25 4064 3549 98642
+
+
+Data prop: 1
+
+Algo: KMeans
+Convergence at iteration: 26
+Algo: DCKM
+Convergence at iteration: 26
+Algo: DCKM
+Data: crop.csv Prop: 1	 Clusters:5	 calc: 41742090 9779385 39786718 26 5319 4688 201084
+
+%%%%%%%%%%%%%%%%%%%%%%%
+Processing Twitter.csv
+%%%%%%%%%%%%%%%%%%%%%%%
+
+/u/parishar/scratch/DATASETS/real_data/experiment_data/comma_seperated_files/Twitter.csv
+
+
+Data prop: 0.2
+
+Algo: KMeans
+Convergence at iteration: 62
+Algo: DCKM
+Convergence at iteration: 62
+Algo: DCKM
+Data: Twitter.csv Prop: 0.2	 Clusters:5	 calc: 36161500 8127482 11276909 62 23141 12136 135512
+
+
+Data prop: 0.4
+
+Algo: KMeans
+Convergence at iteration: 68
+Algo: DCKM
+Convergence at iteration: 68
+Algo: DCKM
+Data: Twitter.csv Prop: 0.4	 Clusters:5	 calc: 79322000 17357964 23212454 68 52315 25621 355805
+
+
+Data prop: 0.8
+
+Algo: KMeans
+Convergence at iteration: 76
+Algo: DCKM
+Convergence at iteration: 76
+Algo: DCKM
