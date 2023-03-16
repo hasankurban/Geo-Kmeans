@@ -41,7 +41,7 @@ class algorithm_utils{
 
     template <typename T1, typename T2>
     void extract_data(vector<vector <T1> > &dataset, vector<vector <T1> > &extracted_data, 
-    T2 num_points, T2 num_cluster, T2 seed);
+    T2 num_points, T2 seed);
     
     template <typename T1>
     void reinit(vector<vector<T1> > &);
@@ -103,7 +103,7 @@ vector<vector <T1> > &dataset, T2 num_cluster, T2 seed){
 
 template <typename T1, typename T2>
 void algorithm_utils::extract_data(vector<vector <T1> > &dataset, vector<vector <T1> > &extracted_data, 
-T2 num_points, T2 num_cluster, T2 seed){
+T2 num_points, T2 seed){
 
 
     int i = 0, j = 0, size = dataset.size();

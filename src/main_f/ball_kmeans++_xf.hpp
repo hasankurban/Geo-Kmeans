@@ -44,7 +44,7 @@ update_centroids(MatrixOur& dataset, ClusterIndexVector& cluster_point_index, un
 
 inline void update_radius(MatrixOur& dataset, ClusterIndexVector& cluster_point_index, MatrixOur& new_centroids,
                           ClusterDistVector& temp_dis,
-                          VectorOur& the_rs, VectorXb& flag, unsigned int iteration_counter, unsigned int& cal_dist_num,
+                          VectorOur& the_rs, VectorXb& flag, unsigned int iteration_counter, unsigned long long int& cal_dist_num,
                           unsigned int the_rs_size);
 
 inline sortedNeighbors
@@ -141,7 +141,7 @@ void get_ball_ranodm_indices(int *arr, size_t size, int seed)
 
 
 void extract_ball_data(MatrixOur &dataset, 
-MatrixOur &extracted_data, int data_prop, int num_points, int num_cluster, int seed)
+MatrixOur &extracted_data, int data_prop, int num_points, int seed)
 {
 
     int i = 0, j = 0, size = dataset.rows();
@@ -199,7 +199,7 @@ double thres= 0.001, int iters = 100, int time_limit = 60000) {
     unsigned int iteration_counter;
     unsigned int num_of_neighbour;
     unsigned int neighbour_num;
-    unsigned int cal_dist_num;
+    unsigned long long int cal_dist_num;
     unsigned int data_num;
 
     MatrixOur::Index minCol;
@@ -212,6 +212,7 @@ double thres= 0.001, int iters = 100, int time_limit = 60000) {
     output_data res;
 
     auto start = std::chrono::high_resolution_clock::now();
+    
     cal_dist_num += (dataset.rows() * centroids.rows());
     // cout << "Initial: " << cal_dist_num << endl;
     
@@ -442,7 +443,7 @@ double thres= 0.001, int iters = 100, int time_limit = 60000) {
     unsigned int iteration_counter;
     unsigned int num_of_neighbour;
     unsigned int neighbour_num;
-    unsigned int cal_dist_num;
+    unsigned long long int cal_dist_num;
     unsigned int data_num;
 
     //bool key = true;
@@ -770,7 +771,7 @@ update_centroids(MatrixOur& dataset, ClusterIndexVector& cluster_point_index, un
 inline void update_radius(MatrixOur& dataset, ClusterIndexVector& cluster_point_index, MatrixOur& new_centroids,
                           ClusterDistVector& temp_dis, VectorOur& the_rs, VectorXb& flag,
                           unsigned int iteration_counter,
-                          unsigned int& cal_dist_num, unsigned int the_rs_size) {
+                          unsigned long long int& cal_dist_num, unsigned int the_rs_size) {
 
     /*
 

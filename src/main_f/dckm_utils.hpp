@@ -32,6 +32,7 @@ class dckm_utils{
     vector<vector <TD> > &center_dist_mat, vector<vector <TD> > &cluster_size, 
     vector<vector<TI> > &neighbors, vector<vector<vector <TD> > > &mid_points, 
     vector<vector<vector <TD> > > &affine_vectors,  vector<TD> &temp, 
+    unsigned long long int &he_counter,
     vector<vector<TD> > &temp_master, vector<TD> &temp_midpoint,
     vector<TD> &temp_affine, vector<vector<TD> > &midpoint_holder, 
     vector<vector<TD> > &affine_holder);
@@ -103,6 +104,7 @@ inline void find_neighbors(vector<vector <TD> > &centroids,
 vector<vector <TD> > &center_dist_mat, vector<vector <TD> > &cluster_size, 
 vector<vector<TI> > &neighbors, vector<vector<vector <TD> > > &mid_points, 
 vector<vector<vector <TD> > > &affine_vectors, vector<TD> &temp, 
+unsigned long long int &he_counter,
 vector<vector<TD> > &temp_master, vector<TD> &temp_midpoint,
 vector<TD> &temp_affine, vector<vector<TD> > &midpoint_holder, 
 vector<vector<TD> > &affine_holder){
@@ -125,7 +127,7 @@ vector<vector<TD> > &affine_holder){
             
             // Do only k calculations, save so many :)
             if (curr_center < ot_center){
-                dist = alg_utils.calc_nei_euclidean(centroids[curr_center], centroids[ot_center]);
+                dist = alg_utils.calc_euclidean(centroids[curr_center], centroids[ot_center], he_counter);
                 center_dist_mat[curr_center][ot_center] = dist/2;
                 center_dist_mat[ot_center][curr_center] = center_dist_mat[curr_center][ot_center];
             }
@@ -196,7 +198,7 @@ Tint &i, Tint &j, Tfloat &temp_result){
 
         if (cluster_size[my_cluster][2] > 0){
             
-            temp_result = alg_utils.calc_nei_euclidean(dataset[i], centroids[my_cluster]);
+            temp_result = alg_utils.calc_euclidean(dataset[i], centroids[my_cluster], he_counter);
             if(temp_result < center_dist_mat[my_cluster][neighbors[my_cluster][0]]){
                 continue;    
             }

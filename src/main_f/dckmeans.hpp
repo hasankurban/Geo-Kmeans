@@ -93,7 +93,7 @@ Tfloat threshold, Tint num_iterations, Tint numCols, Tint time_limit){
         }
         
         find_neighbors(new_centroids, center_dist_mat, cluster_size, neighbors, 
-        mid_points, affine_vectors, temp2, temp_master, temp_midpoint, temp_affine, 
+        mid_points, affine_vectors, temp2, he_counter, temp_master, temp_midpoint, temp_affine, 
         midpoint_holder, affine_holder);
         
         determine_data_expression(dataset, new_centroids, cluster_size, center_dist_mat, dist_matrix,
