@@ -1,24 +1,14 @@
 #include <iostream>
 #include <string>
-#include <tuple>
-#include "data_holder.hpp"
-#include "IOutils.hpp"
-#include "algo_utils.hpp"
-#include "kmeans.hpp"
-#include "dckmeans.hpp"
-#include "ball_kmeans++_xf.hpp"
-#include "misc_utils.hpp"
-#include <map>
 #include <iomanip>
 #include <chrono>
 #include <vector>
 
 using namespace std;
 
-string basePath = "/u/parishar/scratch/DATASETS/real_data/";
 
+void double_prop(string basePath){
 
-int main(){
 
        string input_path = basePath + "experiment_data/comma_seperated_files/";     
        string output_path = basePath + "experiment_data/";
@@ -35,7 +25,7 @@ int main(){
         int num_iters = 2000;
         float threshold = 0.001;
         vector<float> data_prop = {0.2, 0.4};  
-        // vector<float> data_prop = {0.2, 0.4, 0.6, 0.8, 1.0};
+        // vector<float> data_prop = {0.2, 0.4, 0.8, 1.0};
         
        string inputfilePath = "", centroidFilePath = "";
        bool run_stat = false;
@@ -50,12 +40,11 @@ int main(){
        
        //initial seed for replication (due to random data selection)
        int seed = 78;
-       vector<int> clusters = {5, 10, 15};
        int clus = 5;
        int num_points = 0;
 
        ofstream avgresFile;
-       string outFile = out_path + "doubling_experiments.csv" ;
+       string outFile = out_path + "doubling_proportion.csv" ;
        
        avgresFile.open(outFile, ios::trunc);
        avgresFile << "Algorithm,Data,Clusters,Prop,Distances,Runtime,Timeout";
@@ -175,7 +164,6 @@ int main(){
 
         }
 
-       cout << "Completed Doubling Experiments" << endl;
-       return 0;
-
+       cout << "Completed Doubling Proportion Experiments" << endl;
+    //    return 0;
 }
