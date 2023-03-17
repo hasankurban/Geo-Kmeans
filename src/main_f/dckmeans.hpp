@@ -124,7 +124,7 @@ string init_type, Tint seed){
             result.runtime = float(temptime.count());
             result.timeout = true;
             result.centroids = new_centroids;
-            result.sse = get_sse(dataset, centroids, cluster_size, assigned_clusters, num_clusters);
+            result.sse = get_sse(dataset, new_centroids, cluster_size, assigned_clusters, num_clusters);
             cout << "DCKmeans Timed Out :(" << endl;
             return result;
         }

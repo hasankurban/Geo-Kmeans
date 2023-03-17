@@ -1,7 +1,5 @@
 #include <iostream>
 #include <vector>
-#include "misc_utils.hpp"
-#include "algo_utils.hpp"
 #include <chrono>
 
 using namespace std;
@@ -110,6 +108,7 @@ string init_type, Tint seed){
             result.num_he = dataset.size() * loop_counter * num_clusters;
             result.runtime = float(temptime.count());
             result.timeout = true;
+            result.sse = get_sse(dataset, new_centroids, cluster_size, assigned_clusters, num_clusters);
             cout << "Kmeans Timed Out :(" << endl;
             return result;
         }

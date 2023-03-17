@@ -1,20 +1,13 @@
 #include <iostream>
 #include <string>
 #include <tuple>
-#include "data_holder.hpp"
-#include "IOutils.hpp"
-#include "algo_utils.hpp"
-#include "kmeans.hpp"
-#include "dckmeans.hpp"
-#include "ball_kmeans++_xf.hpp"
-#include <map>
 #include <iomanip>
 #include <chrono>
 
 using namespace std;
 
 
-void benchmark_dims(basePath){
+void benchmark_dims(string basePath){
 
        string dims_input_path = basePath;    
        string dims_output_path = basePath + "benchmark_dims.csv";
@@ -28,8 +21,9 @@ void benchmark_dims(basePath){
         //   vector<int> num_dims = {200};
        vector<int> labels;
 
-        int num_iters = 1000;
+        int num_iterations = 1000;
         float threshold = 0.01;
+        int num_clusters = 10;
         
         // 90 minutes cutoff for running
         int time_limit = 5400000, dims = 0, clus = 20;
@@ -79,8 +73,11 @@ void benchmark_dims(basePath){
                 //####################
 
                 cout << "Algo: DCKM" << endl; 
-                alg_utils.init_centroids(centroids, dataset, clus);               
-                dckm_res = dckmeans(dataset, centroids, clus, threshold, num_iters, numCols, time_limit);
+
+                // alg_utils.init_centroids(centroids, dataset, clus);               
+                // dckm_res = dckmeans(dataset, centroids, clus, threshold, num_iters, numCols, time_limit);
+
+                dckm_res = dckmeans(dataset, num_clusters, threshold, num_iterations, numCols, time_limit, "sequential", 0);
                 
                 if (dckm_res.timeout == true){
                     dckm_timeout = "yes";
@@ -93,12 +90,15 @@ void benchmark_dims(basePath){
                 //####################
                 // Ball-KMeans
                 //####################
+
+                cout << "Algo: Ball-KMeans" << endl; 
                 
                 // Load data in Eigen format for Ball KMeans
                 MatrixOur BallK_dataset = load_data(inputfilePath);
-                MatrixOur ballKm_centroids = init_ball_centroids(BallK_dataset, clus);
+                // MatrixOur ballKm_centroids = init_ball_centroids(BallK_dataset, clus);
 
-                ballkm_res = ball_k_means_Ring(BallK_dataset, ballKm_centroids, false, threshold, num_iters, time_limit);
+                ballkm_res = ball_k_means_Ring(BallK_dataset, false, num_clusters, threshold, num_iterations, time_limit, 
+                        "sequential", 0);
 
                 if (ballkm_res.timeout == true){
                     ballkm_timeout = "yes";

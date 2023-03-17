@@ -1,20 +1,13 @@
 #include <iostream>
 #include <string>
 #include <tuple>
-#include "data_holder.hpp"
-#include "IOutils.hpp"
-#include "algo_utils.hpp"
-#include "kmeans.hpp"
-#include "dckmeans.hpp"
-#include "ball_kmeans++_xf.hpp"
-#include <map>
 #include <iomanip>
 #include <chrono>
 
 using namespace std;
 
 
-void benchmark_scal(basePath){
+void benchmark_scal(string basePath){
 
         string scal_input_path = basePath;    
         string scal_output_path = basePath + "benchmark_scal.csv";;
@@ -28,8 +21,9 @@ void benchmark_scal(basePath){
         //  vector<int> num_points = {1000000};
 
         vector<int> labels;
-        int num_iters = 1000;
+        int num_iterations = 1000;
         float threshold = 0.01;
+        int num_clusters = 10;
 
         // 90 minutes cutoff for runtime
         int time_limit = 5400000, clus = 10, points = 0;

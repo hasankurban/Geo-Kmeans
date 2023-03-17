@@ -13,13 +13,13 @@ void double_clusters(string basePath){
        string out_path = basePath ;
        
        // Declare variable
-       vector<string> file_list = {"magic.csv", "spambase.csv", "crop.csv", "Twitter.csv", "birch.csv"};
-       vector<string> data_list = {"Magic", "Spambase", "Crop", "Twitter", "Birch"};
+    //    vector<string> file_list = {"magic.csv", "spambase.csv", "crop.csv", "Twitter.csv", "birch.csv"};
+    //    vector<string> data_list = {"Magic", "Spambase", "Crop", "Twitter", "Birch"};
 
-    //    vector<string> file_list = {"magic.csv", "spambase.csv"};
-    //    vector<string> data_list = {"Magic", "Spambase"};
+       vector<string> file_list = {"magic.csv", "spambase.csv", "crop.csv"};
+       vector<string> data_list = {"Magic", "Spambase", "crop"};
 
-        int num_iters = 2000;
+        int num_iterations = 2000;
         float threshold = 0.001;
         
        string inputfilePath = "", centroidFilePath = "";
@@ -88,7 +88,7 @@ void double_clusters(string basePath){
                 // alg_utils.init_centroids_sequentially(centroids, dataset, clus);   
                 // km_res = kmeans(dataset, centroids, clus, threshold, num_iters, numCols, time_limit);
 
-                km_res = kmeans(dataset, num_clusters, threshold, num_iterations, numCols, time_limit, "sequential", 0);
+                km_res = kmeans(dataset, clus, threshold, num_iterations, numCols, time_limit, "sequential", 0);
                 
                 if (km_res.timeout == true){
                     km_timeout = "yes";
@@ -102,7 +102,7 @@ void double_clusters(string basePath){
                 // alg_utils.init_centroids_sequentially(centroids, dataset, clus);
                 // dckm_res = dckmeans(dataset, centroids, clus, threshold, num_iters, numCols, time_limit);
 
-                dckm_res = dckmeans(dataset, num_clusters, threshold, num_iterations, numCols, time_limit, "sequential", 0);
+                dckm_res = dckmeans(dataset, clus, threshold, num_iterations, numCols, time_limit, "sequential", 0);
                 
                 if (dckm_res.timeout == true){
                     dckm_timeout = "yes";
@@ -116,7 +116,7 @@ void double_clusters(string basePath){
                 // MatrixOur ballKm_centroids = init_ball_centroids(BallK_dataset, clus);
                 // ballkm_res = ball_k_means_Ring(BallK_dataset, ballKm_centroids, false, threshold, num_iters, time_limit);
 
-                ballkm_res = ball_k_means_Ring(BallK_dataset, false, num_clusters, threshold, num_iterations, time_limit, "sequential", 0);
+                ballkm_res = ball_k_means_Ring(BallK_dataset, false, clus, threshold, num_iterations, time_limit, "sequential", 0);
 
                 if (ballkm_res.timeout == true){
                     ballkm_timeout = "yes";

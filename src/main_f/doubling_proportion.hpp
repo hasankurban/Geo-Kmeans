@@ -13,16 +13,16 @@ void double_prop(string basePath){
        string out_path = basePath;
        
        // Declare variable
-       vector<string> file_list = {"magic.csv", "spambase.csv", "crop.csv", "Twitter.csv", "birch.csv"};
-       vector<string> data_list = {"Magic", "Spambase", "Crop", "Twitter", "Birch"};
+    //    vector<string> file_list = {"magic.csv", "spambase.csv", "crop.csv", "Twitter.csv", "birch.csv"};
+    //    vector<string> data_list = {"Magic", "Spambase", "Crop", "Twitter", "Birch"};
 
-    //    vector<string> file_list = {"magic.csv", "spambase.csv"};
-    //    vector<string> data_list = {"Magic", "Spambase"};
+       vector<string> file_list = {"magic.csv", "spambase.csv"};
+       vector<string> data_list = {"Magic", "Spambase"};
 
-        int num_iters = 2000;
+        int num_iterations = 2000;
         float threshold = 0.001;
-        // vector<float> data_prop = {0.2, 0.4};  
-        vector<float> data_prop = {0.2, 0.4, 0.8, 1.0};
+        vector<float> data_prop = {0.2, 0.4};  
+        // vector<float> data_prop = {0.2, 0.4, 0.8, 1.0};
         
        string inputfilePath = "", centroidFilePath = "";
        bool run_stat = false;
@@ -37,11 +37,12 @@ void double_prop(string basePath){
        
        //initial seed for replication (due to random data selection)
        int seed = 78;
-       int clus = 5;
+       int num_clusters = 5;
        int num_points = 0;
 
        ofstream avgresFile;
-       string outFile = out_path + "doubling_proportion.csv" ;
+       string outFile = out_path + "doubling_proportion.csv";
+       cout << outFile << endl;
        
        avgresFile.open(outFile, ios::trunc);
        avgresFile << "Algorithm,Data,Clusters,Prop,Distances,Runtime,Iterations,Timeout";
@@ -85,7 +86,7 @@ void double_prop(string basePath){
                 // Extract the proportion of data from original dataset to run the experiments
                 num_points = ceil(dataset.size() * prop);
                 vector<vector<float> > extracted_data(num_points, vector<float>(numCols, 0.0));
-                vector<vector<float> > centroids(clus, vector<float>(numCols, 0));
+                vector<vector<float> > centroids(num_clusters, vector<float>(numCols, 0));
 
                 alg_utils.extract_data(dataset, extracted_data, num_points, seed+j);
 
@@ -144,7 +145,7 @@ void double_prop(string basePath){
                     cout << "Timeout: BallKmeans time: " << ballkm_res.runtime << " milliseconds" << endl;
                 }
 
-                cout << "Data: " << file_list[i] << " Prop: " << prop << "\t" << " Clusters:" << clus 
+                cout << "Data: " << file_list[i] << " Prop: " << prop << "\t" << " Clusters:" << num_clusters 
                 << "\t calc: " << km_res.num_he <<  " " << dckm_res.num_he <<  " " << ballkm_res.num_he << " " << 
                 ballkm_res.loop_counter << " " << km_res.runtime << " " << dckm_res.runtime << " " << ballkm_res.runtime << endl;
 
@@ -152,15 +153,15 @@ void double_prop(string basePath){
 
                 // Algorithm,Data,Clusters,Prop,Distances,Timeout
 
-                avgresFile << "\nKMeans" << "," << data_list[i] << "," << to_string(clus) 
+                avgresFile << "\nKMeans" << "," << data_list[i] << "," << to_string(num_clusters) 
                 << "," << to_string(prop) << "," << to_string(km_res.num_he) << "," << to_string(km_res.runtime) << "," 
                 << to_string(km_res.loop_counter) << "," << km_timeout;
 
-                avgresFile << "\nDataCentric-KMeans" << "," << data_list[i] << "," << to_string(clus) 
+                avgresFile << "\nDataCentric-KMeans" << "," << data_list[i] << "," << to_string(num_clusters) 
                 << "," << to_string(prop) << "," << to_string(dckm_res.num_he) << ","  << to_string(dckm_res.runtime) << "," 
                 << to_string(dckm_res.loop_counter) << "," << dckm_timeout;
 
-                avgresFile << "\nBall-Kmeans" << "," << data_list[i] << "," << to_string(clus) 
+                avgresFile << "\nBall-Kmeans" << "," << data_list[i] << "," << to_string(num_clusters) 
                 << "," << to_string(prop) << "," << to_string(ballkm_res.num_he) << "," << to_string(ballkm_res.runtime) << "," 
                 << to_string(ballkm_res.loop_counter) << "," << ballkm_timeout;    
 

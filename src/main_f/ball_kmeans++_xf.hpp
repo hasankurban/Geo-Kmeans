@@ -137,6 +137,44 @@ int num_cluster, int seed, string init_type){
     return centroids;
 }
 
+// The following function is taken from the following question thread.
+// https://stackoverflow.com/questions/20734774/random-array-generation-with-no-duplicates
+void get_ball_ranodm_indices(int *arr, size_t size, int seed)
+{
+    if (size > 1) 
+    {
+        size_t i;
+        srand(seed);
+        for (i = 0; i < size - 1; i++) 
+        {
+          size_t j = i + rand() / (RAND_MAX / (size - i) + 1);
+          int t = arr[j];
+          arr[j] = arr[i];
+          arr[i] = t;
+        }
+    }
+}
+
+void extract_ball_data(MatrixOur &dataset, 
+MatrixOur &extracted_data, int data_prop, int num_points, int seed)
+{
+
+    int i = 0, j = 0, size = dataset.rows();
+    int test_array[size];
+
+    for (i = 0; i<size ; i++){
+        test_array[i] = i;
+    }
+
+    get_ball_ranodm_indices(test_array, size, seed);
+
+    for(i=0; i<num_points; i++){  
+        for(j=0; j<dataset.cols(); j++){
+            extracted_data(i, j) = dataset(test_array[i], j);
+        }   
+    }
+}
+
 
 inline float calc_ball_squared_dist(Eigen::MatrixXf::RowXpr point, 
 Eigen::MatrixXf::RowXpr center){
@@ -152,7 +190,7 @@ Eigen::MatrixXf::RowXpr center){
     return dist;
 }
 
-float get_sse(MatrixOur &dataset, MatrixOur &centroids, ClusterIndexVector cluster_point_index, 
+float get_ballkm_sse(MatrixOur &dataset, MatrixOur &centroids, ClusterIndexVector cluster_point_index, 
 int num_cluster){
 
 float total_sse = 0;
@@ -173,7 +211,7 @@ for(i = 0; i<num_cluster; i++){
 return total_sse;
 }
 
-ball_output_data ball_k_means_Ring(MatrixOur& dataset, bool detail, int num_clusters,
+output_data ball_k_means_Ring(MatrixOur& dataset, bool detail, int num_clusters,
 double thres= 0.001, int iters = 100, int time_limit = 60000, string init_type = "random", int seed=0) {
 
     double start_time = 0, end_time = 0;
@@ -223,7 +261,7 @@ double thres= 0.001, int iters = 100, int time_limit = 60000, string init_type =
     cal_dist_num = 0;
     flag.setZero();
 
-    ball_output_data res;
+    output_data res;
 
     auto start = std::chrono::high_resolution_clock::now();
 
@@ -245,7 +283,7 @@ double thres= 0.001, int iters = 100, int time_limit = 60000, string init_type =
             res.runtime = 1;
             res.timeout = false;
             res.sse = std::numeric_limits<float>::max();
-            res.centroids = old_centroids;
+            res.ballkm_centroids = old_centroids;
             return res;
         }
 
@@ -407,7 +445,7 @@ double thres= 0.001, int iters = 100, int time_limit = 60000, string init_type =
                     res.runtime = float(temptime.count());;
                     res.timeout = false;
                     res.sse = std::numeric_limits<float>::max();
-                    res.centroids = new_centroids;
+                    res.ballkm_centroids = new_centroids;
                     return res;
             }
 
@@ -418,8 +456,8 @@ double thres= 0.001, int iters = 100, int time_limit = 60000, string init_type =
                 res.num_he = cal_dist_num;
                 res.runtime = float(temptime.count());
                 res.timeout = true;
-                res.sse = get_sse(dataset, new_centroids, cluster_point_index, k);
-                res.centroids = new_centroids;
+                res.sse = get_ballkm_sse(dataset, new_centroids, cluster_point_index, k);
+                res.ballkm_centroids = new_centroids;
 
                 cout << "Ball-Kmeans Timed Out :(" << endl;
                 return res;
@@ -445,14 +483,14 @@ double thres= 0.001, int iters = 100, int time_limit = 60000, string init_type =
     auto end1 = std::chrono::high_resolution_clock::now();
     auto Totaltime = std::chrono::duration_cast<std::chrono::milliseconds>(end1 - start);
     
-    ball_output_data result;
+    output_data result;
     
     result.loop_counter = iteration_counter;
     result.num_he = cal_dist_num;
     result.runtime = float(Totaltime.count());
     result.timeout = false;
-    result.centroids = new_centroids;
-    result.sse = get_sse(dataset, new_centroids, cluster_point_index, k);
+    result.ballkm_centroids = new_centroids;
+    result.sse = get_ballkm_sse(dataset, new_centroids, cluster_point_index, k);
 
     return result;
 }

@@ -1,20 +1,13 @@
 #include <iostream>
 #include <string>
 #include <tuple>
-#include "data_holder.hpp"
-#include "IOutils.hpp"
-#include "algo_utils.hpp"
-#include "kmeans.hpp"
-#include "dckmeans.hpp"
-#include "ball_kmeans++_xf.hpp"
-#include <map>
 #include <iomanip>
 #include <chrono>
 
 using namespace std;
 
 
-void benchmark_on_reakl_data(basePath){
+void benchmark_on_real_data(string basePath){
 
        string input_path = basePath;     
        string centroid_path = basePath + "/comma_seperated_centroids/";
@@ -34,7 +27,7 @@ void benchmark_on_reakl_data(basePath){
     //    vector<string> out_list = {"TwitterCentroids"};
     //    vector<string> data_list = {"Twitter"};
 
-        int num_iters = 1000;
+        int num_iterations = 1000;
         float threshold = 0.001;
         vector<int> num_clusters = {5, 8, 10, 12, 25};  
         
@@ -78,7 +71,6 @@ void benchmark_on_reakl_data(basePath){
 
                 cout << file_list[i] << " " << dataset.size() << endl;
 
-
                 for (int j = 0; j< num_clusters.size(); j++){
             
                     int clus = num_clusters[j];
@@ -100,7 +92,7 @@ void benchmark_on_reakl_data(basePath){
                         // read_kplus_plus_centroids(centroidFilePath, centroids, clus);
                         // km_res = kmeans(dataset, centroids, clus, threshold, num_iters, numCols, time_limit);
 
-                        km_res = kmeans(dataset, num_clusters, threshold, num_iterations, numCols, 
+                        km_res = kmeans(dataset, clus, threshold, num_iterations, numCols, 
                                 time_limit, centroidFilePath, 0);
                         
                         if (km_res.timeout == true){
@@ -119,7 +111,7 @@ void benchmark_on_reakl_data(basePath){
                         // read_kplus_plus_centroids(centroidFilePath, centroids, clus);
                         // dckm_res = dckmeans(dataset, centroids, clus, threshold, num_iters, numCols, time_limit);
 
-                        dckm_res = dckmeans(dataset, num_clusters, threshold, num_iterations, numCols, time_limit, centroidFilePath, 0);
+                        dckm_res = dckmeans(dataset, clus, threshold, num_iterations, numCols, time_limit, centroidFilePath, 0);
                         
                         if (dckm_res.timeout == true){
                             dckm_timeout = "yes";
@@ -138,7 +130,7 @@ void benchmark_on_reakl_data(basePath){
                         // MatrixOur ballKm_centroids = load_centroids(centroidFilePath, clus, numCols);
                         // ballkm_res = ball_k_means_Ring(BallK_dataset, ballKm_centroids, false, threshold, num_iters, time_limit);
 
-                        ballkm_res = ball_k_means_Ring(BallK_dataset, false, num_clusters, threshold, num_iterations, time_limit, 
+                        ballkm_res = ball_k_means_Ring(BallK_dataset, false, clus, threshold, num_iterations, time_limit, 
                         centroidFilePath, 0);
 
                         if (ballkm_res.timeout == true){
