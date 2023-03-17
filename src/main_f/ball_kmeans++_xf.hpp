@@ -6,8 +6,6 @@
 #include <Eigen/Dense>
 #include <vector>
 #include <cfloat>
-#include <cmath>
-#include <random>
 
 using namespace std;
 using namespace Eigen;
@@ -44,7 +42,7 @@ update_centroids(MatrixOur& dataset, ClusterIndexVector& cluster_point_index, un
 
 inline void update_radius(MatrixOur& dataset, ClusterIndexVector& cluster_point_index, MatrixOur& new_centroids,
                           ClusterDistVector& temp_dis,
-                          VectorOur& the_rs, VectorXb& flag, unsigned int iteration_counter, unsigned long long int& cal_dist_num,
+                          VectorOur& the_rs, VectorXb& flag, unsigned int iteration_counter, unsigned int& cal_dist_num,
                           unsigned int the_rs_size);
 
 inline sortedNeighbors
@@ -77,8 +75,6 @@ void initialize(MatrixOur& dataset, MatrixOur& centroids, VectorXi& labels, Clus
                 ClusterDistVector& temp_dis);
 
 
-MatrixOur init_centroids(MatrixOur &dataset, int num_cluster);
-
 bool check_convergence(MatrixOur&new_centroids, 
 MatrixOur&centroids, float threshold);
 
@@ -108,71 +104,85 @@ MatrixOur&centroids, float threshold){
 }
 
 
-MatrixOur init_ball_centroids(MatrixOur &dataset, int num_cluster){
+MatrixOur init_ball_centroids(MatrixOur &dataset, MatrixOur &centroids, 
+int num_cluster, int seed, string init_type){
 
-    MatrixOur centroids(num_cluster, dataset.cols());;
+    int i = 0, j=0, size = dataset.rows();
+    
+    if (init_type == "random"){
 
-    for(int i=0; i<num_cluster; i++){  
-        for(int j=0; j<dataset.cols(); j++){
+        int test_array[size];
+
+        for (i = 0; i<size ; i++){
+            test_array[i] = i;
+        }
+
+        shuffle(test_array, size, seed);
+
+        for(i=0; i<num_cluster; i++){  
+            for(j=0; j<dataset.cols(); j++){
+                centroids(i, j) = dataset(test_array[i], j);
+            }   
+        }
+    }
+    else if (init_type == "sequential"){
+        for(i=0; i<num_cluster; i++){  
+            for(j=0; j<dataset.cols(); j++){
                 centroids(i, j) = dataset(i, j);
-        }   
+            }   
+        }
+
     }
 
     return centroids;
 }
 
-// The following function is taken from the following question thread.
-// https://stackoverflow.com/questions/20734774/random-array-generation-with-no-duplicates
-void get_ball_ranodm_indices(int *arr, size_t size, int seed)
-{
-    if (size > 1) 
-    {
-        size_t i;
-        srand(seed);
-        for (i = 0; i < size - 1; i++) 
-        {
-          size_t j = i + rand() / (RAND_MAX / (size - i) + 1);
-          int t = arr[j];
-          arr[j] = arr[i];
-          arr[i] = t;
-        }
+
+inline float calc_ball_squared_dist(Eigen::MatrixXf::RowXpr point, 
+Eigen::MatrixXf::RowXpr center){
+    
+    float dist = 0.0;
+    float temp = 0.0;
+    
+    // cout << point.size() << "\n";
+    for (int i=0; i < point.rows(); i++){
+        temp = point(i) - center(i);
+        dist = dist + (temp*temp);
+    }
+    return dist;
+}
+
+float get_sse(MatrixOur &dataset, MatrixOur &centroids, ClusterIndexVector cluster_point_index, 
+int num_cluster){
+
+float total_sse = 0;
+vector<float> sse_vec(num_cluster, 0);
+int i = 0;
+
+for (i = 0; i<num_cluster; i++){
+    for(int j = 0; j < cluster_point_index[i].size(); j++){
+        sse_vec[i] += calc_ball_squared_dist(dataset.row(cluster_point_index[i][j]), centroids.row(i));
     }
 }
 
-
-void extract_ball_data(MatrixOur &dataset, 
-MatrixOur &extracted_data, int data_prop, int num_points, int seed)
-{
-
-    int i = 0, j = 0, size = dataset.rows();
-    int test_array[size];
-
-    for (i = 0; i<size ; i++){
-        test_array[i] = i;
-    }
-
-    get_ball_ranodm_indices(test_array, size, seed);
-
-    for(i=0; i<num_points; i++){  
-        for(j=0; j<dataset.cols(); j++){
-            extracted_data(i, j) = dataset(test_array[i], j);
-        }   
-    }
+for(i = 0; i<num_cluster; i++){
+    sse_vec[i] /= cluster_point_index[i].size();
+    total_sse += sse_vec[i];
 }
 
+return total_sse;
+}
 
-
-output_data ball_k_means_Ring(MatrixOur& dataset, MatrixOur& centroids, bool detail, 
-double thres= 0.001, int iters = 100, int time_limit = 60000) {
+ball_output_data ball_k_means_Ring(MatrixOur& dataset, bool detail, int num_clusters,
+double thres= 0.001, int iters = 100, int time_limit = 60000, string init_type = "random", int seed=0) {
 
     double start_time = 0, end_time = 0;
-
 
     bool judge = true;
 
     const unsigned int dataset_rows = dataset.rows();
     const unsigned int dataset_cols = dataset.cols();
-    const unsigned int k = centroids.rows();
+    const unsigned int k = num_clusters;
 
     ClusterIndexVector temp_cluster_point_index;
     ClusterIndexVector cluster_point_index;
@@ -181,7 +191,11 @@ double thres= 0.001, int iters = 100, int time_limit = 60000) {
     ClusterDistVector temp_dis;
 
     MatrixOur new_centroids(k, dataset_cols);
-    MatrixOur old_centroids = centroids;
+    MatrixOur old_centroids(k, dataset_cols);
+
+    // Initialize the centroid
+    init_ball_centroids(dataset, old_centroids, num_clusters, seed, init_type);
+    
     MatrixOur centers_dis(k, k);
 
     VectorXb flag(k);
@@ -199,7 +213,7 @@ double thres= 0.001, int iters = 100, int time_limit = 60000) {
     unsigned int iteration_counter;
     unsigned int num_of_neighbour;
     unsigned int neighbour_num;
-    unsigned long long int cal_dist_num;
+    unsigned int cal_dist_num;
     unsigned int data_num;
 
     MatrixOur::Index minCol;
@@ -209,17 +223,33 @@ double thres= 0.001, int iters = 100, int time_limit = 60000) {
     cal_dist_num = 0;
     flag.setZero();
 
-    output_data res;
+    ball_output_data res;
 
     auto start = std::chrono::high_resolution_clock::now();
-    
-    cal_dist_num += (dataset.rows() * centroids.rows());
-    // cout << "Initial: " << cal_dist_num << endl;
-    
-    //initialize cluster_point_index and temp_dis
-    initialize(dataset, centroids, labels, cluster_point_index, clusters_neighbors_index, temp_dis);
+
+    // Include the distance computations in the first step
+    cal_dist_num += (dataset.rows() * k);
+
+    // Initialize cluster_point_index and temp_dis
+    initialize(dataset, old_centroids, labels, cluster_point_index, clusters_neighbors_index, temp_dis);
 
     temp_cluster_point_index.assign(cluster_point_index.begin(), cluster_point_index.end());
+
+    // Check for empty clusters
+    for (int i =0; i < k ; i++){
+        if(cluster_point_index[i].size() == 0){
+            
+            cout << "ball-Kmeans: Empty cluster found duriung initialization, safe exiting" << endl;
+            res.loop_counter = iteration_counter;
+            res.num_he = cal_dist_num;
+            res.runtime = 1;
+            res.timeout = false;
+            res.sse = std::numeric_limits<float>::max();
+            res.centroids = old_centroids;
+            return res;
+        }
+
+    }
 
     start_time = clock();
 
@@ -244,16 +274,17 @@ double thres= 0.001, int iters = 100, int time_limit = 60000) {
             delta = (((new_centroids - old_centroids).rowwise().squaredNorm())).array().sqrt();
 
             old_centroids = new_centroids;
-            
+
             // The inter centroid distnace also needs to be added to distance computations.
             cal_dist_num += (k * k) ;
 
             //get the radius of each centroids
             update_radius(dataset, cluster_point_index, new_centroids, temp_dis, the_rs, flag, iteration_counter,
                           cal_dist_num, k);
-            
             //Calculate distance between centers
+
             cal_centers_dist(new_centroids, iteration_counter, k, the_rs, delta, centers_dis);
+
             flag.setZero();
 
             //returns the set of neighbors
@@ -336,10 +367,6 @@ double thres= 0.001, int iters = 100, int time_limit = 60000) {
 
                     MatrixOur temp_distance = cal_ring_dist_Ring(j, data_num, dataset_cols, dataset, now_centers,
                                                                  now_data_index);
-
-                    // Since a point can only move between the i closest annular areas
-                    // so, shouldn't data_num be multiplied by (j+1) to also include the distance calculations with
-                    // currently assigned cluster rather than just (j) ?                                               
                     cal_dist_num += data_num * (j+1);
 
                     unsigned int new_label;
@@ -367,49 +394,71 @@ double thres= 0.001, int iters = 100, int time_limit = 60000) {
                     }
                 }
             }
+
+            auto temp_end = std::chrono::high_resolution_clock::now();
+            auto temptime = std::chrono::duration_cast<std::chrono::milliseconds>(temp_end - start);
+            
+            // Check for empty clusters
+            for (int i =0; i < k ; i++){
+                if(cluster_point_index[i].size() == 0){
+                    cout << "Empty cluster found duriung iteration, safe exiting" << endl;
+                    res.loop_counter = iteration_counter;
+                    res.num_he = cal_dist_num;
+                    res.runtime = float(temptime.count());;
+                    res.timeout = false;
+                    res.sse = std::numeric_limits<float>::max();
+                    res.centroids = new_centroids;
+                    return res;
+            }
+
+            }
+
+            if (temptime.count() >= time_limit){
+                res.loop_counter = iteration_counter;
+                res.num_he = cal_dist_num;
+                res.runtime = float(temptime.count());
+                res.timeout = true;
+                res.sse = get_sse(dataset, new_centroids, cluster_point_index, k);
+                res.centroids = new_centroids;
+
+                cout << "Ball-Kmeans Timed Out :(" << endl;
+                return res;
+                }
         }
-        else{
+        else
             break;
+
+        }
+        end_time = clock();
+
+        if (detail == true) {
+            cout << "ball-k-means with dividing ring:" << endl;
+            cout << "k                :                  ||" << k << endl;
+            cout << "iterations       :                  ||" << iteration_counter << endl;
+            cout << "The number of calculating distance: ||" << cal_dist_num << endl;
+            cout << "The number of neighbors:            ||" << num_of_neighbour << endl;
+            cout << "Time per round:                     ||"
+                << (double)(end_time - start_time) / CLOCKS_PER_SEC * 1000 / iteration_counter << endl;
+
         }
 
-    auto temp_end = std::chrono::high_resolution_clock::now();
-    auto temptime = std::chrono::duration_cast<std::chrono::milliseconds>(temp_end - start);
+    auto end1 = std::chrono::high_resolution_clock::now();
+    auto Totaltime = std::chrono::duration_cast<std::chrono::milliseconds>(end1 - start);
+    
+    ball_output_data result;
+    
+    result.loop_counter = iteration_counter;
+    result.num_he = cal_dist_num;
+    result.runtime = float(Totaltime.count());
+    result.timeout = false;
+    result.centroids = new_centroids;
+    result.sse = get_sse(dataset, new_centroids, cluster_point_index, k);
 
-    if (temptime.count() >= time_limit){
-        res.loop_counter = iteration_counter;
-        res.num_he = cal_dist_num;
-        res.runtime = float(temptime.count());
-        res.timeout = false;
-        cout << "Ball-Kmeans Timed Out :(" << endl;
-        return res;
-    }
-
-    }
-    end_time = clock();
-
-    if (detail == true) {
-        cout << "ball-k-means with dividing ring:" << endl;
-        cout << "k                :                  ||" << k << endl;
-        cout << "iterations       :                  ||" << iteration_counter << endl;
-        cout << "The number of calculating distance: ||" << cal_dist_num << endl;
-        cout << "The number of neighbors:            ||" << num_of_neighbour << endl;
-        cout << "Time per round:                     ||"
-             << (double)(end_time - start_time) / CLOCKS_PER_SEC * 1000 / iteration_counter << endl;
-
-    }
-    auto end = std::chrono::high_resolution_clock::now();
-    auto Totaltime = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-
-    res.loop_counter = iteration_counter;
-    res.num_he = cal_dist_num;
-    res.runtime = float(Totaltime.count());
-    res.timeout = false;
-
-    return res;
+    return result;
 }
 
-output_data ball_k_means_noRing(MatrixOur& dataset, MatrixOur& centroids, bool detail = false, 
-double thres= 0.001, int iters = 100, int time_limit = 60000) {
+MatrixOur ball_k_means_noRing(MatrixOur& dataset, MatrixOur& centroids, bool detail = false, 
+double thres= 0.001, int iters = 100) {
 
     double start_time, end_time;
 
@@ -446,7 +495,7 @@ double thres= 0.001, int iters = 100, int time_limit = 60000) {
     unsigned int iteration_counter;
     unsigned int num_of_neighbour;
     unsigned int neighbour_num;
-    unsigned long long int cal_dist_num;
+    unsigned int cal_dist_num;
     unsigned int data_num;
 
     //bool key = true;
@@ -622,26 +671,7 @@ double thres= 0.001, int iters = 100, int time_limit = 60000) {
 
     }
     
-    auto end = std::chrono::high_resolution_clock::now();
-    auto Totaltime = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-
-    output_data res;
-    res.loop_counter = iteration_counter;
-    res.num_he = cal_dist_num;
-    res.runtime = float(Totaltime.count());
-    res.timeout = false;
-
-    return res;  
-}
-
-MatrixOur get_data(vector<vector<float> > &origdata){
-  MatrixOur data(origdata.size(), origdata[0].size());
-  for(int i = 0; i < origdata.size(); i++){
-    for (int j =0; j < origdata[0].size(); j++){
-        data(i, j ) = origdata[i][j];
-    }
-  }  
-return data;
+    return centroids;
 }
 
 MatrixOur load_data(string filename) {
@@ -651,7 +681,7 @@ MatrixOur load_data(string filename) {
 
     *Parameters:
 
-    *     filename: file path.*    
+    *     filename: file path.*    
 
     *Return : Dataset in eigen matrix format.
 
@@ -681,8 +711,10 @@ MatrixOur load_data(string filename) {
         }
         i++;
     }
+
     return data;
 }
+
 
 
 MatrixOur load_centroids(string filename, int num_clusters, int numCols) {
@@ -692,7 +724,7 @@ MatrixOur load_centroids(string filename, int num_clusters, int numCols) {
 
     *Parameters:
 
-    *     filename: file path.*    
+    *     filename: file path.*    
 
     *Return : Dataset in eigen matrix format.
 
@@ -702,10 +734,9 @@ MatrixOur load_centroids(string filename, int num_clusters, int numCols) {
     ifstream inFile2(filename, ios::in);
     string lineStr2;
 
-    int counter = 0, i =0;
+    int i =0;
     
     while (getline(inFile2, lineStr2)) {
-        if (counter < num_clusters){
             stringstream ss2(lineStr2);
             string str2;
             int j = 0;
@@ -714,11 +745,6 @@ MatrixOur load_centroids(string filename, int num_clusters, int numCols) {
                 j++;
             }
             i++;
-        }
-        else{
-            break;
-        }
-        counter += 1;
     }
     return data;
 }
@@ -733,19 +759,19 @@ update_centroids(MatrixOur& dataset, ClusterIndexVector& cluster_point_index, un
 
     *Parameters:
 
-    *     dataset: dataset in eigen matrix format.*   
+    *     dataset: dataset in eigen matrix format.*   
 
-    *     clusters_point_index: global position of each point in the cluster.* 
+    *     clusters_point_index: global position of each point in the cluster.* 
 
-    *     k: number of center points.*  
+    *     k: number of center points.*  
 
-    *     dataset_cols: data set dimensions*  
+    *     dataset_cols: data set dimensions*  
 
-    *     flag: judgment label for whether each cluster has changed.*  
+    *     flag: judgment label for whether each cluster has changed.*  
 
-    *     iteration_counter: number of iterations.*  
+    *     iteration_counter: number of iterations.*  
 
-    *     old_centroids: center matrix of previous round.*  
+    *     old_centroids: center matrix of previous round.*  
 
     *Return : updated center matrix.
 
@@ -774,7 +800,7 @@ update_centroids(MatrixOur& dataset, ClusterIndexVector& cluster_point_index, un
 inline void update_radius(MatrixOur& dataset, ClusterIndexVector& cluster_point_index, MatrixOur& new_centroids,
                           ClusterDistVector& temp_dis, VectorOur& the_rs, VectorXb& flag,
                           unsigned int iteration_counter,
-                          unsigned long long int& cal_dist_num, unsigned int the_rs_size) {
+                          unsigned int& cal_dist_num, unsigned int the_rs_size) {
 
     /*
 
@@ -782,23 +808,23 @@ inline void update_radius(MatrixOur& dataset, ClusterIndexVector& cluster_point_
 
     *Parameters:
 
-    *     dataset: dataset in eigen matrix format.*   
+    *     dataset: dataset in eigen matrix format.*   
 
-    *     clusters_point_index: global position of each point in the cluster.* 
+    *     clusters_point_index: global position of each point in the cluster.* 
 
-    *     new_centroids: updated center matrix.*  
+    *     new_centroids: updated center matrix.*  
 
-    *     point_center_dist: distance from point in cluster to center*  
+    *     point_center_dist: distance from point in cluster to center*  
 
-    *     the_rs: The radius of each cluster.*  
+    *     the_rs: The radius of each cluster.*  
 
-    *     flag: judgment label for whether each cluster has changed.*  
+    *     flag: judgment label for whether each cluster has changed.*  
 
-    *     iteration_counter: number of iterations.*  
+    *     iteration_counter: number of iterations.*  
 
-    *     cal_dist_num: distance calculation times.* 
+    *     cal_dist_num: distance calculation times.* 
 
-    *     the_rs_size: number of clusters.* 
+    *     the_rs_size: number of clusters.* 
 
     */
 
@@ -834,15 +860,15 @@ get_sorted_neighbors_Ring(VectorOur& the_Rs, MatrixOur& centers_dis, unsigned in
 
     *Parameters:
 
-    *     the_rs: the radius of each cluster.*   
+    *     the_rs: the radius of each cluster.*   
 
-    *     centers_dist: distance matrix between centers.* 
+    *     centers_dist: distance matrix between centers.* 
 
-    *     now_ball: current ball label.*  
+    *     now_ball: current ball label.*  
 
-    *     k: number of center points*  
+    *     k: number of center points*  
 
-    *     now_center_index: nearest neighbor label of the current ball.*  
+    *     now_center_index: nearest neighbor label of the current ball.*  
 
     */
 
@@ -895,15 +921,15 @@ get_sorted_neighbors_noRing(VectorOur& the_rs, MatrixOur& centers_dist, unsigned
 
     *Parameters:
 
-    *     the_rs: the radius of each cluster.*   
+    *     the_rs: the radius of each cluster.*   
 
-    *     centers_dist: distance matrix between centers.* 
+    *     centers_dist: distance matrix between centers.* 
 
-    *     now_ball: current ball label.*  
+    *     now_ball: current ball label.*  
 
-    *     k: number of center points*  
+    *     k: number of center points*  
 
-    *     now_center_index: nearest neighbor label of the current ball.*  
+    *     now_center_index: nearest neighbor label of the current ball.*  
 
     */
 
@@ -957,17 +983,17 @@ cal_centers_dist(MatrixOur& new_centroids, unsigned int iteration_counter, unsig
 
     *Parameters:
 
-    *     new_centroids: current center matrix.*   
+    *     new_centroids: current center matrix.*   
 
-    *     iteration_counter: number of iterations.* 
+    *     iteration_counter: number of iterations.* 
 
-    *     k: number of center points.*  
+    *     k: number of center points.*  
 
-    *     the_rs: the radius of each cluster*  
+    *     the_rs: the radius of each cluster*  
 
-    *     delta: distance between each center and the previous center.*  
+    *     delta: distance between each center and the previous center.*  
 
-    *     centers_dist: distance matrix between centers.*  
+    *     centers_dist: distance matrix between centers.*  
 
     */
 
@@ -993,9 +1019,9 @@ inline MatrixOur cal_dist(MatrixOur& dataset, MatrixOur& centroids) {
 
     *Parameters:
 
-    *     dataset: dataset matrix.*   
+    *     dataset: dataset matrix.*   
 
-    *     centroids: centroids matrix.* 
+    *     centroids: centroids matrix.* 
 
     *Return : distance matrix between dataset and center point.
 
@@ -1016,17 +1042,17 @@ cal_ring_dist_Ring(unsigned j, unsigned int data_num, unsigned int dataset_cols,
 
     *Parameters:
 
-    *     j: the label of the current ring.* 
+    *     j: the label of the current ring.* 
 
-    *     data_num: number of points in the ring area.*   
+    *     data_num: number of points in the ring area.*   
 
-    *     dataset_cols: data set dimensions.* 
+    *     dataset_cols: data set dimensions.* 
 
-    *     dataset: dataset in eigen matrix format.* 
+    *     dataset: dataset in eigen matrix format.* 
 
-    *     now_centers: nearest ball center matrix corresponding to the current ball.* 
+    *     now_centers: nearest ball center matrix corresponding to the current ball.* 
 
-    *     now_data_index: labels for points in each ring.* 
+    *     now_data_index: labels for points in each ring.* 
 
     *Return : distance matrix from the point in the ring area to the corresponding nearest neighbor.
 
@@ -1053,15 +1079,15 @@ cal_ring_dist_noRing(unsigned int data_num, unsigned int dataset_cols, MatrixOur
 
     *Parameters:
 
-    *     data_num: number of points in the ring area.*   
+    *     data_num: number of points in the ring area.*   
 
-    *     dataset_cols: data set dimensions.* 
+    *     dataset_cols: data set dimensions.* 
 
-    *     dataset: dataset in eigen matrix format.* 
+    *     dataset: dataset in eigen matrix format.* 
 
-    *     now_centers: nearest ball center matrix corresponding to the current ball.* 
+    *     now_centers: nearest ball center matrix corresponding to the current ball.* 
 
-    *     now_data_index: labels for points in the ring.* 
+    *     now_data_index: labels for points in the ring.* 
 
     *Return : distance matrix from the point in the ring area to the corresponding nearest neighbor.
 
@@ -1086,17 +1112,17 @@ void initialize(MatrixOur& dataset, MatrixOur& centroids, VectorXi& labels, Clus
 
     *Parameters:
 
-    *     dataset: dataset in eigen matrix format.*   
+    *     dataset: dataset in eigen matrix format.*   
 
-    *     centroids: dcentroids matrix.* 
+    *     centroids: dcentroids matrix.* 
 
-    *     labels: the label of the cluster where each data is located.* 
+    *     labels: the label of the cluster where each data is located.* 
 
-    *     clusters_point_index: two-dimensional vector of data point labels within each cluster.* 
+    *     clusters_point_index: two-dimensional vector of data point labels within each cluster.* 
 
-    *     clusters_neighbors_index: two-dimensional vector of neighbor cluster labels for each cluster.* 
+    *     clusters_neighbors_index: two-dimensional vector of neighbor cluster labels for each cluster.* 
 
-    *     point_center_dist: distance from point in cluster to center.* 
+    *     point_center_dist: distance from point in cluster to center.* 
 
     */
 

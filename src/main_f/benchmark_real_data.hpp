@@ -13,10 +13,8 @@
 
 using namespace std;
 
-string basePath = "/u/parishar/scratch/DATASETS/real_data/";
 
-
-void doubling_prop(){
+void benchmark_on_reakl_data(basePath){
 
        string input_path = basePath;     
        string centroid_path = basePath + "/comma_seperated_centroids/";
@@ -97,9 +95,13 @@ void doubling_prop(){
                         //####################
                         // KMeans
                         //####################
-                        read_kplus_plus_centroids(centroidFilePath, centroids, clus);
-                        
-                        km_res = kmeans(dataset, centroids, clus, threshold, num_iters, numCols, time_limit);
+                        cout << "Algo: KMeans" << endl; 
+
+                        // read_kplus_plus_centroids(centroidFilePath, centroids, clus);
+                        // km_res = kmeans(dataset, centroids, clus, threshold, num_iters, numCols, time_limit);
+
+                        km_res = kmeans(dataset, num_clusters, threshold, num_iterations, numCols, 
+                                time_limit, centroidFilePath, 0);
                         
                         if (km_res.timeout == true){
                             km_timeout = "yes";
@@ -113,10 +115,11 @@ void doubling_prop(){
                         // KMeans-DataCentric
                         //####################
                         cout << "Algo: DCKM" << endl; 
-                        read_kplus_plus_centroids(centroidFilePath, centroids, clus);
-                        
-                        
-                        dckm_res = dckmeans(dataset, centroids, clus, threshold, num_iters, numCols, time_limit);
+
+                        // read_kplus_plus_centroids(centroidFilePath, centroids, clus);
+                        // dckm_res = dckmeans(dataset, centroids, clus, threshold, num_iters, numCols, time_limit);
+
+                        dckm_res = dckmeans(dataset, num_clusters, threshold, num_iterations, numCols, time_limit, centroidFilePath, 0);
                         
                         if (dckm_res.timeout == true){
                             dckm_timeout = "yes";
@@ -130,9 +133,13 @@ void doubling_prop(){
                         //####################
                         // Ball-KMeans
                         //####################
-                        MatrixOur ballKm_centroids = load_centroids(centroidFilePath, clus, numCols);
+                        cout << "Algo: Ball-KMeans" << endl; 
 
-                        ballkm_res = ball_k_means_Ring(BallK_dataset, ballKm_centroids, false, threshold, num_iters, time_limit);
+                        // MatrixOur ballKm_centroids = load_centroids(centroidFilePath, clus, numCols);
+                        // ballkm_res = ball_k_means_Ring(BallK_dataset, ballKm_centroids, false, threshold, num_iters, time_limit);
+
+                        ballkm_res = ball_k_means_Ring(BallK_dataset, false, num_clusters, threshold, num_iterations, time_limit, 
+                        centroidFilePath, 0);
 
                         if (ballkm_res.timeout == true){
                             ballkm_timeout = "yes";
@@ -172,5 +179,4 @@ void doubling_prop(){
             }
 
        cout << "Completed benchmarks" << endl;
-       return 0;
- }
+}

@@ -97,10 +97,14 @@ void double_prop(string basePath){
                 //####################
                 // KMeans
                 //####################
+                
                 cout << "Algo: KMeans" << endl; 
-                alg_utils.init_centroids_sequentially(centroids, extracted_data, clus);   
+                
+                // alg_utils.init_centroids_sequentially(centroids, extracted_data, clus);   
+                // km_res = kmeans(extracted_data, centroids, clus, threshold, num_iters, numCols, time_limit);
 
-                km_res = kmeans(extracted_data, centroids, clus, threshold, num_iters, numCols, time_limit);
+                km_res = kmeans(extracted_data, num_clusters, threshold, num_iterations, numCols, 
+                                time_limit, "sequential", 0);
                 
                 if (km_res.timeout == true){
                     km_timeout = "yes";
@@ -112,9 +116,12 @@ void double_prop(string basePath){
                 //####################
 
                 cout << "Algo: DCKM" << endl; 
-                alg_utils.init_centroids_sequentially(centroids, extracted_data, clus);
                 
-                dckm_res = dckmeans(extracted_data, centroids, clus, threshold, num_iters, numCols, time_limit);
+                // alg_utils.init_centroids_sequentially(centroids, extracted_data, clus);
+                // dckm_res = dckmeans(extracted_data, centroids, clus, threshold, num_iters, numCols, time_limit);
+
+                dckm_res = dckmeans(extracted_data, num_clusters, threshold, num_iterations, numCols, time_limit, "sequential", 0);
+
                 
                 if (dckm_res.timeout == true){
                     dckm_timeout = "yes";
@@ -124,11 +131,13 @@ void double_prop(string basePath){
                 //####################
                 // Ball-KMeans
                 //####################
+                
                 cout << "Algo: BallKMeans" << endl; 
-                MatrixOur ballKm_centroids = init_ball_centroids(extracted_ball_data, clus);
+                
+                // MatrixOur ballKm_centroids = init_ball_centroids(extracted_ball_data, clus);
+                // ballkm_res = ball_k_means_Ring(extracted_ball_data, ballKm_centroids, false, threshold, num_iters, time_limit);
 
-                ballkm_res = ball_k_means_Ring(extracted_ball_data, ballKm_centroids, false, threshold, num_iters, time_limit);
-                // ballkm_res = run_ham(extracted_ball_data, ballKm_centroids, false, threshold, num_iters, time_limit);
+                ballkm_res = ball_k_means_Ring(extracted_ball_data, false, num_clusters, threshold, num_iterations, time_limit, "sequential", 0);
 
                 if (ballkm_res.timeout == true){
                     ballkm_timeout = "yes";

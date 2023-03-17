@@ -1,28 +1,25 @@
 #include <iostream>
 #include <vector>
 #include <map>
-#include "misc_utils.hpp"
-#include "algo_utils.hpp"
 #include "dckm_utils.hpp"
 #include <chrono>
-
 using namespace std;
-
 
 class DataCentricKmeans{
     template <typename Tfloat, typename Tint>
-    output_data dckmeans(vector<vector <Tfloat> > &dataset, vector<vector<Tfloat> > &centroids,
+    output_data dckmeans(vector<vector <Tfloat> > &dataset,
     Tint num_clusters, Tfloat threshold, Tint num_iterations, 
-    Tint numCols, Tint time_limit);
+    Tint numCols, Tint time_limit, string init_type, Tint seed);
 };
 
 
 template <typename Tfloat, typename Tint>
-output_data dckmeans(vector<vector <Tfloat> > &dataset, vector<vector<Tfloat> > &centroids, Tint num_clusters, 
-Tfloat threshold, Tint num_iterations, Tint numCols, Tint time_limit){
+output_data dckmeans(vector<vector <Tfloat> > &dataset, Tint num_clusters, 
+Tfloat threshold, Tint num_iterations, Tint numCols, Tint time_limit, 
+string init_type, Tint seed){
 
     Tint loop_counter = 0;
-    // vector<vector<Tfloat> > centroids(num_clusters, vector<Tfloat>(numCols));
+    vector<vector<Tfloat> > centroids(num_clusters, vector<Tfloat>(numCols));
     vector<vector<Tfloat> > new_centroids(num_clusters, vector<Tfloat>(numCols));
     vector<vector<Tfloat> > dist_matrix(dataset.size(), vector<Tfloat>(num_clusters));
     vector<Tint> assigned_clusters(dataset.size());
@@ -34,7 +31,7 @@ Tfloat threshold, Tint num_iterations, Tint numCols, Tint time_limit){
     
     vector<vector<vector <Tfloat> > > mid_points(num_clusters, vector<vector<Tfloat> >(num_clusters, vector<Tfloat>(numCols, 0)));
     vector<vector<vector <Tfloat> > > affine_vectors(num_clusters, vector<vector<Tfloat> >(num_clusters, vector<Tfloat>(numCols, 0)));
-
+    
     vector<Tint> temp1;
     vector<Tfloat> temp2(3);
     vector<vector<Tfloat> > temp_master;
@@ -55,31 +52,29 @@ Tfloat threshold, Tint num_iterations, Tint numCols, Tint time_limit){
     algorithm_utils alg_utils;
     dckm_utils dc_utils;
 
-
     // Start time counter 
     auto start = std::chrono::high_resolution_clock::now();
 
     // Initialize centroids
-    alg_utils.init_centroids_sequentially(centroids, dataset, num_clusters);
-
+    alg_utils.init_centroids(centroids, dataset, num_clusters, seed, init_type);
 
     // Assign data to nearest center
     alg_utils.calculate_distances(dataset, centroids, dist_matrix,
     num_clusters, assigned_clusters, cluster_size, he_counter);
 
     // Check for empty clusters and return
-    //  for (i=0; i<num_clusters; i++){
-        
-    //     if(cluster_size[i][0] == 0){
-            
-    //         cout << "Empty cluster found after initialization, safe exiting" << endl;
-    //         result.loop_counter = 1;
-    //         result.num_he = 0;
-    //         result.runtime = 0;
-    //         result.timeout = false;
-    //         return result;
-    //     }
-    // }
+    for (i =0 ; i<num_clusters; i++){
+        if(cluster_size[i][0] == 0){
+            cout << "Empty cluster found after initialization, safe exiting" << endl;
+            result.loop_counter = 0;
+            result.num_he = 0;
+            result.runtime = 0;
+            result.timeout = false;
+            result.sse = std::numeric_limits<float>::max();
+            return result;
+        }
+    }
+
 
     while (loop_counter < num_iterations){
 
@@ -93,8 +88,8 @@ Tfloat threshold, Tint num_iterations, Tint numCols, Tint time_limit){
         }
         
         find_neighbors(new_centroids, center_dist_mat, cluster_size, neighbors, 
-        mid_points, affine_vectors, temp2, he_counter, temp_master, temp_midpoint, temp_affine, 
-        midpoint_holder, affine_holder);
+        mid_points, affine_vectors, temp2, temp_master, temp_midpoint, temp_affine, 
+        midpoint_holder, affine_holder, he_counter);
         
         determine_data_expression(dataset, new_centroids, cluster_size, center_dist_mat, dist_matrix,
         assigned_clusters, neighbors, affine_vectors, mid_points, 
@@ -106,29 +101,30 @@ Tfloat threshold, Tint num_iterations, Tint numCols, Tint time_limit){
         // reset centroids
         alg_utils.reinit(new_centroids);
 
-        // Check for empty clusters and return
-        //  for (i=0; i<num_clusters; i++){
+         // Check for empty clusters
+        for (i = 0 ; i<num_clusters; i++){
         
-        //     if(cluster_size[i][0] == 0){
-                
-        //         cout << "Empty cluster found after initialization, safe exiting" << endl;
-        //         result.loop_counter = 1;
-        //         result.num_he = 0;
-        //         result.runtime = 0;
-        //         result.timeout = false;
-        //         return result;
-        //     }
-        // }
+            if(cluster_size[i][0] == 0){
+                cout << "Empty cluster found after initialization, safe exiting" << endl;
+                result.loop_counter = 0;
+                result.num_he = 0;
+                result.runtime = 0;
+                result.timeout = false;
+                result.sse = std::numeric_limits<float>::max();
+                return result;
+            }
+        }
 
         auto temp_end = std::chrono::high_resolution_clock::now();
         auto temptime = std::chrono::duration_cast<std::chrono::milliseconds>(temp_end - start);
 
         if (temptime.count() >= time_limit){
             result.loop_counter = loop_counter;
-            result.num_he = he_counter;
-            result.assigned_labels = assigned_clusters;
+            result.num_he = dataset.size() * loop_counter * num_clusters;
             result.runtime = float(temptime.count());
             result.timeout = true;
+            result.centroids = new_centroids;
+            result.sse = get_sse(dataset, centroids, cluster_size, assigned_clusters, num_clusters);
             cout << "DCKmeans Timed Out :(" << endl;
             return result;
         }
@@ -140,9 +136,10 @@ Tfloat threshold, Tint num_iterations, Tint numCols, Tint time_limit){
 
     result.loop_counter = loop_counter;
     result.num_he = he_counter;
-    result.assigned_labels = assigned_clusters;
     result.runtime = float(Totaltime.count());
     result.timeout = false;
+    result.centroids = new_centroids;
+    result.sse = get_sse(dataset, new_centroids, cluster_size, assigned_clusters, num_clusters);
 
     return result;
 }

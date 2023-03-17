@@ -3,7 +3,6 @@
 #include "math.h"
 #include <map>
 #include <algorithm>
-#include <cmath>
 #include <random>
 #pragma once
 
@@ -11,16 +10,6 @@ using namespace std;
 
 class algorithm_utils{
     public:
-    
-    template <typename T1, typename T2>
-    void init_centroids_sequentially(vector<vector<T1> > &, vector<vector<T1> > &, T2);
-
-    template <typename T1, typename T2>
-    void init_centroids_randomly(vector<vector <T1> > &centroids, 
-    vector<vector <T1> > &dataset, T2 num_cluster, T2 seed);
-    
-    void get_ranodm_indices(int *arr, int size, int seed);
-    
     template <typename T1, typename T2>
     void calculate_distances(const vector<vector<T1> > &dataset, 
     vector<vector<T1> > &centroids, vector<vector<T1> > &dist_mat,
@@ -39,15 +28,21 @@ class algorithm_utils{
     bool check_convergence(vector<vector <T1> > &new_centroids, 
     vector<vector <T1> > &centroids, T1 threshold, float &diff, float &temp_diff, int &i, int &j);
 
-    template <typename T1, typename T2>
-    void extract_data(vector<vector <T1> > &dataset, vector<vector <T1> > &extracted_data, 
-    T2 num_points, T2 seed);
-    
     template <typename T1>
     void reinit(vector<vector<T1> > &);
 
+    template <typename T1, typename T2>
+    float get_sse(vector<vector <T1> > &dataset, vector<vector <T1> > &centroids, vector<vector<T1> > &cluster_size, 
+    vector<T2> assigned_clusters, T2 num_cluster)  ; 
+
+    static void getrandom_indices(int *dst,int nums, int limit);
+
+    template <typename T1, typename T2>
+    void init_centroids(vector<vector<T1> > &centroids, 
+    vector<vector<T1> > &dataset, T2 num_cluster, T2 seed, string init_type);
+
     template <typename T1>
-    float calc_nei_euclidean(const vector<T1> &point, 
+    inline float calc_squared_dist(const vector<T1> &point, 
     const vector<T1> &center);
     
 };
@@ -62,19 +57,34 @@ void algorithm_utils::reinit(vector<vector<T1> > &container){
 }
 
 
-// The following function is taken from the following question thread.
+template <typename T1>
+inline float calc_squared_dist(const vector<T1> &point, 
+const vector<T1> &center){
+    
+    T1 dist = 0.0;
+    T1 temp = 0.0;
+    
+    // cout << point.size() << "\n";
+    for (int i=0; i < point.size(); i++){
+        temp = point[i] - center[i];
+        dist = dist + (temp*temp);
+    }
+    return dist;
+}
+
+
+// The following code fragmemt is taken from the following question thread.
 // https://stackoverflow.com/questions/20734774/random-array-generation-with-no-duplicates
-void algorithm_utils::get_ranodm_indices(int *arr, int size, int seed)
+void shuffle(int *arr, size_t size, int seed)
 {
     if (size > 1) 
     {
-        int i = 0, j = 0, t = 0;
+        size_t i;
         srand(seed);
-        
         for (i = 0; i < size - 1; i++) 
         {
-          j = i + rand() / (RAND_MAX / (size - i) + 1);
-          t = arr[j];
+          size_t j = i + rand() / (RAND_MAX / (size - i) + 1);
+          int t = arr[j];
           arr[j] = arr[i];
           arr[i] = t;
         }
@@ -82,57 +92,54 @@ void algorithm_utils::get_ranodm_indices(int *arr, int size, int seed)
 }
 
 template <typename T1, typename T2>
-void algorithm_utils::init_centroids_randomly(vector<vector <T1> > &centroids, 
-vector<vector <T1> > &dataset, T2 num_cluster, T2 seed){
+void algorithm_utils::init_centroids(vector<vector <T1> > &centroids, 
+vector<vector <T1> > &dataset, T2 num_cluster, T2 seed, string init_type){
 
     int i = 0, j = 0, size = dataset.size();
     int test_array[size];
-
-    for (i = 0; i<size ; i++){
-        test_array[i] = i;
-    }
     
-    get_ranodm_indices(test_array, size, seed);
+    if (init_type == "random"){
+        for (i = 0; i<size ; i++){
+            test_array[i] = i;
+        }
 
-    for(i=0; i<num_cluster; i++){  
-        for(j=0; j <dataset[i].size(); j++){
-            centroids[i][j] = dataset[test_array[i]][j];
-        }   
+        shuffle(test_array, size, seed);
+
+        for(i=0; i<num_cluster; i++){  
+            for(j=0; j <dataset[i].size(); j++){
+                centroids[i][j] = dataset[test_array[i]][j];
+            }   
+        }
     }
-}
-
-template <typename T1, typename T2>
-void algorithm_utils::extract_data(vector<vector <T1> > &dataset, vector<vector <T1> > &extracted_data, 
-T2 num_points, T2 seed){
-
-
-    int i = 0, j = 0, size = dataset.size();
-    int test_array[size];
-
-    for (i = 0; i<size ; i++){
-        test_array[i] = i;
-    }
-
-    get_ranodm_indices(test_array, size, seed);
-    
-    for(i=0; i < num_points; i++){ 
-        for(j=0; j<dataset[0].size(); j++){
-            extracted_data[i][j] = dataset[test_array[i]][j];
-        }   
-    }
-}
-
-
-
-template <typename T1, typename T2>
-void algorithm_utils::init_centroids_sequentially(vector<vector <T1> > &centroids, 
-vector<vector <T1> > &dataset, T2 num_cluster){
-
-    for(int i=0; i<num_cluster; i++){  
-        for(int j=0; j<dataset[i].size(); j++){
+    else if (init_type == "sequential"){
+        for(i=0; i<num_cluster; i++){  
+            for(j=0; j <dataset[i].size(); j++){
                 centroids[i][j] = dataset[i][j];
-        }   
+            }   
+        }
     }
+}
+
+
+template <typename T1, typename T2>
+float get_sse(vector<vector <T1> > &dataset, vector<vector <T1> > &centroids, vector<vector<T1> > &cluster_size, 
+vector<T2> assigned_clusters, T2 num_cluster){
+
+float total_sse = 0;
+vector<float> sse_vec(num_cluster, 0);
+int i = 0;
+
+for (i = 0; i<dataset.size(); i++){
+    sse_vec[assigned_clusters[i]] += calc_squared_dist(dataset[i], centroids[assigned_clusters[i]]);
+}
+
+for(i = 0; i< num_cluster;i++){
+    sse_vec[i] /= cluster_size[i][0];
+    total_sse += sse_vec[i];
+}
+
+return total_sse;
+
 }
 
 
@@ -143,30 +150,15 @@ const vector<T1> &center, unsigned long long int &he_counter){
     T1 dist = 0.0;
     T1 temp = 0.0;
     
-    for (int i=0; i < point.size(); i++){
-        temp = point[i] - center[i];
-        dist = dist + (temp*temp);
-    }
-    
-    he_counter = he_counter + 1;
-    dist = sqrt(dist);
-    return dist;
-}
+    // cout << point.size() << "\n";
 
-
-template <typename T1>
-inline float algorithm_utils::calc_nei_euclidean(const vector<T1> &point, 
-const vector<T1> &center){
-    
-    T1 dist = 0.0;
-    T1 temp = 0.0;
-    
     for (int i=0; i < point.size(); i++){
         temp = point[i] - center[i];
         dist = dist + (temp*temp);
     }
 
     dist = sqrt(dist);
+    he_counter += 1;
     return dist;
 }
 
@@ -189,7 +181,10 @@ unsigned long long int &he_counter){
     // Calculate the distance of points to nearest center
     for (i=0; i < dataset.size(); i++){
 
+        // cout << "inside dist :" << "\n";
+        
         shortestDist2 = std::numeric_limits<float>::max();
+        // cout << i << "\n";
         
         for (j=0; j < centroids.size(); j++){ 
             
@@ -238,12 +233,13 @@ vector<vector<T1> > &cluster_size, T2 numCols){
         for (j = 0; j < new_centroids[i].size(); j++){
             if (k > 0)
                 new_centroids[i][j] = new_centroids[i][j]/k;
-            // else
-            //     new_centroids[i][j] = 0.0;
+            else
+                new_centroids[i][j] = 0.0;
         }
     } 
 
 }
+
 
 
 template <typename T1>

@@ -8,17 +8,19 @@ using namespace std;
 
 class conv_kmeans{
     template <typename Tfloat, typename Tint>
-    output_data kmeans(vector<vector <Tfloat> > &dataset, vector<vector<Tfloat> > &centroids,
-    Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols, Tint time_limit);
+    output_data kmeans(vector<vector <Tfloat> > &dataset,
+    Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols, Tint time_limit, 
+    string init_type, Tint seed);
 
 };
 
-
 template <typename Tfloat, typename Tint>
-inline output_data kmeans(vector<vector <Tfloat> > &dataset, vector<vector<Tfloat> > &centroids,
-Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols, Tint time_limit){
+inline output_data kmeans(vector<vector <Tfloat> > &dataset,
+Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols, Tint time_limit, 
+string init_type, Tint seed){
 
     Tint loop_counter = 0;
+    vector<vector<Tfloat> > centroids(num_clusters, vector<Tfloat>(numCols));
     vector<vector<Tfloat> > new_centroids(num_clusters, vector<Tfloat>(numCols));
     vector<vector <Tfloat> > dist_matrix(dataset.size(), vector<Tfloat>(num_clusters));
     vector<vector<Tfloat> > cluster_size(num_clusters, vector<Tfloat>(2));  
@@ -29,33 +31,35 @@ Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols, Tint tim
     algorithm_utils alg_utils;
     print_utils pu;
 
-    int i =0, j =0 ;
-    float temp_diff = 0, diff = 0;
-    unsigned long long int he_counter = 0;
-
+    int i =0, j = 0;
+    float temp_diff =0, diff = 0;
     output_data result;
+
+    unsigned long long int he_counter = 0;
 
     // Start time counter 
     auto start = std::chrono::high_resolution_clock::now();
     
     // Initialize centroids
-    alg_utils.init_centroids_sequentially(centroids, dataset, num_clusters);
+    alg_utils.init_centroids(centroids, dataset, num_clusters, seed, init_type);
 
     alg_utils.calculate_distances(dataset, centroids, dist_matrix, 
     num_clusters, assigned_clusters, cluster_size, he_counter);
 
-        // Check for empty clusters and return
-//    for (i=0; i<num_clusters; i++){
+    // Check for empty clusters and return
+    for (i=0; i<num_clusters; i++){
         
-//         if(cluster_size[i][0] == 0){
-//             cout << "Empty cluster found after initialization, safe exiting" << endl;
-//             result.loop_counter = 1;
-//             result.num_he = 0;
-//             result.runtime = 0;
-//             result.timeout = false;
-//             return result;
-//         }
-//     }
+        if(cluster_size[i][0] == 0){
+            
+            cout << "Empty cluster found after initialization, safe exiting" << endl;
+            result.loop_counter = 0;
+            result.num_he = 0;
+            result.runtime = 0;
+            result.timeout = false;
+            result.sse = std::numeric_limits<float>::max();
+            return result;
+        }
+    }
 
    
     while (loop_counter < num_iterations){
@@ -83,26 +87,27 @@ Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols, Tint tim
         // reset centroids
         alg_utils.reinit(new_centroids);
 
-            // Check for empty clusters and return
-        //   for (i=0; i<num_clusters; i++){
+        // Check for empty clusters and return
+        for (i=0 ; i<num_clusters; i++){
         
-        //     if(cluster_size[i][0] == 0){
-        //         cout << "Empty cluster found during iterations, safe exiting" << endl;
-        //         result.loop_counter = 1;
-        //         result.num_he = 0;
-        //         result.runtime = 0;
-        //         result.timeout = false;
-        //         return result;
-        //     }
-        // }
+            if(cluster_size[i][0] == 0){
+                
+                cout << "Empty cluster found after initialization, safe exiting" << endl;
+                result.loop_counter = 0;
+                result.num_he = 0;
+                result.runtime = 0;
+                result.timeout = false;
+                result.sse = get_sse(dataset, centroids, cluster_size, assigned_clusters, num_clusters);
+                return result;
+            }
+        }
 
         auto temp_end = std::chrono::high_resolution_clock::now();
         auto temptime = std::chrono::duration_cast<std::chrono::milliseconds>(temp_end - start);
 
         if (temptime.count() >= time_limit){
             result.loop_counter = loop_counter;
-            result.num_he = dataset.size() * num_clusters * loop_counter;
-            result.assigned_labels = assigned_clusters;
+            result.num_he = dataset.size() * loop_counter * num_clusters;
             result.runtime = float(temptime.count());
             result.timeout = true;
             cout << "Kmeans Timed Out :(" << endl;
@@ -114,13 +119,11 @@ Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols, Tint tim
     auto end = std::chrono::high_resolution_clock::now();
     auto Totaltime = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
-    // cout << "He Counter: " << he_counter << "Calculated: " << (dataset.size() * num_clusters * loop_counter) << endl;
-
     result.loop_counter = loop_counter;
     result.num_he = dataset.size() * num_clusters * loop_counter;
-    result.assigned_labels = assigned_clusters;
     result.runtime = float(Totaltime.count());
     result.timeout = false;
+    result.sse = get_sse(dataset, new_centroids, cluster_size, assigned_clusters, num_clusters);
 
     return result;
 
