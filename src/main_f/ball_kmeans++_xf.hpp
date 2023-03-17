@@ -276,7 +276,6 @@ double thres= 0.001, int iters = 100, int time_limit = 60000, string init_type =
     // Check for empty clusters
     for (int i =0; i < k ; i++){
         if(cluster_point_index[i].size() == 0){
-            
             cout << "ball-Kmeans: Empty cluster found duriung initialization, safe exiting" << endl;
             res.loop_counter = iteration_counter;
             res.num_he = cal_dist_num;

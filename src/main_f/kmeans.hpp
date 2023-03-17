@@ -46,10 +46,8 @@ string init_type, Tint seed){
 
     // Check for empty clusters and return
     for (i=0; i<num_clusters; i++){
-        
         if(cluster_size[i][0] == 0){
-            
-            cout << "Empty cluster found after initialization, safe exiting" << endl;
+            cout << "Empty cluster found during initialization, safe exiting" << endl;
             result.loop_counter = 0;
             result.num_he = 0;
             result.runtime = 0;
@@ -89,7 +87,6 @@ string init_type, Tint seed){
         for (i=0 ; i<num_clusters; i++){
         
             if(cluster_size[i][0] == 0){
-                
                 cout << "Empty cluster found after initialization, safe exiting" << endl;
                 result.loop_counter = 0;
                 result.num_he = 0;
