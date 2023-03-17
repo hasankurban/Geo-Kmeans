@@ -93,9 +93,6 @@ void doubling_prop(){
                         // Read centroids  
                         centroidFilePath = centroid_path + out_list[i] + "_" + to_string(clus) + "_.txt";
 
-                        // cout << "Clus: " << clus << " rep: " << rep << endl;
-                        // cout << inputfilePath << endl;
-                        // cout <<  centroidFilePath << endl;
 
                         //####################
                         // KMeans

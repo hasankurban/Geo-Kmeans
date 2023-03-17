@@ -244,6 +244,9 @@ double thres= 0.001, int iters = 100, int time_limit = 60000) {
             delta = (((new_centroids - old_centroids).rowwise().squaredNorm())).array().sqrt();
 
             old_centroids = new_centroids;
+            
+            // The inter centroid distnace also needs to be added to distance computations.
+            cal_dist_num += (k * k) ;
 
             //get the radius of each centroids
             update_radius(dataset, cluster_point_index, new_centroids, temp_dis, the_rs, flag, iteration_counter,

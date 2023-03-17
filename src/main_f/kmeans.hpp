@@ -101,7 +101,7 @@ Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols, Tint tim
 
         if (temptime.count() >= time_limit){
             result.loop_counter = loop_counter;
-            result.num_he = he_counter;
+            result.num_he = dataset.size() * num_clusters * loop_counter;
             result.assigned_labels = assigned_clusters;
             result.runtime = float(temptime.count());
             result.timeout = true;
@@ -114,8 +114,10 @@ Tint num_clusters, Tfloat threshold, Tint num_iterations, Tint numCols, Tint tim
     auto end = std::chrono::high_resolution_clock::now();
     auto Totaltime = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
+    // cout << "He Counter: " << he_counter << "Calculated: " << (dataset.size() * num_clusters * loop_counter) << endl;
+
     result.loop_counter = loop_counter;
-    result.num_he = he_counter;
+    result.num_he = dataset.size() * num_clusters * loop_counter;
     result.assigned_labels = assigned_clusters;
     result.runtime = float(Totaltime.count());
     result.timeout = false;

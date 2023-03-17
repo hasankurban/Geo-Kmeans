@@ -19,8 +19,8 @@ void double_prop(string basePath){
        vector<string> file_list = {"magic.csv", "spambase.csv", "crop.csv", "Twitter.csv", "birch.csv"};
        vector<string> data_list = {"Magic", "Spambase", "Crop", "Twitter", "Birch"};
 
-    //    vector<string> file_list = {"magic.csv", "spambase.csv"};
-    //    vector<string> data_list = {"Magic", "Spambase"};
+    //    vector<string> file_list = {"spambase.csv", "Twitter.csv"};
+    //    vector<string> data_list = {"Spambase", "Twitter"};
 
         int num_iters = 2000;
         float threshold = 0.001;
@@ -47,7 +47,7 @@ void double_prop(string basePath){
        string outFile = out_path + "doubling_proportion.csv" ;
        
        avgresFile.open(outFile, ios::trunc);
-       avgresFile << "Algorithm,Data,Clusters,Prop,Distances,Runtime,Timeout";
+       avgresFile << "Algorithm,Data,Clusters,Prop,Distances,Runtime,Iterations,Timeout";
        avgresFile.close();
        string alg = "";
 
@@ -127,7 +127,7 @@ void double_prop(string basePath){
                 //####################
                 // Ball-KMeans
                 //####################
-                cout << "Algo: DCKM" << endl; 
+                cout << "Algo: BallKMeans" << endl; 
                 MatrixOur ballKm_centroids = init_ball_centroids(extracted_ball_data, clus);
 
                 ballkm_res = ball_k_means_Ring(extracted_ball_data, ballKm_centroids, false, threshold, num_iters, time_limit);
@@ -148,15 +148,15 @@ void double_prop(string basePath){
 
                 avgresFile << "\nKMeans" << "," << data_list[i] << "," << to_string(clus) 
                 << "," << to_string(prop) << "," << to_string(km_res.num_he) << "," << to_string(km_res.runtime) << "," 
-                << km_timeout;
+                << to_string(km_res.loop_counter) << "," << km_timeout;
 
                 avgresFile << "\nDataCentric-KMeans" << "," << data_list[i] << "," << to_string(clus) 
                 << "," << to_string(prop) << "," << to_string(dckm_res.num_he) << ","  << to_string(dckm_res.runtime) << "," 
-                << dckm_timeout;
+                << to_string(dckm_res.loop_counter) << "," << dckm_timeout;
 
                 avgresFile << "\nBall-Kmeans" << "," << data_list[i] << "," << to_string(clus) 
                 << "," << to_string(prop) << "," << to_string(ballkm_res.num_he) << "," << to_string(ballkm_res.runtime) << "," 
-                << ballkm_timeout;    
+                << to_string(ballkm_res.loop_counter) << "," << ballkm_timeout;    
 
                 avgresFile.close();
 
