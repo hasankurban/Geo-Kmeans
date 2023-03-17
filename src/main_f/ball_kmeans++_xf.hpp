@@ -233,6 +233,14 @@ double thres= 0.001, int iters = 100, int time_limit = 60000, string init_type =
 
     // Initialize the centroid
     init_ball_centroids(dataset, old_centroids, num_clusters, seed, init_type);
+
+    // cout << "Ball-KM-Centroids" << endl;
+    // for (int m = 0; m<2; m++){
+    //     for (int n = 0; n<old_centroids.cols(); n++){
+    //         cout << old_centroids(m, n) << " " ;
+    //     }
+    //     cout << "\n";
+    // }
     
     MatrixOur centers_dis(k, k);
 
@@ -270,8 +278,12 @@ double thres= 0.001, int iters = 100, int time_limit = 60000, string init_type =
 
     // Initialize cluster_point_index and temp_dis
     initialize(dataset, old_centroids, labels, cluster_point_index, clusters_neighbors_index, temp_dis);
-
     temp_cluster_point_index.assign(cluster_point_index.begin(), cluster_point_index.end());
+
+    cout << cluster_point_index.size() << endl;
+    for(int m =0; m<cluster_point_index.size();m++){
+        cout << cluster_point_index[m].size() << endl;
+    }
 
     // Check for empty clusters
     for (int i =0; i < k ; i++){

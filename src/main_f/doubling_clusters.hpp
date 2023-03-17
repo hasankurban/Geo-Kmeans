@@ -16,13 +16,13 @@ void double_clusters(string basePath){
     //    vector<string> file_list = {"magic.csv", "spambase.csv", "crop.csv", "Twitter.csv", "birch.csv"};
     //    vector<string> data_list = {"Magic", "Spambase", "Crop", "Twitter", "Birch"};
 
-       vector<string> file_list = {"magic.csv", "spambase.csv", "crop.csv"};
-       vector<string> data_list = {"Magic", "Spambase", "crop"};
+       vector<string> file_list = {"spambase.csv"};
+       vector<string> data_list = {"Spambase"};
 
         int num_iterations = 2000;
         float threshold = 0.001;
         
-       string inputfilePath = "", centroidFilePath = "";
+       string inputfilePath = "";
        bool run_stat = false;
        
        vector<int> labels;
@@ -35,7 +35,7 @@ void double_clusters(string basePath){
        
        //initial seed for replication (due to random data selection)
        int seed = 78;
-       vector<int> clusters = {3, 6, 12, 24};
+       vector<int> clusters = {6};
        int num_points = 0;
 
        ofstream avgresFile;
@@ -64,8 +64,24 @@ void double_clusters(string basePath){
             int numRows = p.first;
             int numCols = p.second;
 
+            // cout << "Normal Data" << endl;
+            // for (int m = 0; m<2; m++){
+            //     for (int n = 0; n<dataset[0].size(); n++){
+            //         cout << dataset[m][n] << " " ;
+            //     }
+            //     cout << "\n";
+            // }
+
             // Load data in Eigen format for Ball KMeans
             MatrixOur BallK_dataset = load_data(inputfilePath);
+
+            // cout << "BAll Data" << endl;
+            // for (int m = 0; m<2; m++){
+            //     for (int n = 0; n<BallK_dataset.cols(); n++){
+            //         cout << BallK_dataset(m, n) << " " ;
+            //     }
+            //     cout << "\n";
+            // }
 
             for (int j = 0; j<clusters.size(); j++){
 
@@ -117,7 +133,6 @@ void double_clusters(string basePath){
                 // ballkm_res = ball_k_means_Ring(BallK_dataset, ballKm_centroids, false, threshold, num_iters, time_limit);
 
                 ballkm_res = ball_k_means_Ring(BallK_dataset, false, clus, threshold, num_iterations, time_limit, "sequential", 0);
-
                 if (ballkm_res.timeout == true){
                     ballkm_timeout = "yes";
                     cout << "Timeout: BallKmeans time: " << ballkm_res.runtime << " milliseconds" << endl;

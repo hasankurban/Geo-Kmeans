@@ -58,6 +58,8 @@ string init_type, Tint seed){
     // Initialize centroids
     alg_utils.init_centroids(centroids, dataset, num_clusters, seed, init_type);
 
+    // print_2d_vector(centroids, 2, "DCKM centroids");
+
     // Assign data to nearest center
     alg_utils.calculate_distances(dataset, centroids, dist_matrix,
     num_clusters, assigned_clusters, cluster_size, he_counter);
