@@ -9,23 +9,15 @@ using namespace std;
 
 void double_prop(string basePath){
 
-
-       string input_path = basePath + "experiment_data/comma_seperated_files/";     
-       string output_path = basePath + "experiment_data/";
-       string centroid_path = basePath + "experiment_data/comma_seperated_centroids/";
-       string out_path = basePath + "experiment_data/";
+       string input_path = basePath;     
+       string out_path = basePath;
        
        // Declare variable
        vector<string> file_list = {"magic.csv", "spambase.csv", "crop.csv", "Twitter.csv", "birch.csv"};
        vector<string> data_list = {"Magic", "Spambase", "Crop", "Twitter", "Birch"};
 
-<<<<<<< HEAD:src/main_f/doubling_proportion.hpp
-    //    vector<string> file_list = {"spambase.csv", "Twitter.csv"};
-    //    vector<string> data_list = {"Spambase", "Twitter"};
-=======
     //    vector<string> file_list = {"magic.csv", "spambase.csv"};
     //    vector<string> data_list = {"Magic", "Spambase"};
->>>>>>> b78b3722d4cb4dc8acbb57a50cb1014ad0f4e3c3:src/main_f/doubling_experiments.cpp
 
         int num_iters = 2000;
         float threshold = 0.001;

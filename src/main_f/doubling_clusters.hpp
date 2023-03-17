@@ -9,22 +9,15 @@ using namespace std;
 
 void double_clusters(string basePath){
 
-       string input_path = basePath + "experiment_data/comma_seperated_files/";     
-       string output_path = basePath + "experiment_data/";
-       string centroid_path = basePath + "experiment_data/comma_seperated_centroids/";
-       string out_path = basePath + "experiment_data/";
+       string input_path = basePath;     
+       string out_path = basePath ;
        
        // Declare variable
        vector<string> file_list = {"magic.csv", "spambase.csv", "crop.csv", "Twitter.csv", "birch.csv"};
        vector<string> data_list = {"Magic", "Spambase", "Crop", "Twitter", "Birch"};
 
-<<<<<<< HEAD
-    //    vector<string> file_list = {"Twitter.csv"};
-    //    vector<string> data_list = {"Twitter"};
-=======
     //    vector<string> file_list = {"magic.csv", "spambase.csv"};
     //    vector<string> data_list = {"Magic", "Spambase"};
->>>>>>> b78b3722d4cb4dc8acbb57a50cb1014ad0f4e3c3
 
         int num_iters = 2000;
         float threshold = 0.001;
@@ -38,14 +31,10 @@ void double_clusters(string basePath){
        output_data ballkm_res;
        
        // Timeout limit
-<<<<<<< HEAD
-       int time_limit = 600000;
-=======
        int time_limit = 900000;
        
        //initial seed for replication (due to random data selection)
        int seed = 78;
->>>>>>> b78b3722d4cb4dc8acbb57a50cb1014ad0f4e3c3
        vector<int> clusters = {3, 6, 12, 24};
        int num_points = 0;
 
@@ -53,11 +42,7 @@ void double_clusters(string basePath){
        string outFile = out_path + "doubling_clusters.csv" ;
        
        avgresFile.open(outFile, ios::trunc);
-<<<<<<< HEAD
        avgresFile << "Algorithm,Data,Clusters,Distances,Runtime,Iterations,Timeout";
-=======
-       avgresFile << "Algorithm,Data,Clusters,Distances,Runtime,Timeout";
->>>>>>> b78b3722d4cb4dc8acbb57a50cb1014ad0f4e3c3
        avgresFile.close();
        string alg = "";
 
@@ -112,7 +97,6 @@ void double_clusters(string basePath){
                 //####################
                 // KMeans-DataCentric
                 //####################
-
                 cout << "Algo: DCKM" << endl; 
                 alg_utils.init_centroids_sequentially(centroids, dataset, clus);
                 
@@ -126,11 +110,7 @@ void double_clusters(string basePath){
                 //####################
                 // Ball-KMeans
                 //####################
-<<<<<<< HEAD
                 cout << "Algo: BallKMeans" << endl; 
-=======
-                cout << "Algo: DCKM" << endl; 
->>>>>>> b78b3722d4cb4dc8acbb57a50cb1014ad0f4e3c3
                 MatrixOur ballKm_centroids = init_ball_centroids(BallK_dataset, clus);
                 ballkm_res = ball_k_means_Ring(BallK_dataset, ballKm_centroids, false, threshold, num_iters, time_limit);
 
@@ -147,7 +127,6 @@ void double_clusters(string basePath){
 
                 // Algorithm,Data,Clusters,Prop,Distances,Timeout
                 avgresFile << "\nKMeans" << "," << data_list[i] << "," << to_string(clus) 
-<<<<<<< HEAD
                 << "," << to_string(km_res.num_he) << "," << to_string(km_res.runtime) << "," << to_string(km_res.loop_counter) << ","
                 << km_timeout;
 
@@ -157,17 +136,6 @@ void double_clusters(string basePath){
 
                 avgresFile << "\nBall-Kmeans" << "," << data_list[i] << "," << to_string(clus) 
                 << "," << to_string(ballkm_res.num_he) << "," << to_string(ballkm_res.runtime) << "," << to_string(ballkm_res.loop_counter) << "," 
-=======
-                << "," << to_string(km_res.num_he) << "," << to_string(km_res.runtime) << "," 
-                << km_timeout;
-
-                avgresFile << "\nDataCentric-KMeans" << "," << data_list[i] << "," << to_string(clus) 
-                << "," << to_string(dckm_res.num_he) << ","  << to_string(dckm_res.runtime) << "," 
-                << dckm_timeout;
-
-                avgresFile << "\nBall-Kmeans" << "," << data_list[i] << "," << to_string(clus) 
-                << "," << to_string(ballkm_res.num_he) << "," << to_string(ballkm_res.runtime) << "," 
->>>>>>> b78b3722d4cb4dc8acbb57a50cb1014ad0f4e3c3
                 << ballkm_timeout;    
 
                 avgresFile.close();

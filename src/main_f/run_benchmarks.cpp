@@ -15,12 +15,29 @@
 
 using namespace std;
 
-int main(){
+int main(int argc, char* argv[]){
 
     string basePath = "/u/parishar/scratch/DATASETS/real_data/";
 
-    // double_prop(basePath);
-    double_clusters(basePath);
+    string basePath = argv[1];
+    string benchmark_type = argv[2];
+
+
+    if (benchmark_type == "doubling_clusters"){
+        double_clusters(basePath);
+    }
+    else if (benchmark_type == "doubling_proportion"){
+        double_prop(basePath);
+    }
+    else if (benchmark_type == "benchmark_real_data"){
+        
+    }
+    else if (benchmark_type == "benchmark_scal"){
+        
+    }
+    else if (benchmark_type == "benchmark_dim"){
+        
+    }
 
     return 0;
 }

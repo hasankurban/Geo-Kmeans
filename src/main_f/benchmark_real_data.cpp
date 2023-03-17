@@ -18,19 +18,16 @@ string basePath = "/u/parishar/scratch/DATASETS/real_data/";
 
 void doubling_prop(){
 
-       string input_path = basePath + "experiment_data/comma_seperated_files/";     
-       string output_path = basePath + "experiment_data/";
-       string centroid_path = basePath + "experiment_data/comma_seperated_centroids/";
-       string out_path = basePath + "experiment_data/";
+       string input_path = basePath;     
+       string centroid_path = basePath + "/comma_seperated_centroids/";
+       string out_path = basePath;
        
        // Declare variables
        vector<string> file_list = {"Breastcancer.csv", "CustomerSaleRecords.csv" , "CreditRisk.csv",
-            "magic.csv", "spambase.csv",
-            "crop.csv", "Twitter.csv", "birch.csv"};
+            "magic.csv", "spambase.csv", "crop.csv", "Twitter.csv", "birch.csv"};
 
        vector<string> out_list = {"BreastcancerCentroids", "CustomerSaleRecordsCentroids", "CreditRiskCentroids",
-            "magicCentroids", "spambaseCentroids",
-            "cropCentroids", "TwitterCentroids", "birchCentroids"};
+            "magicCentroids", "spambaseCentroids", "cropCentroids", "TwitterCentroids", "birchCentroids"};
 
        vector<string> data_list = {"Breastcancer", "CustomerSaleRecords", "CreditRisk",
             "magic", "spambase", "crop", "Twitter", "birch"};
@@ -39,7 +36,7 @@ void doubling_prop(){
     //    vector<string> out_list = {"TwitterCentroids"};
     //    vector<string> data_list = {"Twitter"};
 
-        int num_iters = 500;
+        int num_iters = 1000;
         float threshold = 0.001;
         vector<int> num_clusters = {5, 8, 10, 12, 25};  
         
@@ -56,7 +53,7 @@ void doubling_prop(){
        int time_limit = 1800000;
 
        ofstream avgresFile;
-       string outFile = out_path + "benchmark_out.csv" ;
+       string outFile = out_path + "benchmark_real_data.csv" ;
        
        avgresFile.open(outFile, ios::trunc);
        avgresFile << "Algorithm,Data,Clusters,Iters,Runtime,Runtime_per_Iter,Runtime_speedup,Distances,Dist_speed_up,Timeout";
@@ -78,7 +75,12 @@ void doubling_prop(){
                 int numRows = p.first;
                 int numCols = p.second;
 
+                // Load data in Eigen format for Ball KMeans
+                MatrixOur BallK_dataset = load_data(inputfilePath);
+
                 cout << file_list[i] << " " << dataset.size() << endl;
+
+
                 for (int j = 0; j< num_clusters.size(); j++){
             
                     int clus = num_clusters[j];
@@ -89,16 +91,8 @@ void doubling_prop(){
                         string dckm_timeout = "no";
                         string ballkm_timeout = "no";
 
-                        
                         // Read centroids  
                         centroidFilePath = centroid_path + out_list[i] + "_" + to_string(clus) + "_.txt";
-
-<<<<<<< HEAD
-=======
-                        // cout << "Clus: " << clus << " rep: " << rep << endl;
-                        // cout << inputfilePath << endl;
-                        // cout <<  centroidFilePath << endl;
->>>>>>> b78b3722d4cb4dc8acbb57a50cb1014ad0f4e3c3
 
                         //####################
                         // KMeans
@@ -118,7 +112,6 @@ void doubling_prop(){
                         //####################
                         // KMeans-DataCentric
                         //####################
-
                         cout << "Algo: DCKM" << endl; 
                         read_kplus_plus_centroids(centroidFilePath, centroids, clus);
                         
@@ -137,9 +130,6 @@ void doubling_prop(){
                         //####################
                         // Ball-KMeans
                         //####################
-                        
-                        // Load data in Eigen format for Ball KMeans
-                        MatrixOur BallK_dataset = load_data(inputfilePath);
                         MatrixOur ballKm_centroids = load_centroids(centroidFilePath, clus, numCols);
 
                         ballkm_res = ball_k_means_Ring(BallK_dataset, ballKm_centroids, false, threshold, num_iters, time_limit);
@@ -152,9 +142,7 @@ void doubling_prop(){
                             cout << "Total BallKmeans time: " << ballkm_res.runtime << " milliseconds" << endl;
                         }
 
-
                         avgresFile.open(outFile, ios::app);
-
 
                         avgresFile << "\nKMeans" << "," << data_list[i] << "," << to_string(clus) 
                         << "," << std::setprecision(2) << to_string(km_res.loop_counter) <<  "," << 
