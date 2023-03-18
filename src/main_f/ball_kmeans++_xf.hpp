@@ -280,26 +280,6 @@ double thres= 0.001, int iters = 100, int time_limit = 60000, string init_type =
     initialize(dataset, old_centroids, labels, cluster_point_index, clusters_neighbors_index, temp_dis);
     temp_cluster_point_index.assign(cluster_point_index.begin(), cluster_point_index.end());
 
-    cout << cluster_point_index.size() << endl;
-    for(int m =0; m<cluster_point_index.size();m++){
-        cout << cluster_point_index[m].size() << endl;
-    }
-
-    // Check for empty clusters
-    for (int i =0; i < k ; i++){
-        if(cluster_point_index[i].size() == 0){
-            cout << "ball-Kmeans: Empty cluster found duriung initialization, safe exiting" << endl;
-            res.loop_counter = iteration_counter;
-            res.num_he = cal_dist_num;
-            res.runtime = 1;
-            res.timeout = false;
-            res.sse = std::numeric_limits<float>::max();
-            res.ballkm_centroids = old_centroids;
-            return res;
-        }
-
-    }
-
     start_time = clock();
 
     //while (true) {
@@ -330,14 +310,13 @@ double thres= 0.001, int iters = 100, int time_limit = 60000, string init_type =
             //get the radius of each centroids
             update_radius(dataset, cluster_point_index, new_centroids, temp_dis, the_rs, flag, iteration_counter,
                           cal_dist_num, k);
+            
             //Calculate distance between centers
-
             cal_centers_dist(new_centroids, iteration_counter, k, the_rs, delta, centers_dis);
 
             flag.setZero();
 
             //returns the set of neighbors
-
             //nowball;
             unsigned int now_num = 0;
             for (unsigned int now_ball = 0; now_ball < k; now_ball++) {
@@ -446,21 +425,6 @@ double thres= 0.001, int iters = 100, int time_limit = 60000, string init_type =
 
             auto temp_end = std::chrono::high_resolution_clock::now();
             auto temptime = std::chrono::duration_cast<std::chrono::milliseconds>(temp_end - start);
-            
-            // Check for empty clusters
-            for (int i =0; i < k ; i++){
-                if(cluster_point_index[i].size() == 0){
-                    cout << "Empty cluster found duriung iteration, safe exiting" << endl;
-                    res.loop_counter = iteration_counter;
-                    res.num_he = cal_dist_num;
-                    res.runtime = float(temptime.count());;
-                    res.timeout = false;
-                    res.sse = std::numeric_limits<float>::max();
-                    res.ballkm_centroids = new_centroids;
-                    return res;
-            }
-
-            }
 
             if (temptime.count() >= time_limit){
                 res.loop_counter = iteration_counter;

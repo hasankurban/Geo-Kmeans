@@ -10,28 +10,32 @@ using namespace std;
 void benchmark_on_real_data(string basePath){
 
        string input_path = basePath;     
-       string centroid_path = basePath + "/comma_seperated_centroids/";
+       string centroid_path = basePath + "/centroids/";
        string out_path = basePath;
        
        // Declare variables
+    //    vector<string> file_list = {"Breastcancer.csv", "CustomerSaleRecords.csv" , "CreditRisk.csv",
+    //         "magic.csv", "spambase.csv", "crop.csv", "Twitter.csv", "birch.csv"};
+
+    //    vector<string> out_list = {"BreastcancerCentroids", "CustomerSaleRecordsCentroids", "CreditRiskCentroids",
+    //         "magicCentroids", "spambaseCentroids", "cropCentroids", "TwitterCentroids", "birchCentroids"};
+
+    //    vector<string> data_list = {"Breastcancer", "CustomerSaleRecords", "CreditRisk",
+    //         "magic", "spambase", "crop", "Twitter", "birch"};
+
        vector<string> file_list = {"Breastcancer.csv", "CustomerSaleRecords.csv" , "CreditRisk.csv",
-            "magic.csv", "spambase.csv", "crop.csv", "Twitter.csv", "birch.csv"};
-
+            "magic.csv", "spambase.csv"};
+       
        vector<string> out_list = {"BreastcancerCentroids", "CustomerSaleRecordsCentroids", "CreditRiskCentroids",
-            "magicCentroids", "spambaseCentroids", "cropCentroids", "TwitterCentroids", "birchCentroids"};
-
+            "magicCentroids", "spambaseCentroids"};
+       
        vector<string> data_list = {"Breastcancer", "CustomerSaleRecords", "CreditRisk",
-            "magic", "spambase", "crop", "Twitter", "birch"};
-
-    //    vector<string> file_list = {"Twitter.csv"};
-    //    vector<string> out_list = {"TwitterCentroids"};
-    //    vector<string> data_list = {"Twitter"};
+            "magic", "spambase"};
 
         int num_iterations = 1000;
         float threshold = 0.001;
         vector<int> num_clusters = {5, 8, 10, 12, 25};  
         
-       
        string inputfilePath = "", centroidFilePath = "";
        bool run_stat = false;
        

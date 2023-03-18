@@ -13,11 +13,11 @@ void double_clusters(string basePath){
        string out_path = basePath ;
        
        // Declare variable
-    //    vector<string> file_list = {"magic.csv", "spambase.csv", "crop.csv", "Twitter.csv", "birch.csv"};
-    //    vector<string> data_list = {"Magic", "Spambase", "Crop", "Twitter", "Birch"};
+       vector<string> file_list = {"magic.csv", "spambase.csv", "crop.csv", "Twitter.csv", "birch.csv"};
+       vector<string> data_list = {"Magic", "Spambase", "Crop", "Twitter", "Birch"};
 
-       vector<string> file_list = {"spambase.csv"};
-       vector<string> data_list = {"Spambase"};
+    //    vector<string> file_list = {"magic.csv", "spambase.csv"};
+    //    vector<string> data_list = {"Magic", "Spambase"};
 
         int num_iterations = 2000;
         float threshold = 0.001;
@@ -35,7 +35,7 @@ void double_clusters(string basePath){
        
        //initial seed for replication (due to random data selection)
        int seed = 78;
-       vector<int> clusters = {6};
+       vector<int> clusters = {3, 6, 12, 24};
        int num_points = 0;
 
        ofstream avgresFile;
