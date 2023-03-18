@@ -13,15 +13,15 @@ void benchmark_scal(string basePath){
         string scal_output_path = basePath + "benchmark_scal.csv";;
         
         // Declare variables
-        vector<string> scal_file_list = {"1000000_points.csv", "3000000_points.csv" , "5000000_points.csv",
-                "8000000_points.csv", "10000000_points.csv"};
-        vector<int> num_points = {1000000, 3000000, 5000000, 8000000, 10000000};
+        // vector<string> scal_file_list = {"1000000_points.csv", "3000000_points.csv" , "5000000_points.csv",
+        //         "8000000_points.csv", "10000000_points.csv"};
+        // vector<int> num_points = {1000000, 3000000, 5000000, 8000000, 10000000};
 
-        //  vector<string> scal_file_list = {"1000000_points.csv"};
-        //  vector<int> num_points = {1000000};
+        vector<string> scal_file_list = {"3000000_points.csv"};
+        vector<int> num_points = {3000000};
 
         vector<int> labels;
-        int num_iterations = 1000;
+        int num_iterations = 2000;
         float threshold = 0.01;
         int num_clusters = 10;
 
@@ -51,7 +51,7 @@ void benchmark_scal(string basePath){
             inputfilePath = scal_input_path + scal_file_list[i];
             
             cout << "\n%%%%%%%%%%%%%%%%%%%%%%%" << endl;
-            cout << "Processing " << scal_file_list[i] << endl;
+            cout << "Processing " << inputfilePath << endl;
             cout << "%%%%%%%%%%%%%%%%%%%%%%%\n" << endl;
             
             vector<vector <float> > dataset;
@@ -59,18 +59,21 @@ void benchmark_scal(string basePath){
             std::pair<int, int> p = readSimulatedData(inputfilePath, dataset, labels, false, false);
             int numRows = p.first;
             int numCols = p.second;
-                
-            // vector<vector<float> > centroids(clus, vector<float>(numCols, 0.0));
-
+            
+            // Load data in Eigen format for Ball KMeans
+            MatrixOur BallK_dataset = load_data(inputfilePath);
+    
             string km_timeout = "no";
             string dckm_timeout = "no";
             string ballkm_timeout = "no";
+
+            cout << dataset.size() << endl;
             
             //####################
             // KMeans-DataCentric
             //####################
 
-            cout << "Algo: DCKM" << endl;
+            cout << "Algo: Kmeans-DataCentric" << endl;
 
             // alg_utils.init_centroids(centroids, dataset, clus);               
             // dckm_res = dckmeans(dataset, centroids, clus, threshold, num_iters, numCols, time_limit);
@@ -79,10 +82,10 @@ void benchmark_scal(string basePath){
             
             if (dckm_res.timeout == true){
                 dckm_timeout = "yes";
-                cout << "Timeout: DCKmeans time: " << dckm_res.runtime << " milliseconds" << endl;
+                cout << "Timeout: Kmeans-DataCentric time: " << dckm_res.runtime << " milliseconds" << endl;
             }
             else{
-                cout << "Total DCKmeans time: " << dckm_res.runtime << " milliseconds" << endl;
+                cout << "Total Kmeans-DataCentric time: " << dckm_res.runtime << " milliseconds" << endl;
             }
 
             //####################
@@ -90,9 +93,7 @@ void benchmark_scal(string basePath){
             //####################
 
             cout << "Algo: Ball-KMeans" << endl;
-            
-            // Load data in Eigen format for Ball KMeans
-            MatrixOur BallK_dataset = load_data(inputfilePath);
+        
             // MatrixOur ballKm_centroids = init_ball_centroids(BallK_dataset, clus);
             // ballkm_res = ball_k_means_Ring(BallK_dataset, ballKm_centroids, false, threshold, num_iters, time_limit);
 
@@ -108,7 +109,7 @@ void benchmark_scal(string basePath){
 
             scaloutFile.open(scal_output_path, ios::app);
 
-            scaloutFile << "\nDataCentric-KMeans" << "," << to_string(points) 
+            scaloutFile << "\nKmeans-DataCentric" << "," << to_string(points) 
                 <<  "," << 
             std::setprecision(2) << to_string(dckm_res.runtime) << "," << std::setprecision(6) <<
             to_string(float(dckm_res.runtime/dckm_res.loop_counter)) << "," << std::setprecision(2) 
@@ -123,8 +124,7 @@ void benchmark_scal(string basePath){
 
             scaloutFile.close();
 
-            }
-
-       cout << "Completed Scalability benchmarks" << endl;
-
+        }
+        
+    cout << "Completed Scalability benchmarks" << endl;
 }

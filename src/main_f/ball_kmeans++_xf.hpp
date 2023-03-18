@@ -103,6 +103,38 @@ MatrixOur&centroids, float threshold){
     return false;
 }
 
+MatrixOur load_centroids(string filename, int num_clusters, int numCols) {
+    /*
+
+    *Summary: Read data through file path
+
+    *Parameters:
+
+    *     filename: file path.*    
+
+    *Return : Dataset in eigen matrix format.
+
+    */
+    
+    MatrixOur data(num_clusters, numCols);
+    ifstream inFile2(filename, ios::in);
+    string lineStr2;
+
+    int i =0;
+    
+    while (getline(inFile2, lineStr2)) {
+            stringstream ss2(lineStr2);
+            string str2;
+            int j = 0;
+            while (getline(ss2, str2, ',')) {
+                data(i, j) = atof(const_cast<const char*>(str2.c_str()));
+                j++;
+            }
+            i++;
+    }
+    return data;
+}
+
 
 MatrixOur init_ball_centroids(MatrixOur &dataset, MatrixOur &centroids, 
 int num_cluster, int seed, string init_type){
@@ -132,6 +164,9 @@ int num_cluster, int seed, string init_type){
             }   
         }
 
+    }
+    else{
+        centroids = load_centroids(init_type, num_cluster, dataset.cols());
     }
 
     return centroids;
@@ -728,39 +763,6 @@ MatrixOur load_data(string filename) {
     return data;
 }
 
-
-
-MatrixOur load_centroids(string filename, int num_clusters, int numCols) {
-    /*
-
-    *Summary: Read data through file path
-
-    *Parameters:
-
-    *     filename: file path.*    
-
-    *Return : Dataset in eigen matrix format.
-
-    */
-    
-    MatrixOur data(num_clusters, numCols);
-    ifstream inFile2(filename, ios::in);
-    string lineStr2;
-
-    int i =0;
-    
-    while (getline(inFile2, lineStr2)) {
-            stringstream ss2(lineStr2);
-            string str2;
-            int j = 0;
-            while (getline(ss2, str2, ',')) {
-                data(i, j) = atof(const_cast<const char*>(str2.c_str()));
-                j++;
-            }
-            i++;
-    }
-    return data;
-}
 
 
 inline MatrixOur

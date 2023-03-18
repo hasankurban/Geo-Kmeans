@@ -5,225 +5,302 @@ Processing Breastcancer.csv
 %%%%%%%%%%%%%%%%%%%%%%%
 
 Breastcancer.csv 569
-Convergence at iteration: 3
-Kmeans time: 4 milliseconds
-Algo: DCKM
-Convergence at iteration: 3
-Total DCKmeans time: 2 milliseconds
-Total BallKmeans time: 9 milliseconds
-Convergence at iteration: 2
-Kmeans time: 4 milliseconds
-Algo: DCKM
-Convergence at iteration: 2
-Total DCKmeans time: 3 milliseconds
-Total BallKmeans time: 6 milliseconds
-Convergence at iteration: 3
+Algo: KMeans
+File is not opened
+Convergence at iteration: 10
 Kmeans time: 8 milliseconds
-Algo: DCKM
-Convergence at iteration: 3
-Total DCKmeans time: 4 milliseconds
-Total BallKmeans time: 10 milliseconds
-Convergence at iteration: 3
-Kmeans time: 9 milliseconds
-Algo: DCKM
-Convergence at iteration: 3
-Total DCKmeans time: 5 milliseconds
-Total BallKmeans time: 11 milliseconds
-Convergence at iteration: 2
+Algo: Kmeans-DataCentric
+File is not opened
+Convergence at iteration: 10
+Total Kmeans-DataCentric time: 5 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 27 milliseconds
+Algo: KMeans
+File is not opened
+Convergence at iteration: 10
+Kmeans time: 11 milliseconds
+Algo: Kmeans-DataCentric
+File is not opened
+Convergence at iteration: 10
+Total Kmeans-DataCentric time: 7 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 30 milliseconds
+Algo: KMeans
+File is not opened
+Convergence at iteration: 8
+Kmeans time: 10 milliseconds
+Algo: Kmeans-DataCentric
+File is not opened
+Convergence at iteration: 8
+Total Kmeans-DataCentric time: 7 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 27 milliseconds
+Algo: KMeans
+File is not opened
+Convergence at iteration: 8
 Kmeans time: 12 milliseconds
-Algo: DCKM
-Convergence at iteration: 2
-Total DCKmeans time: 7 milliseconds
-Total BallKmeans time: 12 milliseconds
+Algo: Kmeans-DataCentric
+File is not opened
+Convergence at iteration: 8
+Total Kmeans-DataCentric time: 8 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 28 milliseconds
+Algo: KMeans
+File is not opened
+Convergence at iteration: 6
+Kmeans time: 18 milliseconds
+Algo: Kmeans-DataCentric
+File is not opened
+Convergence at iteration: 6
+Total Kmeans-DataCentric time: 14 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 27 milliseconds
 
 %%%%%%%%%%%%%%%%%%%%%%%
 Processing CustomerSaleRecords.csv
 %%%%%%%%%%%%%%%%%%%%%%%
 
 CustomerSaleRecords.csv 440
-Convergence at iteration: 10
-Kmeans time: 3 milliseconds
-Algo: DCKM
-Convergence at iteration: 10
-Total DCKmeans time: 2 milliseconds
-Total BallKmeans time: 10 milliseconds
-Convergence at iteration: 6
-Kmeans time: 2 milliseconds
-Algo: DCKM
-Convergence at iteration: 6
-Total DCKmeans time: 1 milliseconds
-Total BallKmeans time: 7 milliseconds
-Convergence at iteration: 9
-Kmeans time: 3 milliseconds
-Algo: DCKM
-Convergence at iteration: 9
-Total DCKmeans time: 2 milliseconds
-Total BallKmeans time: 12 milliseconds
-Convergence at iteration: 19
-Kmeans time: 9 milliseconds
-Algo: DCKM
-Convergence at iteration: 19
-Total DCKmeans time: 7 milliseconds
-Total BallKmeans time: 28 milliseconds
-Convergence at iteration: 9
-Kmeans time: 8 milliseconds
-Algo: DCKM
-Convergence at iteration: 9
-Total DCKmeans time: 4 milliseconds
-Total BallKmeans time: 21 milliseconds
+Algo: KMeans
+File is not opened
+Convergence at iteration: 26
+Kmeans time: 5 milliseconds
+Algo: Kmeans-DataCentric
+File is not opened
+Convergence at iteration: 26
+Total Kmeans-DataCentric time: 4 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 30 milliseconds
+Algo: KMeans
+File is not opened
+Convergence at iteration: 47
+Kmeans time: 14 milliseconds
+Algo: Kmeans-DataCentric
+File is not opened
+Convergence at iteration: 47
+Total Kmeans-DataCentric time: 12 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 67 milliseconds
+Algo: KMeans
+File is not opened
+Convergence at iteration: 39
+Kmeans time: 14 milliseconds
+Algo: Kmeans-DataCentric
+File is not opened
+Convergence at iteration: 39
+Total Kmeans-DataCentric time: 12 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 68 milliseconds
+Algo: KMeans
+File is not opened
+Convergence at iteration: 54
+Kmeans time: 23 milliseconds
+Algo: Kmeans-DataCentric
+File is not opened
+Convergence at iteration: 54
+Total Kmeans-DataCentric time: 22 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 104 milliseconds
+Algo: KMeans
+File is not opened
+Convergence at iteration: 99
+Kmeans time: 83 milliseconds
+Algo: Kmeans-DataCentric
+File is not opened
+Convergence at iteration: 99
+Total Kmeans-DataCentric time: 103 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 105 milliseconds
 
 %%%%%%%%%%%%%%%%%%%%%%%
 Processing CreditRisk.csv
 %%%%%%%%%%%%%%%%%%%%%%%
 
 CreditRisk.csv 1000
-Convergence at iteration: 7
-Kmeans time: 9 milliseconds
-Algo: DCKM
-Convergence at iteration: 7
-Total DCKmeans time: 4 milliseconds
-Total BallKmeans time: 21 milliseconds
-Convergence at iteration: 4
-Kmeans time: 7 milliseconds
-Algo: DCKM
-Convergence at iteration: 4
-Total DCKmeans time: 3 milliseconds
-Total BallKmeans time: 12 milliseconds
-Convergence at iteration: 5
-Kmeans time: 11 milliseconds
-Algo: DCKM
-Convergence at iteration: 5
-Total DCKmeans time: 4 milliseconds
-Total BallKmeans time: 16 milliseconds
-Convergence at iteration: 4
-Kmeans time: 10 milliseconds
-Algo: DCKM
-Convergence at iteration: 4
-Total DCKmeans time: 4 milliseconds
-Total BallKmeans time: 14 milliseconds
-Convergence at iteration: 4
-Kmeans time: 19 milliseconds
-Algo: DCKM
-Convergence at iteration: 4
-Total DCKmeans time: 6 milliseconds
-Total BallKmeans time: 16 milliseconds
+Algo: KMeans
+File is not opened
+Convergence at iteration: 24
+Kmeans time: 24 milliseconds
+Algo: Kmeans-DataCentric
+File is not opened
+Convergence at iteration: 24
+Total Kmeans-DataCentric time: 13 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 82 milliseconds
+Algo: KMeans
+File is not opened
+Convergence at iteration: 50
+Kmeans time: 72 milliseconds
+Algo: Kmeans-DataCentric
+File is not opened
+Convergence at iteration: 50
+Total Kmeans-DataCentric time: 32 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 153 milliseconds
+Algo: KMeans
+File is not opened
+Convergence at iteration: 50
+Kmeans time: 87 milliseconds
+Algo: Kmeans-DataCentric
+File is not opened
+Convergence at iteration: 50
+Total Kmeans-DataCentric time: 38 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 158 milliseconds
+Algo: KMeans
+File is not opened
+Convergence at iteration: 50
+Kmeans time: 101 milliseconds
+Algo: Kmeans-DataCentric
+File is not opened
+Convergence at iteration: 50
+Total Kmeans-DataCentric time: 44 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 161 milliseconds
+Algo: KMeans
+File is not opened
+Convergence at iteration: 13
+Kmeans time: 49 milliseconds
+Algo: Kmeans-DataCentric
+File is not opened
+Convergence at iteration: 13
+Total Kmeans-DataCentric time: 33 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 78 milliseconds
 
 %%%%%%%%%%%%%%%%%%%%%%%
 Processing magic.csv
 %%%%%%%%%%%%%%%%%%%%%%%
 
-magic.csv 19020
-Convergence at iteration: 15
-Kmeans time: 216 milliseconds
-Algo: DCKM
-Convergence at iteration: 15
-Total DCKmeans time: 167 milliseconds
-Total BallKmeans time: 2025 milliseconds
-Convergence at iteration: 25
-Kmeans time: 502 milliseconds
-Algo: DCKM
-Convergence at iteration: 25
-Total DCKmeans time: 389 milliseconds
-Total BallKmeans time: 1654 milliseconds
-Convergence at iteration: 85
-Kmeans time: 2038 milliseconds
-Algo: DCKM
-Convergence at iteration: 85
-Total DCKmeans time: 1487 milliseconds
-Total BallKmeans time: 4797 milliseconds
+magic.csv 19019
+Algo: KMeans
+File is not opened
+Convergence at iteration: 46
+Kmeans time: 536 milliseconds
+Algo: Kmeans-DataCentric
+File is not opened
+Convergence at iteration: 46
+Total Kmeans-DataCentric time: 397 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 8244 milliseconds
+Algo: KMeans
+File is not opened
+Convergence at iteration: 52
+Kmeans time: 856 milliseconds
+Algo: Kmeans-DataCentric
+File is not opened
+Convergence at iteration: 52
+Total Kmeans-DataCentric time: 704 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 8075 milliseconds
+Algo: KMeans
+File is not opened
 Convergence at iteration: 75
-Kmeans time: 2037 milliseconds
-Algo: DCKM
+Kmeans time: 1497 milliseconds
+Algo: Kmeans-DataCentric
+File is not opened
 Convergence at iteration: 75
-Total DCKmeans time: 1850 milliseconds
-Total BallKmeans time: 5642 milliseconds
-Convergence at iteration: 114
-Kmeans time: 5840 milliseconds
-Algo: DCKM
-Convergence at iteration: 114
-Total DCKmeans time: 5387 milliseconds
-Total BallKmeans time: 7787 milliseconds
+Total Kmeans-DataCentric time: 1248 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 7873 milliseconds
+Algo: KMeans
+File is not opened
+Convergence at iteration: 59
+Kmeans time: 1359 milliseconds
+Algo: Kmeans-DataCentric
+File is not opened
+Convergence at iteration: 59
+Total Kmeans-DataCentric time: 1110 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 9072 milliseconds
+Algo: KMeans
+File is not opened
+Convergence at iteration: 111
+Kmeans time: 4878 milliseconds
+Algo: Kmeans-DataCentric
+File is not opened
+Convergence at iteration: 103
+Total Kmeans-DataCentric time: 3917 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 12433 milliseconds
 
 %%%%%%%%%%%%%%%%%%%%%%%
 Processing spambase.csv
 %%%%%%%%%%%%%%%%%%%%%%%
 
 spambase.csv 4600
-Convergence at iteration: 17
-Kmeans time: 248 milliseconds
-Algo: DCKM
-Convergence at iteration: 17
-Total DCKmeans time: 105 milliseconds
-Total BallKmeans time: 498 milliseconds
-Convergence at iteration: 21
-Kmeans time: 441 milliseconds
-Algo: DCKM
-Convergence at iteration: 21
-Total DCKmeans time: 142 milliseconds
-Total BallKmeans time: 611 milliseconds
-Convergence at iteration: 21
-Kmeans time: 528 milliseconds
-Algo: DCKM
-Convergence at iteration: 21
-Total DCKmeans time: 154 milliseconds
-Total BallKmeans time: 628 milliseconds
-Convergence at iteration: 21
-Kmeans time: 618 milliseconds
-Algo: DCKM
-Convergence at iteration: 21
-Total DCKmeans time: 156 milliseconds
-Total BallKmeans time: 645 milliseconds
-Convergence at iteration: 15
-Kmeans time: 853 milliseconds
-Algo: DCKM
-Convergence at iteration: 15
-Total DCKmeans time: 170 milliseconds
-Total BallKmeans time: 427 milliseconds
+Algo: KMeans
+File is not opened
+Convergence at iteration: 39
+Kmeans time: 421 milliseconds
+Algo: Kmeans-DataCentric
+File is not opened
+Convergence at iteration: 39
+Total Kmeans-DataCentric time: 237 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 979 milliseconds
+Algo: KMeans
+File is not opened
+Convergence at iteration: 122
+Kmeans time: 1918 milliseconds
+Algo: Kmeans-DataCentric
+File is not opened
+Convergence at iteration: 122
+Total Kmeans-DataCentric time: 878 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 3003 milliseconds
+Algo: KMeans
+File is not opened
+Convergence at iteration: 126
+Kmeans time: 2391 milliseconds
+Algo: Kmeans-DataCentric
+File is not opened
+Convergence at iteration: 126
+Total Kmeans-DataCentric time: 1161 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 3425 milliseconds
+Algo: KMeans
+File is not opened
+Convergence at iteration: 194
+Kmeans time: 4328 milliseconds
+Algo: Kmeans-DataCentric
+File is not opened
+Convergence at iteration: 194
+Total Kmeans-DataCentric time: 2019 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 5122 milliseconds
+Algo: KMeans
+File is not opened
+Convergence at iteration: 311
+Kmeans time: 13471 milliseconds
+Algo: Kmeans-DataCentric
+File is not opened
+Convergence at iteration: 298
+Total Kmeans-DataCentric time: 8033 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 7776 milliseconds
 
 %%%%%%%%%%%%%%%%%%%%%%%
 Processing crop.csv
 %%%%%%%%%%%%%%%%%%%%%%%
 
 crop.csv 321093
-Convergence at iteration: 15
-Kmeans time: 3623 milliseconds
-Algo: DCKM
-Convergence at iteration: 15
-Total DCKmeans time: 2835 milliseconds
-Total BallKmeans time: 47423 milliseconds
-Convergence at iteration: 14
-Kmeans time: 4736 milliseconds
-Algo: DCKM
-Convergence at iteration: 14
-Total DCKmeans time: 4351 milliseconds
-Total BallKmeans time: 249543 milliseconds
-Convergence at iteration: 20
-Kmeans time: 8010 milliseconds
-Algo: DCKM
-Convergence at iteration: 20
-Total DCKmeans time: 7510 milliseconds
-Total BallKmeans time: 196175 milliseconds
-Convergence at iteration: 23
-Kmeans time: 10632 milliseconds
-Algo: DCKM
-Convergence at iteration: 23
-Total DCKmeans time: 9941 milliseconds
-Total BallKmeans time: 120934 milliseconds
-Convergence at iteration: 36
-Kmeans time: 31142 milliseconds
-Algo: DCKM
-Convergence at iteration: 36
-Total DCKmeans time: 34144 milliseconds
-Total BallKmeans time: 140824 milliseconds
-
-%%%%%%%%%%%%%%%%%%%%%%%
-Processing Twitter.csv
-%%%%%%%%%%%%%%%%%%%%%%%
-
-Twitter.csv 583249
-Convergence at iteration: 45
-Kmeans time: 111018 milliseconds
-Algo: DCKM
-Convergence at iteration: 45
-Total DCKmeans time: 47477 milliseconds
-Total BallKmeans time: 352352 milliseconds
+Algo: KMeans
+File is not opened
+Convergence at iteration: 1
+Kmeans time: 193 milliseconds
+Algo: Kmeans-DataCentric
+File is not opened
+Convergence at iteration: 1
+Total Kmeans-DataCentric time: 193 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 678346 milliseconds
+Algo: KMeans
+File is not opened
+Convergence at iteration: 1
+Kmeans time: 272 milliseconds
+Algo: Kmeans-DataCentric
+File is not opened
+Convergence at iteration: 1
+Total Kmeans-DataCentric time: 271 milliseconds
+Algo: Ball-KMeans

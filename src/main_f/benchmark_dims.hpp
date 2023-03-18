@@ -72,7 +72,7 @@ void benchmark_dims(string basePath){
                 // KMeans-DataCentric
                 //####################
 
-                cout << "Algo: DCKM" << endl; 
+                cout << "Algo: Kmeans-DataCentric" << endl; 
 
                 // alg_utils.init_centroids(centroids, dataset, clus);               
                 // dckm_res = dckmeans(dataset, centroids, clus, threshold, num_iters, numCols, time_limit);
@@ -81,10 +81,10 @@ void benchmark_dims(string basePath){
                 
                 if (dckm_res.timeout == true){
                     dckm_timeout = "yes";
-                    cout << "Timeout: DCKmeans time: " << dckm_res.runtime << " milliseconds" << endl;
+                    cout << "Timeout: Kmeans-DataCentric time: " << dckm_res.runtime << " milliseconds" << endl;
                 }
                 else{
-                    cout << "Total DCKmeans time: " << dckm_res.runtime << " milliseconds" << endl;
+                    cout << "Total Kmeans-DataCentric time: " << dckm_res.runtime << " milliseconds" << endl;
                 }
    
                 //####################
@@ -111,7 +111,7 @@ void benchmark_dims(string basePath){
 
                 dimsoutFile.open(dims_output_path, ios::app);
 
-                dimsoutFile << "\nDataCentric-KMeans" << "," << to_string(dims) 
+                dimsoutFile << "\nKmeans-DataCentric" << "," << to_string(dims) 
                 << "," << std::setprecision(2) << to_string(dckm_res.loop_counter) <<  "," << 
                 std::setprecision(2) << to_string(dckm_res.runtime) << "," << std::setprecision(6) <<
                 to_string(float(dckm_res.runtime/dckm_res.loop_counter)) << "," << std::setprecision(2) << to_string(float(km_res.runtime/dckm_res.runtime))

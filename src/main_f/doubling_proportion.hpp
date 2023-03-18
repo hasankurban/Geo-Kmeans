@@ -16,8 +16,8 @@ void double_prop(string basePath){
        vector<string> file_list = {"magic.csv", "spambase.csv", "crop.csv", "Twitter.csv", "birch.csv"};
        vector<string> data_list = {"Magic", "Spambase", "Crop", "Twitter", "Birch"};
 
-    //    vector<string> file_list = {"magic.csv", "spambase.csv"};
-    //    vector<string> data_list = {"Magic", "Spambase"};
+    //    vector<string> file_list = {"magic.csv"};
+    //    vector<string> data_list = {"Magic"};
 
         int num_iterations = 2000;
         float threshold = 0.001;
@@ -39,13 +39,14 @@ void double_prop(string basePath){
        int seed = 78;
        int num_clusters = 5;
        int num_points = 0;
+       vector<int> rep = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50};
 
        ofstream avgresFile;
        string outFile = out_path + "doubling_proportion.csv";
        cout << outFile << endl;
        
        avgresFile.open(outFile, ios::trunc);
-       avgresFile << "Algorithm,Data,Clusters,Prop,Distances,Runtime,Iterations,Timeout";
+       avgresFile << "Algorithm,Data,Clusters,Prop,Distances,Runtime,Iterations,Timeout,Sample";
        avgresFile.close();
        string alg = "";
 
@@ -74,7 +75,6 @@ void double_prop(string basePath){
             for (int j = 0; j<data_prop.size(); j++){
 
                 float prop = data_prop[j];
-
                 cout << "\n" << endl;
                 cout << "Data prop: " << prop << endl;
                 cout << "\n";
@@ -95,77 +95,82 @@ void double_prop(string basePath){
                 MatrixOur extracted_ball_data(num_points, BallK_dataset.cols());
                 extract_ball_data(BallK_dataset, extracted_ball_data, prop, num_points, seed+j);
 
-                //####################
-                // KMeans
-                //####################
-                
-                cout << "Algo: KMeans" << endl; 
-                
-                // alg_utils.init_centroids_sequentially(centroids, extracted_data, clus);   
-                // km_res = kmeans(extracted_data, centroids, clus, threshold, num_iters, numCols, time_limit);
+                for(int n = 0; n<rep.size(); n++){
 
-                km_res = kmeans(extracted_data, num_clusters, threshold, num_iterations, numCols, 
-                                time_limit, "sequential", 0);
-                
-                if (km_res.timeout == true){
-                    km_timeout = "yes";
-                    cout << "Timeout: Kmeans time: " << km_res.runtime << " milliseconds" << endl;
+                    //####################
+                    // KMeans
+                    //####################
+                    
+                    cout << "Algo: KMeans" << endl; 
+                    
+                    // alg_utils.init_centroids_sequentially(centroids, extracted_data, clus);   
+                    // km_res = kmeans(extracted_data, centroids, clus, threshold, num_iters, numCols, time_limit);
+
+                    km_res = kmeans(extracted_data, num_clusters, threshold, num_iterations, numCols, 
+                                    time_limit, "random", seed+rep[n]);
+                    
+                    if (km_res.timeout == true){
+                        km_timeout = "yes";
+                        cout << "Timeout: Kmeans time: " << km_res.runtime << " milliseconds" << endl;
+                    }
+
+                    //####################
+                    // KMeans-DataCentric
+                    //####################
+
+                    cout << "Algo: Kmeans-DataCentric" << endl; 
+                    
+                    // alg_utils.init_centroids_sequentially(centroids, extracted_data, clus);
+                    // dckm_res = dckmeans(extracted_data, centroids, clus, threshold, num_iters, numCols, time_limit);
+
+                    dckm_res = dckmeans(extracted_data, num_clusters, threshold, num_iterations, numCols, 
+                    time_limit, "random", seed+rep[n]);
+
+                    if (dckm_res.timeout == true){
+                        dckm_timeout = "yes";
+                        cout << "Timeout: Kmeans-DataCentric time: " << dckm_res.runtime << " milliseconds" << endl;
+                    }
+
+                    //####################
+                    // Ball-KMeans
+                    //####################
+                    
+                    cout << "Algo: BallKMeans" << endl; 
+                    
+                    // MatrixOur ballKm_centroids = init_ball_centroids(extracted_ball_data, clus);
+                    // ballkm_res = ball_k_means_Ring(extracted_ball_data, ballKm_centroids, false, threshold, num_iters, time_limit);
+
+                    ballkm_res = ball_k_means_Ring(extracted_ball_data, false, num_clusters, threshold, num_iterations, 
+                    time_limit, "random", seed+rep[n]);
+
+                    if (ballkm_res.timeout == true){
+                        ballkm_timeout = "yes";
+                        cout << "Timeout: BallKmeans time: " << ballkm_res.runtime << " milliseconds" << endl;
+                    }
+
+                    cout << "Data: " << file_list[i] << " Prop: " << prop << "\t" << " Clusters:" << num_clusters 
+                    << "\t calc: " << km_res.num_he <<  " " << dckm_res.num_he <<  " " << ballkm_res.num_he << " " << 
+                    ballkm_res.loop_counter << " " << km_res.runtime << " " << dckm_res.runtime << " " << ballkm_res.runtime << endl;
+
+                    avgresFile.open(outFile, ios::app);
+
+                    // Algorithm,Data,Clusters,Prop,Distances,Timeout
+
+                    avgresFile << "\nKmeans" << "," << data_list[i] << "," << to_string(num_clusters) 
+                    << "," << to_string(prop) << "," << to_string(km_res.num_he) << "," << to_string(km_res.runtime) << "," 
+                    << to_string(km_res.loop_counter) << "," << km_timeout << "," << to_string(n+1);
+
+                    avgresFile << "\nKmeans-DataCentric" << "," << data_list[i] << "," << to_string(num_clusters) 
+                    << "," << to_string(prop) << "," << to_string(dckm_res.num_he) << ","  << to_string(dckm_res.runtime) << "," 
+                    << to_string(dckm_res.loop_counter) << "," << dckm_timeout << "," << to_string(n+1);
+
+                    avgresFile << "\nBall-Kmeans" << "," << data_list[i] << "," << to_string(num_clusters) 
+                    << "," << to_string(prop) << "," << to_string(ballkm_res.num_he) << "," << to_string(ballkm_res.runtime) << "," 
+                    << to_string(ballkm_res.loop_counter) << "," << ballkm_timeout << "," << to_string(n+1);    
+
+                    avgresFile.close();
+
                 }
-
-                //####################
-                // KMeans-DataCentric
-                //####################
-
-                cout << "Algo: DCKM" << endl; 
-                
-                // alg_utils.init_centroids_sequentially(centroids, extracted_data, clus);
-                // dckm_res = dckmeans(extracted_data, centroids, clus, threshold, num_iters, numCols, time_limit);
-
-                dckm_res = dckmeans(extracted_data, num_clusters, threshold, num_iterations, numCols, time_limit, "sequential", 0);
-
-                
-                if (dckm_res.timeout == true){
-                    dckm_timeout = "yes";
-                    cout << "Timeout: DCKmeans time: " << dckm_res.runtime << " milliseconds" << endl;
-                }
-
-                //####################
-                // Ball-KMeans
-                //####################
-                
-                cout << "Algo: BallKMeans" << endl; 
-                
-                // MatrixOur ballKm_centroids = init_ball_centroids(extracted_ball_data, clus);
-                // ballkm_res = ball_k_means_Ring(extracted_ball_data, ballKm_centroids, false, threshold, num_iters, time_limit);
-
-                ballkm_res = ball_k_means_Ring(extracted_ball_data, false, num_clusters, threshold, num_iterations, time_limit, "sequential", 0);
-
-                if (ballkm_res.timeout == true){
-                    ballkm_timeout = "yes";
-                    cout << "Timeout: BallKmeans time: " << ballkm_res.runtime << " milliseconds" << endl;
-                }
-
-                cout << "Data: " << file_list[i] << " Prop: " << prop << "\t" << " Clusters:" << num_clusters 
-                << "\t calc: " << km_res.num_he <<  " " << dckm_res.num_he <<  " " << ballkm_res.num_he << " " << 
-                ballkm_res.loop_counter << " " << km_res.runtime << " " << dckm_res.runtime << " " << ballkm_res.runtime << endl;
-
-                avgresFile.open(outFile, ios::app);
-
-                // Algorithm,Data,Clusters,Prop,Distances,Timeout
-
-                avgresFile << "\nKMeans" << "," << data_list[i] << "," << to_string(num_clusters) 
-                << "," << to_string(prop) << "," << to_string(km_res.num_he) << "," << to_string(km_res.runtime) << "," 
-                << to_string(km_res.loop_counter) << "," << km_timeout;
-
-                avgresFile << "\nDataCentric-KMeans" << "," << data_list[i] << "," << to_string(num_clusters) 
-                << "," << to_string(prop) << "," << to_string(dckm_res.num_he) << ","  << to_string(dckm_res.runtime) << "," 
-                << to_string(dckm_res.loop_counter) << "," << dckm_timeout;
-
-                avgresFile << "\nBall-Kmeans" << "," << data_list[i] << "," << to_string(num_clusters) 
-                << "," << to_string(prop) << "," << to_string(ballkm_res.num_he) << "," << to_string(ballkm_res.runtime) << "," 
-                << to_string(ballkm_res.loop_counter) << "," << ballkm_timeout;    
-
-                avgresFile.close();
 
             }
 

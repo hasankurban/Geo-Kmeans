@@ -127,13 +127,15 @@ vector<vector <T1> > &dataset, T2 num_cluster, T2 seed, string init_type){
             }   
         }
     }
+    else{
+        read_kplus_plus_centroids(init_type, centroids, num_cluster);
+    }
 }
 
 
 template <typename T1, typename T2>
 void algorithm_utils::extract_data(vector<vector <T1> > &dataset, vector<vector <T1> > &extracted_data, 
 T2 num_points, T2 seed){
-
 
     int i = 0, j = 0, size = dataset.size();
     int test_array[size];

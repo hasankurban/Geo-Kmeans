@@ -32,15 +32,15 @@ int main(int argc, char* argv[]){
     else if (benchmark_type == "doubling_proportion"){
         double_prop(basePath);
     }
-    // else if (benchmark_type == "benchmark_real_data"){
-    //     benchmark_on_real_data(basePath);
-    // }
-    // else if (benchmark_type == "benchmark_scal"){
-    //     benchmark_scal(basePath);
-    // }
-    // else if (benchmark_type == "benchmark_dim"){
-    //     benchmark_dims(basePath);
-    // }
+    else if (benchmark_type == "benchmark_real_data"){
+        benchmark_on_real_data(basePath);
+    }
+    else if (benchmark_type == "benchmark_scal"){
+        benchmark_scal(basePath);
+    }
+    else if (benchmark_type == "benchmark_dim"){
+        benchmark_dims(basePath);
+    }
 
     return 0;
 }
