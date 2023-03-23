@@ -464,7 +464,7 @@ double thres= 0.001, int iters = 100, int time_limit = 60000, string init_type =
             if (temptime.count() >= time_limit){
                 res.loop_counter = iteration_counter;
                 res.num_he = cal_dist_num;
-                res.runtime = float(temptime.count());
+                // res.runtime = float(temptime.count());
                 res.timeout = true;
                 res.sse = get_ballkm_sse(dataset, new_centroids, cluster_point_index, k);
                 res.ballkm_centroids = new_centroids;
@@ -497,7 +497,7 @@ double thres= 0.001, int iters = 100, int time_limit = 60000, string init_type =
     
     result.loop_counter = iteration_counter;
     result.num_he = cal_dist_num;
-    result.runtime = float(Totaltime.count());
+    // result.runtime = float(Totaltime.count());
     result.timeout = false;
     result.ballkm_centroids = new_centroids;
     result.sse = get_ballkm_sse(dataset, new_centroids, cluster_point_index, k);
@@ -1266,28 +1266,24 @@ inline MatrixOur initial_centroids(MatrixOur dataset, int k, int random_seed = -
 
 //     // string filename = "ijcnn.csv"
 
-//     double thres = 0.01;
-//     int iters = 100;
-//     int num_clusters = 10;
+//     double thres = 0.001;
+//     int iters = 2000;
+//     int num_clusters = 50;
+//     int time_limit = 1800000;
 
 //     output_data res;
 
 //     cout << "Algo : Ball_KMeans," << " Clusters: " << num_clusters << ", Thresh: " << thres << endl;
     
-//     MatrixOur dataset = load_data("/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/Box Sync/PhD/DATASETS/real_data/experiment_data/CustomerSaleRecords.csv");
+//     MatrixOur BallK_dataset = load_data("/u/parishar/scratch/DATASETS/real_data/experiment_data/comma_seperated_files/crop.csv");
 
-//     cout << dataset.rows() << " " << dataset.cols() << endl;
+//     cout << BallK_dataset.rows() << " " << BallK_dataset.cols() << endl;
 
 //     auto t3 = std::chrono::high_resolution_clock::now();
-//     res = ball_k_means(dataset, num_clusters, true, true, -1, thres, iters, "0");
+//     res = ball_k_means_Ring(BallK_dataset, false, num_clusters, thres, iters, time_limit, 
+//                 "random", 45);
     
 //     auto t4 = std::chrono::high_resolution_clock::now();
 //     auto ring_int = std::chrono::duration_cast<std::chrono::milliseconds>(t4 - t3);
 //     std::cout << "\nBall Kmeans time: " << ring_int.count() << "milliseconds\n";
-
-//     // auto t5 = std::chrono::high_resolution_clock::now();
-//     // VectorXi labels123 = ball_k_means(dataset, num_clusters, false, true, -1, thres, iters, "0");
-//     // auto t6 = std::chrono::high_resolution_clock::now();
-//     // auto km_int = std::chrono::duration_cast<std::chrono::seconds>(t6 - t5);
-//     // std::cout << "\nKmeans time: " << km_int.count() << "seconds\n";
 // }

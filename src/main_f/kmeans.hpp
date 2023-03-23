@@ -77,7 +77,7 @@ string init_type, Tint seed){
         if (temptime.count() >= time_limit){
             result.loop_counter = loop_counter;
             result.num_he = dataset.size() * loop_counter * num_clusters;
-            result.runtime = float(temptime.count());
+            // result.runtime = float(temptime.count());
             result.timeout = true;
             result.sse = get_sse(dataset, new_centroids, cluster_size, assigned_clusters, num_clusters);
             cout << "Kmeans Timed Out :(" << endl;
@@ -86,12 +86,12 @@ string init_type, Tint seed){
         
     }
 
-    auto end = std::chrono::high_resolution_clock::now();
-    auto Totaltime = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+    // auto end = std::chrono::high_resolution_clock::now();
+    // auto Totaltime = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
     result.loop_counter = loop_counter;
     result.num_he = dataset.size() * num_clusters * loop_counter;
-    result.runtime = float(Totaltime.count());
+    // result.runtime = float(Totaltime.count());
     result.timeout = false;
     result.sse = get_sse(dataset, new_centroids, cluster_size, assigned_clusters, num_clusters);
 
