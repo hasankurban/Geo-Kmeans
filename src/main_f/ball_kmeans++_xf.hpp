@@ -139,7 +139,7 @@ MatrixOur load_centroids(string filename, int num_clusters, int numCols) {
 MatrixOur init_ball_centroids(MatrixOur &dataset, MatrixOur &centroids, 
 int num_cluster, int seed, string init_type){
 
-    int i = 0, j=0, size = dataset.rows();
+    int i = 0, j = 0, size = dataset.rows();
     
     if (init_type == "random"){
 

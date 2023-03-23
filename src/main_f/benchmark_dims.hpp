@@ -16,17 +16,17 @@ void benchmark_dims(string basePath){
         vector<string> dims_file_list = {"200_dims.csv" , "300_dims.csv", "400_dims.csv", "500_dims.csv", "600_dims.csv"};
         vector<int> num_dims = {200, 300, 400, 500, 600};
 
-
-        //   vector<string> dims_file_list = {"200_dims.csv"};
-        //   vector<int> num_dims = {200};
+        // vector<string> dims_file_list = {"200_dims.csv", "300_dims.csv"};
+        // vector<int> num_dims = {200, 300};
+       
        vector<int> labels;
 
-        int num_iterations = 1000;
+        int num_iterations = 2000;
         float threshold = 0.01;
         int num_clusters = 10;
         
         // 90 minutes cutoff for running
-        int time_limit = 5400000, dims = 0, clus = 20;
+        int time_limit = 5400000, dims = 0;
             
         string inputfilePath = "";
         
@@ -60,22 +60,21 @@ void benchmark_dims(string basePath){
                 std::pair<int, int> p = readSimulatedData(inputfilePath, dataset, labels, false, false);
                 int numRows = p.first;
                 int numCols = p.second;
-                    
-                vector<vector<float> > centroids(clus, vector<float>(numCols, 0.0));
+
+                // Load data in Eigen format for Ball KMeans
+                MatrixOur BallK_dataset = load_data(inputfilePath);
 
                 string km_timeout = "no";
                 string dckm_timeout = "no";
                 string ballkm_timeout = "no";
-               
-
+            
+                // dckm_res = dckmeans(dataset, num_clusters, threshold, num_iterations, numCols, time_limit, "sequential", 0);
+                
                 //####################
                 // KMeans-DataCentric
                 //####################
 
                 cout << "Algo: Kmeans-DataCentric" << endl; 
-
-                // alg_utils.init_centroids(centroids, dataset, clus);               
-                // dckm_res = dckmeans(dataset, centroids, clus, threshold, num_iters, numCols, time_limit);
 
                 dckm_res = dckmeans(dataset, num_clusters, threshold, num_iterations, numCols, time_limit, "sequential", 0);
                 
@@ -93,10 +92,6 @@ void benchmark_dims(string basePath){
 
                 cout << "Algo: Ball-KMeans" << endl; 
                 
-                // Load data in Eigen format for Ball KMeans
-                MatrixOur BallK_dataset = load_data(inputfilePath);
-                // MatrixOur ballKm_centroids = init_ball_centroids(BallK_dataset, clus);
-
                 ballkm_res = ball_k_means_Ring(BallK_dataset, false, num_clusters, threshold, num_iterations, time_limit, 
                         "sequential", 0);
 
@@ -114,16 +109,16 @@ void benchmark_dims(string basePath){
                 dimsoutFile << "\nKmeans-DataCentric" << "," << to_string(dims) 
                 << "," << std::setprecision(2) << to_string(dckm_res.loop_counter) <<  "," << 
                 std::setprecision(2) << to_string(dckm_res.runtime) << "," << std::setprecision(6) <<
-                to_string(float(dckm_res.runtime/dckm_res.loop_counter)) << "," << std::setprecision(2) << to_string(float(km_res.runtime/dckm_res.runtime))
+                to_string(float(dckm_res.runtime/dckm_res.loop_counter)) << "," << std::setprecision(2) << to_string(float(ballkm_res.runtime/dckm_res.runtime))
                     << "," << std::setprecision(2) << to_string(dckm_res.num_he) <<
-                "," << std::setprecision(2) << to_string(float(km_res.num_he/dckm_res.num_he)) << "," << dckm_timeout;
+                "," << std::setprecision(2) << to_string(float(ballkm_res.num_he/dckm_res.num_he)) << "," << dckm_timeout;
 
                 dimsoutFile << "\nBall-Kmeans" << "," << to_string(dims) 
                 << "," << std::setprecision(2) << to_string(ballkm_res.loop_counter) <<  "," << 
                 std::setprecision(2) << to_string(ballkm_res.runtime) << "," << std::setprecision(6) <<
-                to_string(float(ballkm_res.runtime/ballkm_res.loop_counter)) << "," << std::setprecision(2) << to_string(float(km_res.runtime/ballkm_res.runtime))
+                to_string(float(ballkm_res.runtime/ballkm_res.loop_counter)) << "," << std::setprecision(2) << to_string(1)
                     << "," << std::setprecision(2) << to_string(ballkm_res.num_he) <<
-                "," << std::setprecision(2) << to_string(float(km_res.num_he/ballkm_res.num_he)) << "," << ballkm_timeout;    
+                "," << std::setprecision(2) << to_string(1) << "," << ballkm_timeout;    
 
                 dimsoutFile.close();
 

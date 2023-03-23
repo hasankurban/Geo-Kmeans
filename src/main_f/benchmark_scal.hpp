@@ -13,12 +13,12 @@ void benchmark_scal(string basePath){
         string scal_output_path = basePath + "benchmark_scal.csv";;
         
         // Declare variables
-        // vector<string> scal_file_list = {"1000000_points.csv", "3000000_points.csv" , "5000000_points.csv",
-        //         "8000000_points.csv", "10000000_points.csv"};
-        // vector<int> num_points = {1000000, 3000000, 5000000, 8000000, 10000000};
+        vector<string> scal_file_list = {"1000000_points.csv", "3000000_points.csv" , "5000000_points.csv",
+                "8000000_points.csv"};
+        vector<int> num_points = {1000000, 3000000, 5000000, 8000000};
 
-        vector<string> scal_file_list = {"3000000_points.csv"};
-        vector<int> num_points = {3000000};
+        // vector<string> scal_file_list = {"1000000_points.csv", "3000000_points.csv"};
+        // vector<int> num_points = {1000000, 3000000};
 
         vector<int> labels;
         int num_iterations = 2000;
@@ -26,7 +26,7 @@ void benchmark_scal(string basePath){
         int num_clusters = 10;
 
         // 90 minutes cutoff for runtime
-        int time_limit = 5400000, clus = 10, points = 0;
+        int time_limit = 5400000, points = 0;
         
         string inputfilePath = "";
         bool run_stat = false;
@@ -66,17 +66,12 @@ void benchmark_scal(string basePath){
             string km_timeout = "no";
             string dckm_timeout = "no";
             string ballkm_timeout = "no";
-
-            cout << dataset.size() << endl;
             
             //####################
             // KMeans-DataCentric
             //####################
 
             cout << "Algo: Kmeans-DataCentric" << endl;
-
-            // alg_utils.init_centroids(centroids, dataset, clus);               
-            // dckm_res = dckmeans(dataset, centroids, clus, threshold, num_iters, numCols, time_limit);
 
             dckm_res = dckmeans(dataset, num_clusters, threshold, num_iterations, numCols, time_limit, "sequential", 0);
             
@@ -93,9 +88,6 @@ void benchmark_scal(string basePath){
             //####################
 
             cout << "Algo: Ball-KMeans" << endl;
-        
-            // MatrixOur ballKm_centroids = init_ball_centroids(BallK_dataset, clus);
-            // ballkm_res = ball_k_means_Ring(BallK_dataset, ballKm_centroids, false, threshold, num_iters, time_limit);
 
             ballkm_res = ball_k_means_Ring(BallK_dataset, false, num_clusters, threshold, num_iterations, time_limit, "sequential", 0);
 

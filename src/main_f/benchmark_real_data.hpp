@@ -23,9 +23,9 @@ void benchmark_on_real_data(string basePath){
        vector<string> data_list = {"Breastcancer", "CustomerSaleRecords", "CreditRisk",
             "magic", "spambase", "crop", "Twitter", "birch"};
 
-    //    vector<string> file_list = {"Breastcancer.csv", "CustomerSaleRecords.csv" };
-    //    vector<string> out_list = {"BreastcancerCentroids", "CustomerSaleRecordsCentroids"};
-    //    vector<string> data_list = {"Breastcancer", "CustomerSaleRecords"};
+    //    vector<string> file_list = {"crop.csv", "Twitter.csv", "birch.csv"};
+    //    vector<string> out_list = {"cropCentroids", "TwitterCentroids", "birchCentroids"};
+    //    vector<string> data_list = {"crop", "Twitter", "birch"};
 
         int num_iterations = 2000;
         float threshold = 0.001;
@@ -53,12 +53,13 @@ void benchmark_on_real_data(string basePath){
 
 
         for(int i=0; i < file_list.size(); i++){
-              
-            cout << "\n%%%%%%%%%%%%%%%%%%%%%%%" << endl;
-            cout << "Processing " << file_list[i] << endl;
-            cout << "%%%%%%%%%%%%%%%%%%%%%%%\n" << endl;
 
             inputfilePath = input_path + file_list[i];
+              
+            cout << "\n%%%%%%%%%%%%%%%%%%%%%%%" << endl;
+            cout << "Processing " << inputfilePath << endl;
+            cout << "%%%%%%%%%%%%%%%%%%%%%%%\n" << endl;
+
             vector<vector <float> > dataset;
             
             std::pair<int, int> p = readSimulatedData(inputfilePath, dataset, labels, false, false);
@@ -68,9 +69,8 @@ void benchmark_on_real_data(string basePath){
             // Load data in Eigen format for Ball KMeans
             MatrixOur BallK_dataset = load_data(inputfilePath);
 
-            cout << file_list[i] << " " << dataset.size() << endl;
-
-
+            // cout << file_list[i] << " " << dataset.size() << endl;
+            
             for (int j = 0; j< num_clusters.size(); j++){
         
                 int clus = num_clusters[j];

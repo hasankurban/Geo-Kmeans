@@ -105,9 +105,11 @@ void algorithm_utils::init_centroids(vector<vector <T1> > &centroids,
 vector<vector <T1> > &dataset, T2 num_cluster, T2 seed, string init_type){
 
     int i = 0, j = 0, size = dataset.size();
-    int test_array[size];
     
     if (init_type == "random"){
+
+        int test_array[size];
+
         for (i = 0; i<size ; i++){
             test_array[i] = i;
         }
@@ -122,7 +124,7 @@ vector<vector <T1> > &dataset, T2 num_cluster, T2 seed, string init_type){
     }
     else if (init_type == "sequential"){
         for(i=0; i<num_cluster; i++){  
-            for(j=0; j <dataset[i].size(); j++){
+            for(j=0; j<dataset[0].size(); j++){
                 centroids[i][j] = dataset[i][j];
             }   
         }

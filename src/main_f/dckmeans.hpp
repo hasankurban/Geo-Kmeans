@@ -19,8 +19,8 @@ Tfloat threshold, Tint num_iterations, Tint numCols, Tint time_limit,
 string init_type, Tint seed){
 
     Tint loop_counter = 0;
-    vector<vector<Tfloat> > centroids(num_clusters, vector<Tfloat>(numCols));
-    vector<vector<Tfloat> > new_centroids(num_clusters, vector<Tfloat>(numCols));
+    vector<vector<Tfloat> > centroids(num_clusters, vector<Tfloat>(numCols, 0));
+    vector<vector<Tfloat> > new_centroids(num_clusters, vector<Tfloat>(numCols, 0));
     vector<vector<Tfloat> > dist_matrix(dataset.size(), vector<Tfloat>(num_clusters));
     vector<Tint> assigned_clusters(dataset.size());
     
