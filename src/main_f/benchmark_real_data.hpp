@@ -29,7 +29,9 @@ void benchmark_on_real_data(string basePath){
         // vector<int> num_clusters = {5, 8, 10};
         int num_rep = 10;
         int seed = 5;
-        int time_limit = 1800000;
+
+        // Timeout limit of 40 minutes
+        int time_limit = 2400000;
 
         int avg_km_loop_counter = 0, avg_km_num_he = 0;
         int avg_kmdc_loop_counter = 0, avg_kmdc_num_he = 0;
@@ -38,12 +40,11 @@ void benchmark_on_real_data(string basePath){
         float km_time = 0, kmdc_time = 0, bkm_time = 0, avg_km_runtime = 0, 
         avg_kmdc_runtime = 0, avg_bkm_runtime = 0;
 
-        string km_timeout = "no", dckm_timeout = "no", ballkm_timeout = "no";
+       string km_timeout = "no", dckm_timeout = "no", ballkm_timeout = "no";
         
        string inputfilePath = "", centroidFilePath = "";
        bool run_stat = false;
        vector<int> labels;
-       
        
        output_data km_res, kmdc_res, ballkm_res;
        
@@ -169,7 +170,14 @@ void benchmark_on_real_data(string basePath){
                     "random", seed+clus+k);
 
                     auto bkm_end_time = std::chrono::high_resolution_clock::now();
-                    bkm_time = std::chrono::duration_cast<std::chrono::milliseconds>(bkm_end_time - bkm_start_time).count();
+
+                    if (data_list[i] == "CreditRisk" | data_list[i] == "Breastcancer"){
+                        bkm_time = std::chrono::duration_cast<std::chrono::microseconds>(bkm_end_time - bkm_start_time).count();
+                        bkm_time = bkm_time/1000;
+                    }
+                    else{
+                        bkm_time = std::chrono::duration_cast<std::chrono::milliseconds>(bkm_end_time - bkm_start_time).count();
+                    }
 
                     if (ballkm_res.timeout == true){
                         ballkm_timeout = "yes";
@@ -184,25 +192,29 @@ void benchmark_on_real_data(string basePath){
                     allresFile << "\nKmeans" << "," << data_list[i] << "," << to_string(clus) 
                     << "," << std::setprecision(2) << to_string(km_res.loop_counter) <<  "," << 
                     std::setprecision(6) << to_string(km_time) << "," << std::setprecision(6) <<
-                    to_string(km_time/(float)km_res.loop_counter) << "," << std::setprecision(2) << to_string(0)
+                    to_string((float)km_time/km_res.loop_counter) << "," << std::setprecision(2) << to_string(0)
                     << ","  << to_string(0) << "," << std::setprecision(2) << to_string(km_res.num_he) <<
                     "," << std::setprecision(2) << to_string(0) << "," << km_timeout;
 
                     allresFile << "\nKmeans-DataCentric" << "," << data_list[i] << "," << to_string(clus) 
                     << "," << std::setprecision(2) << to_string(kmdc_res.loop_counter) <<  "," << 
                     std::setprecision(6) << to_string(kmdc_time) << "," << std::setprecision(6) <<
-                    to_string(kmdc_time/(float)kmdc_res.loop_counter) << "," << std::setprecision(2) << 
-                    to_string(km_time/kmdc_time) << "," << to_string(bkm_time/kmdc_time)
+                    to_string((float)kmdc_time/kmdc_res.loop_counter) << "," << std::setprecision(2) << 
+                    to_string((float)km_time/kmdc_time) << "," << to_string(bkm_time/kmdc_time)
                     << "," << std::setprecision(2) << to_string(kmdc_res.num_he) <<
-                    "," << std::setprecision(2) << to_string((float)km_res.num_he/(float)kmdc_res.num_he) << "," << dckm_timeout;
+                    "," << std::setprecision(2) << to_string((float)km_res.num_he/kmdc_res.num_he) << "," << dckm_timeout;
+
+                    "Algorithm,Data,Clusters,Iters,Runtime,Runtime_per_Iter,Runtime_speedup_km,Runtime_speedup_bkm,Distances,Dist_speed_up,Timeout";
 
                     allresFile << "\nBall-Kmeans" << "," << data_list[i] << "," << to_string(clus) 
-                    << "," << std::setprecision(2) << to_string(ballkm_res.loop_counter) <<  "," << 
+                    << "," << to_string(ballkm_res.loop_counter) <<  "," << 
                     std::setprecision(6) << to_string(bkm_time) << "," << std::setprecision(6) <<
-                    to_string(bkm_time/(float)ballkm_res.loop_counter) << "," << std::setprecision(2) << 
-                    to_string(km_time/bkm_time) <<  "," << to_string(0)
+                    to_string((float)bkm_time/ballkm_res.loop_counter) << "," << std::setprecision(2) << 
+                    to_string((float)km_time/bkm_time) <<  "," << to_string(1)
                     << "," << std::setprecision(2) << to_string(ballkm_res.num_he) <<
-                    "," << std::setprecision(2) << to_string((float)km_res.num_he/(float)ballkm_res.num_he) << "," << ballkm_timeout;
+                    "," << std::setprecision(2) << to_string((float)km_res.num_he/ballkm_res.num_he) << "," << ballkm_timeout;
+
+                    allresFile.close();
 
                     avg_km_loop_counter = avg_km_loop_counter + km_res.loop_counter;
                     avg_km_num_he = avg_km_num_he + km_res.num_he;
@@ -215,11 +227,7 @@ void benchmark_on_real_data(string basePath){
                     avg_bkm_loop_counter = avg_bkm_loop_counter + ballkm_res.loop_counter;
                     avg_bkm_num_he = avg_bkm_num_he + ballkm_res.num_he;
                     avg_bkm_runtime = avg_bkm_runtime + bkm_time;
-
-                    allresFile.close();
                 }
-
-                avgresFile.open(avgoutFile, ios::app);
 
                 // cout << avg_km_runtime << "\t" << (float)avg_km_runtime/num_rep <<  endl ;
                 // cout << avg_kmdc_runtime << "\t" << (float)avg_kmdc_runtime/num_rep <<  endl ;
@@ -239,28 +247,30 @@ void benchmark_on_real_data(string basePath){
 
                 // cout << avg_km_runtime << endl;
                 // cout << avg_kmdc_runtime << endl;
-                // cout << avg_bkm_runtime << endl;
+                // cout << avg_bkm_runtime << endl;.
+
+                avgresFile.open(avgoutFile, ios::app);
 
                 avgresFile << "\nKmeans" << "," << data_list[i] << "," << to_string(clus) 
                 << "," << std::setprecision(2) << to_string(avg_km_loop_counter) <<  "," << 
                 std::setprecision(6) << to_string(avg_km_runtime) << "," << std::setprecision(6) <<
-                to_string(avg_km_runtime/avg_km_loop_counter) << "," << to_string(0)
+                to_string((float)avg_km_runtime/avg_km_loop_counter) << "," << to_string(0)
                 << ","  << to_string(0) << "," << std::setprecision(3) << to_string(avg_km_num_he) <<
                 "," << to_string(0) << "," << km_timeout;
 
                 avgresFile << "\nKmeans-DataCentric" << "," << data_list[i] << "," << to_string(clus) 
                 << "," << std::setprecision(2) << to_string(avg_kmdc_loop_counter) <<  "," << 
                 std::setprecision(6) << to_string(avg_kmdc_runtime) << "," << std::setprecision(6) <<
-                to_string(avg_kmdc_runtime/avg_kmdc_loop_counter) << "," << std::setprecision(3) << 
-                to_string(avg_km_runtime/avg_kmdc_runtime) << "," << to_string(avg_bkm_runtime/avg_kmdc_runtime)
+                to_string((float)avg_kmdc_runtime/avg_kmdc_loop_counter) << "," << std::setprecision(3) << 
+                to_string((float)avg_km_runtime/avg_kmdc_runtime) << "," << to_string(avg_bkm_runtime/avg_kmdc_runtime)
                 << "," << std::setprecision(2) << to_string(avg_kmdc_num_he) <<
                 "," << std::setprecision(2) << to_string((float)avg_km_num_he/avg_kmdc_num_he) << "," << dckm_timeout;
 
                 avgresFile << "\nBall-Kmeans" << "," << data_list[i] << "," << to_string(clus) 
                 << "," << std::setprecision(2) << to_string(avg_bkm_loop_counter) <<  "," << 
                 std::setprecision(6) << to_string(avg_bkm_runtime) << "," << std::setprecision(6) <<
-                to_string(avg_bkm_runtime/avg_bkm_loop_counter) << "," << std::setprecision(3) << 
-                to_string(avg_km_runtime/avg_bkm_runtime) << "," << to_string(0)
+                to_string((float)avg_bkm_runtime/avg_bkm_loop_counter) << "," << std::setprecision(3) << 
+                to_string((float)avg_km_runtime/avg_bkm_runtime) << "," << to_string(1)
                 << "," << std::setprecision(2) << to_string(avg_bkm_num_he) <<
                 "," << std::setprecision(4) << to_string((float)avg_km_num_he/avg_bkm_num_he) << "," << ballkm_timeout;
 

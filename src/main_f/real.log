@@ -6,358 +6,2177 @@ Processing /u/parishar/scratch/DATASETS/real_data/experiment_data/comma_seperate
 
 Algo: KMeans
 Convergence at iteration: 3
-Kmeans time: 4 milliseconds
+Kmeans time: 0.221 milliseconds
 Algo: Kmeans-DataCentric
 Convergence at iteration: 3
-Total Kmeans-DataCentric time: 2 milliseconds
+Total Kmeans-DataCentric time: 0.191 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 7 milliseconds
+Total BallKmeans time: 0.223 milliseconds
+Algo: KMeans
+Convergence at iteration: 5
+Kmeans time: 0.341 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 5
+Total Kmeans-DataCentric time: 0.25 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.304 milliseconds
+Algo: KMeans
+Convergence at iteration: 3
+Kmeans time: 0.21 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 3
+Total Kmeans-DataCentric time: 0.183 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.201 milliseconds
 Algo: KMeans
 Convergence at iteration: 2
-Kmeans time: 3 milliseconds
+Kmeans time: 0.153 milliseconds
 Algo: Kmeans-DataCentric
 Convergence at iteration: 2
-Total Kmeans-DataCentric time: 2 milliseconds
+Total Kmeans-DataCentric time: 0.146 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 4 milliseconds
+Total BallKmeans time: 0.124 milliseconds
+Algo: KMeans
+Convergence at iteration: 4
+Kmeans time: 0.271 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 4
+Total Kmeans-DataCentric time: 0.19 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.213 milliseconds
 Algo: KMeans
 Convergence at iteration: 3
-Kmeans time: 5 milliseconds
+Kmeans time: 0.222 milliseconds
 Algo: Kmeans-DataCentric
 Convergence at iteration: 3
-Total Kmeans-DataCentric time: 2 milliseconds
+Total Kmeans-DataCentric time: 0.183 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 7 milliseconds
-Algo: KMeans
-Convergence at iteration: 3
-Kmeans time: 6 milliseconds
-Algo: Kmeans-DataCentric
-Convergence at iteration: 3
-Total Kmeans-DataCentric time: 3 milliseconds
-Algo: Ball-KMeans
-Total BallKmeans time: 8 milliseconds
+Total BallKmeans time: 0.197 milliseconds
 Algo: KMeans
 Convergence at iteration: 2
-Kmeans time: 7 milliseconds
+Kmeans time: 0.152 milliseconds
 Algo: Kmeans-DataCentric
 Convergence at iteration: 2
-Total Kmeans-DataCentric time: 4 milliseconds
+Total Kmeans-DataCentric time: 0.133 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 8 milliseconds
-
-%%%%%%%%%%%%%%%%%%%%%%%
-Processing /u/parishar/scratch/DATASETS/real_data/experiment_data/comma_seperated_files/CustomerSaleRecords.csv
-%%%%%%%%%%%%%%%%%%%%%%%
-
+Total BallKmeans time: 0.116 milliseconds
 Algo: KMeans
-Convergence at iteration: 21
-Kmeans time: 5 milliseconds
+Convergence at iteration: 2
+Kmeans time: 0.153 milliseconds
 Algo: Kmeans-DataCentric
-Convergence at iteration: 21
-Total Kmeans-DataCentric time: 3 milliseconds
+Convergence at iteration: 2
+Total Kmeans-DataCentric time: 0.139 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 22 milliseconds
+Total BallKmeans time: 0.115 milliseconds
+Algo: KMeans
+Convergence at iteration: 3
+Kmeans time: 0.212 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 3
+Total Kmeans-DataCentric time: 0.185 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.185 milliseconds
+Algo: KMeans
+Convergence at iteration: 4
+Kmeans time: 0.281 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 4
+Total Kmeans-DataCentric time: 0.2 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.239 milliseconds
+Algo: KMeans
+Convergence at iteration: 5
+Kmeans time: 0.476 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 5
+Total Kmeans-DataCentric time: 0.354 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.401 milliseconds
+Algo: KMeans
+Convergence at iteration: 3
+Kmeans time: 0.31 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 3
+Total Kmeans-DataCentric time: 0.21 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.205 milliseconds
+Algo: KMeans
+Convergence at iteration: 7
+Kmeans time: 0.661 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 7
+Total Kmeans-DataCentric time: 0.358 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.47 milliseconds
+Algo: KMeans
+Convergence at iteration: 8
+Kmeans time: 0.747 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 8
+Total Kmeans-DataCentric time: 0.42 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.535 milliseconds
+Algo: KMeans
+Convergence at iteration: 4
+Kmeans time: 0.397 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 4
+Total Kmeans-DataCentric time: 0.246 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.262 milliseconds
+Algo: KMeans
+Convergence at iteration: 3
+Kmeans time: 0.3 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 3
+Total Kmeans-DataCentric time: 0.255 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.228 milliseconds
+Algo: KMeans
+Convergence at iteration: 3
+Kmeans time: 0.318 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 3
+Total Kmeans-DataCentric time: 0.232 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.221 milliseconds
+Algo: KMeans
+Convergence at iteration: 7
+Kmeans time: 0.66 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 7
+Total Kmeans-DataCentric time: 0.417 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.512 milliseconds
+Algo: KMeans
+Convergence at iteration: 4
+Kmeans time: 0.406 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 4
+Total Kmeans-DataCentric time: 0.323 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.328 milliseconds
+Algo: KMeans
+Convergence at iteration: 3
+Kmeans time: 0.301 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 3
+Total Kmeans-DataCentric time: 0.205 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.199 milliseconds
+Algo: KMeans
+Convergence at iteration: 6
+Kmeans time: 0.713 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 6
+Total Kmeans-DataCentric time: 0.386 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.47 milliseconds
+Algo: KMeans
+Convergence at iteration: 7
+Kmeans time: 0.797 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 7
+Total Kmeans-DataCentric time: 0.475 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.567 milliseconds
+Algo: KMeans
+Convergence at iteration: 4
+Kmeans time: 0.482 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 4
+Total Kmeans-DataCentric time: 0.317 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.302 milliseconds
+Algo: KMeans
+Convergence at iteration: 5
+Kmeans time: 0.574 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 5
+Total Kmeans-DataCentric time: 0.453 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.454 milliseconds
+Algo: KMeans
+Convergence at iteration: 6
+Kmeans time: 0.696 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 6
+Total Kmeans-DataCentric time: 0.386 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.479 milliseconds
+Algo: KMeans
+Convergence at iteration: 6
+Kmeans time: 0.695 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 6
+Total Kmeans-DataCentric time: 0.467 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.522 milliseconds
+Algo: KMeans
+Convergence at iteration: 4
+Kmeans time: 0.477 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 4
+Total Kmeans-DataCentric time: 0.384 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.384 milliseconds
+Algo: KMeans
+Convergence at iteration: 4
+Kmeans time: 0.477 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 4
+Total Kmeans-DataCentric time: 0.295 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.303 milliseconds
+Algo: KMeans
+Convergence at iteration: 4
+Kmeans time: 0.489 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 4
+Total Kmeans-DataCentric time: 0.294 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.286 milliseconds
+Algo: KMeans
+Convergence at iteration: 3
+Kmeans time: 0.36 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 3
+Total Kmeans-DataCentric time: 0.274 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.25 milliseconds
+Algo: KMeans
+Convergence at iteration: 4
+Kmeans time: 0.553 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 4
+Total Kmeans-DataCentric time: 0.35 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.333 milliseconds
+Algo: KMeans
+Convergence at iteration: 3
+Kmeans time: 0.423 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 3
+Total Kmeans-DataCentric time: 0.291 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.251 milliseconds
 Algo: KMeans
 Convergence at iteration: 10
-Kmeans time: 3 milliseconds
+Kmeans time: 1.336 milliseconds
 Algo: Kmeans-DataCentric
 Convergence at iteration: 10
-Total Kmeans-DataCentric time: 2 milliseconds
+Total Kmeans-DataCentric time: 0.617 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 12 milliseconds
+Total BallKmeans time: 0.822 milliseconds
 Algo: KMeans
-Convergence at iteration: 13
-Kmeans time: 5 milliseconds
+Convergence at iteration: 4
+Kmeans time: 0.545 milliseconds
 Algo: Kmeans-DataCentric
-Convergence at iteration: 13
-Total Kmeans-DataCentric time: 3 milliseconds
+Convergence at iteration: 4
+Total Kmeans-DataCentric time: 0.343 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 17 milliseconds
+Total BallKmeans time: 0.342 milliseconds
 Algo: KMeans
-Convergence at iteration: 17
-Kmeans time: 8 milliseconds
+Convergence at iteration: 6
+Kmeans time: 0.809 milliseconds
 Algo: Kmeans-DataCentric
-Convergence at iteration: 17
-Total Kmeans-DataCentric time: 4 milliseconds
+Convergence at iteration: 6
+Total Kmeans-DataCentric time: 0.573 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 21 milliseconds
+Total BallKmeans time: 0.562 milliseconds
 Algo: KMeans
-Convergence at iteration: 11
-Kmeans time: 9 milliseconds
+Convergence at iteration: 5
+Kmeans time: 0.679 milliseconds
 Algo: Kmeans-DataCentric
-Convergence at iteration: 11
-Total Kmeans-DataCentric time: 6 milliseconds
+Convergence at iteration: 5
+Total Kmeans-DataCentric time: 0.406 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 24 milliseconds
+Total BallKmeans time: 0.419 milliseconds
+Algo: KMeans
+Convergence at iteration: 6
+Kmeans time: 0.807 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 6
+Total Kmeans-DataCentric time: 0.439 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.464 milliseconds
+Algo: KMeans
+Convergence at iteration: 5
+Kmeans time: 0.687 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 5
+Total Kmeans-DataCentric time: 0.422 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.44 milliseconds
+Algo: KMeans
+Convergence at iteration: 3
+Kmeans time: 0.429 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 3
+Total Kmeans-DataCentric time: 0.275 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.241 milliseconds
+Algo: KMeans
+Convergence at iteration: 10
+Kmeans time: 1.337 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 10
+Total Kmeans-DataCentric time: 0.831 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.93 milliseconds
+Algo: KMeans
+Convergence at iteration: 7
+Kmeans time: 1.825 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 7
+Total Kmeans-DataCentric time: 0.954 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.9 milliseconds
+Algo: KMeans
+Convergence at iteration: 5
+Kmeans time: 1.322 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 5
+Total Kmeans-DataCentric time: 0.708 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.591 milliseconds
+Algo: KMeans
+Convergence at iteration: 5
+Kmeans time: 1.311 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 5
+Total Kmeans-DataCentric time: 0.724 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.668 milliseconds
+Algo: KMeans
+Convergence at iteration: 7
+Kmeans time: 1.835 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 7
+Total Kmeans-DataCentric time: 0.801 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.789 milliseconds
+Algo: KMeans
+Convergence at iteration: 5
+Kmeans time: 1.31 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 5
+Total Kmeans-DataCentric time: 0.656 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.589 milliseconds
+Algo: KMeans
+Convergence at iteration: 6
+Kmeans time: 1.564 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 6
+Total Kmeans-DataCentric time: 0.813 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.753 milliseconds
+Algo: KMeans
+Convergence at iteration: 5
+Kmeans time: 1.311 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 5
+Total Kmeans-DataCentric time: 0.758 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.633 milliseconds
+Algo: KMeans
+Convergence at iteration: 5
+Kmeans time: 1.315 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 5
+Total Kmeans-DataCentric time: 0.698 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.625 milliseconds
+Algo: KMeans
+Convergence at iteration: 4
+Kmeans time: 1.081 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 4
+Total Kmeans-DataCentric time: 0.557 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.458 milliseconds
+Algo: KMeans
+Convergence at iteration: 9
+Kmeans time: 2.333 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 9
+Total Kmeans-DataCentric time: 1 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1.02 milliseconds
 
 %%%%%%%%%%%%%%%%%%%%%%%
 Processing /u/parishar/scratch/DATASETS/real_data/experiment_data/comma_seperated_files/CreditRisk.csv
 %%%%%%%%%%%%%%%%%%%%%%%
 
 Algo: KMeans
-Convergence at iteration: 4
-Kmeans time: 5 milliseconds
+Convergence at iteration: 18
+Kmeans time: 1.388 milliseconds
 Algo: Kmeans-DataCentric
-Convergence at iteration: 4
-Total Kmeans-DataCentric time: 2 milliseconds
+Convergence at iteration: 18
+Total Kmeans-DataCentric time: 0.682 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 11 milliseconds
+Total BallKmeans time: 1.363 milliseconds
+Algo: KMeans
+Convergence at iteration: 9
+Kmeans time: 0.725 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 9
+Total Kmeans-DataCentric time: 0.401 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.638 milliseconds
+Algo: KMeans
+Convergence at iteration: 18
+Kmeans time: 1.396 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 18
+Total Kmeans-DataCentric time: 0.765 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1.382 milliseconds
+Algo: KMeans
+Convergence at iteration: 11
+Kmeans time: 0.881 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 11
+Total Kmeans-DataCentric time: 0.467 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.817 milliseconds
+Algo: KMeans
+Convergence at iteration: 13
+Kmeans time: 1.016 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 13
+Total Kmeans-DataCentric time: 0.503 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.945 milliseconds
+Algo: KMeans
+Convergence at iteration: 18
+Kmeans time: 1.388 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 18
+Total Kmeans-DataCentric time: 0.74 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1.39 milliseconds
+Algo: KMeans
+Convergence at iteration: 14
+Kmeans time: 1.09 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 14
+Total Kmeans-DataCentric time: 0.514 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1.013 milliseconds
+Algo: KMeans
+Convergence at iteration: 16
+Kmeans time: 1.234 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 16
+Total Kmeans-DataCentric time: 0.626 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1.201 milliseconds
+Algo: KMeans
+Convergence at iteration: 14
+Kmeans time: 1.092 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 14
+Total Kmeans-DataCentric time: 0.521 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1.011 milliseconds
+Algo: KMeans
+Convergence at iteration: 14
+Kmeans time: 1.101 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 14
+Total Kmeans-DataCentric time: 0.568 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1.037 milliseconds
+Algo: KMeans
+Convergence at iteration: 13
+Kmeans time: 1.569 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 13
+Total Kmeans-DataCentric time: 0.633 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1.014 milliseconds
+Algo: KMeans
+Convergence at iteration: 28
+Kmeans time: 3.162 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 28
+Total Kmeans-DataCentric time: 1.084 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2.141 milliseconds
+Algo: KMeans
+Convergence at iteration: 33
+Kmeans time: 3.731 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 34
+Total Kmeans-DataCentric time: 1.296 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2.574 milliseconds
+Algo: KMeans
+Convergence at iteration: 7
+Kmeans time: 0.835 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 7
+Total Kmeans-DataCentric time: 0.354 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.506 milliseconds
+Algo: KMeans
+Convergence at iteration: 34
+Kmeans time: 3.844 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 34
+Total Kmeans-DataCentric time: 1.205 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2.572 milliseconds
+Algo: KMeans
+Convergence at iteration: 14
+Kmeans time: 1.612 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 14
+Total Kmeans-DataCentric time: 0.635 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1.074 milliseconds
+Algo: KMeans
+Convergence at iteration: 25
+Kmeans time: 2.84 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 25
+Total Kmeans-DataCentric time: 1.005 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1.911 milliseconds
+Algo: KMeans
+Convergence at iteration: 15
+Kmeans time: 1.732 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 15
+Total Kmeans-DataCentric time: 0.783 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1.299 milliseconds
+Algo: KMeans
+Convergence at iteration: 31
+Kmeans time: 3.527 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 18
+Total Kmeans-DataCentric time: 0.806 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2.356 milliseconds
 Algo: KMeans
 Convergence at iteration: 6
-Kmeans time: 10 milliseconds
+Kmeans time: 0.723 milliseconds
 Algo: Kmeans-DataCentric
 Convergence at iteration: 6
-Total Kmeans-DataCentric time: 4 milliseconds
+Total Kmeans-DataCentric time: 0.314 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 18 milliseconds
+Total BallKmeans time: 0.426 milliseconds
+Algo: KMeans
+Convergence at iteration: 47
+Kmeans time: 6.419 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 23
+Total Kmeans-DataCentric time: 0.931 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 3.345 milliseconds
+Algo: KMeans
+Convergence at iteration: 14
+Kmeans time: 1.945 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 14
+Total Kmeans-DataCentric time: 0.627 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1.105 milliseconds
+Algo: KMeans
+Convergence at iteration: 44
+Kmeans time: 6.015 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 33
+Total Kmeans-DataCentric time: 1.261 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 3.305 milliseconds
+Algo: KMeans
+Convergence at iteration: 18
+Kmeans time: 2.496 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 18
+Total Kmeans-DataCentric time: 0.836 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1.24 milliseconds
+Algo: KMeans
+Convergence at iteration: 19
+Kmeans time: 2.638 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 19
+Total Kmeans-DataCentric time: 0.97 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1.578 milliseconds
+Algo: KMeans
+Convergence at iteration: 14
+Kmeans time: 1.947 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 14
+Total Kmeans-DataCentric time: 0.855 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1.246 milliseconds
+Algo: KMeans
+Convergence at iteration: 8
+Kmeans time: 1.155 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 8
+Total Kmeans-DataCentric time: 0.457 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.649 milliseconds
+Algo: KMeans
+Convergence at iteration: 10
+Kmeans time: 1.412 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 10
+Total Kmeans-DataCentric time: 0.467 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.645 milliseconds
+Algo: KMeans
+Convergence at iteration: 27
+Kmeans time: 3.724 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 27
+Total Kmeans-DataCentric time: 1.288 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2.115 milliseconds
+Algo: KMeans
+Convergence at iteration: 7
+Kmeans time: 1.002 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 7
+Total Kmeans-DataCentric time: 0.427 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.591 milliseconds
+Algo: KMeans
+Convergence at iteration: 22
+Kmeans time: 3.566 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 22
+Total Kmeans-DataCentric time: 0.939 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1.67 milliseconds
 Algo: KMeans
 Convergence at iteration: 6
-Kmeans time: 12 milliseconds
+Kmeans time: 1.017 milliseconds
 Algo: Kmeans-DataCentric
 Convergence at iteration: 6
-Total Kmeans-DataCentric time: 5 milliseconds
+Total Kmeans-DataCentric time: 0.463 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 19 milliseconds
+Total BallKmeans time: 0.508 milliseconds
 Algo: KMeans
-Convergence at iteration: 6
-Kmeans time: 14 milliseconds
+Convergence at iteration: 28
+Kmeans time: 4.532 milliseconds
 Algo: Kmeans-DataCentric
-Convergence at iteration: 4
-Total Kmeans-DataCentric time: 4 milliseconds
+Convergence at iteration: 28
+Total Kmeans-DataCentric time: 1.346 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 18 milliseconds
+Total BallKmeans time: 2.37 milliseconds
+Algo: KMeans
+Convergence at iteration: 26
+Kmeans time: 4.219 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 26
+Total Kmeans-DataCentric time: 1.438 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2.096 milliseconds
+Algo: KMeans
+Convergence at iteration: 10
+Kmeans time: 1.653 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 10
+Total Kmeans-DataCentric time: 0.589 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.796 milliseconds
+Algo: KMeans
+Convergence at iteration: 12
+Kmeans time: 1.983 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 12
+Total Kmeans-DataCentric time: 0.6 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.854 milliseconds
+Algo: KMeans
+Convergence at iteration: 29
+Kmeans time: 4.691 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 29
+Total Kmeans-DataCentric time: 1.326 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2.212 milliseconds
+Algo: KMeans
+Convergence at iteration: 13
+Kmeans time: 2.148 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 18
+Total Kmeans-DataCentric time: 0.758 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1.03 milliseconds
 Algo: KMeans
 Convergence at iteration: 5
-Kmeans time: 23 milliseconds
+Kmeans time: 0.859 milliseconds
 Algo: Kmeans-DataCentric
 Convergence at iteration: 5
-Total Kmeans-DataCentric time: 7 milliseconds
+Total Kmeans-DataCentric time: 0.394 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 18 milliseconds
+Total BallKmeans time: 0.454 milliseconds
+Algo: KMeans
+Convergence at iteration: 25
+Kmeans time: 4.052 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 25
+Total Kmeans-DataCentric time: 1.349 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1.952 milliseconds
+Algo: KMeans
+Convergence at iteration: 8
+Kmeans time: 2.614 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 8
+Total Kmeans-DataCentric time: 0.731 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 0.835 milliseconds
+Algo: KMeans
+Convergence at iteration: 28
+Kmeans time: 9.095 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 24
+Total Kmeans-DataCentric time: 1.346 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2.136 milliseconds
+Algo: KMeans
+Convergence at iteration: 13
+Kmeans time: 4.224 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 13
+Total Kmeans-DataCentric time: 1.026 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1.303 milliseconds
+Algo: KMeans
+Convergence at iteration: 40
+Kmeans time: 12.958 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 36
+Total Kmeans-DataCentric time: 2.186 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2.841 milliseconds
+Algo: KMeans
+Convergence at iteration: 21
+Kmeans time: 6.9 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 21
+Total Kmeans-DataCentric time: 1.247 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1.415 milliseconds
+Algo: KMeans
+Convergence at iteration: 16
+Kmeans time: 5.274 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 9
+Total Kmeans-DataCentric time: 0.783 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1.144 milliseconds
+Algo: KMeans
+Convergence at iteration: 14
+Kmeans time: 4.594 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 14
+Total Kmeans-DataCentric time: 1.014 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1.161 milliseconds
+Algo: KMeans
+Convergence at iteration: 13
+Kmeans time: 4.324 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 13
+Total Kmeans-DataCentric time: 0.885 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1.135 milliseconds
+Algo: KMeans
+Convergence at iteration: 13
+Kmeans time: 4.276 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 13
+Total Kmeans-DataCentric time: 1.06 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1.208 milliseconds
+Algo: KMeans
+Convergence at iteration: 22
+Kmeans time: 7.194 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 22
+Total Kmeans-DataCentric time: 1.315 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1.934 milliseconds
 
 %%%%%%%%%%%%%%%%%%%%%%%
 Processing /u/parishar/scratch/DATASETS/real_data/experiment_data/comma_seperated_files/magic.csv
 %%%%%%%%%%%%%%%%%%%%%%%
 
 Algo: KMeans
-Convergence at iteration: 17
-Kmeans time: 231 milliseconds
+Convergence at iteration: 20
+Kmeans time: 19 milliseconds
 Algo: Kmeans-DataCentric
-Convergence at iteration: 17
-Total Kmeans-DataCentric time: 186 milliseconds
+Convergence at iteration: 20
+Total Kmeans-DataCentric time: 16 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 2199 milliseconds
+Total BallKmeans time: 36 milliseconds
 Algo: KMeans
-Convergence at iteration: 46
-Kmeans time: 869 milliseconds
+Convergence at iteration: 30
+Kmeans time: 28 milliseconds
 Algo: Kmeans-DataCentric
-Convergence at iteration: 46
-Total Kmeans-DataCentric time: 809 milliseconds
+Convergence at iteration: 30
+Total Kmeans-DataCentric time: 24 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 3526 milliseconds
+Total BallKmeans time: 59 milliseconds
 Algo: KMeans
-Convergence at iteration: 62
-Kmeans time: 1362 milliseconds
+Convergence at iteration: 32
+Kmeans time: 30 milliseconds
 Algo: Kmeans-DataCentric
-Convergence at iteration: 62
-Total Kmeans-DataCentric time: 1336 milliseconds
+Convergence at iteration: 32
+Total Kmeans-DataCentric time: 25 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 4217 milliseconds
+Total BallKmeans time: 53 milliseconds
+Algo: KMeans
+Convergence at iteration: 41
+Kmeans time: 39 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 41
+Total Kmeans-DataCentric time: 32 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 64 milliseconds
+Algo: KMeans
+Convergence at iteration: 15
+Kmeans time: 14 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 15
+Total Kmeans-DataCentric time: 12 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 23 milliseconds
+Algo: KMeans
+Convergence at iteration: 51
+Kmeans time: 48 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 51
+Total Kmeans-DataCentric time: 40 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 87 milliseconds
+Algo: KMeans
+Convergence at iteration: 19
+Kmeans time: 18 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 19
+Total Kmeans-DataCentric time: 15 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 29 milliseconds
 Algo: KMeans
 Convergence at iteration: 40
-Kmeans time: 1036 milliseconds
+Kmeans time: 37 milliseconds
 Algo: Kmeans-DataCentric
 Convergence at iteration: 40
-Total Kmeans-DataCentric time: 993 milliseconds
+Total Kmeans-DataCentric time: 31 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 2949 milliseconds
+Total BallKmeans time: 64 milliseconds
+Algo: KMeans
+Convergence at iteration: 28
+Kmeans time: 26 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 28
+Total Kmeans-DataCentric time: 22 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 45 milliseconds
+Algo: KMeans
+Convergence at iteration: 32
+Kmeans time: 30 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 32
+Total Kmeans-DataCentric time: 25 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 50 milliseconds
+Algo: KMeans
+Convergence at iteration: 102
+Kmeans time: 138 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 102
+Total Kmeans-DataCentric time: 110 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 154 milliseconds
+Algo: KMeans
+Convergence at iteration: 44
+Kmeans time: 59 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 44
+Total Kmeans-DataCentric time: 48 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 66 milliseconds
+Algo: KMeans
+Convergence at iteration: 54
+Kmeans time: 72 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 54
+Total Kmeans-DataCentric time: 59 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 93 milliseconds
+Algo: KMeans
+Convergence at iteration: 32
+Kmeans time: 43 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 32
+Total Kmeans-DataCentric time: 34 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 54 milliseconds
+Algo: KMeans
+Convergence at iteration: 61
+Kmeans time: 81 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 61
+Total Kmeans-DataCentric time: 65 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 95 milliseconds
+Algo: KMeans
+Convergence at iteration: 33
+Kmeans time: 44 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 33
+Total Kmeans-DataCentric time: 36 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 56 milliseconds
+Algo: KMeans
+Convergence at iteration: 50
+Kmeans time: 66 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 50
+Total Kmeans-DataCentric time: 55 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 82 milliseconds
+Algo: KMeans
+Convergence at iteration: 54
+Kmeans time: 72 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 54
+Total Kmeans-DataCentric time: 58 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 84 milliseconds
+Algo: KMeans
+Convergence at iteration: 64
+Kmeans time: 85 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 64
+Total Kmeans-DataCentric time: 69 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 107 milliseconds
+Algo: KMeans
+Convergence at iteration: 52
+Kmeans time: 69 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 52
+Total Kmeans-DataCentric time: 56 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 86 milliseconds
+Algo: KMeans
+Convergence at iteration: 77
+Kmeans time: 123 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 77
+Total Kmeans-DataCentric time: 100 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 131 milliseconds
+Algo: KMeans
+Convergence at iteration: 76
+Kmeans time: 121 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 76
+Total Kmeans-DataCentric time: 96 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 127 milliseconds
+Algo: KMeans
+Convergence at iteration: 43
+Kmeans time: 69 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 43
+Total Kmeans-DataCentric time: 55 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 74 milliseconds
+Algo: KMeans
+Convergence at iteration: 34
+Kmeans time: 55 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 34
+Total Kmeans-DataCentric time: 44 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 59 milliseconds
+Algo: KMeans
+Convergence at iteration: 156
+Kmeans time: 249 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 156
+Total Kmeans-DataCentric time: 194 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 244 milliseconds
+Algo: KMeans
+Convergence at iteration: 103
+Kmeans time: 165 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 103
+Total Kmeans-DataCentric time: 129 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 163 milliseconds
+Algo: KMeans
+Convergence at iteration: 42
+Kmeans time: 67 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 42
+Total Kmeans-DataCentric time: 55 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 74 milliseconds
+Algo: KMeans
+Convergence at iteration: 33
+Kmeans time: 53 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 33
+Total Kmeans-DataCentric time: 43 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 58 milliseconds
 Algo: KMeans
 Convergence at iteration: 58
-Kmeans time: 2787 milliseconds
+Kmeans time: 93 milliseconds
 Algo: Kmeans-DataCentric
 Convergence at iteration: 58
-Total Kmeans-DataCentric time: 2659 milliseconds
+Total Kmeans-DataCentric time: 72 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 4524 milliseconds
+Total BallKmeans time: 94 milliseconds
+Algo: KMeans
+Convergence at iteration: 106
+Kmeans time: 169 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 106
+Total Kmeans-DataCentric time: 137 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 170 milliseconds
+Algo: KMeans
+Convergence at iteration: 248
+Kmeans time: 464 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 248
+Total Kmeans-DataCentric time: 368 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 396 milliseconds
+Algo: KMeans
+Convergence at iteration: 47
+Kmeans time: 88 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 47
+Total Kmeans-DataCentric time: 69 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 77 milliseconds
+Algo: KMeans
+Convergence at iteration: 64
+Kmeans time: 120 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 64
+Total Kmeans-DataCentric time: 93 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 105 milliseconds
+Algo: KMeans
+Convergence at iteration: 75
+Kmeans time: 140 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 75
+Total Kmeans-DataCentric time: 110 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 131 milliseconds
+Algo: KMeans
+Convergence at iteration: 94
+Kmeans time: 176 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 94
+Total Kmeans-DataCentric time: 136 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 147 milliseconds
+Algo: KMeans
+Convergence at iteration: 122
+Kmeans time: 228 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 122
+Total Kmeans-DataCentric time: 182 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 206 milliseconds
+Algo: KMeans
+Convergence at iteration: 64
+Kmeans time: 120 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 64
+Total Kmeans-DataCentric time: 94 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 108 milliseconds
+Algo: KMeans
+Convergence at iteration: 141
+Kmeans time: 263 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 141
+Total Kmeans-DataCentric time: 215 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 249 milliseconds
+Algo: KMeans
+Convergence at iteration: 76
+Kmeans time: 142 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 76
+Total Kmeans-DataCentric time: 115 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 139 milliseconds
+Algo: KMeans
+Convergence at iteration: 87
+Kmeans time: 163 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 87
+Total Kmeans-DataCentric time: 129 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 148 milliseconds
+Algo: KMeans
+Convergence at iteration: 119
+Kmeans time: 441 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 119
+Total Kmeans-DataCentric time: 373 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 221 milliseconds
+Algo: KMeans
+Convergence at iteration: 71
+Kmeans time: 259 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 71
+Total Kmeans-DataCentric time: 217 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 145 milliseconds
+Algo: KMeans
+Convergence at iteration: 139
+Kmeans time: 510 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 139
+Total Kmeans-DataCentric time: 441 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 245 milliseconds
+Algo: KMeans
+Convergence at iteration: 96
+Kmeans time: 352 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 96
+Total Kmeans-DataCentric time: 288 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 210 milliseconds
+Algo: KMeans
+Convergence at iteration: 98
+Kmeans time: 354 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 98
+Total Kmeans-DataCentric time: 293 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 181 milliseconds
+Algo: KMeans
+Convergence at iteration: 44
+Kmeans time: 159 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 44
+Total Kmeans-DataCentric time: 142 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 93 milliseconds
+Algo: KMeans
+Convergence at iteration: 78
+Kmeans time: 284 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 78
+Total Kmeans-DataCentric time: 239 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 162 milliseconds
+Algo: KMeans
+Convergence at iteration: 129
+Kmeans time: 470 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 129
+Total Kmeans-DataCentric time: 391 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 258 milliseconds
+Algo: KMeans
+Convergence at iteration: 103
+Kmeans time: 373 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 103
+Total Kmeans-DataCentric time: 318 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 208 milliseconds
+Algo: KMeans
+Convergence at iteration: 101
+Kmeans time: 366 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 101
+Total Kmeans-DataCentric time: 313 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 212 milliseconds
 
 %%%%%%%%%%%%%%%%%%%%%%%
 Processing /u/parishar/scratch/DATASETS/real_data/experiment_data/comma_seperated_files/spambase.csv
 %%%%%%%%%%%%%%%%%%%%%%%
 
 Algo: KMeans
-Convergence at iteration: 30
-Kmeans time: 401 milliseconds
+Convergence at iteration: 36
+Kmeans time: 32 milliseconds
 Algo: Kmeans-DataCentric
-Convergence at iteration: 30
-Total Kmeans-DataCentric time: 177 milliseconds
+Convergence at iteration: 36
+Total Kmeans-DataCentric time: 13 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 904 milliseconds
+Total BallKmeans time: 22 milliseconds
 Algo: KMeans
-Convergence at iteration: 23
-Kmeans time: 438 milliseconds
+Convergence at iteration: 33
+Kmeans time: 29 milliseconds
 Algo: Kmeans-DataCentric
-Convergence at iteration: 23
-Total Kmeans-DataCentric time: 148 milliseconds
+Convergence at iteration: 33
+Total Kmeans-DataCentric time: 11 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 664 milliseconds
+Total BallKmeans time: 20 milliseconds
 Algo: KMeans
-Convergence at iteration: 15
+Convergence at iteration: 36
+Kmeans time: 32 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 36
+Total Kmeans-DataCentric time: 13 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 23 milliseconds
+Algo: KMeans
+Convergence at iteration: 32
+Kmeans time: 28 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 32
+Total Kmeans-DataCentric time: 11 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 18 milliseconds
+Algo: KMeans
+Convergence at iteration: 32
+Kmeans time: 28 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 32
+Total Kmeans-DataCentric time: 10 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 17 milliseconds
+Algo: KMeans
+Convergence at iteration: 36
+Kmeans time: 32 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 36
+Total Kmeans-DataCentric time: 13 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 22 milliseconds
+Algo: KMeans
+Convergence at iteration: 28
+Kmeans time: 25 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 28
+Total Kmeans-DataCentric time: 9 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 16 milliseconds
+Algo: KMeans
+Convergence at iteration: 36
+Kmeans time: 32 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 36
+Total Kmeans-DataCentric time: 13 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 22 milliseconds
+Algo: KMeans
+Convergence at iteration: 36
+Kmeans time: 32 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 36
+Total Kmeans-DataCentric time: 13 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 23 milliseconds
+Algo: KMeans
+Convergence at iteration: 27
+Kmeans time: 24 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 27
+Total Kmeans-DataCentric time: 8 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 14 milliseconds
+Algo: KMeans
+Convergence at iteration: 104
+Kmeans time: 144 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 104
+Total Kmeans-DataCentric time: 41 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 64 milliseconds
+Algo: KMeans
+Convergence at iteration: 108
+Kmeans time: 150 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 108
+Total Kmeans-DataCentric time: 43 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 67 milliseconds
+Algo: KMeans
+Convergence at iteration: 112
+Kmeans time: 156 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 112
+Total Kmeans-DataCentric time: 47 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 73 milliseconds
+Algo: KMeans
+Convergence at iteration: 106
+Kmeans time: 147 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 106
+Total Kmeans-DataCentric time: 43 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 66 milliseconds
+Algo: KMeans
+Convergence at iteration: 111
+Kmeans time: 154 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 111
+Total Kmeans-DataCentric time: 47 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 71 milliseconds
+Algo: KMeans
+Convergence at iteration: 111
+Kmeans time: 154 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 111
+Total Kmeans-DataCentric time: 47 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 72 milliseconds
+Algo: KMeans
+Convergence at iteration: 76
+Kmeans time: 106 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 76
+Total Kmeans-DataCentric time: 28 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 43 milliseconds
+Algo: KMeans
+Convergence at iteration: 108
+Kmeans time: 150 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 108
+Total Kmeans-DataCentric time: 44 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 67 milliseconds
+Algo: KMeans
+Convergence at iteration: 102
+Kmeans time: 141 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 102
+Total Kmeans-DataCentric time: 37 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 64 milliseconds
+Algo: KMeans
+Convergence at iteration: 104
+Kmeans time: 145 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 104
+Total Kmeans-DataCentric time: 39 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 65 milliseconds
+Algo: KMeans
+Convergence at iteration: 107
+Kmeans time: 183 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 107
+Total Kmeans-DataCentric time: 60 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 75 milliseconds
+Algo: KMeans
+Convergence at iteration: 77
+Kmeans time: 131 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 77
+Total Kmeans-DataCentric time: 39 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 50 milliseconds
+Algo: KMeans
+Convergence at iteration: 110
+Kmeans time: 188 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 110
+Total Kmeans-DataCentric time: 60 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 76 milliseconds
+Algo: KMeans
+Convergence at iteration: 113
+Kmeans time: 193 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 113
+Total Kmeans-DataCentric time: 67 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 83 milliseconds
+Algo: KMeans
+Convergence at iteration: 71
+Kmeans time: 121 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 71
+Total Kmeans-DataCentric time: 33 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 44 milliseconds
+Algo: KMeans
+Convergence at iteration: 104
+Kmeans time: 178 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 104
+Total Kmeans-DataCentric time: 57 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 71 milliseconds
+Algo: KMeans
+Convergence at iteration: 94
+Kmeans time: 161 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 94
+Total Kmeans-DataCentric time: 44 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 64 milliseconds
+Algo: KMeans
+Convergence at iteration: 101
+Kmeans time: 173 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 101
+Total Kmeans-DataCentric time: 49 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 69 milliseconds
+Algo: KMeans
+Convergence at iteration: 117
+Kmeans time: 201 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 117
+Total Kmeans-DataCentric time: 69 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 84 milliseconds
+Algo: KMeans
+Convergence at iteration: 115
+Kmeans time: 198 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 115
+Total Kmeans-DataCentric time: 64 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 84 milliseconds
+Algo: KMeans
+Convergence at iteration: 168
 Kmeans time: 342 milliseconds
 Algo: Kmeans-DataCentric
-Convergence at iteration: 15
-Total Kmeans-DataCentric time: 105 milliseconds
+Convergence at iteration: 168
+Total Kmeans-DataCentric time: 108 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 406 milliseconds
+Total BallKmeans time: 117 milliseconds
 Algo: KMeans
-Convergence at iteration: 18
-Kmeans time: 479 milliseconds
+Convergence at iteration: 176
+Kmeans time: 361 milliseconds
 Algo: Kmeans-DataCentric
-Convergence at iteration: 18
-Total Kmeans-DataCentric time: 130 milliseconds
+Convergence at iteration: 176
+Total Kmeans-DataCentric time: 113 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 518 milliseconds
+Total BallKmeans time: 129 milliseconds
 Algo: KMeans
-Convergence at iteration: 12
-Kmeans time: 612 milliseconds
+Convergence at iteration: 113
+Kmeans time: 231 milliseconds
 Algo: Kmeans-DataCentric
-Convergence at iteration: 12
-Total Kmeans-DataCentric time: 131 milliseconds
+Convergence at iteration: 113
+Total Kmeans-DataCentric time: 58 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 395 milliseconds
+Total BallKmeans time: 69 milliseconds
+Algo: KMeans
+Convergence at iteration: 127
+Kmeans time: 258 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 127
+Total Kmeans-DataCentric time: 74 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 83 milliseconds
+Algo: KMeans
+Convergence at iteration: 114
+Kmeans time: 232 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 114
+Total Kmeans-DataCentric time: 47 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 72 milliseconds
+Algo: KMeans
+Convergence at iteration: 149
+Kmeans time: 302 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 149
+Total Kmeans-DataCentric time: 90 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 101 milliseconds
+Algo: KMeans
+Convergence at iteration: 183
+Kmeans time: 371 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 183
+Total Kmeans-DataCentric time: 124 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 130 milliseconds
+Algo: KMeans
+Convergence at iteration: 171
+Kmeans time: 347 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 171
+Total Kmeans-DataCentric time: 103 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 123 milliseconds
+Algo: KMeans
+Convergence at iteration: 176
+Kmeans time: 359 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 176
+Total Kmeans-DataCentric time: 119 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 125 milliseconds
+Algo: KMeans
+Convergence at iteration: 149
+Kmeans time: 303 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 149
+Total Kmeans-DataCentric time: 92 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 101 milliseconds
+Algo: KMeans
+Convergence at iteration: 155
+Kmeans time: 640 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 155
+Total Kmeans-DataCentric time: 254 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 119 milliseconds
+Algo: KMeans
+Convergence at iteration: 203
+Kmeans time: 841 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 203
+Total Kmeans-DataCentric time: 225 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 171 milliseconds
+Algo: KMeans
+Convergence at iteration: 159
+Kmeans time: 658 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 159
+Total Kmeans-DataCentric time: 268 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 135 milliseconds
+Algo: KMeans
+Convergence at iteration: 132
+Kmeans time: 541 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 132
+Total Kmeans-DataCentric time: 218 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 106 milliseconds
+Algo: KMeans
+Convergence at iteration: 144
+Kmeans time: 591 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 144
+Total Kmeans-DataCentric time: 255 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 117 milliseconds
+Algo: KMeans
+Convergence at iteration: 182
+Kmeans time: 746 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 182
+Total Kmeans-DataCentric time: 301 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 135 milliseconds
+Algo: KMeans
+Convergence at iteration: 152
+Kmeans time: 625 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 152
+Total Kmeans-DataCentric time: 195 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 128 milliseconds
+Algo: KMeans
+Convergence at iteration: 144
+Kmeans time: 592 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 144
+Total Kmeans-DataCentric time: 260 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 121 milliseconds
+Algo: KMeans
+Convergence at iteration: 148
+Kmeans time: 609 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 148
+Total Kmeans-DataCentric time: 245 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 125 milliseconds
+Algo: KMeans
+Convergence at iteration: 155
+Kmeans time: 637 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 155
+Total Kmeans-DataCentric time: 284 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 128 milliseconds
 
 %%%%%%%%%%%%%%%%%%%%%%%
 Processing /u/parishar/scratch/DATASETS/real_data/experiment_data/comma_seperated_files/crop.csv
 %%%%%%%%%%%%%%%%%%%%%%%
 
 Algo: KMeans
-Convergence at iteration: 19
-Kmeans time: 4303 milliseconds
-Algo: Kmeans-DataCentric
-Convergence at iteration: 19
-Total Kmeans-DataCentric time: 3948 milliseconds
-Algo: Ball-KMeans
-Total BallKmeans time: 232157 milliseconds
-Algo: KMeans
-Convergence at iteration: 12
-Kmeans time: 3782 milliseconds
-Algo: Kmeans-DataCentric
-Convergence at iteration: 12
-Total Kmeans-DataCentric time: 3648 milliseconds
-Algo: Ball-KMeans
-Total BallKmeans time: 135494 milliseconds
-Algo: KMeans
-Convergence at iteration: 23
-Kmeans time: 8473 milliseconds
-Algo: Kmeans-DataCentric
-Convergence at iteration: 23
-Total Kmeans-DataCentric time: 8893 milliseconds
-Algo: Ball-KMeans
-Total BallKmeans time: 189920 milliseconds
-Algo: KMeans
 Convergence at iteration: 24
-Kmeans time: 10221 milliseconds
+Kmeans time: 401 milliseconds
 Algo: Kmeans-DataCentric
 Convergence at iteration: 24
-Total Kmeans-DataCentric time: 10925 milliseconds
+Total Kmeans-DataCentric time: 339 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 177116 milliseconds
+Total BallKmeans time: 2229 milliseconds
 Algo: KMeans
-Convergence at iteration: 45
-Kmeans time: 36339 milliseconds
+Convergence at iteration: 25
+Kmeans time: 414 milliseconds
 Algo: Kmeans-DataCentric
-Convergence at iteration: 45
-Total Kmeans-DataCentric time: 41116 milliseconds
+Convergence at iteration: 25
+Total Kmeans-DataCentric time: 346 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 162973 milliseconds
+Total BallKmeans time: 1633 milliseconds
+Algo: KMeans
+Convergence at iteration: 9
+Kmeans time: 159 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 9
+Total Kmeans-DataCentric time: 136 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2618 milliseconds
+Algo: KMeans
+Convergence at iteration: 30
+Kmeans time: 494 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 30
+Total Kmeans-DataCentric time: 395 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 3768 milliseconds
+Algo: KMeans
+Convergence at iteration: 21
+Kmeans time: 351 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 21
+Total Kmeans-DataCentric time: 290 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1467 milliseconds
+Algo: KMeans
+Convergence at iteration: 16
+Kmeans time: 272 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 16
+Total Kmeans-DataCentric time: 222 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1932 milliseconds
+Algo: KMeans
+Convergence at iteration: 21
+Kmeans time: 353 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 21
+Total Kmeans-DataCentric time: 274 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2422 milliseconds
+Algo: KMeans
+Convergence at iteration: 29
+Kmeans time: 486 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 29
+Total Kmeans-DataCentric time: 389 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1520 milliseconds
+Algo: KMeans
+Convergence at iteration: 24
+Kmeans time: 397 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 24
+Total Kmeans-DataCentric time: 338 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2846 milliseconds
+Algo: KMeans
+Convergence at iteration: 10
+Kmeans time: 175 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 10
+Total Kmeans-DataCentric time: 151 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1927 milliseconds
+Algo: KMeans
+Convergence at iteration: 27
+Kmeans time: 640 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 27
+Total Kmeans-DataCentric time: 521 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2752 milliseconds
+Algo: KMeans
+Convergence at iteration: 19
+Kmeans time: 456 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 19
+Total Kmeans-DataCentric time: 384 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2053 milliseconds
+Algo: KMeans
+Convergence at iteration: 23
+Kmeans time: 550 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 23
+Total Kmeans-DataCentric time: 445 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1600 milliseconds
+Algo: KMeans
+Convergence at iteration: 22
+Kmeans time: 523 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 22
+Total Kmeans-DataCentric time: 442 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2017 milliseconds
+Algo: KMeans
+Convergence at iteration: 27
+Kmeans time: 640 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 27
+Total Kmeans-DataCentric time: 514 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1895 milliseconds
+Algo: KMeans
+Convergence at iteration: 18
+Kmeans time: 435 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 18
+Total Kmeans-DataCentric time: 346 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2365 milliseconds
+Algo: KMeans
+Convergence at iteration: 31
+Kmeans time: 733 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 31
+Total Kmeans-DataCentric time: 559 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2133 milliseconds
+Algo: KMeans
+Convergence at iteration: 16
+Kmeans time: 386 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 16
+Total Kmeans-DataCentric time: 310 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1233 milliseconds
+Algo: KMeans
+Convergence at iteration: 51
+Kmeans time: 1185 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 51
+Total Kmeans-DataCentric time: 982 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2865 milliseconds
+Algo: KMeans
+Convergence at iteration: 26
+Kmeans time: 612 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 26
+Total Kmeans-DataCentric time: 487 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2303 milliseconds
+Algo: KMeans
+Convergence at iteration: 23
+Kmeans time: 645 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 23
+Total Kmeans-DataCentric time: 542 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1933 milliseconds
+Algo: KMeans
+Convergence at iteration: 17
+Kmeans time: 481 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 17
+Total Kmeans-DataCentric time: 411 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1597 milliseconds
+Algo: KMeans
+Convergence at iteration: 16
+Kmeans time: 458 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 16
+Total Kmeans-DataCentric time: 392 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1555 milliseconds
+Algo: KMeans
+Convergence at iteration: 43
+Kmeans time: 1227 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 43
+Total Kmeans-DataCentric time: 942 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2392 milliseconds
+Algo: KMeans
+Convergence at iteration: 30
+Kmeans time: 858 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 30
+Total Kmeans-DataCentric time: 716 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2771 milliseconds
+Algo: KMeans
+Convergence at iteration: 24
+Kmeans time: 685 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 24
+Total Kmeans-DataCentric time: 544 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1512 milliseconds
+Algo: KMeans
+Convergence at iteration: 39
+Kmeans time: 1118 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 39
+Total Kmeans-DataCentric time: 894 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2424 milliseconds
+Algo: KMeans
+Convergence at iteration: 23
+Kmeans time: 650 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 23
+Total Kmeans-DataCentric time: 546 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1851 milliseconds
+Algo: KMeans
+Convergence at iteration: 17
+Kmeans time: 487 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 17
+Total Kmeans-DataCentric time: 403 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1358 milliseconds
+Algo: KMeans
+Convergence at iteration: 21
+Kmeans time: 604 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 21
+Total Kmeans-DataCentric time: 515 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2034 milliseconds
+Algo: KMeans
+Convergence at iteration: 26
+Kmeans time: 858 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 26
+Total Kmeans-DataCentric time: 719 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2223 milliseconds
+Algo: KMeans
+Convergence at iteration: 40
+Kmeans time: 1333 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 40
+Total Kmeans-DataCentric time: 1021 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2376 milliseconds
+Algo: KMeans
+Convergence at iteration: 56
+Kmeans time: 1813 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 56
+Total Kmeans-DataCentric time: 1512 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 4406 milliseconds
+Algo: KMeans
+Convergence at iteration: 33
+Kmeans time: 1080 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 33
+Total Kmeans-DataCentric time: 873 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1695 milliseconds
+Algo: KMeans
+Convergence at iteration: 33
+Kmeans time: 1073 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 33
+Total Kmeans-DataCentric time: 894 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2189 milliseconds
+Algo: KMeans
+Convergence at iteration: 17
+Kmeans time: 563 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 17
+Total Kmeans-DataCentric time: 455 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1578 milliseconds
+Algo: KMeans
+Convergence at iteration: 32
+Kmeans time: 1050 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 32
+Total Kmeans-DataCentric time: 837 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2331 milliseconds
+Algo: KMeans
+Convergence at iteration: 38
+Kmeans time: 1234 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 38
+Total Kmeans-DataCentric time: 1034 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2396 milliseconds
+Algo: KMeans
+Convergence at iteration: 17
+Kmeans time: 562 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 17
+Total Kmeans-DataCentric time: 460 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1043 milliseconds
+Algo: KMeans
+Convergence at iteration: 38
+Kmeans time: 1236 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 38
+Total Kmeans-DataCentric time: 999 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2615 milliseconds
+Algo: KMeans
+Convergence at iteration: 137
+Kmeans time: 8608 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 137
+Total Kmeans-DataCentric time: 7473 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 5270 milliseconds
+Algo: KMeans
+Convergence at iteration: 103
+Kmeans time: 6524 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 103
+Total Kmeans-DataCentric time: 5696 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 4095 milliseconds
+Algo: KMeans
+Convergence at iteration: 41
+Kmeans time: 2573 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 41
+Total Kmeans-DataCentric time: 2160 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 1943 milliseconds
+Algo: KMeans
+Convergence at iteration: 43
+Kmeans time: 2695 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 43
+Total Kmeans-DataCentric time: 2406 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2378 milliseconds
+Algo: KMeans
+Convergence at iteration: 113
+Kmeans time: 7154 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 113
+Total Kmeans-DataCentric time: 6342 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 4725 milliseconds
+Algo: KMeans
+Convergence at iteration: 80
+Kmeans time: 5067 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 80
+Total Kmeans-DataCentric time: 4476 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 3455 milliseconds
+Algo: KMeans
+Convergence at iteration: 47
+Kmeans time: 2960 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 47
+Total Kmeans-DataCentric time: 2532 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2380 milliseconds
+Algo: KMeans
+Convergence at iteration: 82
+Kmeans time: 5231 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 82
+Total Kmeans-DataCentric time: 4498 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 3675 milliseconds
+Algo: KMeans
+Convergence at iteration: 140
+Kmeans time: 8655 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 140
+Total Kmeans-DataCentric time: 7178 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 6015 milliseconds
+Algo: KMeans
+Convergence at iteration: 57
+Kmeans time: 3528 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 57
+Total Kmeans-DataCentric time: 3130 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 2753 milliseconds
 
 %%%%%%%%%%%%%%%%%%%%%%%
 Processing /u/parishar/scratch/DATASETS/real_data/experiment_data/comma_seperated_files/Twitter.csv
 %%%%%%%%%%%%%%%%%%%%%%%
 
 Algo: KMeans
-Convergence at iteration: 61
-Kmeans time: 137738 milliseconds
+Convergence at iteration: 85
+Kmeans time: 13380 milliseconds
 Algo: Kmeans-DataCentric
-Convergence at iteration: 61
-Total Kmeans-DataCentric time: 63833 milliseconds
+Convergence at iteration: 85
+Total Kmeans-DataCentric time: 5051 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 876813 milliseconds
+Total BallKmeans time: 33564 milliseconds
 Algo: KMeans
-Convergence at iteration: 64
-Kmeans time: 204814 milliseconds
+Convergence at iteration: 85
+Kmeans time: 13399 milliseconds
 Algo: Kmeans-DataCentric
-Convergence at iteration: 64
-Total Kmeans-DataCentric time: 70103 milliseconds
+Convergence at iteration: 85
+Total Kmeans-DataCentric time: 5144 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 603533 milliseconds
+Total BallKmeans time: 42026 milliseconds
 Algo: KMeans
-Convergence at iteration: 92
-Kmeans time: 353422 milliseconds
+Convergence at iteration: 83
+Kmeans time: 13090 milliseconds
 Algo: Kmeans-DataCentric
-Convergence at iteration: 92
-Total Kmeans-DataCentric time: 112438 milliseconds
+Convergence at iteration: 83
+Total Kmeans-DataCentric time: 4879 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 1.27233e+06 milliseconds
+Total BallKmeans time: 33191 milliseconds
 Algo: KMeans
-Convergence at iteration: 98
-Kmeans time: 444383 milliseconds
+Convergence at iteration: 86
+Kmeans time: 13526 milliseconds
 Algo: Kmeans-DataCentric
-Convergence at iteration: 98
-Total Kmeans-DataCentric time: 133283 milliseconds
+Convergence at iteration: 86
+Total Kmeans-DataCentric time: 5251 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 1.0724e+06 milliseconds
+Total BallKmeans time: 36980 milliseconds
 Algo: KMeans
-Kmeans Timed Out :(
-Timeout: Kmeans time: 1.80346e+06 milliseconds
+Convergence at iteration: 86
+Kmeans time: 13496 milliseconds
 Algo: Kmeans-DataCentric
-Convergence at iteration: 309
-Total Kmeans-DataCentric time: 621939 milliseconds
+Convergence at iteration: 86
+Total Kmeans-DataCentric time: 5238 milliseconds
 Algo: Ball-KMeans
-Ball-Kmeans Timed Out :(
-Timeout: BallKmeans time: 1.80813e+06 milliseconds
-
-%%%%%%%%%%%%%%%%%%%%%%%
-Processing /u/parishar/scratch/DATASETS/real_data/experiment_data/comma_seperated_files/birch.csv
-%%%%%%%%%%%%%%%%%%%%%%%
-
+Total BallKmeans time: 40041 milliseconds
 Algo: KMeans
-Convergence at iteration: 35
-Kmeans time: 1126 milliseconds
+Convergence at iteration: 84
+Kmeans time: 13125 milliseconds
 Algo: Kmeans-DataCentric
-Convergence at iteration: 35
-Total Kmeans-DataCentric time: 555 milliseconds
+Convergence at iteration: 84
+Total Kmeans-DataCentric time: 5063 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 28264 milliseconds
+Total BallKmeans time: 48617 milliseconds
 Algo: KMeans
-Convergence at iteration: 27
-Kmeans time: 1160 milliseconds
+Convergence at iteration: 86
+Kmeans time: 13510 milliseconds
 Algo: Kmeans-DataCentric
-Convergence at iteration: 27
-Total Kmeans-DataCentric time: 453 milliseconds
+Convergence at iteration: 86
+Total Kmeans-DataCentric time: 5232 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 10153 milliseconds
+Total BallKmeans time: 46642 milliseconds
 Algo: KMeans
-Convergence at iteration: 57
-Kmeans time: 2855 milliseconds
+Convergence at iteration: 86
+Kmeans time: 13509 milliseconds
 Algo: Kmeans-DataCentric
-Convergence at iteration: 57
-Total Kmeans-DataCentric time: 941 milliseconds
+Convergence at iteration: 86
+Total Kmeans-DataCentric time: 5216 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 12118 milliseconds
+Total BallKmeans time: 39160 milliseconds
 Algo: KMeans
-Convergence at iteration: 15
-Kmeans time: 856 milliseconds
+Convergence at iteration: 88
+Kmeans time: 13777 milliseconds
 Algo: Kmeans-DataCentric
-Convergence at iteration: 15
-Total Kmeans-DataCentric time: 292 milliseconds
+Convergence at iteration: 88
+Total Kmeans-DataCentric time: 5515 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 5022 milliseconds
+Total BallKmeans time: 50244 milliseconds
 Algo: KMeans
-Convergence at iteration: 20
-Kmeans time: 2019 milliseconds
+Convergence at iteration: 87
+Kmeans time: 13740 milliseconds
 Algo: Kmeans-DataCentric
-Convergence at iteration: 20
-Total Kmeans-DataCentric time: 441 milliseconds
+Convergence at iteration: 87
+Total Kmeans-DataCentric time: 5450 milliseconds
 Algo: Ball-KMeans
-Total BallKmeans time: 5020 milliseconds
-Completed benchmarks
+Total BallKmeans time: 47731 milliseconds
+Algo: KMeans
+Convergence at iteration: 150
+Kmeans time: 35603 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 150
+Total Kmeans-DataCentric time: 12164 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 81139 milliseconds
+Algo: KMeans
+Convergence at iteration: 154
+Kmeans time: 36634 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 154
+Total Kmeans-DataCentric time: 13188 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 93781 milliseconds
+Algo: KMeans
+Convergence at iteration: 149
+Kmeans time: 35216 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 149
+Total Kmeans-DataCentric time: 12239 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 95888 milliseconds
+Algo: KMeans
+Convergence at iteration: 151
+Kmeans time: 36006 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 151
+Total Kmeans-DataCentric time: 12684 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 89743 milliseconds
+Algo: KMeans
+Convergence at iteration: 149
+Kmeans time: 35417 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 149
+Total Kmeans-DataCentric time: 11923 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 76991 milliseconds
+Algo: KMeans
+Convergence at iteration: 154
+Kmeans time: 36652 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 154
+Total Kmeans-DataCentric time: 13282 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 100221 milliseconds
+Algo: KMeans
+Convergence at iteration: 152
+Kmeans time: 36025 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 152
+Total Kmeans-DataCentric time: 12623 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 92196 milliseconds
+Algo: KMeans
+Convergence at iteration: 154
+Kmeans time: 36687 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 154
+Total Kmeans-DataCentric time: 13107 milliseconds
+Algo: Ball-KMeans
+Total BallKmeans time: 100906 milliseconds
+Algo: KMeans
+Convergence at iteration: 153
+Kmeans time: 36418 milliseconds
+Algo: Kmeans-DataCentric
+Convergence at iteration: 153
+Total Kmeans-DataCentric time: 12816 milliseconds
+Algo: Ball-KMeans

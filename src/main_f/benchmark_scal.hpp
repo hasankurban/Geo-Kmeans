@@ -1,11 +1,8 @@
 #include <iostream>
 #include <string>
-#include <tuple>
 #include <iomanip>
 #include <chrono>
-
 using namespace std;
-
 
 void benchmark_scal(string basePath){
 
@@ -13,25 +10,28 @@ void benchmark_scal(string basePath){
         string scal_output_path = basePath + "benchmark_scal.csv";;
         
         // Declare variables
-        vector<string> scal_file_list = {"1000000_points.csv", "3000000_points.csv" , "5000000_points.csv",
-                "8000000_points.csv"};
+        vector<string> scal_file_list = {"1000000_points.csv", "3000000_points.csv" , "5000000_points.csv", "8000000_points.csv"};
         vector<int> num_points = {1000000, 3000000, 5000000, 8000000};
 
-        // vector<string> scal_file_list = {"1000000_points.csv", "3000000_points.csv"};
-        // vector<int> num_points = {1000000, 3000000};
+        // vector<string> scal_file_list = {"1000000_points.csv"};
+        // vector<int> num_points = {1000000};
 
         vector<int> labels;
         int num_iterations = 2000;
         float threshold = 0.01;
         int num_clusters = 10;
+        int seed = 90;
 
         // 90 minutes cutoff for runtime
         int time_limit = 5400000, points = 0;
         
         string inputfilePath = "";
         bool run_stat = false;
+        string kmdc_timeout = "no", ballkm_timeout = "no";
+
+        float kmdc_time = 0, bkm_time = 0;
         
-        output_data dckm_res;
+        output_data kmdc_res;
         output_data ballkm_res;
         
         ofstream scaloutFile;
@@ -41,9 +41,9 @@ void benchmark_scal(string basePath){
 
         algorithm_utils alg_utils;
 
-        ///////
+        ////////////////////////////
         // Scalability experiments
-        ///////
+        ////////////////////////////
         
         for(int i = 0; i < num_points.size(); i++){
 
@@ -62,10 +62,9 @@ void benchmark_scal(string basePath){
             
             // Load data in Eigen format for Ball KMeans
             MatrixOur BallK_dataset = load_data(inputfilePath);
-    
-            string km_timeout = "no";
-            string dckm_timeout = "no";
-            string ballkm_timeout = "no";
+
+            kmdc_timeout = "no";
+            ballkm_timeout = "no";
             
             //####################
             // KMeans-DataCentric
@@ -73,14 +72,19 @@ void benchmark_scal(string basePath){
 
             cout << "Algo: Kmeans-DataCentric" << endl;
 
-            dckm_res = dckmeans(dataset, num_clusters, threshold, num_iterations, numCols, time_limit, "sequential", 0);
-            
-            if (dckm_res.timeout == true){
-                dckm_timeout = "yes";
-                cout << "Timeout: Kmeans-DataCentric time: " << dckm_res.runtime << " milliseconds" << endl;
+            auto kmdc_start_time = std::chrono::high_resolution_clock::now();
+
+            kmdc_res = dckmeans(dataset, num_clusters, threshold, num_iterations, numCols, time_limit, "random", seed);
+
+            auto kmdc_end_time = std::chrono::high_resolution_clock::now();
+            kmdc_time = std::chrono::duration_cast<std::chrono::seconds>(kmdc_end_time - kmdc_start_time).count();
+
+            if (kmdc_res.timeout == true){
+                kmdc_timeout = "yes";
+                cout << "Timeout: Kmeans-DataCentric time: " << kmdc_time << " seconds" << endl;
             }
             else{
-                cout << "Total Kmeans-DataCentric time: " << dckm_res.runtime << " milliseconds" << endl;
+                cout << "Total Kmeans-DataCentric time: " << kmdc_time << " seconds" << endl;
             }
 
             //####################
@@ -89,34 +93,38 @@ void benchmark_scal(string basePath){
 
             cout << "Algo: Ball-KMeans" << endl;
 
-            ballkm_res = ball_k_means_Ring(BallK_dataset, false, num_clusters, threshold, num_iterations, time_limit, "sequential", 0);
+            auto bkm_start_time = std::chrono::high_resolution_clock::now();
+            
+            ballkm_res = ball_k_means_Ring(BallK_dataset, true, num_clusters, threshold, num_iterations, time_limit, 
+                        "random", seed);
+
+            auto bkm_end_time = std::chrono::high_resolution_clock::now();
+            bkm_time = std::chrono::duration_cast<std::chrono::seconds>(bkm_end_time - bkm_start_time).count();
 
             if (ballkm_res.timeout == true){
                 ballkm_timeout = "yes";
-                cout << "Timeout: BallKmeans time: " << ballkm_res.runtime << " milliseconds" << endl;
+                cout << "Timeout: BallKmeans time: " << bkm_time << " seconds" << endl;
             }
             else{
-                cout << "Total BallKmeans time: " << ballkm_res.runtime << " milliseconds" << endl;
+                cout << "Total BallKmeans time: " << bkm_time << " seconds" << endl;
             }
 
             scaloutFile.open(scal_output_path, ios::app);
 
             scaloutFile << "\nKmeans-DataCentric" << "," << to_string(points) 
-                <<  "," << 
-            std::setprecision(2) << to_string(dckm_res.runtime) << "," << std::setprecision(6) <<
-            to_string(float(dckm_res.runtime/dckm_res.loop_counter)) << "," << std::setprecision(2) 
-            << to_string(float(ballkm_res.runtime/dckm_res.runtime)) << "," << std::setprecision(2) << to_string(dckm_res.num_he) <<
-            "," << std::setprecision(2) << to_string(float(ballkm_res.num_he/dckm_res.num_he)) << "," << dckm_timeout;
+            <<  "," <<  std::setprecision(2) << to_string(kmdc_time) << "," << std::setprecision(3) <<
+            to_string((float)kmdc_time/kmdc_res.loop_counter) << "," << std::setprecision(3) 
+            << to_string((float)bkm_time/kmdc_time) << "," << to_string(kmdc_res.num_he) <<
+            "," << std::setprecision(3) << to_string((float)ballkm_res.num_he/kmdc_res.num_he) << "," << kmdc_timeout;
 
             scaloutFile << "\nBall-Kmeans" << "," << to_string(points) 
-            << "," <<  std::setprecision(2) << to_string(ballkm_res.runtime) << "," << std::setprecision(6) <<
-            to_string(float(ballkm_res.runtime/ballkm_res.loop_counter)) << "," << std::setprecision(2) << to_string(1)
-                << "," << std::setprecision(2) << to_string(ballkm_res.num_he) <<
-            "," << std::setprecision(2) << to_string(1) << "," << ballkm_timeout;    
+            << "," <<  std::setprecision(2) << to_string(bkm_time) << "," << std::setprecision(3) <<
+            to_string((float)bkm_time/ballkm_res.loop_counter) << "," << to_string(1)
+            << "," << to_string(ballkm_res.num_he) <<
+            "," << to_string(1) << "," << ballkm_timeout;    
 
             scaloutFile.close();
-
         }
         
-    cout << "Completed Scalability benchmarks" << endl;
+    cout << "Completed synthetic data scalability benchmarks" << endl;
 }
