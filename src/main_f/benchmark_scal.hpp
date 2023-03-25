@@ -13,8 +13,8 @@ void benchmark_scal(string basePath){
         vector<string> scal_file_list = {"1000000_points.csv", "3000000_points.csv" , "5000000_points.csv", "8000000_points.csv"};
         vector<int> num_points = {1000000, 3000000, 5000000, 8000000};
 
-        // vector<string> scal_file_list = {"1000000_points.csv"};
-        // vector<int> num_points = {1000000};
+        // vector<string> scal_file_list = {"3000000_points.csv"};
+        // vector<int> num_points = {3000000};
 
         vector<int> labels;
         int num_iterations = 2000;
@@ -74,7 +74,7 @@ void benchmark_scal(string basePath){
 
             auto kmdc_start_time = std::chrono::high_resolution_clock::now();
 
-            kmdc_res = dckmeans(dataset, num_clusters, threshold, num_iterations, numCols, time_limit, "random", seed);
+            kmdc_res = dckmeans(dataset, num_clusters, threshold, num_iterations, numCols, time_limit, "sequential", 0);
 
             auto kmdc_end_time = std::chrono::high_resolution_clock::now();
             kmdc_time = std::chrono::duration_cast<std::chrono::seconds>(kmdc_end_time - kmdc_start_time).count();
@@ -96,7 +96,7 @@ void benchmark_scal(string basePath){
             auto bkm_start_time = std::chrono::high_resolution_clock::now();
             
             ballkm_res = ball_k_means_Ring(BallK_dataset, true, num_clusters, threshold, num_iterations, time_limit, 
-                        "random", seed);
+                        "sequential", 0);
 
             auto bkm_end_time = std::chrono::high_resolution_clock::now();
             bkm_time = std::chrono::duration_cast<std::chrono::seconds>(bkm_end_time - bkm_start_time).count();

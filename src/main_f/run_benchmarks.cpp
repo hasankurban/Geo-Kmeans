@@ -10,8 +10,8 @@
 #include "kmeans.hpp"
 #include "dckmeans.hpp"
 #include "ball_kmeans++_xf.hpp"
-// #include "doubling_proportion.hpp"
-// #include "doubling_clusters.hpp"
+#include "doubling_proportion.hpp"
+#include "doubling_clusters.hpp"
 #include "benchmark_scal.hpp"
 #include "benchmark_dims.hpp"
 #include "benchmark_clus.hpp"
@@ -24,8 +24,8 @@ int main(int argc, char* argv[]){
     // string basePath = "/u/parishar/scratch/DATASETS/real_data/experiment_data/comma_seperated_files/";
     // string benchmark_type = "benchmark_real_data";
     
-    // string basePath = "/u/parishar/scratch/DATASETS/clustering_data/";
-    // string benchmark_type = "benchmark_clus";
+    string basePath = "/u/parishar/scratch/DATASETS/clustering_data/";
+    string benchmark_type = "benchmark_clus";
 
     // string basePath = "/u/parishar/scratch/DATASETS/dims_data/";
     // string benchmark_type = "benchmark_dims";
@@ -33,16 +33,22 @@ int main(int argc, char* argv[]){
     // string basePath = "/u/parishar/scratch/DATASETS/scal_data/";
     // string benchmark_type = "benchmark_scal";
 
-    string basePath = argv[1];
-    string benchmark_type = argv[2];
+    // string basePath = "/u/parishar/scratch/DATASETS/real_data/experiment_data/comma_seperated_files/";
+    // string benchmark_type = "doubling_clusters";
 
-    // if (benchmark_type == "doubling_clusters"){
-    //     double_clusters(basePath);
-    // }
-    // else if (benchmark_type == "doubling_proportion"){
-    //     double_prop(basePath);
-    // }
-    if (benchmark_type == "benchmark_real_data"){
+    // string basePath = "/u/parishar/scratch/DATASETS/real_data/experiment_data/comma_seperated_files/";
+    // string benchmark_type = "doubling_proportion";
+
+    // string basePath = argv[1];
+    // string benchmark_type = argv[2];
+
+    if (benchmark_type == "doubling_clusters"){
+        double_clusters(basePath);
+    }
+    else if (benchmark_type == "doubling_proportion"){
+        double_prop(basePath);
+    }
+    else if (benchmark_type == "benchmark_real_data"){
         benchmark_on_real_data(basePath);
     }
     else if (benchmark_type == "benchmark_scal"){

@@ -16,8 +16,8 @@ void double_prop(string basePath){
        vector<string> file_list = {"magic.csv", "spambase.csv", "crop.csv", "Twitter.csv", "birch.csv"};
        vector<string> data_list = {"Magic", "Spambase", "Crop", "Twitter", "Birch"};
 
-    //    vector<string> file_list = {"magic.csv"};
-    //    vector<string> data_list = {"Magic"};
+    //    vector<string> file_list = {"magic.csv", "spambase.csv"};
+    //    vector<string> data_list = {"Magic", "Spambase"};
 
         int num_iterations = 2000;
         float threshold = 0.001;
@@ -29,7 +29,7 @@ void double_prop(string basePath){
        
        vector<int> labels;
        output_data km_res;
-       output_data dckm_res;
+       output_data kmdc_res;
        output_data ballkm_res;
        
        // Timeout limit
@@ -40,6 +40,9 @@ void double_prop(string basePath){
        int num_clusters = 5;
        int num_points = 0;
        vector<int> rep = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50};
+
+       float km_time = 0, kmdc_time = 0, bkm_time = 0;
+       string km_timeout = "no", kmdc_timeout = "no", ballkm_timeout = "no";
 
        ofstream avgresFile;
        string outFile = out_path + "doubling_proportion.csv";
@@ -78,16 +81,10 @@ void double_prop(string basePath){
                 cout << "\n" << endl;
                 cout << "Data prop: " << prop << endl;
                 cout << "\n";
-                
-                string km_timeout = "no";
-                string dckm_timeout = "no";
-                string ballkm_timeout = "no";
 
                 // Extract the proportion of data from original dataset to run the experiments
                 num_points = ceil(dataset.size() * prop);
                 vector<vector<float> > extracted_data(num_points, vector<float>(numCols, 0.0));
-                vector<vector<float> > centroids(num_clusters, vector<float>(numCols, 0));
-
                 alg_utils.extract_data(dataset, extracted_data, num_points, seed+j);
 
                 // Extract data for Ball KMeans
@@ -105,30 +102,37 @@ void double_prop(string basePath){
                     
                     // alg_utils.init_centroids_sequentially(centroids, extracted_data, clus);   
                     // km_res = kmeans(extracted_data, centroids, clus, threshold, num_iters, numCols, time_limit);
+                    auto km_start_time = std::chrono::high_resolution_clock::now();
 
                     km_res = kmeans(extracted_data, num_clusters, threshold, num_iterations, numCols, 
                                     time_limit, "random", seed+rep[n]);
                     
+                    auto km_end_time = std::chrono::high_resolution_clock::now();
+                    km_time = std::chrono::duration_cast<std::chrono::milliseconds>(km_end_time - km_start_time).count();
+                    
                     if (km_res.timeout == true){
                         km_timeout = "yes";
-                        cout << "Timeout: Kmeans time: " << km_res.runtime << " milliseconds" << endl;
+                        cout << "Timeout: Kmeans time: " << km_time << " milliseconds" << endl;
                     }
 
+                    
                     //####################
                     // KMeans-DataCentric
                     //####################
 
                     cout << "Algo: Kmeans-DataCentric" << endl; 
-                    
-                    // alg_utils.init_centroids_sequentially(centroids, extracted_data, clus);
-                    // dckm_res = dckmeans(extracted_data, centroids, clus, threshold, num_iters, numCols, time_limit);
 
-                    dckm_res = dckmeans(extracted_data, num_clusters, threshold, num_iterations, numCols, 
+                    auto kmdc_start_time = std::chrono::high_resolution_clock::now();
+                    
+                    kmdc_res = dckmeans(extracted_data, num_clusters, threshold, num_iterations, numCols, 
                     time_limit, "random", seed+rep[n]);
 
-                    if (dckm_res.timeout == true){
-                        dckm_timeout = "yes";
-                        cout << "Timeout: Kmeans-DataCentric time: " << dckm_res.runtime << " milliseconds" << endl;
+                    auto kmdc_end_time = std::chrono::high_resolution_clock::now();
+                    kmdc_time = std::chrono::duration_cast<std::chrono::milliseconds>(kmdc_end_time - kmdc_start_time).count();
+
+                    if (kmdc_res.timeout == true){
+                        kmdc_timeout = "yes";
+                        cout << "Timeout: Kmeans-DataCentric time: " << kmdc_time << " milliseconds" << endl;
                     }
 
                     //####################
@@ -136,36 +140,38 @@ void double_prop(string basePath){
                     //####################
                     
                     cout << "Algo: BallKMeans" << endl; 
-                    
-                    // MatrixOur ballKm_centroids = init_ball_centroids(extracted_ball_data, clus);
-                    // ballkm_res = ball_k_means_Ring(extracted_ball_data, ballKm_centroids, false, threshold, num_iters, time_limit);
+
+                    auto bkm_start_time = std::chrono::high_resolution_clock::now();
 
                     ballkm_res = ball_k_means_Ring(extracted_ball_data, false, num_clusters, threshold, num_iterations, 
                     time_limit, "random", seed+rep[n]);
 
+                    auto bkm_end_time = std::chrono::high_resolution_clock::now();
+                    bkm_time = std::chrono::duration_cast<std::chrono::milliseconds>(bkm_end_time - bkm_start_time).count();
+
                     if (ballkm_res.timeout == true){
                         ballkm_timeout = "yes";
-                        cout << "Timeout: BallKmeans time: " << ballkm_res.runtime << " milliseconds" << endl;
+                        cout << "Timeout: BallKmeans time: " << bkm_time << " milliseconds" << endl;
                     }
 
-                    cout << "Data: " << file_list[i] << " Prop: " << prop << "\t" << " Clusters:" << num_clusters 
-                    << "\t calc: " << km_res.num_he <<  " " << dckm_res.num_he <<  " " << ballkm_res.num_he << " " << 
-                    ballkm_res.loop_counter << " " << km_res.runtime << " " << dckm_res.runtime << " " << ballkm_res.runtime << endl;
+                    // cout << "Data: " << file_list[i] << " Prop: " << prop << "\t" << " Clusters:" << num_clusters 
+                    // << "\t calc: " << km_res.num_he <<  " " << kmdc_res.num_he <<  " " << ballkm_res.num_he << " " << 
+                    // ballkm_res.loop_counter << " " << km_res.runtime << " " << kmdc_res.runtime << " " << ballkm_res.runtime << endl;
 
                     avgresFile.open(outFile, ios::app);
 
                     // Algorithm,Data,Clusters,Prop,Distances,Timeout
 
                     avgresFile << "\nKmeans" << "," << data_list[i] << "," << to_string(num_clusters) 
-                    << "," << to_string(prop) << "," << to_string(km_res.num_he) << "," << to_string(km_res.runtime) << "," 
+                    << "," << to_string(prop) << "," << to_string(km_res.num_he) << "," << to_string(km_time) << "," 
                     << to_string(km_res.loop_counter) << "," << km_timeout << "," << to_string(n+1);
 
                     avgresFile << "\nKmeans-DataCentric" << "," << data_list[i] << "," << to_string(num_clusters) 
-                    << "," << to_string(prop) << "," << to_string(dckm_res.num_he) << ","  << to_string(dckm_res.runtime) << "," 
-                    << to_string(dckm_res.loop_counter) << "," << dckm_timeout << "," << to_string(n+1);
+                    << "," << to_string(prop) << "," << to_string(kmdc_res.num_he) << ","  << to_string(kmdc_time) << "," 
+                    << to_string(kmdc_res.loop_counter) << "," << kmdc_timeout << "," << to_string(n+1);
 
                     avgresFile << "\nBall-Kmeans" << "," << data_list[i] << "," << to_string(num_clusters) 
-                    << "," << to_string(prop) << "," << to_string(ballkm_res.num_he) << "," << to_string(ballkm_res.runtime) << "," 
+                    << "," << to_string(prop) << "," << to_string(ballkm_res.num_he) << "," << to_string(bkm_time) << "," 
                     << to_string(ballkm_res.loop_counter) << "," << ballkm_timeout << "," << to_string(n+1);    
 
                     avgresFile.close();

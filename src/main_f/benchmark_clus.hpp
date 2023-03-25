@@ -14,14 +14,14 @@ void benchmark_clus(string basePath){
         // vector<string> clus_file_list = {"20_clusters.csv", "40_clusters.csv", "60_clusters.csv", 
         // "80_clusters.csv", "100_clusters.csv"};
 
-        vector<string> clus_file_list = {"20_clusters.csv", "100_clusters.csv"};
+        vector<string> clus_file_list = {"50_clusters.csv", "100_clusters.csv"};
 
         int num_iterations = 2000, clus = 0;
         float threshold = 0.01;
-         vector<int> num_clusters = {20, 50, 100, 200, 500};
-        // vector<int> num_clusters = {20};
+        //  vector<int> num_clusters = {20, 50, 100, 200, 500};
+        vector<int> num_clusters = {50, 100};
         int seed = 12;
-        int num_rep = 10; 
+        int num_rep = 1; 
 
         int avg_kmdc_loop_counter = 0, avg_kmdc_num_he = 0;
         int avg_bkm_loop_counter = 0, avg_bkm_num_he = 0;
@@ -96,7 +96,7 @@ void benchmark_clus(string basePath){
 
                 auto kmdc_start_time = std::chrono::high_resolution_clock::now();
 
-                kmdc_res = dckmeans(dataset, clus, threshold, num_iterations, numCols, time_limit, "random", seed+k);
+                kmdc_res = dckmeans(dataset, clus, threshold, num_iterations, numCols, time_limit, "sequential", 0);
 
                 auto kmdc_end_time = std::chrono::high_resolution_clock::now();
                 kmdc_time = std::chrono::duration_cast<std::chrono::seconds>(kmdc_end_time - kmdc_start_time).count();
@@ -115,8 +115,8 @@ void benchmark_clus(string basePath){
 
                 auto bkm_start_time = std::chrono::high_resolution_clock::now();
                 
-                ballkm_res = ball_k_means_Ring(BallK_dataset, false, clus, threshold, num_iterations, time_limit, 
-                            "random", seed+k);
+                ballkm_res = ball_k_means_Ring(BallK_dataset, true, clus, threshold, num_iterations, time_limit, 
+                            "sequential", 0);
 
                 auto bkm_end_time = std::chrono::high_resolution_clock::now();
                 bkm_time = std::chrono::duration_cast<std::chrono::seconds>(bkm_end_time - bkm_start_time).count();
