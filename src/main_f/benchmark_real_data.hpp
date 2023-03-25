@@ -14,20 +14,20 @@ void benchmark_on_real_data(string basePath){
        string out_path = basePath;
        
        // Declare variables
-       vector<string> file_list = {"Breastcancer.csv", "CreditRisk.csv",
-            "magic.csv", "spambase.csv", "crop.csv", "Twitter.csv", "birch.csv"};
+    //    vector<string> file_list = {"Breastcancer.csv", "CreditRisk.csv",
+    //         "magic.csv", "spambase.csv", "crop.csv", "Twitter.csv", "birch.csv"};
 
-       vector<string> data_list = {"Breastcancer", "CreditRisk",
-            "magic", "spambase", "crop", "Twitter", "birch"};
+    //    vector<string> data_list = {"Breastcancer", "CreditRisk",
+    //         "magic", "spambase", "crop", "Twitter", "birch"};
 
-    //    vector<string> file_list = {"Breastcancer.csv", "CreditRisk.csv"};
-    //    vector<string> data_list = {"Breastcancer", "CreditRisk"};
+       vector<string> file_list = {"Breastcancer.csv", "CreditRisk.csv"};
+       vector<string> data_list = {"Breastcancer", "CreditRisk"};
 
         int num_iterations = 2000;
         float threshold = 0.001;
-        vector<int> num_clusters = {5, 8, 10, 12, 25}; 
-        // vector<int> num_clusters = {5, 8, 10};
-        int num_rep = 10;
+        // vector<int> num_clusters = {5, 8, 10, 12, 25}; 
+        // vector<int> num_clusters = {5, 8, 10, 12, 25};
+        int num_rep = 1;
         int seed = 5;
 
         // Timeout limit of 40 minutes
@@ -84,6 +84,8 @@ void benchmark_on_real_data(string basePath){
             for (int j = 0; j< num_clusters.size(); j++){
 
                 int clus = num_clusters[j];
+                
+                cout << "\nClusters:\n " << clus << endl;
 
                 avg_km_loop_counter = 0;
                 avg_kmdc_loop_counter = 0;
