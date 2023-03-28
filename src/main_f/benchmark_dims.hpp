@@ -30,8 +30,8 @@ void benchmark_dims(string basePath){
         // 50 minutes cutoff for running
         int time_limit = 3000000, dims = 0;
 
-        int avg_kmdc_loop_counter = 0, avg_kmdc_num_he = 0;
-        int avg_bkm_loop_counter = 0, avg_bkm_num_he = 0;
+        unsigned long long int avg_kmdc_num_he = 0, avg_bkm_num_he =0; 
+        int avg_kmdc_loop_counter = 0, avg_bkm_loop_counter = 0;
 
         float kmdc_time = 0, bkm_time = 0, avg_kmdc_runtime = 0, avg_bkm_runtime = 0;
         string kmdc_timeout = "no", ballkm_timeout = "no";

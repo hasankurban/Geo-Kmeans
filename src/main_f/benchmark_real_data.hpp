@@ -14,28 +14,26 @@ void benchmark_on_real_data(string basePath){
        string out_path = basePath;
        
        // Declare variables
-    //    vector<string> file_list = {"Breastcancer.csv", "CreditRisk.csv",
-    //         "magic.csv", "spambase.csv", "crop.csv", "Twitter.csv", "birch.csv"};
+       vector<string> file_list = {"Breastcancer.csv", "CreditRisk.csv",
+            "magic.csv", "spambase.csv", "crop.csv", "Twitter.csv", "birch.csv"};
 
-    //    vector<string> data_list = {"Breastcancer", "CreditRisk",
-    //         "magic", "spambase", "crop", "Twitter", "birch"};
+       vector<string> data_list = {"Breastcancer", "CreditRisk",
+            "magic", "spambase", "crop", "Twitter", "birch"};
 
-       vector<string> file_list = {"Breastcancer.csv", "CreditRisk.csv"};
-       vector<string> data_list = {"Breastcancer", "CreditRisk"};
+    //    vector<string> file_list = {"Breastcancer.csv", "CreditRisk.csv", "Twitter.csv"};
+    //    vector<string> data_list = {"Breastcancer", "CreditRisk", "Twitter"};
 
         int num_iterations = 2000;
         float threshold = 0.001;
-        // vector<int> num_clusters = {5, 8, 10, 12, 25}; 
-        // vector<int> num_clusters = {5, 8, 10, 12, 25};
-        int num_rep = 1;
+        vector<int> num_clusters = {5, 8, 10, 12, 25};
+        int num_rep = 10;
         int seed = 5;
 
         // Timeout limit of 40 minutes
         int time_limit = 2400000;
 
-        int avg_km_loop_counter = 0, avg_km_num_he = 0;
-        int avg_kmdc_loop_counter = 0, avg_kmdc_num_he = 0;
-        int avg_bkm_loop_counter = 0, avg_bkm_num_he = 0;
+        unsigned long long int avg_km_num_he = 0, avg_kmdc_num_he = 0, avg_bkm_num_he =0; 
+        int avg_km_loop_counter = 0, avg_kmdc_loop_counter = 0, avg_bkm_loop_counter = 0;
 
         float km_time = 0, kmdc_time = 0, bkm_time = 0, avg_km_runtime = 0, 
         avg_kmdc_runtime = 0, avg_bkm_runtime = 0;
@@ -85,7 +83,7 @@ void benchmark_on_real_data(string basePath){
 
                 int clus = num_clusters[j];
                 
-                cout << "\nClusters:\n " << clus << endl;
+                // cout << "\nClusters:\n " << clus << endl;
 
                 avg_km_loop_counter = 0;
                 avg_kmdc_loop_counter = 0;

@@ -112,12 +112,14 @@ inline void find_neighbors(vector<vector <TD> > &centroids,
     algorithm_utils alg_utils;
     vector<TI> temp1;
 
-    int curr_center = 0, ot_center = 0, cnt = 0;
+    int curr_center = 0, ot_center = 0, cnt = 0, closest_neighbor = 0, temp_val = 0, closest_ind = 0;
+    float shortestDist2 = 0;
 
     // Calculate inter-centroid distances
     for(curr_center=0; curr_center<centroids.size(); curr_center++){
         
         radius = cluster_size[curr_center][1];
+        shortestDist2 = std::numeric_limits<float>::max();
         cnt = 0;
         
         for (ot_center=0; ot_center<centroids.size(); 
@@ -136,10 +138,18 @@ inline void find_neighbors(vector<vector <TD> > &centroids,
 
                 // Create an object of neighbor holder structure
                 // and populate the fields inside it.
-                temp[0] = center_dist_mat[curr_center][ot_center];
-                temp[1] = ot_center;
-                temp[2] = cnt;
-                temp_master.push_back(temp);
+                // temp[0] = center_dist_mat[curr_center][ot_center];
+                // temp[1] = ot_center;
+                // temp[2] = cnt;
+                // temp_master.push_back(temp);
+                
+                temp1.push_back(ot_center);
+
+                if (center_dist_mat[curr_center][ot_center] < shortestDist2){
+                    shortestDist2 = center_dist_mat[curr_center][ot_center];
+                    closest_neighbor = ot_center;
+                    closest_ind = cnt;
+                }
            
                 // Get the mid-point coordinates for this pair of centroids
                 find_midpoints(centroids[curr_center], centroids[ot_center], mid_points, affine_vectors, curr_center, ot_center);
@@ -149,18 +159,25 @@ inline void find_neighbors(vector<vector <TD> > &centroids,
 
             if (cnt>1){
                 
-                sort(temp_master.begin(), temp_master.end(), [](const std::vector<TD>& a, const std::vector<TD>& b) {
-                    return a[0] < b[0];});
+                // sort(temp_master.begin(), temp_master.end(), [](const std::vector<TD>& a, const std::vector<TD>& b) {
+                //     return a[0] < b[0];});
 
-                for(int i = 0; i<temp_master.size(); i++){
-                    temp1.push_back(trunc(temp_master[i][1]));
+                // for(int i = 0; i<temp_master.size(); i++){
+                //     temp1.push_back(trunc(temp_master[i][1]));
+                // }
+
+                if (closest_ind !=0){
+                    temp_val = temp1[0];
+                    temp1[0] = closest_neighbor;
+                    temp1[closest_ind] = temp_val;
                 }
 
                 neighbors[curr_center] = temp1;
             }
 
+            
             else if (cnt == 1){
-                temp1.push_back(temp_master[0][1]);
+                // temp1.push_back(temp_master[0][1]);
                 neighbors[curr_center] = temp1;
             }
  
@@ -170,7 +187,7 @@ inline void find_neighbors(vector<vector <TD> > &centroids,
             }
 
             cluster_size[curr_center][2] = cnt;
-            temp_master.clear();
+            // temp_master.clear();
             temp1.clear();
     }
 }

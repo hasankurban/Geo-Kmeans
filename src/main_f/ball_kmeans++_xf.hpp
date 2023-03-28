@@ -42,7 +42,7 @@ update_centroids(MatrixOur& dataset, ClusterIndexVector& cluster_point_index, un
 
 inline void update_radius(MatrixOur& dataset, ClusterIndexVector& cluster_point_index, MatrixOur& new_centroids,
                           ClusterDistVector& temp_dis,
-                          VectorOur& the_rs, VectorXb& flag, unsigned int iteration_counter, unsigned int& cal_dist_num,
+                          VectorOur& the_rs, VectorXb& flag, unsigned int iteration_counter, unsigned long long int& cal_dist_num,
                           unsigned int the_rs_size);
 
 inline sortedNeighbors
@@ -294,7 +294,7 @@ double thres= 0.001, int iters = 100, int time_limit = 60000, string init_type =
     unsigned int iteration_counter;
     unsigned int num_of_neighbour;
     unsigned int neighbour_num;
-    unsigned int cal_dist_num;
+    unsigned long long int cal_dist_num;
     unsigned int data_num;
 
     MatrixOur::Index minCol;
@@ -543,7 +543,7 @@ double thres= 0.001, int iters = 100) {
     unsigned int iteration_counter;
     unsigned int num_of_neighbour;
     unsigned int neighbour_num;
-    unsigned int cal_dist_num;
+    unsigned long long int cal_dist_num = 0;
     unsigned int data_num;
 
     //bool key = true;
@@ -815,7 +815,7 @@ update_centroids(MatrixOur& dataset, ClusterIndexVector& cluster_point_index, un
 inline void update_radius(MatrixOur& dataset, ClusterIndexVector& cluster_point_index, MatrixOur& new_centroids,
                           ClusterDistVector& temp_dis, VectorOur& the_rs, VectorXb& flag,
                           unsigned int iteration_counter,
-                          unsigned int& cal_dist_num, unsigned int the_rs_size) {
+                          unsigned long long int& cal_dist_num, unsigned int the_rs_size) {
 
     /*
 
