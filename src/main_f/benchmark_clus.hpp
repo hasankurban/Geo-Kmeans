@@ -14,8 +14,9 @@ void benchmark_clus(string basePath){
         int num_iterations = 2000, clus = 0;
         float threshold = 0.01;
         vector<int> num_clusters = {20, 40, 60, 80, 100};
+        // vector<int> num_clusters = {20, 100};
         int seed = 12;
-        int num_rep = 5; 
+        int num_rep = 10; 
 
         unsigned long long int avg_kmdc_num_he = 0, avg_bkm_num_he =0; 
         int avg_kmdc_loop_counter = 0, avg_bkm_loop_counter = 0;
@@ -65,6 +66,7 @@ void benchmark_clus(string basePath){
         //////////////////////////
         // Clustering experiments
         //////////////////////////
+        
         for(int i = 0; i < num_clusters.size(); i++){
 
             clus = num_clusters[i];
@@ -90,7 +92,7 @@ void benchmark_clus(string basePath){
 
                 auto kmdc_start_time = std::chrono::high_resolution_clock::now();
 
-                kmdc_res = dckmeans(dataset, clus, threshold, num_iterations, numCols, time_limit, "sequential", 0);
+                kmdc_res = dckmeans(dataset, clus, threshold, num_iterations, numCols, time_limit, "random", seed+k);
 
                 auto kmdc_end_time = std::chrono::high_resolution_clock::now();
                 kmdc_time = std::chrono::duration_cast<std::chrono::seconds>(kmdc_end_time - kmdc_start_time).count();
@@ -112,7 +114,7 @@ void benchmark_clus(string basePath){
                 auto bkm_start_time = std::chrono::high_resolution_clock::now();
                 
                 ballkm_res = ball_k_means_Ring(BallK_dataset, true, clus, threshold, num_iterations, time_limit, 
-                            "sequential", 0);
+                            "random", seed+k);
 
                 auto bkm_end_time = std::chrono::high_resolution_clock::now();
                 bkm_time = std::chrono::duration_cast<std::chrono::seconds>(bkm_end_time - bkm_start_time).count();
