@@ -94,7 +94,7 @@ string init_type, Tint seed){
 
         if (temptime.count() >= time_limit){
             result.loop_counter = loop_counter;
-            result.num_he = dataset.size() * loop_counter * num_clusters;
+            result.num_he = he_counter;
             // result.runtime = float(temptime.count());
             result.timeout = true;
             result.centroids = new_centroids;

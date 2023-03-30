@@ -21,11 +21,11 @@ using namespace std;
 
 int main(int argc, char* argv[]){
 
-    // string basePath = "/u/parishar/scratch/DATASETS/real_data/experiment_data/comma_seperated_files/";
-    // string benchmark_type = "benchmark_real_data";
+    string basePath = "/u/parishar/scratch/DATASETS/real_data/";
+    string benchmark_type = "benchmark_real_data";
     
-    string basePath = "/u/parishar/scratch/DATASETS/clustering_data/";
-    string benchmark_type = "benchmark_clus";
+    // string basePath = "/u/parishar/scratch/DATASETS/clustering_data/";
+    // string benchmark_type = "benchmark_clus";
 
     // string basePath = "/u/parishar/scratch/DATASETS/dims_data/";
     // string benchmark_type = "benchmark_dims";

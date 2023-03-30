@@ -11,20 +11,14 @@ void benchmark_clus(string basePath){
         string clus_output_path = basePath;
         
         // Declare variables
-        // vector<string> clus_file_list = {"20_clusters.csv", "40_clusters.csv", "60_clusters.csv", 
-        // "80_clusters.csv", "100_clusters.csv"};
-
-        vector<string> clus_file_list = {"50_clusters.csv", "100_clusters.csv"};
-
         int num_iterations = 2000, clus = 0;
         float threshold = 0.01;
-        //  vector<int> num_clusters = {20, 50, 100, 200, 500};
-        vector<int> num_clusters = {50, 100};
+        vector<int> num_clusters = {20, 40, 60, 80, 100};
         int seed = 12;
-        int num_rep = 1; 
+        int num_rep = 5; 
 
-        int avg_kmdc_loop_counter = 0, avg_kmdc_num_he = 0;
-        int avg_bkm_loop_counter = 0, avg_bkm_num_he = 0;
+        unsigned long long int avg_kmdc_num_he = 0, avg_bkm_num_he =0; 
+        int avg_kmdc_loop_counter = 0, avg_bkm_loop_counter = 0;
 
         float kmdc_time = 0, bkm_time = 0, avg_kmdc_runtime = 0, avg_bkm_runtime = 0;
 
@@ -52,28 +46,28 @@ void benchmark_clus(string basePath){
 
         algorithm_utils alg_utils;
 
+        inputfilePath = clus_input_path + "100_clusters.csv";
+            
+        cout << "\n%%%%%%%%%%%%%%%%%%%%%%%" << endl;
+        cout << "Processing " << inputfilePath << endl;
+        cout << "%%%%%%%%%%%%%%%%%%%%%%%\n" << endl;
+        
+        vector<vector <float> > dataset;
+        
+        std::pair<int, int> p = readSimulatedData(inputfilePath, dataset, labels, false, false);
+        int numRows = p.first;
+        int numCols = p.second;
+
+        // Load data in Eigen format for Ball KMeans
+        MatrixOur BallK_dataset = load_data(inputfilePath);
+
+        
         //////////////////////////
         // Clustering experiments
         //////////////////////////
-
         for(int i = 0; i < num_clusters.size(); i++){
 
             clus = num_clusters[i];
-            inputfilePath = clus_input_path + clus_file_list[i];
-            
-            cout << "\n%%%%%%%%%%%%%%%%%%%%%%%" << endl;
-            cout << "Processing " << inputfilePath << endl;
-            cout << "%%%%%%%%%%%%%%%%%%%%%%%\n" << endl;
-            
-            vector<vector <float> > dataset;
-            
-            std::pair<int, int> p = readSimulatedData(inputfilePath, dataset, labels, false, false);
-            int numRows = p.first;
-            int numCols = p.second;
-
-            // Load data in Eigen format for Ball KMeans
-            MatrixOur BallK_dataset = load_data(inputfilePath);
-
             avg_kmdc_loop_counter = 0;
             avg_bkm_loop_counter = 0;
 
@@ -112,6 +106,8 @@ void benchmark_clus(string basePath){
                 //####################
                 // Ball-KMeans
                 //####################
+
+                cout << "Algo: Ball-Kmeans" << endl; 
 
                 auto bkm_start_time = std::chrono::high_resolution_clock::now();
                 

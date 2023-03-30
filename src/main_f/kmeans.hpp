@@ -91,7 +91,6 @@ string init_type, Tint seed){
 
     result.loop_counter = loop_counter;
     result.num_he = dataset.size() * num_clusters * loop_counter;
-    // result.runtime = float(Totaltime.count());
     result.timeout = false;
     result.sse = get_sse(dataset, new_centroids, cluster_size, assigned_clusters, num_clusters);
 
