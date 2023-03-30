@@ -22,7 +22,7 @@ def read_data(input_loc):
     return data, labels
 
 
-def read_simulated_data(file_path):
+def read_data_with_labels(file_path):
 
     data = pd.read_csv(file_path, sep=",")
     labels = data['labels'].to_list()
@@ -31,7 +31,7 @@ def read_simulated_data(file_path):
     return np.array(data), labels
 
 
-def read_simulated_data_test(file_path):
+def read_data_without_labels(file_path):
 
     data = pd.read_csv(file_path, sep=",", header=None)
     return np.array(data)

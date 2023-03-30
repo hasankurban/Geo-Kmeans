@@ -246,6 +246,7 @@ for(i = 0; i<num_cluster; i++){
 return total_sse;
 }
 
+
 output_data ball_k_means_Ring(MatrixOur& dataset, bool detail, int num_clusters,
 double thres= 0.001, int iters = 100, int time_limit = 60000, string init_type = "random", int seed=0) {
 
@@ -440,9 +441,9 @@ double thres= 0.001, int iters = 100, int time_limit = 60000, string init_type =
                             flag(now_ball) = true;
                             flag(new_label) = true;
 
-                            //Update localand global labels
-                            vector<unsigned int>::iterator it = (temp_cluster_point_index[labels[now_data_index[j -
-                                                                                                                1][i]]]).begin();
+                            // Update local and global labels
+                            vector<unsigned int>::iterator it = (temp_cluster_point_index[labels[now_data_index[j - 1][i]]]).begin();
+
                             while ((it) != (temp_cluster_point_index[labels[now_data_index[j - 1][i]]]).end()) {
                                 if (*it == now_data_index[j - 1][i]) {
                                     it = (temp_cluster_point_index[labels[now_data_index[j - 1][i]]]).erase(it);

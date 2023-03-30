@@ -18,32 +18,29 @@ Algo2: DCKMeans
 threshold = 0.001
 num_iterations = 100
 
-# file_list = ['test_100_2_3.csv']
+file_list = ['test_100_2_3.csv']
 
-file_list = ['census.csv']
-label_file = 'census_labels.csv'
+# file_list = ['census.csv']
+# label_file = 'census_labels.csv'
 # file_list = ['user_knowledge_train.csv']
 # file_list = ['hapt_train.csv']
 # file_list = ['covertype.csv']
 # file_list = ['spambase.csv']
 # file_list = ['10_clusters.csv']
 
-# file_list = ['ringnorm.csv']
-cenfile = 'ringnormCentroids_5_0.txt'
+DATA_PATH = "/Users/schmuck/Documents/Box Sync/PhD/DATASETS/"
 
-DATA_PATH = "/Users/schmuck/Documents/Box Sync/Ph.D./DATASETS"
-DATA_PATH = "/Users/schmuck/Documents/OneDrive - Indiana University/Box Sync/PhD/DATASETS/"
 
 # Make changes for adjusting the current directory here
 file_path = os.path.join(DATA_PATH, "benchmark", "clustering_data")
 # file_path = os.path.join(Path(__file__).parents[1], "benchmark", "scal_data")
 # file_path = os.path.join(DATA_PATH, "real_data")
-file_path = os.path.join(DATA_PATH, "real_data")
+file_path = os.path.join(DATA_PATH, "sample_data")
 
 # file_path = os.path.join(DATA_PATH, "sample_data")
 
 
-num_clusters = [2]
+num_clusters = [4]
 seed = 1245
 
 seeds = np.random.randint(1, 1200, 1000)
@@ -53,16 +50,9 @@ counter = 1
 
 for data_file in file_list:
 
-    # data, labels = read_simulated_data(os.path.join(file_path, data_file))
-    data = read_simulated_data_test(os.path.join(file_path, data_file))
-    labels = read_simulated_data_test(os.path.join(file_path, label_file))
-    labels = labels.flatten()
-    # labels = labels.reshape(len(labels))
-    # centroids1 = read_simulated_data_test(os.path.join(DATA_PATH, "real_data", "experiment_data", "comma_seperated_centroids", cenfile))
-    # centroids2 = read_simulated_data_test(os.path.join(DATA_PATH, "real_data", "experiment_data", "comma_seperated_centroids", cenfile))
-    # centroids = read_simulated_data_test(os.path.join(DATA_PATH, "real_data", "experiment_data", "test1", cenfile))
+    data, labels = read_data_with_labels(os.path.join(file_path, data_file))
 
-    print("Data Shape :", data.shape, labels.shape)
+    print("Data Shape :", data.shape)
 
     for centers in num_clusters:
 
