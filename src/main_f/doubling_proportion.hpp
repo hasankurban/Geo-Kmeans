@@ -49,7 +49,7 @@ void double_prop(string basePath){
        cout << outFile << endl;
        
        avgresFile.open(outFile, ios::trunc);
-       avgresFile << "Algorithm,Data,Clusters,Prop,Distances,Runtime,Iterations,Timeout,Sample";
+       avgresFile << "Algorithm,Data,Clusters,Prop,Distances,Iterations,Timeout,Sample";
        avgresFile.close();
        string alg = "";
 
@@ -160,18 +160,16 @@ void double_prop(string basePath){
 
                     avgresFile.open(outFile, ios::app);
 
-                    // Algorithm,Data,Clusters,Prop,Distances,Timeout
-
                     avgresFile << "\nKmeans" << "," << data_list[i] << "," << to_string(num_clusters) 
-                    << "," << to_string(prop) << "," << to_string(km_res.num_he) << "," << to_string(km_time) << "," 
+                    << "," << to_string(prop) << "," << to_string(km_res.num_he) << "," 
                     << to_string(km_res.loop_counter) << "," << km_timeout << "," << to_string(n+1);
 
                     avgresFile << "\nKmeans-DataCentric" << "," << data_list[i] << "," << to_string(num_clusters) 
-                    << "," << to_string(prop) << "," << to_string(kmdc_res.num_he) << ","  << to_string(kmdc_time) << "," 
+                    << "," << to_string(prop) << "," << to_string(kmdc_res.num_he) << "," 
                     << to_string(kmdc_res.loop_counter) << "," << kmdc_timeout << "," << to_string(n+1);
 
                     avgresFile << "\nBall-Kmeans" << "," << data_list[i] << "," << to_string(num_clusters) 
-                    << "," << to_string(prop) << "," << to_string(ballkm_res.num_he) << "," << to_string(bkm_time) << "," 
+                    << "," << to_string(prop) << "," << to_string(ballkm_res.num_he) << "," 
                     << to_string(ballkm_res.loop_counter) << "," << ballkm_timeout << "," << to_string(n+1);    
 
                     avgresFile.close();

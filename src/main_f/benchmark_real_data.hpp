@@ -13,21 +13,21 @@ void benchmark_on_real_data(string basePath){
     //    string centroid_path = basePath + "/centroids/";
        string out_path = basePath;
        
-       // Declare variables
+    // Declare variables
        vector<string> file_list = {"Breastcancer.csv", "CreditRisk.csv",
             "census.csv", "crop.csv", "Twitter.csv", "birch.csv"};
 
        vector<string> data_list = {"Breastcancer", "CreditRisk",
-            "census", "crop", "Twitter", "birch"};
+            "Census", "Crop", "Twitter", "Birch"};
 
-    //    vector<string> file_list = {"census.csv"};
-    //    vector<string> data_list = {"census"};
+    //    vector<string> file_list = {"census.csv", "crop.csv"};
+    //    vector<string> data_list = {"Census", "Crop"};
 
         int num_iterations = 2000;
         float threshold = 0.001;
-        vector<int> num_clusters = {5, 10, 15, 20, 25};
+        vector<int> num_clusters = {5, 8, 12, 15, 20};
         int num_rep = 10;
-        int seed = 41;
+        int seed = 5;
 
         // Timeout limit of 40 minutes
         int time_limit = 2400000;

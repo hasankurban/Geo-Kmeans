@@ -1,5 +1,3 @@
-#define EIGEN_DONT_VECTORIZE 1
-
 #include <iostream>
 #include <string>
 #include <iomanip>
