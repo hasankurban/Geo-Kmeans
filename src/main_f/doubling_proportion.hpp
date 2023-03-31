@@ -13,8 +13,8 @@ void double_prop(string basePath){
        string out_path = basePath;
        
        // Declare variable
-       vector<string> file_list = {"magic.csv", "spambase.csv", "crop.csv", "Twitter.csv", "birch.csv"};
-       vector<string> data_list = {"Magic", "Spambase", "Crop", "Twitter", "Birch"};
+       vector<string> file_list = {"census.csv", "crop.csv", "Twitter.csv", "birch.csv"};
+       vector<string> data_list = {"Census", "Crop", "Twitter", "Birch"};
 
     //    vector<string> file_list = {"magic.csv", "spambase.csv"};
     //    vector<string> data_list = {"Magic", "Spambase"};

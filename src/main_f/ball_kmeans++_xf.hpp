@@ -270,13 +270,6 @@ double thres= 0.001, int iters = 100, int time_limit = 60000, string init_type =
     // Initialize the centroid
     init_ball_centroids(dataset, old_centroids, num_clusters, seed, init_type);
 
-    // cout << "Ball-KM-Centroids" << endl;
-    // for (int m = 0; m<2; m++){
-    //     for (int n = 0; n<old_centroids.cols(); n++){
-    //         cout << old_centroids(m, n) << " " ;
-    //     }
-    //     cout << "\n";
-    // }
     
     MatrixOur centers_dis(k, k);
 
@@ -317,6 +310,7 @@ double thres= 0.001, int iters = 100, int time_limit = 60000, string init_type =
     temp_cluster_point_index.assign(cluster_point_index.begin(), cluster_point_index.end());
 
     start_time = clock();
+
 
     //while (true) {
 
@@ -465,7 +459,6 @@ double thres= 0.001, int iters = 100, int time_limit = 60000, string init_type =
             if (temptime.count() >= time_limit){
                 res.loop_counter = iteration_counter;
                 res.num_he = cal_dist_num;
-                // res.runtime = float(temptime.count());
                 res.timeout = true;
                 res.sse = get_ballkm_sse(dataset, new_centroids, cluster_point_index, k);
                 res.ballkm_centroids = new_centroids;
@@ -498,8 +491,6 @@ double thres= 0.001, int iters = 100, int time_limit = 60000, string init_type =
     
     result.loop_counter = iteration_counter;
     result.num_he = cal_dist_num;
-    // result.runtime = float(Totaltime.count());
-    result.timeout = false;
     result.ballkm_centroids = new_centroids;
     result.sse = get_ballkm_sse(dataset, new_centroids, cluster_point_index, k);
 
