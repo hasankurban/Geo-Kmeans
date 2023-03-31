@@ -13,8 +13,8 @@ void double_clusters(string basePath){
        string out_path = basePath ;
        
        // Declare variable
-       vector<string> file_list = {"magic.csv", "spambase.csv", "crop.csv", "Twitter.csv", "birch.csv"};
-       vector<string> data_list = {"Magic", "Spambase", "Crop", "Twitter", "Birch"};
+       vector<string> file_list = {"census.csv", "crop.csv", "Twitter.csv", "birch.csv"};
+       vector<string> data_list = {"Census", "Crop", "Twitter", "Birch"};
 
 //    vector<string> file_list = {"magic.csv", "spambase.csv"};
 //    vector<string> data_list = {"Magic", "Spambase"};
@@ -36,7 +36,6 @@ void double_clusters(string basePath){
        //initial seed for replication (due to random data selection)
        int seed = 78;
        vector<int> clusters = {3, 6, 12, 24};
-    //    vector<int> clusters = {3, 6};
        int num_points = 0;
        vector<int> rep = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50};
 

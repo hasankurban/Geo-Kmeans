@@ -1,3 +1,5 @@
+#define EIGEN_DONT_VECTORIZE 1
+
 #include <iostream>
 #include <string>
 #include <iomanip>
@@ -17,12 +19,13 @@
 #include "benchmark_clus.hpp"
 #include "benchmark_real_data.hpp"
 
+
 using namespace std;
 
 int main(int argc, char* argv[]){
 
-    string basePath = "/u/parishar/scratch/DATASETS/real_data/";
-    string benchmark_type = "benchmark_real_data";
+    // string basePath = "/u/parishar/scratch/DATASETS/real_data/";
+    // string benchmark_type = "benchmark_real_data";
     
     // string basePath = "/u/parishar/scratch/DATASETS/clustering_data/";
     // string benchmark_type = "benchmark_clus";
@@ -33,14 +36,14 @@ int main(int argc, char* argv[]){
     // string basePath = "/u/parishar/scratch/DATASETS/scal_data/";
     // string benchmark_type = "benchmark_scal";
 
-    // string basePath = "/u/parishar/scratch/DATASETS/real_data/experiment_data/comma_seperated_files/";
+    // string basePath = "/u/parishar/scratch/DATASETS/real_data/";
     // string benchmark_type = "doubling_clusters";
 
-    // string basePath = "/u/parishar/scratch/DATASETS/real_data/experiment_data/comma_seperated_files/";
+    // string basePath = "/u/parishar/scratch/DATASETS/real_data/";
     // string benchmark_type = "doubling_proportion";
 
-    // string basePath = argv[1];
-    // string benchmark_type = argv[2];
+    string basePath = argv[1];
+    string benchmark_type = argv[2];
 
     if (benchmark_type == "doubling_clusters"){
         double_clusters(basePath);

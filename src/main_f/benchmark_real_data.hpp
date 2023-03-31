@@ -15,19 +15,19 @@ void benchmark_on_real_data(string basePath){
        
        // Declare variables
        vector<string> file_list = {"Breastcancer.csv", "CreditRisk.csv",
-            "magic.csv", "spambase.csv", "crop.csv", "Twitter.csv", "birch.csv"};
+            "census.csv", "crop.csv", "Twitter.csv", "birch.csv"};
 
        vector<string> data_list = {"Breastcancer", "CreditRisk",
-            "magic", "spambase", "crop", "Twitter", "birch"};
+            "census", "crop", "Twitter", "birch"};
 
-    //    vector<string> file_list = {"Breastcancer.csv", "CreditRisk.csv", "Twitter.csv"};
-    //    vector<string> data_list = {"Breastcancer", "CreditRisk", "Twitter"};
+    //    vector<string> file_list = {"census.csv"};
+    //    vector<string> data_list = {"census"};
 
         int num_iterations = 2000;
         float threshold = 0.001;
-        vector<int> num_clusters = {5, 8, 10, 12, 25};
+        vector<int> num_clusters = {5, 10, 15, 20, 25};
         int num_rep = 10;
-        int seed = 5;
+        int seed = 41;
 
         // Timeout limit of 40 minutes
         int time_limit = 2400000;
