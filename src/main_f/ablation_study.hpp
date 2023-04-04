@@ -7,30 +7,23 @@
 using namespace std;
 
 
-void benchmark_on_real_data(string basePath){
+void ablation(string basePath, string vecFlag){
 
        string input_path = basePath;     
        string out_path = basePath;
        
-    // Declare variables
-       vector<string> file_list = {"Breastcancer.csv", "CreditRisk.csv",
-            "census.csv", "crop.csv", "Twitter.csv", "birch.csv"};
+        // Declare variables
+       vector<string> file_list = {"census.csv", "crop.csv", "Twitter.csv", "birch.csv"};
+       vector<string> data_list = {"Census", "Crop", "Twitter", "Birch"};
 
-       vector<string> data_list = {"Breastcancer", "CreditRisk",
-            "Census", "Crop", "Twitter", "Birch"};
-
-    //    vector<string> file_list = {"census.csv", "crop.csv"};
-    //    vector<string> data_list = {"Census", "Crop"};
-
-        int num_iterations = 2000;
-        float threshold = 0.001;
-        vector<int> num_clusters = {5, 8, 12, 15, 20};
-        // vector<int> num_clusters = {50};
+        int num_iterations = 100;
+        float threshold = 0.05;
+        vector<int> num_clusters = {30, 50, 60, 80};
         int num_rep = 10;
-        int seed = 5;
+        int seed = 20;
 
-        // Timeout limit of 40 minutes
-        int time_limit = 2400000;
+        // Timeout limit of 30 minutes
+        int time_limit = 1800000;
 
         unsigned long long int avg_km_num_he = 0, avg_kmdc_num_he = 0, avg_bkm_num_he =0; 
         int avg_km_loop_counter = 0, avg_kmdc_loop_counter = 0, avg_bkm_loop_counter = 0;
@@ -47,8 +40,17 @@ void benchmark_on_real_data(string basePath){
        output_data km_res, kmdc_res, ballkm_res;
        
        ofstream avgresFile, allresFile;
-       string avgoutFile = out_path + "benchmark_real_avg_runs.csv" ;
-       string alloutFile = out_path + "benchmark_real_all_runs.csv" ;
+       string avgoutFile = "", alloutFile = "";
+       
+       if (vecFlag == "1"){
+            avgoutFile = out_path + "ablation_with_vec_avg.csv" ;
+            alloutFile = out_path + "ablation_with_vec_all.csv" ;
+       }
+       else if (vecFlag == "0"){
+            avgoutFile = out_path + "ablation_without_vec_avg.csv" ;
+            alloutFile = out_path + "ablation_without_vec_all.csv" ;
+       }
+       
        
        allresFile.open(alloutFile, ios::trunc);
        allresFile << "Algorithm,Data,Clusters,Iters,Runtime,Runtime_per_Iter,Runtime_speedup_km,Runtime_speedup_bkm,Distances,Dist_speed_up,Timeout";
@@ -83,7 +85,7 @@ void benchmark_on_real_data(string basePath){
 
                 int clus = num_clusters[j];
                 
-                cout << "\nClusters:\n " << clus << endl;
+                // cout << "\nClusters:\n " << clus << endl;
 
                 avg_km_loop_counter = 0;
                 avg_kmdc_loop_counter = 0;
