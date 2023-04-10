@@ -43,6 +43,7 @@ int main(int argc, char* argv[]){
 
     // string basePath = "/u/parishar/scratch/DATASETS/real_data/";
     // string benchmark_type = "doubling_proportion";
+    // string vecFlag = "0";
 
     string basePath = argv[1];
     string benchmark_type = argv[2];

@@ -13,8 +13,8 @@ void ablation(string basePath, string vecFlag){
        string out_path = basePath;
        
         // Declare variables
-       vector<string> file_list = {"census.csv", "crop.csv", "Twitter.csv", "birch.csv"};
-       vector<string> data_list = {"Census", "Crop", "Twitter", "Birch"};
+       vector<string> file_list = {"census.csv", "Twitter.csv", "birch.csv"};
+       vector<string> data_list = {"Census", "Twitter", "Birch"};
 
         int num_iterations = 100;
         float threshold = 0.05;

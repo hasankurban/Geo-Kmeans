@@ -13,11 +13,11 @@ void double_prop(string basePath){
        string out_path = basePath;
        
        // Declare variable
-       vector<string> file_list = {"census.csv", "crop.csv", "Twitter.csv", "birch.csv"};
-       vector<string> data_list = {"Census", "Crop", "Twitter", "Birch"};
+       vector<string> file_list = {"Breastcancer.csv", "CreditRisk.csv", "census.csv", "crop.csv", "Twitter.csv", "birch.csv"};
+       vector<string> data_list = {"Breastcancer", "CreditRisk", "Census", "Crop", "Twitter", "Birch"};
 
-    //    vector<string> file_list = {"magic.csv", "spambase.csv"};
-    //    vector<string> data_list = {"Magic", "Spambase"};
+    //    vector<string> file_list = {"Breastcancer.csv", "CreditRisk.csv"};
+    //    vector<string> data_list = {"Breastcancer", "CreditRisk"};
 
         int num_iterations = 2000;
         float threshold = 0.001;
@@ -40,17 +40,29 @@ void double_prop(string basePath){
        int num_clusters = 5;
        int num_points = 0;
        vector<int> rep = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50};
+       int num_rep = 10;
 
-       float km_time = 0, kmdc_time = 0, bkm_time = 0;
+       unsigned long long int avg_km_num_he = 0, avg_kmdc_num_he = 0, avg_bkm_num_he =0; 
+       int avg_km_loop_counter = 0, avg_kmdc_loop_counter = 0, avg_bkm_loop_counter = 0;
+
+       float km_time = 0, kmdc_time = 0, bkm_time = 0, avg_km_runtime = 0, 
+       avg_kmdc_runtime = 0, avg_bkm_runtime = 0;
+
        string km_timeout = "no", kmdc_timeout = "no", ballkm_timeout = "no";
 
-       ofstream avgresFile;
-       string outFile = out_path + "doubling_proportion.csv";
-       cout << outFile << endl;
+       ofstream avgresFile, allresFile;
        
-       avgresFile.open(outFile, ios::trunc);
-       avgresFile << "Algorithm,Data,Clusters,Prop,Distances,Iterations,Timeout,Sample";
+       string avgoutFile = out_path + "doubling_proportion_avg.csv";
+       string alloutFile = out_path + "doubling_proportion_all.csv";
+       
+       avgresFile.open(avgoutFile, ios::trunc);
+       avgresFile << "Algorithm,Data,Clusters,Prop,Distances,Iterations,Timeout";
        avgresFile.close();
+       
+       allresFile.open(alloutFile, ios::trunc);
+       allresFile << "Algorithm,Data,Clusters,Prop,Distances,Iterations,Timeout,Sample";
+       allresFile.close();
+       
        string alg = "";
 
        ofstream tempFile;
@@ -77,7 +89,20 @@ void double_prop(string basePath){
 
             for (int j = 0; j<data_prop.size(); j++){
 
+                avg_km_loop_counter = 0;
+                avg_kmdc_loop_counter = 0;
+                avg_bkm_loop_counter = 0;
+
+                avg_km_runtime = 0;
+                avg_kmdc_runtime = 0;
+                avg_bkm_runtime = 0;
+
+                avg_km_num_he = 0; 
+                avg_kmdc_num_he = 0;
+                avg_bkm_num_he = 0;
+
                 float prop = data_prop[j];
+                
                 cout << "\n" << endl;
                 cout << "Data prop: " << prop << endl;
                 cout << "\n";
@@ -93,6 +118,10 @@ void double_prop(string basePath){
                 extract_ball_data(BallK_dataset, extracted_ball_data, prop, num_points, seed+j);
 
                 for(int n = 0; n<rep.size(); n++){
+
+                    km_timeout = "no";
+                    kmdc_timeout = "no";
+                    ballkm_timeout = "no";
 
                     //####################
                     // KMeans
@@ -158,23 +187,63 @@ void double_prop(string basePath){
                     // << "\t calc: " << km_res.num_he <<  " " << kmdc_res.num_he <<  " " << ballkm_res.num_he << " " << 
                     // ballkm_res.loop_counter << " " << km_res.runtime << " " << kmdc_res.runtime << " " << ballkm_res.runtime << endl;
 
-                    avgresFile.open(outFile, ios::app);
+                    allresFile.open(alloutFile, ios::app);
 
-                    avgresFile << "\nKmeans" << "," << data_list[i] << "," << to_string(num_clusters) 
+                    allresFile << "\nKmeans" << "," << data_list[i] << "," << to_string(num_clusters) 
                     << "," << to_string(prop) << "," << to_string(km_res.num_he) << "," 
                     << to_string(km_res.loop_counter) << "," << km_timeout << "," << to_string(n+1);
 
-                    avgresFile << "\nKmeans-DataCentric" << "," << data_list[i] << "," << to_string(num_clusters) 
+                    allresFile << "\nKmeans-DataCentric" << "," << data_list[i] << "," << to_string(num_clusters) 
                     << "," << to_string(prop) << "," << to_string(kmdc_res.num_he) << "," 
                     << to_string(kmdc_res.loop_counter) << "," << kmdc_timeout << "," << to_string(n+1);
 
-                    avgresFile << "\nBall-Kmeans" << "," << data_list[i] << "," << to_string(num_clusters) 
+                    allresFile << "\nBall-Kmeans" << "," << data_list[i] << "," << to_string(num_clusters) 
                     << "," << to_string(prop) << "," << to_string(ballkm_res.num_he) << "," 
                     << to_string(ballkm_res.loop_counter) << "," << ballkm_timeout << "," << to_string(n+1);    
 
-                    avgresFile.close();
+                    allresFile.close();
+
+                    avg_km_loop_counter = avg_km_loop_counter + km_res.loop_counter;
+                    avg_km_num_he = avg_km_num_he + km_res.num_he;
+                    avg_km_runtime = avg_km_runtime + km_time;
+
+                    avg_kmdc_loop_counter = avg_kmdc_loop_counter + kmdc_res.loop_counter;
+                    avg_kmdc_num_he = avg_kmdc_num_he + kmdc_res.num_he;
+                    avg_kmdc_runtime = avg_kmdc_runtime + kmdc_time;
+
+                    avg_bkm_loop_counter = avg_bkm_loop_counter + ballkm_res.loop_counter;
+                    avg_bkm_num_he = avg_bkm_num_he + ballkm_res.num_he;
+                    avg_bkm_runtime = avg_bkm_runtime + bkm_time;
 
                 }
+
+                avg_km_loop_counter = (float)avg_km_loop_counter/num_rep;
+                avg_km_num_he = (float)avg_km_num_he/num_rep;
+                avg_km_runtime = (float)avg_km_runtime/num_rep;
+
+                avg_kmdc_loop_counter = (float)avg_kmdc_loop_counter/num_rep;
+                avg_kmdc_num_he = (float) avg_kmdc_num_he/num_rep;
+                avg_kmdc_runtime = (float)avg_kmdc_runtime/num_rep;
+
+                avg_bkm_loop_counter = (float)avg_bkm_loop_counter/num_rep;
+                avg_bkm_num_he = (float)avg_bkm_num_he/num_rep;
+                avg_bkm_runtime = (float)avg_bkm_runtime/num_rep;
+
+                avgresFile.open(avgoutFile, ios::app);
+
+                avgresFile << "\nKmeans" << "," << data_list[i] << "," << to_string(num_clusters) 
+                << "," << to_string(prop) << "," << to_string(avg_km_num_he) << "," 
+                << to_string(avg_km_loop_counter) << "," << km_timeout;
+
+                avgresFile << "\nKmeans-DataCentric" << "," << data_list[i] << "," << to_string(num_clusters) 
+                << "," << to_string(prop) << "," << to_string(avg_kmdc_num_he) << "," 
+                << to_string(avg_kmdc_loop_counter) << "," << kmdc_timeout;
+
+                avgresFile << "\nBall-Kmeans" << "," << data_list[i] << "," << to_string(num_clusters) 
+                << "," << to_string(prop) << "," << to_string(avg_bkm_num_he) << "," 
+                << to_string(avg_bkm_loop_counter) << "," << ballkm_timeout; 
+
+                avgresFile.close();
 
             }
 
