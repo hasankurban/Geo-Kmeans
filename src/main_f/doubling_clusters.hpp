@@ -13,8 +13,8 @@ void double_clusters(string basePath){
        string out_path = basePath ;
        
        // Declare variable
-       vector<string> file_list = {"census.csv", "crop.csv", "Twitter.csv", "birch.csv"};
-       vector<string> data_list = {"Census", "Crop", "Twitter", "Birch"};
+       vector<string> file_list = {"Breastcancer.csv", "CreditRisk.csv", "census.csv", "crop.csv", "Twitter.csv", "birch.csv"};
+       vector<string> data_list = {"Breastcancer", "CreditRisk", "Census", "Crop", "Twitter", "Birch"};
 
         // vector<string> file_list = {"census.csv", "crop.csv"};
         // vector<string> data_list = {"Census", "Crop"};
