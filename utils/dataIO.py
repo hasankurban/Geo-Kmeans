@@ -22,6 +22,22 @@ def read_data(input_loc):
     return data, labels
 
 
+def read_data(file_path, labels, header):
+    
+    if header != "no":
+        data = pd.read_csv(file_path, sep=",", header=0)
+    else:
+        data = pd.read_csv(file_path, sep=",")
+    
+    if labels!="no":
+        labels = data['labels'].to_list()
+        data.drop(["labels"], inplace=True, axis=1)
+
+        return np.array(data), labels
+    
+    return np.array(data)
+
+
 def read_data_with_labels(file_path):
 
     data = pd.read_csv(file_path, sep=",")

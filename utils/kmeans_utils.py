@@ -5,7 +5,7 @@ from sklearn.metrics.cluster import adjusted_mutual_info_score as amis
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 import pandas as pd
-# import seaborn as sns
+import seaborn as sns
 import matplotlib.pyplot as plt
 # from sortedcontainers import SortedDict
 # from sklearn.cluster import kmeans_plusplus

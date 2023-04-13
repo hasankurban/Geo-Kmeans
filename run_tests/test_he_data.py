@@ -20,7 +20,7 @@ num_iterations = 100
 
 file_list = ['test_100_2_3.csv']
 
-# file_list = ['census.csv']
+file_list = ['census.csv']
 # label_file = 'census_labels.csv'
 # file_list = ['user_knowledge_train.csv']
 # file_list = ['hapt_train.csv']
@@ -32,10 +32,10 @@ DATA_PATH = "/Users/schmuck/Documents/Box Sync/PhD/DATASETS/"
 
 
 # Make changes for adjusting the current directory here
-file_path = os.path.join(DATA_PATH, "benchmark", "clustering_data")
+# file_path = os.path.join(DATA_PATH, "benchmark", "clustering_data")
 # file_path = os.path.join(Path(__file__).parents[1], "benchmark", "scal_data")
-# file_path = os.path.join(DATA_PATH, "real_data")
-file_path = os.path.join(DATA_PATH, "sample_data")
+file_path = os.path.join(DATA_PATH, "real_data")
+# file_path = os.path.join(DATA_PATH, "sample_data")
 
 # file_path = os.path.join(DATA_PATH, "sample_data")
 
