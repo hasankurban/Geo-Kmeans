@@ -7,9 +7,10 @@
 using namespace std;
 
 
-void benchmark_on_real_data(string basePath){
+void benchmark_on_real_kplus(string basePath){
 
        string input_path = basePath;     
+       string centroid_path = basePath + "/centroids/";
        string out_path = basePath;
        
     // Declare variables
@@ -19,13 +20,16 @@ void benchmark_on_real_data(string basePath){
        vector<string> data_list = {"Breastcancer", "CreditRisk",
             "Census", "Crop", "Twitter", "Birch"};
 
-    //    vector<string> file_list = {"census.csv", "crop.csv"};
-    //    vector<string> data_list = {"Census", "Crop"};
+        vector<string> centroid_list = {"BreastcancerCentroids", "CreditRiskCentroids",
+            "CensusCentroids", "cropCentroids", "TwitterCentroids", "birchCentroids"};
+
+    //    vector<string> file_list = {"census.csv"};
+    //    vector<string> data_list = {"Census"};
+    //    vector<string> centroid_list = {"CensusCentroids"};
 
         int num_iterations = 2000;
         float threshold = 0.001;
         vector<int> num_clusters = {5, 8, 12, 15, 20};
-        // vector<int> num_clusters = {50};
         int num_rep = 10;
         int seed = 5;
 
@@ -47,8 +51,8 @@ void benchmark_on_real_data(string basePath){
        output_data km_res, kmdc_res, ballkm_res;
        
        ofstream avgresFile, allresFile;
-       string avgoutFile = out_path + "benchmark_real_avg_runs.csv" ;
-       string alloutFile = out_path + "benchmark_real_all_runs.csv" ;
+       string avgoutFile = out_path + "benchmark_real_kplus_avg_runs.csv" ;
+       string alloutFile = out_path + "benchmark_real_kplus_all_runs.csv" ;
        
        allresFile.open(alloutFile, ios::trunc);
        allresFile << "Algorithm,Data,Clusters,Iters,Runtime,Runtime_per_Iter,Runtime_speedup_km,Runtime_speedup_bkm,Distances,Dist_speed_up,Timeout";
@@ -78,12 +82,15 @@ void benchmark_on_real_data(string basePath){
 
             // Load data in Eigen format for Ball KMeans
             MatrixOur BallK_dataset = load_data(inputfilePath);
+
+            string centroid_name = centroid_path + centroid_list[i];
+
             
             for (int j = 0; j< num_clusters.size(); j++){
 
                 int clus = num_clusters[j];
                 
-                cout << "\nClusters:\n " << clus << endl;
+                // cout << "\nClusters:\n " << clus << endl;
 
                 avg_km_loop_counter = 0;
                 avg_kmdc_loop_counter = 0;
@@ -98,6 +105,8 @@ void benchmark_on_real_data(string basePath){
                 avg_bkm_num_he = 0;
 
                 for (int k = 0 ; k < num_rep ; k++){
+
+                    string centroidFilePath = centroid_name + "_" + to_string(clus) + "_" + to_string(k) + "_.txt";
         
                     km_timeout = "no";
                     dckm_timeout = "no";
@@ -111,7 +120,7 @@ void benchmark_on_real_data(string basePath){
                     auto km_start_time = std::chrono::high_resolution_clock::now();
 
                     km_res = kmeans(dataset, clus, threshold, num_iterations, numCols, 
-                            time_limit, "random", seed+clus+k);
+                            time_limit, centroidFilePath, seed+clus+k);
 
                     auto km_end_time = std::chrono::high_resolution_clock::now();
 
@@ -138,7 +147,7 @@ void benchmark_on_real_data(string basePath){
 
                     auto kmdc_start_time = std::chrono::high_resolution_clock::now();
 
-                    kmdc_res = dckmeans(dataset, clus, threshold, num_iterations, numCols, time_limit, "random", seed+clus+k);
+                    kmdc_res = dckmeans(dataset, clus, threshold, num_iterations, numCols, time_limit, centroidFilePath, seed+clus+k);
 
                     auto kmdc_end_time = std::chrono::high_resolution_clock::now();
 
@@ -166,8 +175,8 @@ void benchmark_on_real_data(string basePath){
 
                     auto bkm_start_time = std::chrono::high_resolution_clock::now();
 
-                    ballkm_res = ball_k_means_Ring(BallK_dataset, true, clus, threshold, num_iterations, time_limit, 
-                    "random", seed+clus+k);
+                    ballkm_res = ball_k_means_Ring(BallK_dataset, false, clus, threshold, num_iterations, time_limit, 
+                    centroidFilePath, seed+clus+k);
 
                     auto bkm_end_time = std::chrono::high_resolution_clock::now();
 
