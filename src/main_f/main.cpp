@@ -2,8 +2,8 @@
 // #include <string>
 // #include <tuple>
 // #include "data_holder.hpp"
-// #include "algo_utils.hpp"
 // #include "IOutils.hpp"
+// #include "algo_utils.hpp"
 // #include "kmeans.hpp"
 // #include "dckmeans.hpp"
 // #include <chrono>
@@ -16,8 +16,8 @@
 // // namespace fs = std::filesystem;
 
 // //  string basePath = "/nobackup/parishar/DATASETS/";
-// string basePath = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/Box Sync/PhD/DATASETS/";
-// // string basePath = "/Users/schmuck/Documents/OneDrive - Indiana University/Box Sync/PhD/Data-Centric-KMeans/";
+// string basePath = "/Users/schmuck/Documents/Box Sync/PhD/DATASETS/";
+// // string basePath = "/Users/schmuck/Documents/Box Sync/PhD/Data-Centric-KMeans/";
 
 // int main(){
 
@@ -33,7 +33,6 @@
 //     // string somefilePath = filePath + fileName;
     
 //     // string centroidFilePath = filePath + "cropCentroids_30.txt";
-//     string centroidFilePath = "";
 //     string somefilePath = "";
 
 
@@ -44,7 +43,7 @@
     
 //     // Declare variables
 //     int num_iterations = 500;
-//     float threshold = 0.0;
+//     float threshold = 0.0001;
 
 //     // vector<string> file_list = {"fourclass.csv", "codrna.csv", "Breastcancer.csv",
 //     // "crop.csv", "Census.csv"};
@@ -53,12 +52,15 @@
 //     // "cropCentroids", "CensusCentroids"};
 
 
-//     vector<string> file_list = {"census.csv"};
-//     vector<string> out_list = {"census"};
-//     int num_clusters = 40;
+//     vector<string> file_list = {"blakeley.csv"};
+//     vector<string> out_list = {"blakeley"};
+//     int num_clusters = 8;
+//     int seed = 21;
 
-//     somefilePath = basePath + "comma_seperated_files/" + file_list[0];
+//     somefilePath =  basePath + "blakeley.csv";
+
 //     // Read in the data
+//     cout << somefilePath << endl;
 //     auto t1 = std::chrono::high_resolution_clock::now();
 //     std::pair<int, int> p = readSimulatedData(somefilePath, dataset, labels, false, false);
 //     auto t2 = std::chrono::high_resolution_clock::now();
@@ -69,32 +71,23 @@
     
 //     int numRows = p.first;
 //     int numCols = p.second;
+    
 
 //     output_data res;
-    
-//     // Read the centroids
-//     vector<vector<float> > centroids(num_clusters, vector<float>(numCols, 0.0));
-    
-//     centroidFilePath = basePath + "comma_seperated_centroids/" + out_list[0] + "_" + std::to_string(num_clusters) + "_0" + ".txt" ;
-//     cout << centroidFilePath << endl;
-    
-//     // read_kplus_plus_centroids(centroidFilePath, centroids, num_clusters);
+     
 
 //     // Debug - Testing
 //     cout << "\nAlgo: KMeans," << " Clusters: " << num_clusters << ", Threshold: " << threshold << endl;
 //     auto t3 = std::chrono::high_resolution_clock::now();
-//     res = kmeans(dataset, centroids, num_clusters, threshold, num_iterations, numCols, 60000);
+//     res = kmeans(dataset, num_clusters, threshold, num_iterations, numCols, 60000, "random", seed);
 //     auto t4 = std::chrono::high_resolution_clock::now();
 //     auto km_int = std::chrono::duration_cast<std::chrono::milliseconds>(t4 - t3);
 //     std::cout << "Total KMeans time: " << km_int.count() << " milliseconds\n";
-    
 
-//     vector<vector<float> > rcentroids(num_clusters, vector<float>(numCols, 0.0));
-//     // read_kplus_plus_centroids(centroidFilePath, rcentroids, num_clusters);
 
 //     cout << "\nAlgo: DCKM," << " Clusters: " << num_clusters << ", Threshold: " << threshold << endl;
 //     auto t5 = std::chrono::high_resolution_clock::now();
-//     res = dckmeans(dataset, rcentroids, num_clusters, threshold, num_iterations, numCols, 60000);
+//     res = dckmeans(dataset, num_clusters, threshold, num_iterations, numCols, 60000, "random", seed);
 //     auto t6 = std::chrono::high_resolution_clock::now();
 //     auto ms_int2 = std::chrono::duration_cast<std::chrono::milliseconds>(t6 - t5);
 //     std::cout << "Total DCKmeans time: " << ms_int2.count() << " milliseconds\n";
