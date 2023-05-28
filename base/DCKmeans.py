@@ -47,10 +47,10 @@ def DCKMeans(data, num_clusters, threshold, num_iterations, centroids, seed):
         neighbors, he_indices_dict = find_all_he_indices_neighbor(data, new_centroids, radius,
                                                 assign_dict, dist_mat)
 
-        he_data_indices = []
-        for i in he_indices_dict.keys():
-            # print("iter: ", loop_counter, "\t center: ", i, "HE datas: ", len(he_indices_dict[i]), he_indices_dict[i])
-            he_data_indices += he_indices_dict[i]
+        # he_data_indices = []
+        # for i in he_indices_dict.keys():
+        #     # print("iter: ", loop_counter, "\t center: ", i, "HE datas: ", len(he_indices_dict[i]), he_indices_dict[i])
+        #     he_data_indices += he_indices_dict[i]
 
         for center in neighbors:
             if len(he_indices_dict[center]) > 0:
@@ -76,12 +76,12 @@ def DCKMeans(data, num_clusters, threshold, num_iterations, centroids, seed):
             print("DCKMeans: Found less modalities, safe exiting with current centroids.")
             return centroids, loop_counter, sys.float_info.max, new_assigned_clusters, dckm_calc
 
-        data_changed = np.where(old_assigned_clusters != new_assigned_clusters)[0]
-        temp_sign = list(np.sum(centroids, axis=1))
-        for i in range(len(temp_sign)):
-            print("Centroid: ", i, temp_sign[i])
+        # data_changed = np.where(old_assigned_clusters != new_assigned_clusters)[0]
+        # temp_sign = list(np.sum(centroids, axis=1))
+        # for i in range(len(temp_sign)):
+        #     print("Centroid: ", i, temp_sign[i])
 
-        vis_data_with_he(data, centroids, old_assigned_clusters, distances, loop_counter, data_changed, he_data_indices)
+        # vis_data_with_he(data, centroids, old_assigned_clusters, distances, loop_counter, data_changed, he_data_indices)
 
         # Calculate the cluster assignments for data points
         centroids[:] = new_centroids[:]

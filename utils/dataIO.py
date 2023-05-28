@@ -7,35 +7,20 @@ from pathlib import Path
 
 def read_data(input_loc):
 
-    data = pd.read_csv(input_loc, header=0, sep="\t")
-
-    # Get the label column from the data
-    labels = list(data['labels'].values)
-    data.drop(['labels'], inplace=True, axis=1)
-
-    # Subset the feature columns from the data
-    data = np.array(data, dtype=float)
+    data = pd.read_csv(input_loc, header=None, sep=",")
 
     # Cast labels to a numpy array
-    labels = np.array(labels)
-    print("Data shape: ", data.shape)
-    return data, labels
+    data = np.array(data, dtype=float)
+    return data
 
 
-def read_data(file_path, labels, header):
-    
-    if header != "no":
-        data = pd.read_csv(file_path, sep=",", header=0)
-    else:
-        data = pd.read_csv(file_path, sep=",")
-    
-    if labels!="no":
-        labels = data['labels'].to_list()
-        data.drop(["labels"], inplace=True, axis=1)
+def read_labels(input_loc):
 
-        return np.array(data), labels
-    
-    return np.array(data)
+    data = pd.read_csv(input_loc, header=None)
+
+    # Cast labels to a numpy array
+    data = np.array(data, dtype=float).reshape(len(data))
+    return data
 
 
 def read_data_with_labels(file_path):

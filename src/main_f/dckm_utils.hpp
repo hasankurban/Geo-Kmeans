@@ -70,7 +70,9 @@ Tfloat &vec_sum){
     vec_sum = 0.0;
     
     for (int i=0; i<midpoint.size(); i++){
-        vec_sum = vec_sum + ((actual_point[i] - midpoint[i]) * centroid_vector[i]);
+        if (centroid_vector[i] != 0){
+            vec_sum = vec_sum + ((actual_point[i] - midpoint[i]) * centroid_vector[i]);
+        }
     }
 
     if (vec_sum>0)

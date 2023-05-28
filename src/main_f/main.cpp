@@ -16,7 +16,7 @@
 // // namespace fs = std::filesystem;
 
 // //  string basePath = "/nobackup/parishar/DATASETS/";
-// string basePath = "/Users/schmuck/Documents/Box Sync/PhD/DATASETS/";
+// string basePath = "/Users/schmuck/Library/CloudStorage/OneDrive-IndianaUniversity/PhD/DATASETS/";
 // // string basePath = "/Users/schmuck/Documents/Box Sync/PhD/Data-Centric-KMeans/";
 
 // int main(){
@@ -26,7 +26,7 @@
 //     // string filePath = basePath + "dims_data/";
 //     // string filePath = basePath + "scal_data/";
 // //    string filePath = basePath + "sample_data/";
-//      basePath = basePath + "real_data/experiment_data/";
+//      basePath = basePath + "real_data/";
     
 // //    string fileName = "50_2_10.csv";
 //     // string fileName = "crop.csv";
@@ -43,7 +43,7 @@
     
 //     // Declare variables
 //     int num_iterations = 500;
-//     float threshold = 0.0001;
+//     float threshold = 0.001;
 
 //     // vector<string> file_list = {"fourclass.csv", "codrna.csv", "Breastcancer.csv",
 //     // "crop.csv", "Census.csv"};
@@ -52,12 +52,14 @@
 //     // "cropCentroids", "CensusCentroids"};
 
 
-//     vector<string> file_list = {"blakeley.csv"};
-//     vector<string> out_list = {"blakeley"};
-//     int num_clusters = 8;
+//     vector<string> file_list = {"deng.csv"};
+//     vector<string> out_list = {"deng"};
+//     int num_clusters = 15;
 //     int seed = 21;
 
-//     somefilePath =  basePath + "blakeley.csv";
+//     somefilePath =  basePath + "deng.csv";
+
+//     cout << somefilePath << endl;
 
 //     // Read in the data
 //     cout << somefilePath << endl;
