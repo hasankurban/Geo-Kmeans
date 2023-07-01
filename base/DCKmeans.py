@@ -23,7 +23,7 @@ def DCKMeans(data, num_clusters, threshold, num_iterations, centroids, seed):
     dckm_calc += data.shape[0]*num_clusters
 
     if len(np.unique(old_assigned_clusters)) < num_clusters:
-        print("DCKMeans: Found less modalities, safe exiting with current centroids.")
+        print("Geo-KMeans: Found less modalities, safe exiting with current centroids.")
         return centroids, loop_counter, sys.float_info.max, old_assigned_clusters, dckm_calc
 
     new_assigned_clusters[:] = old_assigned_clusters[:]
@@ -40,7 +40,7 @@ def DCKMeans(data, num_clusters, threshold, num_iterations, centroids, seed):
         new_centroids = calculate_centroids(data, old_assigned_clusters)
 
         if check_convergence(new_centroids, centroids, threshold):
-            print("DCKmeans: Convergence at iteration: ", loop_counter, "\n")
+            print("Geo-KMeans: Convergence at iteration: ", loop_counter, "\n")
             break
 
         assign_dict, radius = get_membership(old_assigned_clusters, distances, num_clusters, assign_dict)
@@ -73,7 +73,7 @@ def DCKMeans(data, num_clusters, threshold, num_iterations, centroids, seed):
         #     break
 
         if len(np.unique(new_assigned_clusters)) < num_clusters:
-            print("DCKMeans: Found less modalities, safe exiting with current centroids.")
+            print("Geo-KMeans: Found less modalities, safe exiting with current centroids.")
             return centroids, loop_counter, sys.float_info.max, new_assigned_clusters, dckm_calc
 
         # data_changed = np.where(old_assigned_clusters != new_assigned_clusters)[0]
