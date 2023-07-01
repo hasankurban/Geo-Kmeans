@@ -1,43 +1,47 @@
-This repository contains the Python and C++ source code for traditional KMeans (Lloyd's version) and the Data-Centric 
-implementation of KMeans.
+# Geometric-KMeans (geo-KMeans)
 
-#### Required packages
+Geometry inspired, data-centric version of traditional Lloyd's KMeans clustering algorithm.
+
+### Installation for Python version
+
+#### Install dependencies
 
 - The dependencies required for Python version are numpy, pandas, sklearn, matplotlib
+- This release have been tested for Python3.10+. If you face any problem while using older version of Python then please open an issue.
 - These can be installed in one line via pip as follows:
 
 ```
-pip install numpy, pandas, sklearn, matplotlib
+pip3 install numpy, pandas, sklearn, matplotlib
 ```
 
-#### Basic Setup
+#### How to use geo-KMeans
 
-- The relevant function can be called as follows:
-- For KMeans, the primary function is called Kmeans(data, centers, threshold, num_iterations, centroids, seed)
+- The relevant functions for data-centric and traditional KMeans (traditional is Lloyd's KMeans) are shown below.
+- Description of input arguments and returned parameters is given below:
 
 __How to call KMeans/DCKMeans routine:__
 
 ```
-km_centroids, km_iter, km_sse, km_calc = Kmeans(data, centers, threshold, num_iterations, centroids, seed)
-
 dckm_centroids, dckm_iter, dckm_sse, dckm_calc = DCKMeans(data, centers, threshold, num_iterations, centroids, seed)
+
+km_centroids, km_iter, km_sse, km_calc = Kmeans(data, centers, threshold, num_iterations, centroids, seed)
 ```
 
 __Description of input arguments:__
 
-1. data (2D matrix): A numpy matrix of in format n * d, where n = number of data points (in rows) and d = dimensions (columns).
+1. data (2D matrix): A numpy matrix in format n * d, where n = number of data points (in rows) and d = dimensions (columns).
 2. centers (integer): number of clusters to partition the data.
-3. threshold (float): Value to stop the algorithm. Default threshold of 0.001 is used but can be changed by the user as needed.
-4. num_iterations (integer): Number of iterations to run the algorithm.
-5. centroids (2D matrix): You can pass the centroids of your choice as 2d numpy array (data in rows and features in columns) or pass [] to indicate random centroid selection by the algorithm.
-6. seed (integer): A seed to use in case of random centroid selection.
+3. threshold (float): Convergence threshold to stop the algorithm. Default threshold of 0.001 is used but can be changed by the user as needed.
+4. num_iterations (integer): Maximum number of iterations.
+5. centroids (2D matrix): You can either provide the centroids as 2d numpy array (data in rows and features in columns) or pass an empty list [] to randomly select the centroids.
+6. seed (integer): For reprodicibility, a seed to use in case of random centroid selection.
 
 __Description of output:__
 
-1. km_centroids: Final centroids upon convergence.
-2. km_iter: Number of iterations until convergence.
-3. km_sse: The sum of squared distances upon convergence. 
-4. km_calc: Number of distance calculations performed by the algorithm.
+1. dckm_centroids: Final centroids upon convergence.
+2. dckm_iter: Number of iterations until convergence.
+3. dckm_sse: The sum of squared distances upon convergence. 
+4. dckm_calc: Number of distance calculations performed by the algorithm.
 
-Note: The fourth parameter (sse) returned by the function is used to evaluate the quality of clustering. If the centroids produced by the two
+Note: The third parameter (sse) returned by the function is used to evaluate the quality of clustering. If the centroids produced by the two
 algorithms are same then both algorithms must have the same SSE value upon convergence.
