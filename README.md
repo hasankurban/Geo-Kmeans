@@ -72,17 +72,14 @@ print("KMeans: ", check_ARI(km_labels, labels))
 print("Geo-KMeans: ", check_ARI(geo_labels, labels))
 ```
 
-#### How to use Python implementation of geo-KMeans
+#### Relevant function calls and parameters
 
 - The relevant functions for data-centric and traditional KMeans (traditional is Lloyd's KMeans) are shown below.
-- Description of input arguments and returned parameters is given below:
-
-__How to call KMeans/DCKMeans routine:__
 
 ```
-dckm_centroids, dckm_iter, dckm_sse, dckm_calc = DCKMeans(data, centers, threshold, num_iterations, centroids, seed)
+geo_centroids, geo_iter, geo_sse, geo_clusters, geo_calc = DCKMeans(data, centers, threshold, num_iterations, centroids, seed)
 
-km_centroids, km_iter, km_sse, km_calc = Kmeans(data, centers, threshold, num_iterations, centroids, seed)
+km_centroids, km_iter, km_sse, km_clusters, km_calc = Kmeans(data, centers, threshold, num_iterations, centroids, seed)
 ```
 
 __Description of input arguments:__
@@ -96,10 +93,11 @@ __Description of input arguments:__
 
 __Description of output:__
 
-1. dckm_centroids: Final centroids upon convergence.
-2. dckm_iter: Number of iterations until convergence.
-3. dckm_sse: The sum of squared distances upon convergence. 
-4. dckm_calc: Number of distance calculations performed by the algorithm.
+1. geo_centroids: Final centroids upon convergence.
+2. geo_iter: Number of iterations until convergence.
+3. geo_sse: The sum of squared distances upon convergence.
+4. geo_clusters: cluster assignment for data.
+5. geo_calc: Number of distance calculations performed by the algorithm.
 
 Note: The third parameter (sse) returned by the function is used to evaluate the quality of clustering. If the centroids produced by the two
 algorithms are same then both algorithms must have the same SSE value upon convergence.
